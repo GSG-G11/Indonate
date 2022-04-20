@@ -6,7 +6,8 @@
   "scripts": {
     "dev":" NODE_ENV=dev nodemon server",
     "start":"NODE_ENV=production node server",
-    "test": "jest --watchAll",
+    "testDB": "NODE_ENV=test jest server/tests/database.test.js",
+    "testRoutes": "cross-env NODE_ENV=test jest server/tests/datbase/route.test.js",
     "heroku-postbuild": "cd client && npm i && npm run build"
   },
   "repository": {
