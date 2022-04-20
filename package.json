@@ -7,7 +7,7 @@
     "dev":" NODE_ENV=dev nodemon server",
     "start":"NODE_ENV=production node server",
     "testDB": "NODE_ENV=test jest server/tests/database.test.js",
-    "testRoutes": "cross-env NODE_ENV=test jest server/tests/datbase/route.test.js",
+    "testRoutes": "NODE_ENV=test jest server/tests/datbase/route.test.js",
     "heroku-postbuild": "cd client && npm i && npm run build"
   },
   "repository": {
