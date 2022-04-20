@@ -1,0 +1,39 @@
+name: Indonate
+on: push
+env: 
+  super_secret: ${{ secrets.SECRET }}
+jobs:
+  container-job:
+    runs-on: ubuntu-latest
+    container: node:14
+
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_PASSWORD: 12345
+          POSTGRES_USER: m
+          POSTGRES_DB: indonate_db_test
+          POSTGRES_PORT: 5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+          
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+        
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Connect to PostgreSQL
+        run: npm run testDB 
+        env: 
+          DB_URL_test: postgres://m:12345@postgres:5432/indonate_db_test
+      
+      - name: testing Routes
+        run: npm run testRoutes
+        env: 
+          DB_URL_test: postgres://m:12345@postgres:5432/indonate_db_test
