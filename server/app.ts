@@ -1,5 +1,5 @@
 import { join } from 'path';
-import express, { Request, Response } from 'express';
+import express, { Request, Response, Application } from 'express';
 import compression from 'compression';
 import cors from 'cors';
 import morgan from 'morgan';
@@ -7,7 +7,7 @@ import route from './routes/index';
 
 require('env2')('.env');
 
-const app:express.Application = express();
+const app:Application = express();
 app.set('port', process.env.PORT || 5001);
 app.use(cors());
 app.use(express.json());

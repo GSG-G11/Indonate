@@ -2,8 +2,7 @@
   "name": "indonate",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/index",
-  "typings": "dist/index",
+  "main": "index.js",
   "scripts": {
     "dev": "NODE_ENV=dev nodemon ./server/index.ts",
     "start": "NODE_ENV=production npx tsc && node ./dist",
@@ -30,7 +29,6 @@
   },
   "homepage": "https://github.com/GSG-G11/Indonate#readme",
   "dependencies": {
-    "@types/morgan": "^1.9.3",
     "bcryptjs": "^2.4.3",
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.6",
@@ -47,6 +45,7 @@
     "@types/compression": "^1.7.2",
     "@types/cors": "^2.8.12",
     "@types/express": "^4.17.13",
+    "@types/morgan": "^1.9.3",
     "@types/node": "^17.0.25",
     "@typescript-eslint/eslint-plugin": "^5.20.0",
     "@typescript-eslint/parser": "^5.20.0",
