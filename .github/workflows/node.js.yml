@@ -28,12 +28,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Connect to PostgreSQL
-        run: npm run testDB 
-        env: 
-          DB_URL_test: postgres://m:12345@postgres:5432/indonate_db_test
-      
-      - name: testing Routes
-        run: npm run testRoutes
+      - name: tests
+        run: npm run test 
         env: 
           DB_URL_test: postgres://m:12345@postgres:5432/indonate_db_test
