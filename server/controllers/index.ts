@@ -1,3 +1,4 @@
 import notFound from './error/notFound';
+import serverError from './error/serverError';
 
-export default notFound;
+export { serverError, notFound };

@@ -5,7 +5,7 @@ import cors from 'cors';
 import morgan from 'morgan';
 import cookieParser from 'cookie-parser';
 import route from './routes/index';
-import notFound from './controllers';
+import { notFound, serverError } from './controllers';
 
 require('env2')('.env');
 
@@ -26,4 +26,5 @@ if (NODE_ENV === 'production') {
   });
 }
 app.use(notFound);
+app.use(serverError);
 export default app;
