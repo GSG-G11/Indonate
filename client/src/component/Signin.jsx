@@ -5,13 +5,22 @@ import FormInput from './Input';
 
 function Signin() {
   const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-  const getInputValue = (rawEmail) => {
+  const getEmailValue = (rawEmail) => {
     setEmail(rawEmail);
   };
 
+  const getPasswordValue = (rawPassword) => {
+    console.log(rawPassword);
+    setPassword(rawPassword);
+  };
+
   return (
-    <FormInput type="email" placeholder="Email" getInputValue={getInputValue} emailValue={email} />
+    <>
+      <FormInput type="email" placeholder="Email" getInputValue={getEmailValue} emailValue={email} />
+      <FormInput type="password" placeholder="Password" getInputValue={getPasswordValue} passwordValue={password} />
+    </>
   );
 }
 
