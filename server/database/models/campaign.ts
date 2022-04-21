@@ -1,8 +1,8 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '../config/connection';
-import { category, donation, capon } from './index';
+import { Category, Donation, Capon } from './index';
 
-const campaign = sequelize.define('campaigns', {
+const Campaign = sequelize.define('campaigns', {
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
@@ -29,8 +29,8 @@ const campaign = sequelize.define('campaigns', {
   },
 
 });
-campaign.belongsTo(category);
-campaign.hasMany(donation);
-campaign.hasMany(capon);
+Campaign.belongsTo(Category);
+Campaign.hasMany(Donation);
+Campaign.hasMany(Capon);
 
-export default campaign;
+export default Campaign;

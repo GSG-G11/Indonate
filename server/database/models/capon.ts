@@ -1,8 +1,8 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '../config/connection';
-import { donor, campaign } from './index';
+import { Campaign, Family } from './index';
 
-const donation = sequelize.define('donations', {
+const Capon = sequelize.define('capon', {
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
@@ -21,7 +21,7 @@ const donation = sequelize.define('donations', {
     allowNull: true,
   },
 });
-donation.belongsTo(campaign);
-donation.belongsTo(donor);
+Capon.belongsTo(Campaign);
+Capon.belongsTo(Family);
 
-export default donation;
+export default Capon;

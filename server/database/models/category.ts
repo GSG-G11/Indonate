@@ -1,7 +1,7 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '../config/connection';
 
-const family = sequelize.define('families', {
+const Category = sequelize.define('categories', {
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
@@ -11,14 +11,9 @@ const family = sequelize.define('families', {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  phone: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    unique: true,
-  },
-  address: {
+  icon_url: {
     type: DataTypes.STRING,
   },
 });
 
-export default family;
+export default Category;

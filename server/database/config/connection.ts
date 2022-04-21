@@ -1,5 +1,4 @@
-/* eslint-disable no-console */
-import { Sequelize, DataTypes } from 'sequelize';
+import { Sequelize } from 'sequelize';
 
 const {
   NODE_ENV, DB_URL, TEST_DB_URL, DATABASE_URL,
@@ -18,34 +17,12 @@ if (NODE_ENV === 'test') {
   dbUrl = DB_URL || '';
   sslConnection = false;
 } else {
+  // eslint-disable-next-line no-console
   console.log('no environment found');
 }
 
 const sequelize = new Sequelize(dbUrl, {
   dialectOptions: { sslConnection },
 });
-
-sequelize
-  .authenticate()
-  .then(() => {
-    console.log('Connection successfully.');
-  })
-  .catch((error: any) => {
-    console.error('Connection Failed', error);
-  });
-
-sequelize.sync({ force: true });
-const User = sequelize.define('users', {
-  id: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    autoIncrement: true,
-  },
-  first_name: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-});
-User.create({ first_name: 'donor' }).then((value: any) => console.log(value));
 
 export default sequelize;

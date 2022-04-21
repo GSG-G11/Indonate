@@ -1,7 +1,7 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '../config/connection';
 
-const donor = sequelize.define('donors', {
+const Donor = sequelize.define('donors', {
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
@@ -39,4 +39,4 @@ const donor = sequelize.define('donors', {
   },
 });
 
-export default donor;
+export default Donor;

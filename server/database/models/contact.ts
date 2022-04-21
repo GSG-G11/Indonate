@@ -1,7 +1,7 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '../config/connection';
 
-const category = sequelize.define('categories', {
+const Contact = sequelize.define('contacts', {
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
@@ -11,9 +11,15 @@ const category = sequelize.define('categories', {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  icon_url: {
+  email: {
     type: DataTypes.STRING,
+    allowNull: false,
+    unique: true,
+  },
+  message: {
+    type: DataTypes.TEXT,
+    allowNull: false,
   },
 });
 
-export default category;
+export default Contact;
