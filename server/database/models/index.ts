@@ -14,5 +14,12 @@ Capon.belongsTo(Family);
 Donation.belongsTo(Donor);
 
 export {
-  Donor, Family, Donation, Contact, Category, Campaign, Capon, sequelize,
+  Donor,
+  Family,
+  Donation,
+  Contact,
+  Category,
+  Campaign,
+  Capon,
+  sequelize,
 };

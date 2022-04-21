@@ -25,6 +25,7 @@ const Campaign = sequelize.define('campaigns', {
   },
   is_available: {
     type: DataTypes.BOOLEAN,
+    defaultValue: true,
   },
 });
 
