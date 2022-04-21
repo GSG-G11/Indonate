@@ -1,6 +1,5 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '../config/connection';
-import { Campaign, Family } from './index';
 
 const Capon = sequelize.define('capon', {
   id: {
@@ -21,7 +20,5 @@ const Capon = sequelize.define('capon', {
     allowNull: true,
   },
 });
-Capon.belongsTo(Campaign);
-Capon.belongsTo(Family);
 
 export default Capon;

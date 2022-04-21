@@ -1,6 +1,5 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '../config/connection';
-import { Donor, Campaign } from './index';
 
 const Donation = sequelize.define('donations', {
   id: {
@@ -21,7 +20,5 @@ const Donation = sequelize.define('donations', {
     allowNull: true,
   },
 });
-Donation.belongsTo(Campaign);
-Donation.belongsTo(Donor);
 
 export default Donation;

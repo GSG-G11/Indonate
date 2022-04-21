@@ -6,6 +6,12 @@ import Category from './category';
 import Campaign from './campaign';
 import Capon from './capon';
 
+Campaign.belongsTo(Category);
+Campaign.hasMany(Donation);
+Campaign.hasMany(Capon);
+Capon.belongsTo(Family);
+Donation.belongsTo(Donor);
+
 export {
   Donor, Family, Donation, Contact, Category, Campaign, Capon,
 };

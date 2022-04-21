@@ -1,6 +1,5 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '../config/connection';
-import { Category, Donation, Capon } from './index';
 
 const Campaign = sequelize.define('campaigns', {
   id: {
@@ -29,8 +28,5 @@ const Campaign = sequelize.define('campaigns', {
   },
 
 });
-Campaign.belongsTo(Category);
-Campaign.hasMany(Donation);
-Campaign.hasMany(Capon);
 
 export default Campaign;
