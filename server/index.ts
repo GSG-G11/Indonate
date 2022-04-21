@@ -1,4 +1,4 @@
-import app from './app.ts';
+import app from './app';
 
 const port = app.get('port');
 app.listen(port, () => {
