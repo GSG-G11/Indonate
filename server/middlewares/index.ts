@@ -1,4 +1,4 @@
-import notFound from '../middlewares/error/notFound';
+import pageNotFoundError from './error/pageNotFoundError';
 import serverError from '../middlewares/error/serverError';
 
-export { serverError, notFound };
+export { serverError, pageNotFoundError };
