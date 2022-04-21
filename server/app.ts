@@ -5,7 +5,7 @@ import cors from 'cors';
 import morgan from 'morgan';
 import cookieParser from 'cookie-parser';
 import route from './routes/index';
-import { notFound } from './controllers';
+import notFound from './controllers';
 
 require('env2')('.env');
 
