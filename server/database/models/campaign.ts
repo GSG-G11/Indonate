@@ -21,12 +21,11 @@ const Campaign = sequelize.define('campaigns', {
   },
   image_link: {
     type: DataTypes.INTEGER,
-    allowNull: true,
+    allowNull: false,
   },
-  status: {
+  is_available: {
     type: DataTypes.BOOLEAN,
   },
-
 });
 
 export default Campaign;

@@ -1,3 +1,4 @@
+import sequelize from '../config/connection';
 import Donor from './donor';
 import Family from './family';
 import Donation from './donation';
@@ -13,5 +14,5 @@ Capon.belongsTo(Family);
 Donation.belongsTo(Donor);
 
 export {
-  Donor, Family, Donation, Contact, Category, Campaign, Capon,
+  Donor, Family, Donation, Contact, Category, Campaign, Capon, sequelize,
 };

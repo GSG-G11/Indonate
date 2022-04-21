@@ -22,6 +22,7 @@ const Donor = sequelize.define('donors', {
   },
   address: {
     type: DataTypes.STRING,
+    allowNull: false,
   },
   phone: {
     type: DataTypes.STRING,
