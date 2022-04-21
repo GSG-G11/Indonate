@@ -15,6 +15,20 @@
     "plugins": [
         "@typescript-eslint"
     ],
-    "rules": {
+    "rules": { 
+        "import/extensions": [
+            "error",
+            "ignorePackages",
+            {
+            "ts": "never"
+            }
+        ]       
+    },
+    "settings": {
+        "import/resolver": {
+            "node": {
+            "extensions": [".js", ".jsx", ".ts", ".tsx"]
+            }
+        }
     }
 }
