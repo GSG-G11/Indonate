@@ -2,6 +2,8 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:5001",
+
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.1",
     "antd": "^4.19.5",
@@ -43,4 +45,5 @@
     "eslint-plugin-react": "^7.29.4",
     "eslint-plugin-react-hooks": "^4.4.0"
   }
+  
 }
