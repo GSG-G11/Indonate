@@ -9,10 +9,7 @@ const login = async (req: Request, res: Response, next: NextFunction) => {
   const { email, password } = req.body;
   try {
     await loginSchema.validateAsync({ email, password });
-  } catch (error) {
-    next(new CustomedError(error.details[0].message, 400));
-  }
-  try {
+
     const user = await Donor.findOne({
       where: {
         email,
@@ -48,7 +45,8 @@ const login = async (req: Request, res: Response, next: NextFunction) => {
       })
       .json({ message: 'Successfully logged in', data: payload });
   } catch (error) {
-    next(error);
+    if (error.details) next(new CustomedError(error.details[0].message, 400));
+    else next(error);
   }
 };
 
