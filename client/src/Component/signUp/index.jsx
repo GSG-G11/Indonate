@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import './style.css';
 // import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import {
-  Form, Button, Input,
+  Form, Button, Input, message,
 } from 'antd';
 import { signUp } from '../../feature/userReducer';
+import './style.css';
 
 function SignUp() {
   // const navigate = useNavigate();
@@ -20,19 +20,23 @@ function SignUp() {
       const response = await axios.post('/api/signup', userInfo);
       const data = response.data.data[0];// user info object
       dispatch(signUp(data));
-
-      // navigate('/');/// home page
+      // navigate('/');// home page
     } catch (err) {
-      console.log(err);
+      message.error({
+        content: err,
+        style: {
+          marginTop: '30vh',
+        },
+      });
     }
   };
+
   return (
     <div>
       <Form
         name="register"
         onFinish={signup}
       >
-
         <Form.Item
           name="name"
           rules={[
@@ -91,14 +95,12 @@ function SignUp() {
               message: 'Please input your password!',
             },
           ]}
-
         >
           <Input.Password
             placeholder="Password"
             onChange={(e) => setUserInfo({ ...userInfo, password: e.target.value })}
           />
         </Form.Item>
-
         <Form.Item
           name="confirm"
           dependencies={['password']}
@@ -120,9 +122,8 @@ function SignUp() {
         >
           <Input.Password placeholder="Confirm password" />
         </Form.Item>
-
         <Button type="primary" htmlType="submit">
-          Register
+          Sign Up
         </Button>
       </Form>
     </div>
