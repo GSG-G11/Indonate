@@ -15,9 +15,22 @@
     "plugins": [
         "@typescript-eslint"
     ],
-    "rules": {
-    "import/no-unresolved": "off",
-    "import/extensions": "off",
-    "import/no-extraneous-dependencies": "off"
+    "rules": { 
+        "import/no-unresolved": "off",
+        "import/no-extraneous-dependencies": "off",
+        "import/extensions": [
+            "error",
+            "ignorePackages",
+            {
+            "ts": "never"
+            }
+        ]       
+    },
+    "settings": {
+        "import/resolver": {
+            "node": {
+            "extensions": [".js", ".jsx", ".ts", ".tsx"]
+            }
+        }
     }
 }
