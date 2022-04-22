@@ -17,7 +17,7 @@ function FormInput({
 
   return (
     <div>
-      <Input className="emailInput" type={type} onChange={handleInputChange} placeholder={placeholder} value={input} />
+      <Input className="emailInput" type={type} onChange={handleInputChange} placeholder={placeholder} value={input} maxLength={type !== 'email' ? 12 : 64} />
     </div>
   );
 }
