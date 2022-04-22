@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
-import { Button } from 'antd';
+import { useDispatch } from 'react-redux';
+import { Button, message } from 'antd';
 import 'antd/dist/antd.css';
 import './Signin.css';
-import FormInput from './Input';
+import FormInput from '../Input';
+import { setUser } from '../../slices/user';
 
 function Signin() {
+  const dispatch = useDispatch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [credentials, setCredentials] = useState({ email, password });
+
   const getEmailValue = (rawEmail) => {
     setEmail(rawEmail);
   };
@@ -15,21 +18,19 @@ function Signin() {
   const getPasswordValue = (rawPassword) => {
     setPassword(rawPassword);
   };
-
   const validateCredentials = () => {
     const validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
     if (!email.match(validRegex)) {
-      alert('Invalid Email');
+      message.warning('Please enter a valid email address');
     } else if (password.length < 6) {
-      alert('Password is short');
+      message.warning('Password must be at least 6 characters');
     } else {
-      setCredentials({ email, password });
-      alert(credentials);
+      dispatch(setUser({ email, password }));
+      message.success('Welcome back!');
     }
   };
 
   return (
-
     <>
       <FormInput type="email" placeholder="Email" getInputValue={getEmailValue} />
       <FormInput type="password" placeholder="Password" getInputValue={getPasswordValue} />
