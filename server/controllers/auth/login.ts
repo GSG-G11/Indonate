@@ -33,9 +33,21 @@ const login = async (req: Request, res: Response, next: NextFunction) => {
       name: user?.getDataValue('name'),
       isAdmin: user?.getDataValue('is_admin'),
     };
-    const token = jwt.sign(payload, process.env.SECRET as string, {
-      expiresIn: '30d',
-      algorithm: 'HS256',
+    const token = await new Promise((resolve, reject) => {
+      resolve(
+        jwt.sign(
+          payload,
+          process.env.SECRET as string,
+          {
+            expiresIn: '30d',
+            algorithm: 'HS256',
+          },
+          (err, encoded) => {
+            if (err) reject(err);
+            else resolve(encoded);
+          },
+        ),
+      );
     });
     res
       .status(200)
