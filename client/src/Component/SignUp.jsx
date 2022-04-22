@@ -4,10 +4,10 @@ import {
 } from 'antd';
 
 function SignUp() {
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState();
-  const [password, SetPassword] = useState('');
+  const [userInfo, setUserInfo] = useState({
+    name: '', email: '', password: '', phone: '',
+  });
+
   return (
     <div>
       <Form name="login" onFinish={SignUp}>
@@ -16,7 +16,7 @@ function SignUp() {
           message: 'Please input your username!',
         }]}
         >
-          <Input value={username} placeholder="User name" onChange={(e) => setUsername(e.target.value)} />
+          <Input value={userInfo.name} placeholder="User name" onChange={(e) => setUserInfo({ ...userInfo, name: e.target.value })} />
         </Form.Item>
         <Form.Item rules={[
           {
@@ -29,7 +29,11 @@ function SignUp() {
           },
         ]}
         >
-          <Input value={email} placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
+          <Input
+            value={userInfo.email}
+            placeholder="Email"
+            onChange={(e) => setUserInfo({ ...userInfo, email: e.target.value })}
+          />
         </Form.Item>
 
         <Form.Item rules={[{
@@ -37,7 +41,11 @@ function SignUp() {
           message: 'Please input your phone number!',
         }]}
         >
-          <Input value={phone} placeholder="Phone" onChange={(e) => setPhone(e.target.value)} />
+          <Input
+            value={userInfo.phone}
+            placeholder="Phone"
+            onChange={(e) => setUserInfo({ ...userInfo, phone: e.target.value })}
+          />
         </Form.Item>
 
         <Form.Item
@@ -49,7 +57,10 @@ function SignUp() {
             },
           ]}
         >
-          <Input.Password value={password} onChange={(e) => SetPassword(e.target.value)} />
+          <Input.Password
+            value={userInfo.password}
+            onChange={(e) => setUserInfo({ ...userInfo, password: e.target.value })}
+          />
         </Form.Item>
         <Form.Item
           name="confirm"
