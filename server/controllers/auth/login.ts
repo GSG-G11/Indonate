@@ -3,7 +3,7 @@ import { NextFunction, Request, Response } from 'express';
 // import jwt from 'jsonwebtoken';
 import loginSchema from '../../utils/loginSchema';
 import CustomedError from '../../utils/customedError';
-// import { Donor } from '../../database/models';
+import { Donor } from '../../database/models';
 
 const login = async (req: Request, res: Response, next: NextFunction) => {
   const { email, password } = req.body;
@@ -11,6 +11,16 @@ const login = async (req: Request, res: Response, next: NextFunction) => {
     await loginSchema.validateAsync({ email, password });
   } catch (error) {
     next(new CustomedError(error.details[0].message, 200));
+  }
+  const user = await Donor.findOne({
+    where: {
+      email,
+    },
+  });
+  if (!user) {
+    next(
+      new CustomedError("Email doesn't exists, Try another one or sign up", 406),
+    );
   }
 };
 
