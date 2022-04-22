@@ -2,11 +2,6 @@ import { DataTypes } from 'sequelize';
 import sequelize from '../config/connection';
 
 const Donation = sequelize.define('donations', {
-  id: {
-    type: DataTypes.INTEGER,
-    autoIncrement: true,
-    primaryKey: true,
-  },
   food: {
     type: DataTypes.INTEGER,
     allowNull: true,
