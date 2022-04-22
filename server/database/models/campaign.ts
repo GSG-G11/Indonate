@@ -20,7 +20,7 @@ const Campaign = sequelize.define('campaigns', {
     allowNull: false,
   },
   image_link: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING,
     allowNull: false,
   },
   is_available: {

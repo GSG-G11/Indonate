@@ -8,10 +8,10 @@ import Campaign from './campaign';
 import Capon from './capon';
 
 Campaign.belongsTo(Category);
-Campaign.hasMany(Donation);
-Campaign.hasMany(Capon);
-Capon.belongsTo(Family);
-Donation.belongsTo(Donor);
+Campaign.belongsToMany(Family, { through: Capon });
+Family.belongsToMany(Campaign, { through: Capon });
+Campaign.belongsToMany(Donor, { through: Donation });
+Donor.belongsToMany(Campaign, { through: Donation });
 
 export {
   Donor,
