@@ -12,11 +12,11 @@ function Signin() {
   const [password, setPassword] = useState('');
 
   const getEmailValue = (rawEmail) => {
-    setEmail(rawEmail);
+    setEmail(rawEmail.replace(/\s/g, ''));
   };
 
   const getPasswordValue = (rawPassword) => {
-    setPassword(rawPassword);
+    setPassword(rawPassword.trim());
   };
   const validateCredentials = () => {
     const validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
