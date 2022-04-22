@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-// import bcrypt from 'bcryptjs';
+import bcrypt from 'bcryptjs';
 // import jwt from 'jsonwebtoken';
 import loginSchema from '../../utils/loginSchema';
 import CustomedError from '../../utils/customedError';
@@ -21,6 +21,13 @@ const login = async (req: Request, res: Response, next: NextFunction) => {
     next(
       new CustomedError("Email doesn't exists, Try another one or sign up", 406),
     );
+  }
+  const isPasswordValidate = await bcrypt.compare(
+    password,
+    user?.getDataValue('password'),
+  );
+  if (!isPasswordValidate) {
+    next(new CustomedError('Incorrect password, please try again ', 406));
   }
 };
 
