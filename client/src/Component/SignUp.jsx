@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+
 import {
   Form, Button, Input,
 } from 'antd';
@@ -8,9 +10,16 @@ function SignUp() {
     name: '', email: '', password: '', phone: '',
   });
 
+  const signup = async () => {
+    try {
+      await axios.post('/api/signup', userInfo);
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <div>
-      <Form name="login" onFinish={SignUp}>
+      <Form name="login" onFinish={signup}>
         <Form.Item rules={[{
           required: true,
           message: 'Please input your username!',
