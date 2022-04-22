@@ -43,17 +43,21 @@
     "sequelize": "^6.19.0"
   },
   "devDependencies": {
+    "@types/compression": "^1.7.2",
+    "@types/cookie-parser": "^1.4.2",
+    "@types/cors": "^2.8.12",
+    "@types/express": "^4.17.13",
+    "@types/morgan": "^1.9.3",
+    "@types/node": "^17.0.25",
     "@typescript-eslint/eslint-plugin": "^5.20.0",
     "@typescript-eslint/parser": "^5.20.0",
-    "@types/express": "^4.17.13",
-    "@types/node": "^17.0.25",
     "eslint": "^8.13.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.26.0",
     "jest": "^27.5.1",
     "nodemon": "^2.0.15",
-    "supertest": "^6.2.2",
     "pre-commit": "^1.2.2",
+    "supertest": "^6.2.2",
     "ts-node": "^10.7.0",
     "typescript": "^4.6.3"
   }
