@@ -1,8 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
-import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
-import loginSchema from '../../utils/loginSchema';
-import CustomedError from '../../utils/customedError';
+import { compare } from 'bcryptjs';
+import { loginSchema, CustomedError, signToken } from '../../utils';
 import { Donor } from '../../database/models';
 
 const login = async (req: Request, res: Response, next: NextFunction) => {
@@ -18,39 +16,29 @@ const login = async (req: Request, res: Response, next: NextFunction) => {
     if (!user) {
       throw new CustomedError(
         "Email doesn't exists, Try another one or sign up",
-        406,
+        400,
       );
     }
-    const isPasswordValidate = await bcrypt.compare(
+
+    const isPasswordValidate = await compare(
       password,
       user?.getDataValue('password'),
     );
     if (!isPasswordValidate) {
-      throw new CustomedError('Incorrect password, please try again', 406);
+      throw new CustomedError('Incorrect password, please try again', 400);
     }
+
     const payload = {
       id: user?.getDataValue('id'),
       name: user?.getDataValue('name'),
       isAdmin: user?.getDataValue('is_admin'),
     };
-    const token = await new Promise((resolve, reject) => {
-      resolve(
-        jwt.sign(
-          payload,
-          process.env.SECRET as string,
-          {
-            expiresIn: '30d',
-            algorithm: 'HS256',
-          },
-          (err, encoded) => {
-            if (err) reject(err);
-            else resolve(encoded);
-          },
-        ),
-      );
-    });
+    const token = await signToken(payload);
+    if (typeof token !== 'object') {
+      throw new CustomedError('Unexpected Error', 500);
+    }
+
     res
-      .status(200)
       .cookie('ACCESS_TOKEN', token, {
         maxAge: 900000,
         httpOnly: true,
