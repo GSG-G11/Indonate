@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import '../css/signUp.css';
 import { useNavigate } from 'react-router-dom';
 
 import axios from 'axios';
@@ -14,6 +15,7 @@ function SignUp() {
   });
 
   const signup = async () => {
+    console.log(userInfo);
     try {
       await axios.post('/api/signup', userInfo);
       navigate('/');/// home page
@@ -23,44 +25,61 @@ function SignUp() {
   };
   return (
     <div>
-      <Form name="login" onFinish={signup}>
-        <Form.Item rules={[{
-          required: true,
-          message: 'Please input your username!',
-        }]}
-        >
-          <Input value={userInfo.name} placeholder="User name" onChange={(e) => setUserInfo({ ...userInfo, name: e.target.value })} />
-        </Form.Item>
-        <Form.Item rules={[
-          {
-            type: 'email',
-            message: 'The input is not valid E-mail!',
-          },
-          {
-            required: true,
-            message: 'Please input your E-mail!',
-          },
-        ]}
+      <Form
+        name="register"
+        onFinish={signup}
+      >
+
+        <Form.Item
+          name="name"
+          rules={[
+            {
+              required: true,
+              message: 'Please input your nickname!',
+              whitespace: true,
+            },
+          ]}
         >
           <Input
-            value={userInfo.email}
+            placeholder="Name"
+            onChange={(e) => setUserInfo({ ...userInfo, name: e.target.value })}
+          />
+        </Form.Item>
+        <Form.Item
+          name="email"
+          rules={[
+            {
+              type: 'email',
+              message: 'The input is not valid E-mail!',
+            },
+            {
+              required: true,
+              message: 'Please input your E-mail!',
+            },
+          ]}
+        >
+          <Input
             placeholder="Email"
             onChange={(e) => setUserInfo({ ...userInfo, email: e.target.value })}
           />
         </Form.Item>
-
-        <Form.Item rules={[{
-          required: true,
-          message: 'Please input your phone number!',
-        }]}
+        <Form.Item
+          name="phone"
+          rules={[
+            {
+              required: true,
+              message: 'Please input your phone number!',
+            },
+          ]}
         >
           <Input
-            value={userInfo.phone}
-            placeholder="Phone"
+            style={{
+              width: '100%',
+            }}
+            placeholder="Phone Number"
             onChange={(e) => setUserInfo({ ...userInfo, phone: e.target.value })}
           />
         </Form.Item>
-
         <Form.Item
           name="password"
           rules={[
@@ -69,15 +88,16 @@ function SignUp() {
               message: 'Please input your password!',
             },
           ]}
+
         >
           <Input.Password
-            value={userInfo.password}
+            placeholder="Password"
             onChange={(e) => setUserInfo({ ...userInfo, password: e.target.value })}
           />
         </Form.Item>
+
         <Form.Item
           name="confirm"
-          label="Confirm Password"
           dependencies={['password']}
           rules={[
             {
@@ -95,10 +115,11 @@ function SignUp() {
             }),
           ]}
         >
-          <Input.Password />
+          <Input.Password placeholder="Confirm password" />
         </Form.Item>
-        <Button htmlType="submit">
-          sign up
+
+        <Button type="primary" htmlType="submit">
+          Register
         </Button>
       </Form>
 
