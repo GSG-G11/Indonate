@@ -15,7 +15,7 @@ function SignUp() {
     name: '', email: '', password: '', phone: '',
   });
 
-  const signup = async () => {
+  const Registor = async () => {
     try {
       const response = await axios.post('/api/signup', userInfo);
       const data = response.data.data[0];// user info object
@@ -35,7 +35,7 @@ function SignUp() {
     <div>
       <Form
         name="register"
-        onFinish={signup}
+        onFinish={Registor}
       >
         <Form.Item
           name="name"
