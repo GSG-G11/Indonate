@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import '../css/signUp.css';
-import { useNavigate } from 'react-router-dom';
+import './signUp.css';
+// import { useNavigate } from 'react-router-dom';
 
 import axios from 'axios';
 
@@ -9,16 +9,15 @@ import {
 } from 'antd';
 
 function SignUp() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState({
     name: '', email: '', password: '', phone: '',
   });
 
   const signup = async () => {
-    console.log(userInfo);
     try {
       await axios.post('/api/signup', userInfo);
-      navigate('/');/// home page
+      // navigate('/');/// home page
     } catch (err) {
       console.log(err);
     }
