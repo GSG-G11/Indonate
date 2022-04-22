@@ -24,6 +24,7 @@
         "no-param-reassign": [
             "error",
             { "props": true, "ignorePropertyModificationsForRegex": ["^draft"] }
-          ]
+          ],
+          "no-param-reassign": 0
     }
 }

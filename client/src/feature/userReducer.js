@@ -6,13 +6,14 @@ export const userSlice = createSlice({
     userInfo: {
       name: '', id: '', isAdmin: false,
     },
-    reducers: {
-      signUp: () => {
-
-      },
-
+  },
+  reducers: {
+    signUp: (state, action) => {
+      state.userInfo = action.payload;
     },
   },
+
 });
+
 export const { signUp } = userSlice.actions;
 export default userSlice.reducer;

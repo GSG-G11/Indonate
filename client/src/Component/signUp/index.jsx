@@ -1,22 +1,26 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import './style.css';
 // import { useNavigate } from 'react-router-dom';
-
 import axios from 'axios';
-
 import {
   Form, Button, Input,
 } from 'antd';
+import { signUp } from '../../feature/userReducer';
 
 function SignUp() {
   // const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [userInfo, setUserInfo] = useState({
     name: '', email: '', password: '', phone: '',
   });
 
   const signup = async () => {
     try {
-      await axios.post('/api/signup', userInfo);
+      const response = await axios.post('/api/signup', userInfo);
+      const data = response.data.data[0];// user info object
+      dispatch(signUp(data));
+
       // navigate('/');/// home page
     } catch (err) {
       console.log(err);
@@ -121,7 +125,6 @@ function SignUp() {
           Register
         </Button>
       </Form>
-
     </div>
   );
 }
