@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import axios from 'axios';
 
 import {
@@ -6,6 +8,7 @@ import {
 } from 'antd';
 
 function SignUp() {
+  const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState({
     name: '', email: '', password: '', phone: '',
   });
@@ -13,6 +16,7 @@ function SignUp() {
   const signup = async () => {
     try {
       await axios.post('/api/signup', userInfo);
+      navigate('/');/// home page
     } catch (err) {
       console.log(err);
     }
