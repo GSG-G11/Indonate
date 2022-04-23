@@ -1,5 +1,3 @@
-import { Capon } from '../models/index';
-
 const allCapon = [
   {
     food: 10,
@@ -20,7 +18,7 @@ const allCapon = [
     clothes: 30,
     money: 300,
     campaignId: 2,
-    familyId: 3,
+    familyId: 2,
   },
   {
     food: 40,
@@ -30,12 +28,5 @@ const allCapon = [
     familyId: 4,
   },
 ];
-const caponData = async () => {
-  await Promise.all(
-    allCapon.map(async (capon) => {
-      await Capon.create(capon);
-    }),
-  );
-};
 
-export default caponData;
+export default allCapon;
