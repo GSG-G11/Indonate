@@ -85,6 +85,7 @@ function SignUp() {
             onFinish={registor}
           >
             <Form.Item
+              name="name"
               rules={[
                 {
                   required: true,
@@ -100,6 +101,7 @@ function SignUp() {
               />
             </Form.Item>
             <Form.Item
+              name="email"
               rules={[
                 {
                   type: 'email',
@@ -118,6 +120,7 @@ function SignUp() {
               />
             </Form.Item>
             <Form.Item
+              name="phone"
               rules={[
                 {
                   required: true,
@@ -132,6 +135,7 @@ function SignUp() {
               />
             </Form.Item>
             <Form.Item
+              name="password"
               rules={[
                 {
                   required: true,
@@ -148,7 +152,6 @@ function SignUp() {
             </Form.Item>
             <Form.Item
               name="confirm"
-              dependencies={['password']}
               rules={[
                 {
                   required: true,
