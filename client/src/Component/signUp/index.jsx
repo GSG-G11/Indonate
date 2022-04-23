@@ -34,7 +34,6 @@ function SignUp() {
       });
     }
   };
-
   const passwordValidation = () => ({
     validator(_, value) {
       if (value.length >= 6) {
@@ -43,7 +42,6 @@ function SignUp() {
       return Promise.reject(new Error('password should have at least 6 character '));
     },
   });
-
   const confirmPasswordValidation = (getFieldValue) => ({
     validator(_, value) {
       if (!value || getFieldValue('password') === value) {
