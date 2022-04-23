@@ -1,15 +1,58 @@
-import campaignsData from './campaignsData';
-import categoryData from './categoryData';
-import familyData from './familyData';
-import contactData from './contactData';
-import donorData from './donorData';
-import donationData from './donationData';
-import caponData from './caponData';
+import sequelize from '../config/connection';
+// eslint-disable-next-line import/extensions
+import * as allCampaignModule from './campaignData.json';
+import * as caponModule from './caponData.json';
+import * as familyModule from './familyData.json';
+import * as contactModule from './contactData.json';
+import * as donorModule from './donorData.json';
+import * as donationModule from './donationData.json';
+import * as categoryModule from './categoryData.json';
 
-campaignsData();
-categoryData();
-familyData();
-contactData();
-donorData();
-donationData();
-caponData();
+import {
+  Campaign,
+  Donor,
+  Family,
+  Donation,
+  Contact,
+  Category,
+  Capon,
+} from '../models';
+
+const { data: allCampaign } = allCampaignModule;
+const { data: allCapon } = caponModule;
+const { data: allFamilies } = familyModule;
+const { data: categories } = categoryModule;
+const { data: allMessages } = contactModule;
+const { data: allDonors } = donorModule;
+const { data: allDonation } = donationModule;
+
+const buildData = async () => {
+  await sequelize.sync({ force: true });
+  // };
+  if (process.env.NODE_ENV === 'dev') {
+    await Promise.all([
+      allCampaign.map(async (campaign: any) => {
+        await Campaign.create(campaign);
+      }),
+      categories.map(async (category: any) => {
+        await Category.create(category);
+      }),
+      allMessages.map(async (message: any) => {
+        await Contact.create(message);
+      }),
+      allFamilies.map(async (family: any) => {
+        await Family.create(family);
+      }),
+      ...allDonors.map(async (donor: any) => {
+        await Donor.create(donor);
+      }),
+      ...allDonation.map(async (donation: any) => {
+        await Donation.create(donation);
+      }),
+      allCapon.map(async (capon: any) => {
+        await Capon.create(capon);
+      }),
+    ]);
+  }
+};
+buildData();
