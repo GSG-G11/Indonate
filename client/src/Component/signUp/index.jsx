@@ -62,7 +62,6 @@ const SignUp = () => {
     <div className="sign-up-container">
       <div className="img-side-sgin-up">
         <Title
-          style={{ color: '#fff' }}
           level={3}
         >
           Subsicribe with us to make yourself a contributor to charity and help people in need.
@@ -75,8 +74,7 @@ const SignUp = () => {
           align="center"
         >
           <Title
-            style={{ color: '#469D62' }}
-            level={3}
+            level={2}
           >
             Sign Up
           </Title>
