@@ -6,7 +6,6 @@
 }
 
 .login_text {
-    font-size: 36px;
     color: #469d62;
 }
 
@@ -84,7 +83,6 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    color: white;
 }
 
 .form_section {
@@ -101,17 +99,15 @@
 
 .login_text {
     display: flex;
-    align-self: start;
-    margin-bottom: 60px;
-    width: 187.66px;
-    height: 48.67;
+    align-self: flex-start;
+    margin-bottom: 50px;
     color: #469D62;
 }
 
 .login_form {
     display: flex;
     flex-direction: column;
-    justify-content: start;
+    justify-content: flex-start;
     width: 543.6px;
     height: 426.66px;
 }

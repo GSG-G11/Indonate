@@ -8,11 +8,15 @@ import {
   Button,
   Input,
   message,
+  Typography,
 } from 'antd';
 
 import axios from 'axios';
-import 'antd/dist/antd.css';
+import 'antd/dist/antd.min.css';
 import './index.css';
+import Google from './Google';
+
+const { Title } = Typography;
 
 const {
   Content,
@@ -29,13 +33,25 @@ function Signin() {
     });
   };
 
-  const handleSubmit = async () => {
+  const passwordValidation = () => ({
+    validator(_, value) {
+      if (value.length >= 6) {
+        return Promise.resolve();
+      }
+      return Promise.reject(new Error('password should be at least 6 characters'));
+    },
+  });
+
+  const login = async () => {
     try {
-      // Post data here
       await axios.post('/api/signin', userData);
-      message.success('Welcome back!');
-    } catch (e) {
-      message.warning('Try again');
+    } catch (err) {
+      message.error({
+        content: err,
+        style: {
+          marginTop: '20vh',
+        },
+      });
     }
   };
 
@@ -43,18 +59,14 @@ function Signin() {
     <Layout>
       {/* --- Navbar --- */}
       <Content>
-        <Row
-          justify="end"
-        >
+        <Row>
           <Col span={12} className="login_image">
             <Image
               style={{ height: '100vh', width: '100vh' }}
               preview={false}
               src="https://i.postimg.cc/9FMJSScj/login-image.png"
             />
-            <h1 className="text_image">
-              Subscribe with us to make yourself a contributor to charity and help people in need.
-            </h1>
+            <Title level={2} style={{ color: 'white' }} className="text_image">Subscribe with us to make yourself a contributor to charity and help people in need.</Title>
           </Col>
           <Col span={12} className="form_section">
             <Form
@@ -70,8 +82,11 @@ function Signin() {
                 remember: true,
               }}
               autoComplete="off"
+              onFinish={login}
             >
-              <h1 className="login_text">Login</h1>
+              <Title style={{ color: '#469D62', marginBottom: '68px' }}>
+                Login
+              </Title>
 
               <Form.Item
                 name="email"
@@ -92,18 +107,19 @@ function Signin() {
                     required: true,
                     message: 'Please input your password!',
                   },
+                  () => passwordValidation(),
                 ]}
               >
                 <Input.Password name="password" placeholder="Password" onChange={handleInputChange} />
               </Form.Item>
 
               <Form.Item>
-                <Button className="login_button" type="primary" htmlType="submit" onClick={handleSubmit}>
+                <Button className="login_button" type="primary" htmlType="submit">
                   Login
                 </Button>
                 <div className="register_option">
                   <p>Don`t have an account ?</p>
-                  <a className="register_text" href="/signup">Signup now</a>
+                  <Typography.Link style={{ color: 'green' }}>Signup now</Typography.Link>
                 </div>
               </Form.Item>
               <Form.Item wrapperCol={{
@@ -111,12 +127,7 @@ function Signin() {
                 span: 32,
               }}
               >
-                <div className="google-btn">
-                  <div className="google-icon-wrapper">
-                    <img className="google-icon" alt="" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" />
-                  </div>
-                  <p className="btn-text"><b>Sign in with Google</b></p>
-                </div>
+                <Google />
               </Form.Item>
             </Form>
           </Col>
