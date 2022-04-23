@@ -13,6 +13,10 @@ import {
 import { signUp } from '../../redux/feature/user/userSlice';
 import './style.less';
 
+const { Password } = Input;
+const { Item } = Form;
+const { Title } = Typography;
+
 function SignUp() {
   // const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -57,12 +61,12 @@ function SignUp() {
   return (
     <div className="sign-up-container">
       <div className="img-side-sgin-up">
-        <Typography.Title
+        <Title
           style={{ color: '#fff' }}
           level={3}
         >
           Subsicribe with us to make yourself a contributor to charity and help people in need.
-        </Typography.Title>
+        </Title>
       </div>
       <div className="form-conatainer-signup">
         <Space
@@ -70,18 +74,18 @@ function SignUp() {
           direction="horizontal"
           align="center"
         >
-          <Typography.Title
+          <Title
             style={{ color: '#469D62' }}
             level={3}
           >
             Sign Up
-          </Typography.Title>
+          </Title>
           <Form
             className="Form-sign-up"
             name="register"
             onFinish={registor}
           >
-            <Form.Item
+            <Item
               name="name"
               rules={[
                 {
@@ -96,8 +100,8 @@ function SignUp() {
                 placeholder="Name"
                 onChange={(e) => handleChange(e)}
               />
-            </Form.Item>
-            <Form.Item
+            </Item>
+            <Item
               name="email"
               rules={[
                 {
@@ -115,8 +119,8 @@ function SignUp() {
                 placeholder="Email"
                 onChange={(e) => handleChange(e)}
               />
-            </Form.Item>
-            <Form.Item
+            </Item>
+            <Item
               name="phone"
               rules={[
                 {
@@ -130,8 +134,8 @@ function SignUp() {
                 name="phone"
                 onChange={(e) => handleChange(e)}
               />
-            </Form.Item>
-            <Form.Item
+            </Item>
+            <Item
               name="password"
               rules={[
                 {
@@ -141,13 +145,13 @@ function SignUp() {
                 () => passwordValidation(),
               ]}
             >
-              <Input.Password
+              <Password
                 placeholder="Password"
                 name="password"
                 onChange={(e) => handleChange(e)}
               />
-            </Form.Item>
-            <Form.Item
+            </Item>
+            <Item
               name="confirm"
               rules={[
                 {
@@ -157,8 +161,8 @@ function SignUp() {
                 ({ getFieldValue }) => confirmPasswordValidation(getFieldValue),
               ]}
             >
-              <Input.Password placeholder="Confirm password" />
-            </Form.Item>
+              <Password placeholder="Confirm password" />
+            </Item>
             <Button className="sign-up-btn" type="primary" htmlType="submit">
               Sign Up
             </Button>
