@@ -1,4 +1,6 @@
-import express from 'express';
+import { Router } from 'express';
+import checkAuth from '../controllers';
 
-const router = express.Router();
+const router = Router();
+router.get('/checkAuth', checkAuth);
 export default router;
