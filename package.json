@@ -12,7 +12,7 @@
     "lint-fix": "eslint --ext .ts server/ --fix && cd client && npm run lint-fix",
     "lint:client": "cd client && npm run lint",
     "build:db": "NODE_ENV=dev ts-node server/database/config/build.ts",
-    "db:fake": "NODE_ENV=dev ts-node server/database/fakeData/index.ts --resolveJsonModule"
+    "db:fake": "NODE_ENV=test ts-node server/database/fakeData/buildFakeData.ts --resolveJsonModule"
   },
   "pre-commit": [
     "lint",
