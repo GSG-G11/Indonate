@@ -10,7 +10,7 @@ import {
   Space,
   Typography,
 } from 'antd';
-import { signUp } from '../../feature/userReducer';
+import { signUp } from '../../redux/feature/user/userSlice';
 import './style.less';
 
 function SignUp() {
