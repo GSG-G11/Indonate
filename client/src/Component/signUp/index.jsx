@@ -6,7 +6,7 @@ import {
   Form, Button, Input, message, Space, Typography,
 } from 'antd';
 import { signUp } from '../../feature/userReducer';
-import './style.css';
+import './style.less';
 
 function SignUp() {
   // const navigate = useNavigate();
@@ -146,7 +146,7 @@ function SignUp() {
             >
               <Input.Password placeholder="Confirm password" />
             </Form.Item>
-            <Button className="sign-up-btn" type="none" htmlType="submit">
+            <Button className="sign-up-btn" type="primary" htmlType="submit">
               Sign Up
             </Button>
           </Form>
