@@ -3,7 +3,12 @@ import { useDispatch } from 'react-redux';
 // import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import {
-  Form, Button, Input, message, Space, Typography,
+  Form,
+  Button,
+  Input,
+  message,
+  Space,
+  Typography,
 } from 'antd';
 import { signUp } from '../../feature/userReducer';
 import './style.less';
@@ -30,6 +35,26 @@ function SignUp() {
       });
     }
   };
+
+  const passwordValidation = () => ({
+    validator(_, value) {
+      if (value.length >= 6) {
+        return Promise.resolve();
+      }
+
+      return Promise.reject(new Error('password should have at least 6 character '));
+    },
+  });
+
+  const confirmPasswordValidation = (getFieldValue) => ({
+    validator(_, value) {
+      if (!value || getFieldValue('password') === value) {
+        return Promise.resolve();
+      }
+
+      return Promise.reject(new Error('The two passwords that you entered do not match!'));
+    },
+  });
 
   return (
     <div className="sign-up-container">
@@ -119,15 +144,7 @@ function SignUp() {
                   required: true,
                   message: 'Please input your password!',
                 },
-                () => ({
-                  validator(_, value) {
-                    if (value.length >= 6) {
-                      return Promise.resolve();
-                    }
-
-                    return Promise.reject(new Error('password should have at least 6 character '));
-                  },
-                }),
+                () => passwordValidation(),
               ]}
             >
               <Input.Password
@@ -143,15 +160,7 @@ function SignUp() {
                   required: true,
                   message: 'Please confirm your password!',
                 },
-                ({ getFieldValue }) => ({
-                  validator(_, value) {
-                    if (!value || getFieldValue('password') === value) {
-                      return Promise.resolve();
-                    }
-
-                    return Promise.reject(new Error('The two passwords that you entered do not match!'));
-                  },
-                }),
+                ({ getFieldValue }) => confirmPasswordValidation(getFieldValue),
               ]}
             >
               <Input.Password placeholder="Confirm password" />
