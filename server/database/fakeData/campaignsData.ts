@@ -1,5 +1,3 @@
-import { Campaign } from '../models/index';
-
 const allCampaign = [
   {
     title: 'Helping poor families',
@@ -7,6 +5,7 @@ const allCampaign = [
     target: 50000,
     image_link: 'https://media.voltron.alhurra.com/Drupal/01live-116/styles/sourced/s3/2019-12/AFC8DF4B-8C6D-4968-87B2-CEAFD63DED97.jpg?itok=Y3YypJNm',
     is_available: true,
+    CategoryId: 2,
   },
   {
     title: 'winter clothes collection',
@@ -14,6 +13,7 @@ const allCampaign = [
     target: 3000,
     image_link: 'http://www.humanitygate.com/thumb/560x292/uploads//images/88e62e08915b10584950106f496140ca.jpg',
     is_available: true,
+    CategoryId: 3,
   },
   {
     title: 'summer clothes collection',
@@ -21,6 +21,7 @@ const allCampaign = [
     target: 3000,
     image_link: 'http://www.humanitygate.com/thumb/560x292/uploads//images/88e62e08915b10584950106f496140ca.jpg',
     is_available: true,
+    CategoryId: 3,
   },
   {
     title: 'winter clothes collection',
@@ -28,6 +29,7 @@ const allCampaign = [
     target: 3000,
     image_link: 'http://www.humanitygate.com/thumb/560x292/uploads//images/88e62e08915b10584950106f496140ca.jpg',
     is_available: true,
+    CategoryId: 3,
   },
   {
     title: 'Million Meals Campaign',
@@ -35,14 +37,8 @@ const allCampaign = [
     target: 1000000,
     image_link: 'https://bedounraqaba.net/wp-content/uploads/2224871143260802120-450x300.jpg',
     is_available: true,
+    CategoryId: 2,
   },
 ];
-const campaignsData = async () => {
-  await Promise.all(
-    allCampaign.map(async (campaign) => {
-      await Campaign.create(campaign);
-    }),
-  );
-};
 
-export default campaignsData;
+export default allCampaign;
