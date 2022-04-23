@@ -119,6 +119,15 @@ function SignUp() {
                   required: true,
                   message: 'Please input your password!',
                 },
+                () => ({
+                  validator(_, value) {
+                    if (value.length >= 6) {
+                      return Promise.resolve();
+                    }
+
+                    return Promise.reject(new Error('password should have at least 6 character '));
+                  },
+                }),
               ]}
             >
               <Input.Password
