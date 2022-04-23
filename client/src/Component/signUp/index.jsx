@@ -20,7 +20,7 @@ function SignUp() {
     name: '', email: '', password: '', phone: '',
   });
 
-  const Registor = async () => {
+  const registor = async () => {
     try {
       const response = await axios.post('/api/signup', userInfo);
       const data = response.data.data[0];// user info object
@@ -30,7 +30,7 @@ function SignUp() {
       message.error({
         content: err,
         style: {
-          marginTop: '30vh',
+          marginTop: '20vh',
         },
       });
     }
@@ -80,7 +80,7 @@ function SignUp() {
           <Form
             className="Form-sign-up"
             name="register"
-            onFinish={Registor}
+            onFinish={registor}
           >
             <Form.Item
               name="name"
