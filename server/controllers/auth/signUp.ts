@@ -35,7 +35,6 @@ const signUp = async (req: Request, res: Response, next: NextFunction) => {
     const donor: any = await Donor.create({
       name, email, password: hashedPassword, phone, address,
     });
-    console.log('donor.is_admin', donor.is_admin);
 
     // eslint-disable-next-line max-len
     await sign({ id: donor.id }, process.env.SECRET as string, (error:Error | null, token: string | undefined) => {
