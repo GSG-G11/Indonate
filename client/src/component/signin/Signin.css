@@ -1,4 +1,3 @@
-
 * {
     margin: 0;
     padding: 0px;
@@ -60,3 +59,121 @@ li a:hover {
     color: #469D62;
 }
 
+.login_text {
+    font-size: 36px;
+    line-height: 35px;
+    color: #469d62;
+}
+
+.login_header {
+    height: 426.66px;
+    width: 543px;
+    background-color: aquamarine;
+}
+
+.login_button {
+    height: 41.47px;
+    width: 100%;
+    color: white;
+    background-color: #469D62;
+    border-color: #469D62;
+}
+
+.login_button:hover {
+    height: 41.47px;
+    width: 100%;
+    color: white;
+    background-color: #469D62;
+    border-color: #469D62;
+}
+
+.login_button:active {
+    height: 41.47px;
+    width: 100%;
+    color: white;
+    background-color: #469D62;
+    border-color: #469D62;
+}
+
+.signup_link {
+    display: flex;
+    justify-content: space-around;
+}
+
+
+/* *************** */
+.google-btn {
+    width: 184px;
+    height: 42px;
+    background-color: #fff;
+}
+
+.google-icon {
+    position: absolute;
+    margin-top: 11px;
+    margin-left: 11px;
+    width: 18px;
+    height: 18px;
+}
+
+.btn-text {
+    float: right;
+    margin: 11px 11px 0 0;
+    color: #787c86;
+    font-size: 14px;
+    letter-spacing: 0.2px;
+    font-family: "Roboto";
+}
+
+.google-btn:hover {
+    box-shadow: 0 0 3px #4285f4;
+}
+
+.google-btn:active {
+    background: #d3d5da;
+}
+
+.site-layout-background {
+    background-color: #4285f4;
+}
+
+.ant-menu>.ant-menu-submenu-selected {
+    color: red;
+    border-bottom: 2px solid red;
+}
+
+.text_image {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+}
+
+.form_section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.login_text {
+    display: flex;
+    align-self: start;
+    margin-left: 64px;
+    width: 187.66px;
+    height: 48.67;
+    color: #469D62;
+}
+
+.login_form {
+    width: 543.6px;
+    height: 426.66px;
+}
+
+.formInput {
+    margin-bottom: 30px;
+}
+.register_option{
+    display: none;
+}

@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Button, message } from 'antd';
+import {
+  Button, message,
+} from 'antd';
 import 'antd/dist/antd.css';
 import './Signin.css';
-import FormInput from '../Input';
 import { setUser } from '../../slices/user';
+import FormInput from '../Input';
 
 function Signin() {
   const dispatch = useDispatch();
@@ -31,11 +33,26 @@ function Signin() {
   };
 
   return (
-    <>
+    <div className="login_header">
+      <h1 className="login_text">Login</h1>
       <FormInput type="email" placeholder="Email" getInputValue={getEmailValue} />
       <FormInput type="password" placeholder="Password" getInputValue={getPasswordValue} />
-      <Button type="success" onClick={validateCredentials}>Login</Button>
-    </>
+      <Button className="login_button" type="success" onClick={validateCredentials}>Login</Button>
+      <div className="signup_link">
+        <p>Dont have an account</p>
+        <p>Signup now</p>
+      </div>
+      <div className="google-btn">
+        <div className="google-icon-wrapper">
+          <img
+            className="google-icon"
+            src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
+            alt=""
+          />
+        </div>
+        <p className="btn-text"><b>Sign in with google</b></p>
+      </div>
+    </div>
   );
 }
 
