@@ -55,6 +55,9 @@ function SignUp() {
     },
   });
 
+  const handleChange = ({ target: { name, value } }) => {
+    setUserInfo({ ...userInfo, [name]: value });
+  };
   return (
     <div className="sign-up-container">
       <div className="img-side-sgin-up">
@@ -83,7 +86,6 @@ function SignUp() {
             onFinish={registor}
           >
             <Form.Item
-              name="name"
               rules={[
                 {
                   required: true,
@@ -93,12 +95,12 @@ function SignUp() {
               ]}
             >
               <Input
+                name="name"
                 placeholder="Name"
-                onChange={(e) => setUserInfo({ ...userInfo, name: e.target.value })}
+                onChange={(e) => handleChange(e)}
               />
             </Form.Item>
             <Form.Item
-              name="email"
               rules={[
                 {
                   type: 'email',
@@ -111,12 +113,12 @@ function SignUp() {
               ]}
             >
               <Input
+                name="email"
                 placeholder="Email"
-                onChange={(e) => setUserInfo({ ...userInfo, email: e.target.value })}
+                onChange={(e) => handleChange(e)}
               />
             </Form.Item>
             <Form.Item
-              name="phone"
               rules={[
                 {
                   required: true,
@@ -126,11 +128,11 @@ function SignUp() {
             >
               <Input
                 placeholder="Phone Number"
-                onChange={(e) => setUserInfo({ ...userInfo, phone: e.target.value })}
+                name="phone"
+                onChange={(e) => handleChange(e)}
               />
             </Form.Item>
             <Form.Item
-              name="password"
               rules={[
                 {
                   required: true,
@@ -141,7 +143,8 @@ function SignUp() {
             >
               <Input.Password
                 placeholder="Password"
-                onChange={(e) => setUserInfo({ ...userInfo, password: e.target.value })}
+                name="password"
+                onChange={(e) => handleChange(e)}
               />
             </Form.Item>
             <Form.Item
