@@ -7,6 +7,7 @@ const signUpSchema = Joi.object({
   password: Joi.string().max(50).min(3).required(),
   address: Joi.string().required(),
   phone: Joi.string().required(),
+  is_admin: Joi.boolean(),
 });
 
 export default signUpSchema;
