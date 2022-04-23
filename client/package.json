@@ -3,9 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "proxy": "http://localhost:5001",
-
   "dependencies": {
+    "@craco/craco": "^6.4.3",
     "@reduxjs/toolkit": "^1.8.1",
+    "craco-less": "^2.0.0",
     "env2": "^2.2.2",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
@@ -18,7 +19,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint --ext .js,.jsx src/**",
-    "lint-fix":"eslint --ext .js,.jsx src/** --fix"
+    "lint-fix": "eslint --ext .js,.jsx src/** --fix"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -43,5 +44,4 @@
     "eslint-plugin-react": "^7.29.4",
     "eslint-plugin-react-hooks": "^4.4.0"
   }
-  
 }
