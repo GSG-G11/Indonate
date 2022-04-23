@@ -1,5 +1,3 @@
-import { Donor } from '../models/index';
-
 const allDonors = [
   {
     name: 'Ali',
@@ -30,12 +28,5 @@ const allDonors = [
     phone: '0599848610',
   },
 ];
-const donorData = async () => {
-  await Promise.all(
-    allDonors.map(async (donor) => {
-      await Donor.create(donor);
-    }),
-  );
-};
 
-export default donorData;
+export default allDonors;
