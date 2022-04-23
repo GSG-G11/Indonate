@@ -22,9 +22,8 @@ function SignUp() {
 
   const registor = async () => {
     try {
-      const response = await axios.post('/api/signup', userInfo);
-      const data = response.data.data[0];// user info object
-      dispatch(signUp(data));
+      const { data: { data: [userInfoObject] } } = await axios.post('/api/signup', userInfo);
+      dispatch(signUp(userInfoObject));
       // navigate('/');// home page
     } catch (err) {
       message.error({
