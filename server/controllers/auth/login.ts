@@ -33,10 +33,9 @@ const login = async (req: Request, res: Response, next: NextFunction) => {
       name: user?.getDataValue('name'),
       isAdmin: user?.getDataValue('is_admin'),
     };
+
     const token = await signToken(payload);
-    if (typeof token !== 'string') {
-      throw new CustomedError('Unexpected Error', 500);
-    }
+
     res
       .cookie('ACCESS_TOKEN', token, {
         maxAge: 900000,
