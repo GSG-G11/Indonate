@@ -1,56 +1,60 @@
-// import { NextFunction, Request, Response } from 'express';
-// import { compare } from 'bcryptjs';
-// import { loginSchema, CustomedError, signToken } from '../../utils';
-// import { Donor } from '../../database/models';
+/* eslint-disable camelcase */
+import { NextFunction, Request, Response } from 'express';
+import { hash } from 'bcryptjs';
+import { sign } from 'jsonwebtoken';
+import { signUpSchema, CustomedError } from '../../utils';
+import { Donor } from '../../database/models';
 
-// const signUp = async (req: Request, res: Response, next: NextFunction) => {
-// const {
-//   name, email, password, phone, address,
-// } = req.body;
-// console.log(req.body);
+require('env2')('.env');
 
-// try {
-//   await loginSchema.validateAsync({ email, password });
+const signUp = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const validationResult = await signUpSchema.validateAsync(req.body);
+    const {
+      name,
+      email,
+      password,
+      phone,
+      address,
+    } = validationResult;
 
-//   const user = await Donor.findOne({
-//     where: {
-//       email,
-//     },
-//   });
-//   if (!user) {
-//     throw new CustomedError(
-//       "Email doesn't exists, Try another one or sign up",
-//       400,
-//     );
-//   }
+    const checkEmail = await Donor.findOne({
+      where: {
+        email,
+      },
+    });
 
-//   const isPasswordValidate = await compare(
-//     password,
-//     user?.getDataValue('password'),
-//   );
-//   if (!isPasswordValidate) {
-//     throw new CustomedError('Incorrect password, please try again', 400);
-//   }
+    if (checkEmail) {
+      throw new CustomedError(
+        'Email is used try another one',
+        400,
+      );
+    }
+    const hashedPassword = await hash(password, 10);
 
-//   const payload = {
-//     id: user?.getDataValue('id'),
-//     name: user?.getDataValue('name'),
-//     isAdmin: user?.getDataValue('is_admin'),
-//   };
-//   const token = await signToken(payload);
-//   if (typeof token !== 'string') {
-//     throw new CustomedError('Unexpected Error', 500);
-//   }
-//   res
-//     .cookie('ACCESS_TOKEN', token, {
-//       maxAge: 900000,
-//       httpOnly: true,
-//     })
-//     .json({ message: 'Successfully logged in', data: payload });
-// } catch (error) {
-//   if (error.details) next(new CustomedError(error.details[0].message, 400));
-//   else next(error);
-// }
-// };
+    const donor: any = await Donor.create({
+      name, email, password: hashedPassword, phone, address,
+    });
+    console.log('donor.is_admin', donor.is_admin);
 
-// export default signUp;
+    // eslint-disable-next-line max-len
+    await sign({ id: donor.id }, process.env.SECRET as string, (error:Error | null, token: string | undefined) => {
+      if (error) throw new CustomedError('Hash Function Error', 400);
+
+      res.status(201).cookie('ACCESS_TOKEN', token, {
+        maxAge: 900000,
+        httpOnly: true,
+      }).json({
+        message: 'Sign in successfully',
+        data: {
+          name, email, phone, address, is_admin: donor.is_admin,
+        },
+      });
+    });
+  } catch (error: any) {
+    if (error.details) next(new CustomedError(error.details[0].message, 400));
+    next(error);
+  }
+};
+
+export default signUp;
