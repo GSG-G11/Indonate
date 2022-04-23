@@ -34,8 +34,10 @@ function SignUp() {
   return (
     <div className="sign-up-container">
       <div className="img-side-sgin-up">
-        <Typography.Title level={3} style={{ margin: 0 }}>
-          Subsicribe with us to make yourself a contributor to charity and help people in need.
+        <Typography.Title
+          style={{ color: '#fff' }}
+          level={3}
+        >
           Subsicribe with us to make yourself a contributor to charity and help people in need.
         </Typography.Title>
       </div>
@@ -50,14 +52,13 @@ function SignUp() {
           }}
         >
           <Typography.Title
+            style={{ color: '#469D62' }}
             level={3}
           >
-            Register
+            Sign Up
           </Typography.Title>
           <Form
-            style={{
-              width: '30vw',
-            }}
+            className="Form-sign-up"
             name="register"
             onFinish={Registor}
           >
