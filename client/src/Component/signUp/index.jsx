@@ -51,7 +51,6 @@ function SignUp() {
       if (!value || getFieldValue('password') === value) {
         return Promise.resolve();
       }
-
       return Promise.reject(new Error('The two passwords that you entered do not match!'));
     },
   });
@@ -68,13 +67,9 @@ function SignUp() {
       </div>
       <div className="form-conatainer-signup">
         <Space
-          direction="vertical"
-          style={{
-            height: '100%',
-            justifyContent: 'center',
-            width: '100%',
-            alignItems: 'center',
-          }}
+          className="space-component"
+          direction="horizontal"
+          align="center"
         >
           <Typography.Title
             style={{ color: '#469D62' }}
@@ -92,7 +87,7 @@ function SignUp() {
               rules={[
                 {
                   required: true,
-                  message: 'Please input your nickname!',
+                  message: 'Please input your name!',
                   whitespace: true,
                 },
               ]}
@@ -130,9 +125,6 @@ function SignUp() {
               ]}
             >
               <Input
-                style={{
-                  width: '100%',
-                }}
                 placeholder="Phone Number"
                 onChange={(e) => setUserInfo({ ...userInfo, phone: e.target.value })}
               />
