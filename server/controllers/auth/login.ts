@@ -43,7 +43,7 @@ const login = async (req: Request, res: Response, next: NextFunction) => {
       })
       .json({ message: 'Successfully logged in', data: payload });
   } catch (error) {
-    if (error.details) next(new CustomedError(error.details[0].message, 400));
+    if (error.name === 'ValidationError') next(new CustomedError(error.details[0].message, 400));
     else next(error);
   }
 };
