@@ -25,7 +25,7 @@
             "error",
             { "props": true, "ignorePropertyModificationsForRegex": ["^draft"] }
           ],
-          "no-param-reassign": 0
+          "react/function-component-definition":0
           
     }
 }
