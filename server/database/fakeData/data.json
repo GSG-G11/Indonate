@@ -1,0 +1,201 @@
+{
+  "campaigns": [
+    {
+      "title": "Helping poor families",
+      "description": "This campaign helps save an amount of money that guarantees 50 families for two months",
+      "target": 50000,
+      "image_link": "https://media.voltron.alhurra.com/Drupal/01live-116/styles/sourced/s3/2019-12/AFC8DF4B-8C6D-4968-87B2-CEAFD63DED97.jpg?itok=Y3YypJNm",
+      "is_available": true,
+      "CategoryId": 2
+    },
+    {
+      "title": "winter clothes collection",
+      "description": "This campaign aims to help poor families to heat their homes in the winter by collecting clothes from donors or buying new clothes from financial donations",
+      "target": 3000,
+      "image_link": "http://www.humanitygate.com/thumb/560x292/uploads//images/88e62e08915b10584950106f496140ca.jpg",
+      "is_available": true,
+      "CategoryId": 3
+    },
+    {
+      "title": "summer clothes collection",
+      "description": "This campaign aims to help poor families secure summer clothes by collecting clothes from donors or buying new clothes with financial donations",
+      "target": 3000,
+      "image_link": "http://www.humanitygate.com/thumb/560x292/uploads//images/88e62e08915b10584950106f496140ca.jpg",
+      "is_available": true,
+      "CategoryId": 3
+    },
+    {
+      "title": "winter clothes collection",
+      "description": "This campaign aims to help poor families to warm them in the winter by collecting clothes from donors",
+      "target": 3000,
+      "image_link": "http://www.humanitygate.com/thumb/560x292/uploads//images/88e62e08915b10584950106f496140ca.jpg",
+      "is_available": true,
+      "CategoryId": 3
+    },
+    {
+      "title": "Million Meals Campaign",
+      "description": "This campaign aims to feed needy families by donating meals to feed families or donating money to buy the right amount",
+      "target": 1000000,
+      "image_link": "https://bedounraqaba.net/wp-content/uploads/2224871143260802120-450x300.jpg",
+      "is_available": true,
+      "CategoryId": 2
+    }
+  ],
+  "capons": [
+    {
+      "food": 10,
+      "clothes": 10,
+      "money": 100,
+      "campaignId": 1,
+      "familyId": 1
+    },
+    {
+      "food": 20,
+      "clothes": 20,
+      "money": 200,
+      "campaignId": 2,
+      "familyId": 1
+    },
+    {
+      "food": 30,
+      "clothes": 30,
+      "money": 300,
+      "campaignId": 2,
+      "familyId": 2
+    },
+    {
+      "food": 40,
+      "clothes": 40,
+      "money": 400,
+      "campaignId": 3,
+      "familyId": 4
+    }
+  ],
+  "categories": [
+    {
+      "name": "Food",
+      "icon_url": "https://i.pinimg.com/564x/dd/9d/c9/dd9dc9d83423bc037b511d73b29e6b80.jpg"
+    },
+    {
+      "name": "Money",
+      "icon_url": "https://i.pinimg.com/564x/dd/9d/c9/dd9dc9d83423bc037b511d73b29e6b80.jpg"
+    },
+    {
+      "name": "Clothes",
+      "icon_url": "https://i.pinimg.com/564x/dd/9d/c9/dd9dc9d83423bc037b511d73b29e6b80.jpg"
+    },
+    {
+      "name": "Education",
+      "icon_url": "https://i.pinimg.com/564x/dd/9d/c9/dd9dc9d83423bc037b511d73b29e6b80.jpg"
+    }
+  ],
+  "messages": [
+    {
+      "name": "Ahmed",
+      "email": "Ahmed@gmail.com",
+      "message": "Suggest an idea to donate to unemployed people"
+    },
+    {
+      "name": "Ali",
+      "email": "Ali@gmail.com",
+      "message": "I like your work very much, but I suggest and hope that it will be on a global level"
+    },
+    {
+      "name": "ameer",
+      "email": "ameer@gmail.com",
+      "message": "I know a poor family in need of help. I hope to contact me 0594562017"
+    },
+    {
+      "name": "Ossama",
+      "email": "Ossama@gmail.com",
+      "message": "I am from a poor family and I need help. Please contact me 0598740265"
+    }
+  ],
+  "donations": [
+    {
+      "food": 10,
+      "clothes": 10,
+      "money": 100,
+      "campaignId": 1,
+      "donorId": 1
+    },
+    {
+      "food": 20,
+      "clothes": 20,
+      "money": 200,
+      "campaignId": 2,
+      "donorId": 1
+    },
+    {
+      "food": 30,
+      "clothes": 30,
+      "money": 300,
+      "campaignId": 2,
+      "donorId": 3
+    },
+    {
+      "food": 40,
+      "clothes": 40,
+      "money": 400,
+      "campaignId": 3,
+      "donorId": 4
+    }
+  ],
+  "donors": [
+    {
+      "name": "Ali",
+      "email": "Ali@gmail.com",
+      "password": "123456",
+      "address": "Gaza",
+      "phone": "0599888611"
+    },
+    {
+      "name": "Ahmed",
+      "email": "Ahmed@gmail.com",
+      "password": "123456",
+      "address": "Gaza",
+      "phone": "0599883610"
+    },
+    {
+      "name": "hosam",
+      "email": "hosam@gmail.com",
+      "password": "123456",
+      "address": "Gaza",
+      "phone": "0597988610"
+    },
+    {
+      "name": "sami",
+      "email": "sami@gmail.com",
+      "password": "123456",
+      "address": "Gaza",
+      "phone": "0599848610"
+    }
+  ],
+  "families": [
+    {
+      "name": "Marwani",
+      "phone": "0599888620",
+      "address": "Gaza al remal street "
+    },
+    {
+      "name": "Alami",
+      "phone": "0599815756",
+      "address": "Rafah al remal street"
+    },
+    {
+      "name": "Freeha",
+      "phone": "0597801162",
+      "address": "Khan Youne al remal street"
+    },
+    {
+      "name": "Sorami",
+      "phone": "0597802262",
+      "address": "Jabalia al remal street"
+    },
+    {
+      "name": "Ghazi",
+      "phone": "0597086162",
+      "address": "Al Zahra"
+    }
+  ]
+}
