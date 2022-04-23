@@ -1,5 +1,3 @@
-import { Contact } from '../models/index';
-
 const allMessages = [
   {
     name: 'Ahmed',
@@ -22,12 +20,5 @@ const allMessages = [
     message: 'I am from a poor family and I need help. Please contact me 0598740265',
   },
 ];
-const contactData = async () => {
-  await Promise.all(
-    allMessages.map(async (message) => {
-      await Contact.create(message);
-    }),
-  );
-};
 
-export default contactData;
+export default allMessages;
