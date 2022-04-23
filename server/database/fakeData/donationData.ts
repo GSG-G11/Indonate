@@ -1,5 +1,3 @@
-import { Donation } from '../models/index';
-
 const allDonation = [
   {
     food: 10,
@@ -30,12 +28,5 @@ const allDonation = [
     donorId: 4,
   },
 ];
-const donationData = async () => {
-  await Promise.all(
-    allDonation.map(async (donation) => {
-      await Donation.create(donation);
-    }),
-  );
-};
 
-export default donationData;
+export default allDonation;
