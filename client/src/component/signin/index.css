@@ -2,8 +2,6 @@
     margin: 0;
     padding: 0px;
     box-sizing: border-box;
-    overflow: hidden;
-    /* Hide scrollbars */
 
 }
 
@@ -74,7 +72,6 @@ li a:hover {
 }
 
 .login_button {
-    text-align: center;
     font-size: 20px;
     height: 41.47px;
     width: 100%;
@@ -107,7 +104,7 @@ li a:hover {
 
 /* *************** */
 .google-btn {
-    width: 184px;
+    width: 180px;
     height: 42px;
     border: 1px rgb(196, 193, 193) solid;
     border-radius: 20px;
@@ -181,14 +178,11 @@ li a:hover {
 .login_form {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: start;
     width: 543.6px;
     height: 426.66px;
 }
 
-.formInput {
-    margin-bottom: 30px;
-}
 
 .register_option {
     margin-top: 80px;
