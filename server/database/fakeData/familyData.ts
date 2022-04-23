@@ -1,5 +1,3 @@
-import { Family } from '../models/index';
-
 const allFamilies = [
   {
     name: 'Marwani',
@@ -27,12 +25,5 @@ const allFamilies = [
     address: 'Al Zahra',
   },
 ];
-const familyData = async () => {
-  await Promise.all(
-    allFamilies.map(async (family) => {
-      await Family.create(family);
-    }),
-  );
-};
 
-export default familyData;
+export default allFamilies;
