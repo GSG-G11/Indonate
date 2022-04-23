@@ -35,23 +35,6 @@
     border-color: #469D62;
 }
 
-.google-btn {
-    width: 180px;
-    height: 42px;
-    border: 1px rgb(196, 193, 193) solid;
-    border-radius: 20px;
-    box-shadow: 0.1px .5px #888888;
-    background-color: #fff;
-}
-
-.google-icon {
-    position: absolute;
-    margin-top: 11px;
-    margin-left: 11px;
-    width: 18px;
-    height: 18px;
-}
-
 .btn-text {
     float: right;
     margin: 11px 11px 0 0;
@@ -59,14 +42,6 @@
     font-size: 14px;
     letter-spacing: 0.2px;
     font-family: "Roboto";
-}
-
-.google-btn:hover {
-    box-shadow: 0 0 3px #4285f4;
-}
-
-.google-btn:active {
-    background: #d3d5da;
 }
 
 .site-layout-background {
@@ -83,6 +58,10 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+
+h2.ant-typography {
+    color: white;
 }
 
 .form_section {
@@ -112,7 +91,6 @@
     height: 426.66px;
 }
 
-
 .register_option {
     margin-top: 80px;
     display: flex;
@@ -126,5 +104,23 @@
 .register_text:hover {
     cursor: pointer;
     color: #469D62;
-
 }
+
+.image {
+    height: '100vh';
+    width: '100vh'
+}
+
+.signup_title {
+    color: 'green'
+}
+
+.ant-typography.ant-typography-login {
+    color: #469D62;
+    margin-bottom: '68px';
+}
+
+a.ant-typography {
+    color: green;
+}
+

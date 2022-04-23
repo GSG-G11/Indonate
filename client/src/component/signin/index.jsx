@@ -7,14 +7,15 @@ import {
   Form,
   Button,
   Input,
-  message,
+  // message,
   Typography,
 } from 'antd';
 
-import axios from 'axios';
+import { GoogleOutlined } from '@ant-design/icons';
+
+// import axios from 'axios';
 import 'antd/dist/antd.min.css';
 import './index.css';
-import Google from './Google';
 
 const { Title } = Typography;
 
@@ -43,16 +44,7 @@ function Signin() {
   });
 
   const login = async () => {
-    try {
-      await axios.post('/api/signin', userData);
-    } catch (err) {
-      message.error({
-        content: err,
-        style: {
-          marginTop: '20vh',
-        },
-      });
-    }
+    console.log(userData);
   };
 
   return (
@@ -66,7 +58,13 @@ function Signin() {
               preview={false}
               src="https://i.postimg.cc/9FMJSScj/login-image.png"
             />
-            <Title level={2} style={{ color: 'white' }} className="text_image">Subscribe with us to make yourself a contributor to charity and help people in need.</Title>
+            <Title
+              level={2}
+              className="text_image"
+            >
+              Subscribe with us to make yourself a contributor to charity and help people in need.
+
+            </Title>
           </Col>
           <Col span={12} className="form_section">
             <Form
@@ -97,7 +95,11 @@ function Signin() {
                   },
                 ]}
               >
-                <Input name="email" placeholder="Email" onChange={handleInputChange} />
+                <Input
+                  name="email"
+                  placeholder="Email"
+                  onChange={handleInputChange}
+                />
               </Form.Item>
 
               <Form.Item
@@ -110,7 +112,11 @@ function Signin() {
                   () => passwordValidation(),
                 ]}
               >
-                <Input.Password name="password" placeholder="Password" onChange={handleInputChange} />
+                <Input.Password
+                  name="password"
+                  placeholder="Password"
+                  onChange={handleInputChange}
+                />
               </Form.Item>
 
               <Form.Item>
@@ -119,7 +125,7 @@ function Signin() {
                 </Button>
                 <div className="register_option">
                   <p>Don`t have an account ?</p>
-                  <Typography.Link style={{ color: 'green' }}>Signup now</Typography.Link>
+                  <Typography.Link>Signup now</Typography.Link>
                 </div>
               </Form.Item>
               <Form.Item wrapperCol={{
@@ -127,7 +133,9 @@ function Signin() {
                 span: 32,
               }}
               >
-                <Google />
+                <Button type="primary" icon={<GoogleOutlined />}>
+                  Sign in with Google
+                </Button>
               </Form.Item>
             </Form>
           </Col>
