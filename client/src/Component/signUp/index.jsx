@@ -40,7 +40,6 @@ function SignUp() {
       if (value.length >= 6) {
         return Promise.resolve();
       }
-
       return Promise.reject(new Error('password should have at least 6 character '));
     },
   });
