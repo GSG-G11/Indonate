@@ -6,6 +6,7 @@
   "dependencies": {
     "@craco/craco": "^6.4.3",
     "@reduxjs/toolkit": "^1.8.1",
+    "antd": "^4.19.5",
     "craco-less": "^2.0.0",
     "env2": "^2.2.2",
     "react": "^18.0.0",
