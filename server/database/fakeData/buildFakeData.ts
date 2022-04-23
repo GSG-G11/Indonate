@@ -52,7 +52,7 @@ const buildFakeData = async () => {
     }),
   ]);
 };
-if (process.env.NODE_ENV === 'test') {
+if (process.env.NODE_ENV !== 'test') {
   buildFakeData();
 }
 
