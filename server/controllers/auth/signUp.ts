@@ -41,8 +41,12 @@ const signUp = async (req: Request, res: Response, next: NextFunction) => {
 
     const hashedPassword = await hash(password, 10);
 
-    const donor: any = await Donor.create({
-      name, email, password: hashedPassword, phone, address,
+    const donor : any = await Donor.create({
+      name,
+      email,
+      password: hashedPassword,
+      phone,
+      address,
     });
 
     const payload = {
@@ -59,11 +63,13 @@ const signUp = async (req: Request, res: Response, next: NextFunction) => {
     }).json({
       message: 'Sign up successfully',
       data: {
-        id: donor.id, name, is_admin: donor.is_admin,
+        id: donor.id,
+        name,
+        is_admin: donor.is_admin,
       },
     });
   } catch (error: any) {
-    if (error.details) next(new CustomedError(error.details[0].message, 400));
+    if (error.name === 'ValidationError') next(new CustomedError(error.details[0].message, 400));
     next(error);
   }
 };

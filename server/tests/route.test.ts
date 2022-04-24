@@ -125,6 +125,9 @@ describe('POST/signUp', () => {
       })
       .expect(201);
     expect(response.body.message).toBe('Sign up successfully');
+    expect(
+      response.headers['set-cookie'][0].startsWith('ACCESS_TOKEN'),
+    ).toEqual(true);
   });
   test('Email is used', async () => {
     const response = await request(app)
