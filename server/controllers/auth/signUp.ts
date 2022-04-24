@@ -62,11 +62,7 @@ const signUp = async (req: Request, res: Response, next: NextFunction) => {
       httpOnly: true,
     }).json({
       message: 'Sign up successfully',
-      data: {
-        id: donor.id,
-        name,
-        is_admin: donor.is_admin,
-      },
+      data: payload,
     });
   } catch (error: any) {
     if (error.name === 'ValidationError') next(new CustomedError(error.details[0].message, 400));
