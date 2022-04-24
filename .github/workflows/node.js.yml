@@ -37,4 +37,4 @@ jobs:
       - name: tests
         run: npm run test 
         env: 
-          DB_URL_test: postgres://m:12345@postgres:5432/indonate_db_test
+          TEST_DB_URL: postgres://m:12345@postgres:5432/indonate_db_test
