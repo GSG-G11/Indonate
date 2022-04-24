@@ -27,18 +27,16 @@ const signUp = async (req: Request, res: Response, next: NextFunction) => {
       },
     });
 
-    if (check) {
-      if (check.email === email) {
-        throw new CustomedError(
-          'Email is used try another one',
-          400,
-        );
-      } else {
-        throw new CustomedError(
-          'phone is used try another one',
-          400,
-        );
-      }
+    if (check?.email === email) {
+      throw new CustomedError(
+        'Email is used try another one',
+        400,
+      );
+    } else if (check?.phone === phone) {
+      throw new CustomedError(
+        'phone is used try another one',
+        400,
+      );
     }
 
     const hashedPassword = await hash(password, 10);
