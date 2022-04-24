@@ -7,6 +7,15 @@ import { Donor } from '../../database/models';
 
 require('env2')('.env');
 
+// interface DonnerInfo {
+//     id: Number,
+//     name: string,
+//     email: string,
+//     password: string,
+//     phone: string,
+//     address:string,
+//     is_Admin: Boolean,
+// }
 const signUp = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const validationResult = await signUpSchema.validateAsync(req.body);
@@ -41,7 +50,7 @@ const signUp = async (req: Request, res: Response, next: NextFunction) => {
 
     const hashedPassword = await hash(password, 10);
 
-    const donor : any = await Donor.create({
+    const donor = await Donor.create({
       name,
       email,
       password: hashedPassword,
@@ -64,7 +73,7 @@ const signUp = async (req: Request, res: Response, next: NextFunction) => {
       message: 'Sign up successfully',
       data: payload,
     });
-  } catch (error: any) {
+  } catch (error) {
     if (error.name === 'ValidationError') next(new CustomedError(error.details[0].message, 400));
     next(error);
   }
