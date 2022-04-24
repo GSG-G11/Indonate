@@ -9,20 +9,24 @@ beforeAll(() => buildFakeData());
 
 describe('POST/login', () => {
   test('User with admin role', async () => {
-    const response = await request(app)
-      .post('/api/login')
-      .send({
-        email: 'admin@gmail.com',
-        password: '123456789',
-      })
-      .expect(200);
-    expect(response.body.data.isAdmin).toEqual(true);
-    expect(response.body.data.name).toEqual('admin');
-    expect(response.body.data.hasOwnProperty('id')).toEqual(true);
-    expect(response.body.message).toBe('Successfully logged in');
-    expect(
-      response.headers['set-cookie'][0].startsWith('ACCESS_TOKEN'),
-    ).toEqual(true);
+    try {
+      const response = await request(app)
+        .post('/api/login')
+        .send({
+          email: 'admin@gmail.com',
+          password: '123456789',
+        })
+        .expect(200);
+      expect(response.body.data.isAdmin).toEqual(true);
+      expect(response.body.data.name).toEqual('admin');
+      expect(response.body.data.hasOwnProperty('id')).toEqual(true);
+      expect(response.body.message).toBe('Successfully logged in');
+      expect(
+        response.headers['set-cookie'][0].startsWith('ACCESS_TOKEN'),
+      ).toEqual(true);
+    } catch (err) {
+      console.log(err, 5555555555555);
+    }
   });
 
   test('User without admin role (Normal User)', async () => {
