@@ -6,7 +6,7 @@ on:
   branches: [ main ]
 
 env: 
-  super_secret: ${{ secrets.SECRET }}
+  SECRET: ${{ secrets.SECRET }}
 jobs:
   container-job:
     if: github.event.pull_request.draft == false
