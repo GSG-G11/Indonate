@@ -139,6 +139,19 @@ describe('POST/signUp', () => {
       .expect(400);
     expect(response.body.message).toBe('Email is used try another one');
   });
+  test('phone is used', async () => {
+    const response = await request(app)
+      .post('/api/signUp')
+      .send({
+        name: 'Ahmed',
+        email: 'Ahmed1@gmail.com',
+        password: '123456789',
+        address: 'Gaza',
+        phone: '0599883610',
+      })
+      .expect(400);
+    expect(response.body.message).toBe('phone is used try another one');
+  });
 });
 
 afterAll(() => {
