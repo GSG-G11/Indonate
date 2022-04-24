@@ -20,6 +20,9 @@ describe('POST/login', () => {
     expect(response.body.data.name).toEqual('admin');
     expect(response.body.data.hasOwnProperty('id')).toEqual(true);
     expect(response.body.message).toBe('Successfully logged in');
+    expect(
+      response.headers['set-cookie'][0].startsWith('ACCESS_TOKEN'),
+    ).toEqual(true);
   });
 
   test('User without admin role (Normal User)', async () => {
@@ -33,16 +36,6 @@ describe('POST/login', () => {
     expect(response.body.data.hasOwnProperty('id')).toEqual(true);
     expect(response.body.data.isAdmin).toEqual(false);
     expect(response.body.message).toBe('Successfully logged in');
-  });
-
-  test('If is there access token', async () => {
-    const response = await request(app)
-      .post('/api/login')
-      .send({
-        email: 'admin@gmail.com',
-        password: '123456789',
-      })
-      .expect(200);
     expect(
       response.headers['set-cookie'][0].startsWith('ACCESS_TOKEN'),
     ).toEqual(true);
@@ -57,6 +50,9 @@ describe('POST/login', () => {
       })
       .expect(400);
     expect(response.body.message).toBe('"email" must be a valid email');
+    expect(
+      response.headers['set-cookie'],
+    ).toEqual(undefined);
   });
 
   test('User with not valid password', async () => {
