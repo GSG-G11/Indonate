@@ -7,15 +7,6 @@ import { Donor } from '../../database/models';
 
 require('env2')('.env');
 
-// interface DonnerInfo {
-//     id: Number,
-//     name: string,
-//     email: string,
-//     password: string,
-//     phone: string,
-//     address:string,
-//     is_Admin: Boolean,
-// }
 const signUp = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const validationResult = await signUpSchema.validateAsync(req.body);
