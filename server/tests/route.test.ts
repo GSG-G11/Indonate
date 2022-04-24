@@ -126,6 +126,19 @@ describe('POST/signUp', () => {
       .expect(201);
     expect(response.body.message).toBe('Sign up successfully');
   });
+  test('Email is used', async () => {
+    const response = await request(app)
+      .post('/api/signUp')
+      .send({
+        name: 'Ahmed',
+        email: 'Ahmed@gmail.com',
+        password: '123456789',
+        address: 'Gaza',
+        phone: '0599821345',
+      })
+      .expect(400);
+    expect(response.body.message).toBe('Email is used try another one');
+  });
 });
 
 afterAll(() => {
