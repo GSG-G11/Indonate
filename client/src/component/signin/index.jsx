@@ -7,15 +7,17 @@ import {
   Form,
   Button,
   Input,
-  // message,
+  message,
   Typography,
 } from 'antd';
+import { useDispatch } from 'react-redux';
 
 import { GoogleOutlined } from '@ant-design/icons';
 
-// import axios from 'axios';
+import axios from 'axios';
 import 'antd/dist/antd.min.css';
 import './index.css';
+import { setUser } from '../../slices/user';
 
 const { Title } = Typography;
 
@@ -25,6 +27,7 @@ const {
 
 function Signin() {
   const [userData, setUserData] = useState({ email: '', password: '' });
+  const dispatch = useDispatch();
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -44,7 +47,18 @@ function Signin() {
   });
 
   const login = async () => {
-    console.log(userData);
+    try {
+      const { data: { data: { name } } } = await axios.post('/api/signin', userData);
+      dispatch(setUser({ name, isLoggedIn: true }));
+      message.success(`Welcome back ${name}`);
+    } catch (err) {
+      message.error({
+        content: err,
+        style: {
+          marginTop: '20vh',
+        },
+      });
+    }
   };
 
   return (

@@ -11,7 +11,7 @@
     "lint": "eslint --ext .ts server/",
     "lint-fix": "eslint --ext .ts server/ --fix && cd client && npm run lint-fix",
     "lint:client": "cd client && npm run lint",
-    "build:db":"NODE_ENV=dev ts-node server/database/config/build.ts"
+    "build:db": "NODE_ENV=dev ts-node server/database/config/build.ts"
   },
   "pre-commit": [
     "lint",
