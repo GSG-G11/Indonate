@@ -1,8 +1,8 @@
 /* eslint-disable camelcase */
 import { NextFunction, Request, Response } from 'express';
 import { hash } from 'bcryptjs';
-import { sign } from 'jsonwebtoken';
-import { signUpSchema, CustomedError } from '../../utils';
+import { Op } from 'sequelize';
+import { signUpSchema, CustomedError, signToken } from '../../utils';
 import { Donor } from '../../database/models';
 
 require('env2')('.env');
@@ -18,37 +18,51 @@ const signUp = async (req: Request, res: Response, next: NextFunction) => {
       address,
     } = validationResult;
 
-    const checkEmail = await Donor.findOne({
+    const check: any = await Donor.findOne({
       where: {
-        email,
+        [Op.or]: [
+          { email },
+          { phone },
+        ],
       },
     });
 
-    if (checkEmail) {
-      throw new CustomedError(
-        'Email is used try another one',
-        400,
-      );
+    if (check) {
+      if (check.email === email) {
+        throw new CustomedError(
+          'Email is used try another one',
+          400,
+        );
+      } else {
+        throw new CustomedError(
+          'phone is used try another one',
+          400,
+        );
+      }
     }
+
     const hashedPassword = await hash(password, 10);
 
     const donor: any = await Donor.create({
       name, email, password: hashedPassword, phone, address,
     });
 
-    // eslint-disable-next-line max-len
-    await sign({ id: donor.id }, process.env.SECRET as string, (error:Error | null, token: string | undefined) => {
-      if (error) throw new CustomedError('Hash Function Error', 400);
+    const payload = {
+      id: donor?.getDataValue('id'),
+      name: donor?.getDataValue('name'),
+      isAdmin: donor?.getDataValue('is_admin'),
+    };
 
-      res.status(201).cookie('ACCESS_TOKEN', token, {
-        maxAge: 900000,
-        httpOnly: true,
-      }).json({
-        message: 'Sign in successfully',
-        data: {
-          name, email, phone, address, is_admin: donor.is_admin,
-        },
-      });
+    const token = await signToken(payload);
+
+    res.status(201).cookie('ACCESS_TOKEN', token, {
+      maxAge: 900000,
+      httpOnly: true,
+    }).json({
+      message: 'Sign up successfully',
+      data: {
+        id: donor.id, name, is_admin: donor.is_admin,
+      },
     });
   } catch (error: any) {
     if (error.details) next(new CustomedError(error.details[0].message, 400));
