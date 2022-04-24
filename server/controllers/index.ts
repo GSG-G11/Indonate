@@ -1,3 +1,4 @@
 import login from './auth/login';
+import logout from './auth/logout';
 
-export default login;
+export { login, logout };
