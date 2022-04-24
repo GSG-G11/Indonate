@@ -1,11 +1,12 @@
 {
   "donors": [
     {
-      "name": "Ali",
-      "email": "Ali@gmail.com",
+      "name": "admin",
+      "email": "admin@gmail.com",
       "password": "$2a$10$zak/42j/GpDReRtzYC/iEef.ZR6HRJPNy0yvUxn54632Ekhr9Q7se",
       "address": "Gaza",
-      "phone": "0599888611"
+      "phone": "0599888611",
+      "is_admin": true
     },
     {
       "name": "Ahmed",
