@@ -115,7 +115,7 @@ describe('POST/login', () => {
 describe('Get/logout', () => {
   test('logout', async () => {
     const response = await request(app)
-      .get('/api/logout')
+      .post('/api/logout')
       .expect(200)
       .expect('set-cookie', 'ACCESS_TOKEN=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT');
     expect(response.body.message).toBe('logged out successfully!');
