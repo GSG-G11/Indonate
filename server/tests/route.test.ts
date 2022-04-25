@@ -112,6 +112,7 @@ describe('POST/login', () => {
     );
   });
 });
+
 describe('POST/signUp', () => {
   test('sign up', async () => {
     const response = await request(app)
@@ -154,6 +155,15 @@ describe('POST/signUp', () => {
       })
       .expect(400);
     expect(response.body.message).toBe('phone is used try another one');
+  });
+});
+describe('Get/logout', () => {
+  test('logout', async () => {
+    const response = await request(app)
+      .post('/api/logout')
+      .expect(200)
+      .expect('set-cookie', 'ACCESS_TOKEN=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT');
+    expect(response.body.message).toBe('logged out successfully!');
   });
 });
 
