@@ -176,7 +176,7 @@ describe('Post/reports', () => {
         message: ' any message you want',
       })
       .expect(201);
-    expect(response.body.message).toBe('report sent successfully');
+    expect(response.body.message).toBe('Report sent successfully');
   });
 });
 
