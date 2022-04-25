@@ -8,4 +8,5 @@ const loginSchema = Joi.object({
     .required(),
   password: Joi.string().max(50).min(3).required(),
 });
+
 export default loginSchema;
