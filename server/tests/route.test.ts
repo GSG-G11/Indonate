@@ -166,6 +166,26 @@ describe('Get/logout', () => {
     expect(response.body.message).toBe('logged out successfully!');
   });
 });
+describe('Get/campaign/:id', () => {
+  test('campaign/:id', async () => {
+    const id = 1;
+    const data = {
+      id: 1,
+      title: 'Helping poor families',
+      description: 'This campaign helps save an amount of money that guarantees 50 families for two months',
+      target: 50000,
+      is_available: true,
+    };
+    const response = await request(app)
+      .get(`/api/campaign/${id}`)
+      .expect(200);
+    expect(response.body.id).toBe(data.id);
+    expect(response.body.title).toBe(data.title);
+    expect(response.body.description).toBe(data.description);
+    expect(response.body.target).toBe(data.target);
+    expect(response.body.is_available).toBe(data.is_available);
+  });
+});
 
 afterAll(() => {
   connection.close();
