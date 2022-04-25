@@ -166,6 +166,19 @@ describe('Get/logout', () => {
     expect(response.body.message).toBe('logged out successfully!');
   });
 });
+describe('Post/reports', () => {
+  test('reports', async () => {
+    const response = await request(app)
+      .post('/api/reports')
+      .send({
+        name: 'reports',
+        email: 'report@gmail.com',
+        message: ' any message you want',
+      })
+      .expect(201);
+    expect(response.body.message).toBe('report sent successfully');
+  });
+});
 
 afterAll(() => {
   connection.close();
