@@ -12,7 +12,6 @@ const getAllCategories = async (
       attributes: ['id', 'name', 'icon_url'],
       raw: true,
     });
-    console.log(categories);
     if (categories.length === 0) throw new CustomedError('There is no categories', 400);
     res.json({ message: 'Success', data: { categories } });
   } catch (error) {
