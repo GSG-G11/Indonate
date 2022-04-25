@@ -1,3 +1,4 @@
-import checkAuth from './checkAuth';
+import checkUser from './auth/checkAuth';
+import login from './auth/login';
 
-export default checkAuth;
+export { login, checkUser };

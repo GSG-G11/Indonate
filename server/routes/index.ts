@@ -1,6 +1,8 @@
 import { Router } from 'express';
-import checkAuth from '../controllers';
+
+import authRouter from './authRoutes';
 
 const router = Router();
-router.get('/checkAuth', checkAuth);
+
+router.use(authRouter);
 export default router;

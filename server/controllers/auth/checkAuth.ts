@@ -1,6 +1,6 @@
 import { Response } from 'express';
 
-const checkAuth = (req:any, res:Response) => {
+const checkUser = (req:any, res:Response) => {
   res.status(200).json({
     data: [{
       id: req.user.id,
@@ -9,4 +9,4 @@ const checkAuth = (req:any, res:Response) => {
     }],
   });
 };
-export default checkAuth;
+export default checkUser;
