@@ -6,10 +6,9 @@ const initialState = {
   loading: false,
   isUserAuthorized: false,
 };
-// '/api/login'
 export const getUserData = createAsyncThunk('user/getUserData', async () => {
-  const response = await axios.get('/api/checkAuth');
-  return response.data;
+  const { data } = await axios.get('/api/checkAuth');
+  return data;
 });
 
 export const userSlice = createSlice({
