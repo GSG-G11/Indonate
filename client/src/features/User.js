@@ -4,7 +4,7 @@ import axios from 'axios';
 const initialState = {
   userData: {},
   loading: false,
-  isAuthorized: false,
+  isUserAuthorized: false,
 };
 // '/api/login'
 export const getUserData = createAsyncThunk('user/getUserData', async () => {
@@ -21,12 +21,12 @@ export const userSlice = createSlice({
     });
     builder.addCase(getUserData.fulfilled, (state, action) => {
       state.loading = false;
-      state.isAuthorized = true;
+      state.isUserAuthorized = true;
       state.userData = action.payload;
     });
     builder.addCase(getUserData.rejected, (state) => {
       state.loading = false;
-      state.isAuthorized = false;
+      state.isUserAuthorized = false;
     });
   },
 });
