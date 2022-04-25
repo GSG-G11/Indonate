@@ -1,7 +1,11 @@
 import { Request, Response } from 'express';
+import Family from '../database/models/family';
 
-const statistics = (req: Request, res: Response) => {
-  res.send('Hello World');
+const statistics = async (req: Request, res: Response) => {
+  let counts = {};
+  const families = await Family.count();
+  counts = { families };
+  res.send(counts);
 };
 
 export default statistics;

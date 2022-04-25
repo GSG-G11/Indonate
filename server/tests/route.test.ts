@@ -126,9 +126,7 @@ describe('POST/signUp', () => {
       })
       .expect(201);
     expect(response.body.message).toBe('Sign up successfully');
-    expect(
-      response.headers['set-cookie'][0].startsWith('ACCESS_TOKEN'),
-    ).toEqual(true);
+    expect(response.headers['set-cookie'][0].startsWith('ACCESS_TOKEN')).toEqual(true);
   });
   test('Email is used', async () => {
     const response = await request(app)
@@ -164,6 +162,17 @@ describe('Get/logout', () => {
       .expect(200)
       .expect('set-cookie', 'ACCESS_TOKEN=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT');
     expect(response.body.message).toBe('logged out successfully!');
+  });
+});
+
+describe('GET /statistics', () => {
+  test('get all stats', async () => {
+    const response = await request(app)
+      .get('/api/statistics')
+      .expect(200);
+    const counts = response.body;
+    expect(counts && typeof counts === 'object').toBe(true);
+    expect(counts.families).toBeTruthy();
   });
 });
 
