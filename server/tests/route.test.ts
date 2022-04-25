@@ -173,6 +173,7 @@ describe('GET /statistics', () => {
     const counts = response.body;
     expect(counts && typeof counts === 'object').toBe(true);
     expect(counts.families).toBeTruthy();
+    expect(counts.doners).toBeTruthy();
   });
 });
 
