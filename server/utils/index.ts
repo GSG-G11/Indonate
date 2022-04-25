@@ -3,5 +3,9 @@ import { signUpSchema, loginSchema, reportsSchema } from './validation';
 import signToken from './signToken';
 
 export {
-  CustomedError, loginSchema, signToken, signUpSchema, reportsSchema,
+  CustomedError,
+  loginSchema,
+  signToken,
+  signUpSchema,
+  reportsSchema,
 };
