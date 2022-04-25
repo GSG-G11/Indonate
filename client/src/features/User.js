@@ -2,14 +2,15 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 const initialState = {
-  data: {},
+  userData: {},
   loading: false,
+  isAuthorized: false,
 };
 // '/api/login'
-export const getUserData = createAsyncThunk('user/getUserData', () => axios.post('/api/login', {
-  email: 'admin@gamil.com',
-  password: '123456789',
-}));
+export const getUserData = createAsyncThunk('user/getUserData', async () => {
+  const response = await axios.get('/api/checkAuth');
+  return response.data;
+});
 
 export const userSlice = createSlice({
   name: 'user',
@@ -20,7 +21,12 @@ export const userSlice = createSlice({
     });
     builder.addCase(getUserData.fulfilled, (state, action) => {
       state.loading = false;
-      state.data = action.payload;
+      state.isAuthorized = true;
+      state.userData = action.payload;
+    });
+    builder.addCase(getUserData.rejected, (state) => {
+      state.loading = false;
+      state.isAuthorized = false;
     });
   },
 });
