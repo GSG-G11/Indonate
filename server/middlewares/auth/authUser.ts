@@ -1,11 +1,12 @@
 import { Response, NextFunction } from 'express';
 import { verifyToken, CustomedError } from '../../utils';
 
-export interface IGetUserAuthInfoRequest extends Request {
+export interface userRequestType extends Request {
   user: unknown,
+  cookies: { ACCESS_TOKEN: string; };
 }
 
-const authUser = async (req: any, res: Response, next: NextFunction) => {
+const authUser = async (req: userRequestType, res: Response, next: NextFunction) => {
   try {
     const { ACCESS_TOKEN } = req.cookies;
     const userToken = await verifyToken(ACCESS_TOKEN);
