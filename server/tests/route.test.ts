@@ -179,11 +179,12 @@ describe('Get/campaign/:id', () => {
     const response = await request(app)
       .get(`/api/campaign/${id}`)
       .expect(200);
-    expect(response.body.id).toBe(data.id);
-    expect(response.body.title).toBe(data.title);
-    expect(response.body.description).toBe(data.description);
-    expect(response.body.target).toBe(data.target);
-    expect(response.body.is_available).toBe(data.is_available);
+    expect(response.body.data.id).toBe(data.id);
+    expect(response.body.data.title).toBe(data.title);
+    expect(response.body.data.description).toBe(data.description);
+    expect(response.body.data.target).toBe(data.target);
+    expect(response.body.data.is_available).toBe(data.is_available);
+    expect(response.body.message).toBe('campaign information');
   });
 });
 

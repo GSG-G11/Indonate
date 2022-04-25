@@ -9,7 +9,7 @@ const getCampaignById = async (req: Request, res: Response, next: NextFunction) 
     const { id } = result;
     const campaignInfo = await Campaign.findByPk(id);
     if (!campaignInfo) throw new CustomedError('there is no campaign', 400);
-    res.status(200).json(campaignInfo);
+    res.status(200).json({ message: 'campaign information', data: campaignInfo });
   } catch (error) {
     if (error.name === 'ValidationError') next(new CustomedError(error.details[0].message, 400));
     next(error);
