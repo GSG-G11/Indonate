@@ -174,6 +174,7 @@ describe('GET /statistics', () => {
     expect(counts && typeof counts === 'object').toBe(true);
     expect(counts.families).toBeTruthy();
     expect(counts.doners).toBeTruthy();
+    expect(counts.donations).toBeTruthy();
   });
 });
 
