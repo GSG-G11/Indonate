@@ -1,8 +1,7 @@
 import React from 'react';
-import Signin from './component/signin';
 
 function App() {
-  return <Signin />;
+  return <div />;
 }
 
 export default App;

@@ -14,7 +14,7 @@ const authUser = async (req: userRequestType, res: Response, next: NextFunction)
     req.user = user;
     next();
   } catch (e) {
-    next(new CustomedError('Unauthorized catch', 401));
+    next(new CustomedError('Unauthorized user', 401));
   }
 };
 
