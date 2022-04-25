@@ -1,6 +1,5 @@
 import { NextFunction, Response, Request } from 'express';
 import { Category } from '../../database/models';
-import { CustomedError } from '../../utils';
 
 const getAllCategories = async (
   req: Request,
@@ -12,7 +11,6 @@ const getAllCategories = async (
       attributes: ['id', 'name', 'icon_url'],
       raw: true,
     });
-    if (categories.length === 0) throw new CustomedError('There is no categories', 400);
     res.json({ message: 'Success', data: { categories } });
   } catch (error) {
     next(error);
