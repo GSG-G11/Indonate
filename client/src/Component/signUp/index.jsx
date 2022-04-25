@@ -10,6 +10,7 @@ import {
   Space,
   Typography,
 } from 'antd';
+
 import { signUp } from '../../redux/feature/user/userSlice';
 import './style.less';
 
@@ -17,24 +18,21 @@ const { Password } = Input;
 const { Item } = Form;
 const { Title } = Typography;
 
-const SignUp = () => {
+function SignUp() {
   // const navigate = useNavigate();
   const dispatch = useDispatch();
   const [userInfo, setUserInfo] = useState({
-    name: '', email: '', password: '', phone: '',
+    name: '', email: '', password: '', phone: '', address: 'Gaza',
   });
 
   const registor = async () => {
     try {
-      const { data: { data: [userInfoObject] } } = await axios.post('/api/signup', userInfo);
-      dispatch(signUp(userInfoObject));
+      const { data: { data } } = await axios.post('/api/signup', userInfo);
+      dispatch(signUp(data));
       // navigate('/');// home page
-    } catch (err) {
+    } catch ({ response: { data: { message: errorMessage } } }) {
       message.error({
-        content: err,
-        style: {
-          marginTop: '20vh',
-        },
+        content: errorMessage,
       });
     }
   };
@@ -170,6 +168,6 @@ const SignUp = () => {
       </div>
     </div>
   );
-};
+}
 
 export default SignUp;
