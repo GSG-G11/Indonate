@@ -1,67 +1,46 @@
-import { Layout, Menu } from 'antd';
 import React from 'react';
+import { NavLink } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import 'antd/dist/antd.css';
+import './Nav.css';
+
+import { Layout, Menu, Button } from 'antd';
 
 const { Header } = Layout;
+const items = [
+  { label: <NavLink to="/" style={{ color: 'black' }}> Home </NavLink> },
+  { label: <NavLink to="/about-us" style={{ color: 'black' }}> About Us </NavLink> },
+  { label: <NavLink to="/campaigns" style={{ color: 'black' }}> Campaigns</NavLink> },
+  { label: <NavLink to="/contact-us" style={{ color: 'black' }}> Contact Us</NavLink> },
+  { label: (<NavLink to="/signUp"><Button className="btn" type="primary">Sign Up</Button></NavLink>) },
+  { label: (<NavLink to="/login"><Button className="btn" type="primary">Login</Button></NavLink>) },
+];
+const items2 = [
+  { label: <NavLink to="/" style={{ color: 'black' }}> Home </NavLink> },
+  { label: <NavLink to="/about-us" style={{ color: 'black' }}> About Us </NavLink> },
+  { label: <NavLink to="/campaigns" style={{ color: 'black' }}> Campaigns</NavLink> },
+  { label: <NavLink to="/contact-us" style={{ color: 'black' }}> Contact Us</NavLink> },
+  { label: (<NavLink to="/logout"><Button className="btn" type="primary">Logout</Button></NavLink>) },
+  { label: (<NavLink to="/campaign"><Button className="btn" type="primary">Donate Now</Button></NavLink>) },
+];
 function Nav() {
+  const user = useSelector((state) => state.user);
   return (
-    <Layout>
-      <Header
-        style={{
-          position: 'fixed',
-          zIndex: 1,
-          width: '100%',
-        }}
-      >
-        <div className="logo" />
-        <Menu
-          theme="dark"
-          mode="horizontal"
-          defaultSelectedKeys={['2']}
-          items={new Array(1).fill(null).map((_, index) => ({
-            key: String(index + 1),
-            label: `nav ${index + 1}`,
-          }))}
-        />
+    <Layout className="layout">
+      <Header>
+        <h2 className="logo">InDonate</h2>
+        <div style={{ display: 'flex' }}>
+
+          <Menu
+            theme="dark"
+            mode="horizontal"
+            defaultSelectedKeys={1}
+            items={user.isUserAuthorized ? items2 : items}
+          />
+        </div>
       </Header>
     </Layout>
   );
 }
-
-// /* eslint-disable react/react-in-jsx-scope */
-// import { Layout, Menu } from 'antd';
-
-// const { Header } = Layout;
-
-// function Nav() {
-//   return (
-//     <Layout>
-//       <Header style={{ position: 'fixed', zIndex: 1, width: '100%' }}>
-//         <div className="logo" />
-//         <Menu
-//           theme="dark"
-//           mode="horizontal"
-//           defaultSelectedKeys={['2']}
-//           items={[{
-//             key: String(1),
-//             label: `nav ${1}`,
-//           },
-//           ]}
-//         />
-//       </Header>
-//       {/* <Content className="site-layout" style={{ padding: '0 50px', marginTop: 64 }}>
-//         <Breadcrumb style={{ margin: '16px 0' }}>
-//           <Breadcrumb.Item>Home</Breadcrumb.Item>
-//           <Breadcrumb.Item>List</Breadcrumb.Item>
-//           <Breadcrumb.Item>App</Breadcrumb.Item>
-//         </Breadcrumb>
-//         <div className="site-layout-background" style={{ padding: 24, minHeight: 380 }}>
-//           Content
-//         </div>
-//       </Content>
-//       <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer> */}
-//     </Layout>
-//   );
-// }
 
 export default Nav;

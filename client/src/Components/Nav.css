@@ -1,0 +1,51 @@
+.ant-layout-header{
+background: white;
+}
+.ant-menu.ant-menu-dark{
+background: white;
+}
+.ant-menu.ant-menu-dark .ant-menu-item-selected {
+  background-color: #469D62;
+}
+.ant-menu-dark.ant-menu-horizontal > .ant-menu-item:hover {
+  background-color: #469D62;
+  color: black;
+}
+.ant-menu-dark.ant-menu-horizontal > .ant-menu-item:active {
+  background-color: #469D62;
+  color: black;
+}
+.ant-menu-dark .ant-menu-item, .ant-menu-dark {
+  color: black;
+} 
+.ant-layout {
+  box-shadow: 0px 0px 2px 0 #888888;
+}
+.ant-menu-overflow  {
+  width: 700px;
+  margin-right: 30px;
+}
+.btn {
+  margin-top: 16px;
+  margin-left: 3px;
+  background:#469D62;
+  border: none;
+}
+.ant-btn-primary:hover, .ant-btn-primary:focus {
+  background:#469D62;
+}
+
+.ant-menu-overflow {
+  justify-content: space-between;
+} 
+.logo {
+  color: #469D62;
+  font-weight: bold;
+}
+.ant-layout-header {
+  display: flex;
+  justify-content: space-between;
+}
+.links {
+  display: 'flex';
+}
