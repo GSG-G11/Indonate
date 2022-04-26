@@ -5,7 +5,7 @@ import connection from '../database/config/connection';
 import app from '../app';
 import buildFakeData from '../database/fakeData/buildFakeData';
 
-beforeEach(() => buildFakeData());
+beforeAll(() => buildFakeData());
 
 describe('POST/login', () => {
   test('User with admin role', async () => {
@@ -173,7 +173,7 @@ describe('GET /statistics', () => {
     const { statistics } = response.body;
     expect(statistics).toStrictEqual({
       families: 5,
-      doners: 4,
+      doners: 5,
       donations: [
         {
           money: '1000',
