@@ -2,8 +2,8 @@ import CustomedError from './customedError';
 import {
   signUpSchema,
   loginSchema,
-  reportsSchema,
   paramsSchema,
+  reportsSchema,
 } from './validation';
 import signToken from './signToken';
 
