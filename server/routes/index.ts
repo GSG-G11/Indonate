@@ -1,9 +1,9 @@
 import express from 'express';
 import authRouter from './authRoutes';
-import userRouter from './userRoutes';
+import campaignRoutes from './campaignRoutes';
 
 const router = express.Router();
 router.use(authRouter);
-router.use(userRouter);
+router.use(campaignRoutes);
 
 export default router;

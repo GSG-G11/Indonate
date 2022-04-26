@@ -179,12 +179,27 @@ describe('Get/campaign/:id', () => {
     const response = await request(app)
       .get(`/api/campaign/${id}`)
       .expect(200);
-    expect(response.body.data.id).toBe(data.id);
-    expect(response.body.data.title).toBe(data.title);
-    expect(response.body.data.description).toBe(data.description);
-    expect(response.body.data.target).toBe(data.target);
-    expect(response.body.data.is_available).toBe(data.is_available);
-    expect(response.body.message).toBe('campaign information');
+    expect(response.body.data).toMatchObject(data);
+    expect(response.body.message).toBe('Success');
+  });
+
+  test('campaign/:id => id dose not exist', async () => {
+    const id = 10;
+    const response = await request(app)
+      .get(`/api/campaign/${id}`)
+      .expect(400);
+    expect(response.body.data).toBe(undefined);
+    expect(response.body.message).toBe('There is no campaign');
+  });
+
+  test('campaign/:id => id is not a number', async () => {
+    const id = 'id';
+    const response = await request(app)
+      .get(`/api/campaign/${id}`)
+      .expect(400);
+    expect(response.body.data).toBe(undefined);
+    // eslint-disable-next-line no-useless-escape
+    expect(response.body.message).toBe('\"id\" must be a number');
   });
 });
 
