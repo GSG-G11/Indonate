@@ -1,5 +1,10 @@
 import CustomedError from './customedError';
-import { signUpSchema, loginSchema, paramsSchema } from './validation';
+import {
+  signUpSchema,
+  loginSchema,
+  reportsSchema,
+  paramsSchema,
+} from './validation';
 import signToken from './signToken';
 
 export {
@@ -8,4 +13,5 @@ export {
   signToken,
   signUpSchema,
   paramsSchema,
+  reportsSchema,
 };

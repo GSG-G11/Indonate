@@ -21,9 +21,6 @@
     "rules": {
         "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
         "linebreak-style": 0,
-        "no-param-reassign": [
-            "error",
-            { "props": true, "ignorePropertyModificationsForRegex": ["^draft"] }
-          ]
+        "no-param-reassign": "off"
     }
 }
