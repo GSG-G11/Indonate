@@ -8,7 +8,7 @@ import buildFakeData from '../database/fakeData/buildFakeData';
 beforeAll(() => buildFakeData());
 
 describe('POST/login', () => {
-  test('User with admin role', async () => {
+  /* test('User with admin role', async () => {
     const response = await request(app)
       .post('/api/login')
       .send({
@@ -24,7 +24,7 @@ describe('POST/login', () => {
       response.headers['set-cookie'][0].startsWith('ACCESS_TOKEN'),
     ).toEqual(true);
   });
-
+*/
   test('User without admin role (Normal User)', async () => {
     const response = await request(app)
       .post('/api/login')
