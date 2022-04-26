@@ -117,11 +117,11 @@ describe('POST/signUp', () => {
     const response = await request(app)
       .post('/api/signUp')
       .send({
-        name: 'mohammed',
-        email: 'mohaammed@gmail.com',
+        name: 'mohammed2',
+        email: 'mohaammed2@gmail.com',
         password: '123456789',
         address: 'Gaza',
-        phone: '0599522660',
+        phone: '05995226600',
       })
       .expect(201);
     expect(response.body.message).toBe('Sign up successfully');
@@ -165,6 +165,7 @@ describe('Get/logout', () => {
     expect(response.body.message).toBe('logged out successfully!');
   });
 });
+
 afterAll(() => {
   connection.close();
 });

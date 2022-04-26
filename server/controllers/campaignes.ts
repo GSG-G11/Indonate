@@ -13,21 +13,21 @@ const campaigns = async (req:Request, res:Response, next:NextFunction) => {
       limit,
     } = req.query;
     const pageNum = page || 1;
-    const limitNum = limit;
     const categoryObject = category ? { name: category } : {};
     const searchObject = search ? { title: search } : {};
     const availableObject = available ? { is_available: available } : {};
 
     const {
-      pageNumber, limitNumber,
+      page: validatedPageNumber,
+      limit: validatedLimitNumber,
     } = await querySchema.validateAsync({
       page: pageNum,
-      limit: limitNum,
+      limit,
     });
 
     const campaignesData:any = await Campaign.findAll({
-      offset: (pageNumber - 1) * (limitNumber || 1),
-      limit: limitNumber,
+      offset: (validatedPageNumber - 1) * (validatedLimitNumber || 1),
+      limit: validatedLimitNumber,
       attributes:
        ['id', 'title', 'description', 'target', 'image_link', 'is_available', 'categoryId'],
       where: {
