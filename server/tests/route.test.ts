@@ -178,6 +178,30 @@ describe('Post/reports', () => {
       .expect(201);
     expect(response.body.message).toBe('Report sent successfully');
   });
+
+  test('Validation Email', async () => {
+    const response = await request(app)
+      .post('/api/reports')
+      .send({
+        name: 'reports',
+        email: 'report@gmail',
+        message: ' any message you want',
+      })
+      .expect(400);
+    // eslint-disable-next-line no-useless-escape
+    expect(response.body.message).toBe('\"email\" must be a valid email');
+  });
+
+  test('Database error', async () => {
+    const response = await request(app)
+      .post('/api/reports')
+      .send({
+        name: 'reports',
+        email: 'report@gmail.com',
+      })
+      .expect(400);
+    expect(response.body.message).toBe('Failed to create report');
+  });
 });
 
 afterAll(() => {
