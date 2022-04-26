@@ -1,0 +1,53 @@
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    height: 20px;
+}
+
+.customCard {
+    max-width: 270px;
+
+    .ant-card-body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 24px;
+        box-shadow: 1px 2px #cac9c9;
+    }
+
+    .ant-card-cover img {
+        height: 260px;
+        border-radius: 2px 2px 0 0;
+    }
+
+    .ant-card-meta-title {
+        overflow: hidden;
+        color: rgba(0, 0, 0, 0.85);
+        font-size: 16px;
+        font-size: 15px;
+        font-weight: bold;
+        font-size: 18px;
+        white-space: inherit;
+        max-height: 3.6em;
+        line-height: 1.8em;
+    }
+
+    .ant-typography.ant-typography-secondary {
+        margin: 10px;
+        color: rgba(0, 0, 0, 0.45);
+    }
+
+    button,
+    html [type="button"],
+    [type="reset"],
+    [type="submit"] {
+        -webkit-appearance: button;
+        border-radius: 14px;
+    }
+
+
+}
