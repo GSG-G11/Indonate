@@ -1,8 +1,8 @@
 import { Router } from 'express';
 import { reports } from '../controllers';
 
-const reportsRoutes = Router();
+const reportsRouter = Router();
 
-reportsRoutes.route('/reports').post(reports);
+reportsRouter.route('/reports').post(reports);
 
-export default reportsRoutes;
+export default reportsRouter;
