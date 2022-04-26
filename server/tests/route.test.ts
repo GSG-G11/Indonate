@@ -166,6 +166,32 @@ describe('Get/logout', () => {
     expect(response.body.message).toBe('logged out successfully!');
   });
 });
+describe('Post/reports', () => {
+  test('reports', async () => {
+    const response = await request(app)
+      .post('/api/reports')
+      .send({
+        name: 'reports',
+        email: 'report@gmail.com',
+        message: ' any message you want',
+      })
+      .expect(201);
+    expect(response.body.message).toBe('Report sent successfully');
+  });
+
+  test('Validation Email', async () => {
+    const response = await request(app)
+      .post('/api/reports')
+      .send({
+        name: 'reports',
+        email: 'report@gmail',
+        message: ' any message you want',
+      })
+      .expect(400);
+    // eslint-disable-next-line no-useless-escape
+    expect(response.body.message).toBe('\"email\" must be a valid email');
+  });
+});
 
 afterAll(() => {
   connection.close();
