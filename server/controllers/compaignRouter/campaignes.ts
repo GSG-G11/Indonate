@@ -43,7 +43,7 @@ const campaigns = async (req:Request, res:Response, next:NextFunction) => {
       },
     });
 
-    res.json({ message: 'Success', data: campaignesData });
+    res.json({ message: 'Success', data: { campaigns: campaignesData } });
   } catch (e) {
     if (e.details) {
       next(new CustomedError(e.message, 400));

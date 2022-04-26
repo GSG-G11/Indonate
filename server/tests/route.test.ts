@@ -222,7 +222,7 @@ describe('GET/campaines', () => {
   test('get all campaines', async () => {
     const response = await request(app).get('/api/campaigns').expect(200);
 
-    expect(response.body.data.length).toBe(10);
+    expect(response.body.data.campaigns.length).toBe(10);
   });
   test('get campaines with name Helping poor families', async () => {
     const response = await request(app).get('/api/campaigns?search=Helping poor families').expect(200);
@@ -230,7 +230,7 @@ describe('GET/campaines', () => {
   });
   test('get campaines with name not exit', async () => {
     const response = await request(app).get('/api/campaigns?search=give people maney').expect(200);
-    expect(response.body.data).toEqual([]);
+    expect(response.body.data.campaigns).toEqual([]);
   });
   test('get campaines with category Health', async () => {
     const response = await request(app).get('/api/campaigns?category=Health').expect(200);
@@ -238,7 +238,7 @@ describe('GET/campaines', () => {
   });
   test('get campaines with name not exit', async () => {
     const response = await request(app).get('/api/campaigns?category=food');
-    expect(response.body.data).toEqual([]);
+    expect(response.body.data.campaigns).toEqual([]);
   });
   test('get campaines with is available', async () => {
     const response = await request(app).get('/api/campaigns?available=true').expect(200);
@@ -246,11 +246,11 @@ describe('GET/campaines', () => {
   });
   test('get campaines with is not available', async () => {
     const response = await request(app).get('/api/campaigns?available=false').expect(200);
-    expect(response.body.data).toEqual([]);
+    expect(response.body.data.campaigns).toEqual([]);
   });
   test('get campaines with limit 6', async () => {
     const response = await request(app).get('/api/campaigns?limit=6').expect(200);
-    expect(response.body.data.length).toBe(6);
+    expect(response.body.data.campaigns.length).toBe(6);
   });
   test('get error whene  string to page', async () => {
     const response = await request(app).get('/api/campaigns?page="f').expect(400);
@@ -262,7 +262,7 @@ describe('GET/campaines', () => {
   });
   test('get campaines with name summer clothes collection and category=Health', async () => {
     const response = await request(app).get('/api/campaigns?search=summer%20clothes%20collection&category=Education').expect(200);
-    expect(response.body.data).toEqual([{
+    expect(response.body.data.campaigns).toEqual([{
       id: 3,
       title: 'summer clothes collection',
       description: 'This campaign aims to help poor families secure summer clothes by collecting clothes from donors or buying new clothes with financial donations',
@@ -278,8 +278,8 @@ describe('GET/campaines', () => {
   });
   test('get three campaines with catergory education and available ', async () => {
     const response = await request(app).get('/api/campaigns?category=Education&avilable=ture&limit=3').expect(200);
-    expect(response.body.data[0].category.name).toBe('Education');
-    expect(response.body.data.length).toBe(3);
+    expect(response.body.data.campaigns[0].category.name).toBe('Education');
+    expect(response.body.data.campaigns.length).toBe(3);
   });
   test('test pagenation get the three campaines page 1', async () => {
     const response = await request(app).get('/api/campaigns?page=1&limit=3', () => {
