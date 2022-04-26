@@ -1,42 +1,42 @@
 /* eslint-disable import/extensions */
-import sequelize from '../config/connection';
 import * as campaignModule from './campaigns.json';
+/* import sequelize from '../config/connection';
 import * as caponModule from './capons.json';
 import * as familyModule from './families.json';
 import * as contactModule from './contacts.json';
 import * as donorModule from './donors.json';
 import * as donationModule from './donations.json';
-import * as categoryModule from './categories.json';
+import * as categoryModule from './categories.json'; */
 
 import {
   Campaign,
-  Donor,
+  /* Donor,
   Family,
   Donation,
   Contact,
   Category,
-  Capon,
+  Capon, */
 } from '../models';
 
 const { campaigns } = campaignModule;
-const { capons } = caponModule;
+/* const { capons } = caponModule;
 const { families } = familyModule;
 const { categories } = categoryModule;
 const { messages } = contactModule;
 const { donors } = donorModule;
-const { donations } = donationModule;
+const { donations } = donationModule; */
 
 const buildFakeData = async () => {
-  await sequelize.sync({ force: true });
+  // await sequelize.sync({ force: true });
   await Promise.all([
-    categories.map(async (category: any) => {
+    /* categories.map(async (category: any) => {
       await Category.create(category);
-    }),
+    }), */
     campaigns.map(async (campaign: any) => {
       await Campaign.create(campaign);
     }),
 
-    messages.map(async (message: any) => {
+    /* messages.map(async (message: any) => {
       await Contact.create(message);
     }),
     families.map(async (family: any) => {
@@ -50,7 +50,7 @@ const buildFakeData = async () => {
     }),
     capons.map(async (capon: any) => {
       await Capon.create(capon);
-    }),
+    }),* */
   ]);
 };
 if (process.env.NODE_ENV !== 'test') {
