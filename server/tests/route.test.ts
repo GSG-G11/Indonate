@@ -24,6 +24,7 @@ describe('POST/login', () => {
       response.headers['set-cookie'][0].startsWith('ACCESS_TOKEN'),
     ).toEqual(true);
   });
+
   test('User without admin role (Normal User)', async () => {
     const response = await request(app)
       .post('/api/login')
@@ -49,9 +50,7 @@ describe('POST/login', () => {
       })
       .expect(400);
     expect(response.body.message).toBe('"email" must be a valid email');
-    expect(
-      response.headers['set-cookie'],
-    ).toEqual(undefined);
+    expect(response.headers['set-cookie']).toEqual(undefined);
   });
 
   test('User with not valid password', async () => {
@@ -117,11 +116,11 @@ describe('POST/signUp', () => {
     const response = await request(app)
       .post('/api/signUp')
       .send({
-        name: 'mohaammed3',
-        email: 'mohammed3@gmail.com',
+        name: 'mohammed',
+        email: 'mohaammed@gmail.com',
         password: '123456789',
         address: 'Gaza',
-        phone: '05995266300',
+        phone: '0599522660',
       })
       .expect(201);
     expect(response.body.message).toBe('Sign up successfully');
@@ -156,15 +155,69 @@ describe('POST/signUp', () => {
     expect(response.body.message).toBe('phone is used try another one');
   });
 });
-describe('Get/logout', () => {
+describe('POST /logout', () => {
   test('logout', async () => {
     const response = await request(app)
       .post('/api/logout')
       .expect(200)
-      .expect('set-cookie', 'ACCESS_TOKEN=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT');
+      .expect(
+        'set-cookie',
+        'ACCESS_TOKEN=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT',
+      );
     expect(response.body.message).toBe('logged out successfully!');
   });
 });
+describe('Get/campaign/:id', () => {
+  test('campaign/:id', async () => {
+    const id = 1;
+    const data = {
+      id: 1,
+      title: 'Helping poor families',
+      description:
+        'This campaign helps save an amount of money that guarantees 50 families for two months',
+      target: 50000,
+      is_available: true,
+    };
+    const response = await request(app).get(`/api/campaign/${id}`).expect(200);
+    expect(response.body.data).toMatchObject(data);
+    expect(response.body.message).toBe('Success');
+  });
+
+  test('campaign/:id => id dose not exist', async () => {
+    const id = 20;
+    const response = await request(app).get(`/api/campaign/${id}`).expect(400);
+    expect(response.body.data).toBe(undefined);
+    expect(response.body.message).toBe('There is no campaign');
+  });
+
+  test('campaign/:id => id is not a number', async () => {
+    const id = 'id';
+    const response = await request(app).get(`/api/campaign/${id}`).expect(400);
+    expect(response.body.data).toBe(undefined);
+    // eslint-disable-next-line no-useless-escape
+    expect(response.body.message).toBe('"id" must be a number');
+  });
+});
+describe('Post/reports', () => {
+  test('reports', async () => {
+    const response = await request(app)
+      .post('/api/reports')
+      .send({
+        name: 'reports',
+        email: 'report@gmail.com',
+        message: ' any message you want',
+      })
+      .expect(201);
+    expect(response.body.message).toBe('Report sent successfully');
+  });
+});
+describe('GET/categories', () => {
+  test('get all categories from database', async () => {
+    const response = await request(app).get('/api/categories').expect(200);
+    expect(response.body.hasOwnProperty('data')).toEqual(true);
+  });
+});
+
 describe('GET/campaines', () => {
   test('get all campaines', async () => {
     const response = await request(app).get('/api/campaigns').expect(200);
