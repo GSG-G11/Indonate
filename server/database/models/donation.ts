@@ -4,15 +4,18 @@ import sequelize from '../config/connection';
 const Donation = sequelize.define('donations', {
   food: {
     type: DataTypes.INTEGER,
-    allowNull: true,
+    allowNull: false,
+    defaultValue: 0,
   },
   clothes: {
     type: DataTypes.INTEGER,
-    allowNull: true,
+    allowNull: false,
+    defaultValue: 0,
   },
   money: {
     type: DataTypes.INTEGER,
-    allowNull: true,
+    allowNull: false,
+    defaultValue: 0,
   },
 });
 
