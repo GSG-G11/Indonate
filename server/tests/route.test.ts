@@ -5,7 +5,7 @@ import connection from '../database/config/connection';
 import app from '../app';
 import buildFakeData from '../database/fakeData/buildFakeData';
 
-beforeAll(() => buildFakeData());
+beforeEach(() => buildFakeData());
 
 describe('POST/login', () => {
   test('User with admin role', async () => {
@@ -170,11 +170,18 @@ describe('GET /statistics', () => {
     const response = await request(app)
       .get('/api/statistics')
       .expect(200);
-    const counts = response.body;
-    expect(counts && typeof counts === 'object').toBe(true);
-    expect(counts.families).toBeTruthy();
-    expect(counts.doners).toBeTruthy();
-    expect(counts.donations).toBeTruthy();
+    const { statistics } = response.body;
+    expect(statistics).toStrictEqual({
+      families: 5,
+      doners: 4,
+      donations: [
+        {
+          money: '1000',
+          food: '100',
+          clothes: '100',
+        },
+      ],
+    });
   });
 });
 
