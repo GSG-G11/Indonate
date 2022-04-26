@@ -7,7 +7,7 @@ const reportsSchema = Joi.object({
     .min(4)
     .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } })
     .required(),
-  message: Joi.string(),
+  message: Joi.string().required(),
 });
 
 export default reportsSchema;

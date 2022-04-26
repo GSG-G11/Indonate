@@ -191,17 +191,6 @@ describe('Post/reports', () => {
     // eslint-disable-next-line no-useless-escape
     expect(response.body.message).toBe('\"email\" must be a valid email');
   });
-
-  test('Database error', async () => {
-    const response = await request(app)
-      .post('/api/reports')
-      .send({
-        name: 'reports',
-        email: 'report@gmail.com',
-      })
-      .expect(400);
-    expect(response.body.message).toBe('Failed to create report');
-  });
 });
 
 afterAll(() => {

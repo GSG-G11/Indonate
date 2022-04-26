@@ -8,7 +8,6 @@ const reports = async (req: Request, res: Response, next: NextFunction) => {
     await Contact.create(result);
     res.status(201).json({ message: 'Report sent successfully' });
   } catch (error) {
-    if (error.errors) next(new CustomedError('Failed to create report', 400));
     if (error.name === 'ValidationError') next(new CustomedError(error.details[0].message, 400));
     next(error);
   }
