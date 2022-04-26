@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { Op } from 'sequelize';
-import { Campaign, Category } from '../database/models';
-import { CustomedError, querySchema } from '../utils';
+import { Campaign, Category } from '../../database/models';
+import { CustomedError, querySchema } from '../../utils';
 
 const campaigns = async (req:Request, res:Response, next:NextFunction) => {
   try {

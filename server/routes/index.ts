@@ -1,8 +1,13 @@
 import express from 'express';
 import authRouter from './authRoutes';
-import userRoutes from './UserRoutes';
+import categoryRouter from './categoryRoutes';
+import campaignRoutes from './campaignRoutes';
+import reportsRouter from './reportsRoutes';
 
 const router = express.Router();
 router.use(authRouter);
-router.use(userRoutes);
+router.use(categoryRouter);
+router.use(campaignRoutes);
+router.use(reportsRouter);
+
 export default router;

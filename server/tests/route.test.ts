@@ -117,11 +117,11 @@ describe('POST/signUp', () => {
     const response = await request(app)
       .post('/api/signUp')
       .send({
-        name: 'mohammed2',
-        email: 'mohaammed2@gmail.com',
+        name: 'mohaammed3',
+        email: 'mohammed3@gmail.com',
         password: '123456789',
         address: 'Gaza',
-        phone: '05995226600',
+        phone: '05995266300',
       })
       .expect(201);
     expect(response.body.message).toBe('Sign up successfully');
@@ -163,6 +163,98 @@ describe('Get/logout', () => {
       .expect(200)
       .expect('set-cookie', 'ACCESS_TOKEN=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT');
     expect(response.body.message).toBe('logged out successfully!');
+  });
+});
+describe('GET/campaines', () => {
+  test('get all campaines', async () => {
+    const response = await request(app).get('/api/campaigns').expect(200);
+
+    expect(response.body.data.length).toBe(10);
+  });
+  test('get campaines with name Helping poor families', async () => {
+    const response = await request(app).get('/api/campaigns?search=Helping poor families').expect(200);
+    expect(response.body.message).toBe('Success');
+  });
+  test('get campaines with name not exit', async () => {
+    const response = await request(app).get('/api/campaigns?search=give people maney').expect(200);
+    expect(response.body.data).toEqual([]);
+  });
+  test('get campaines with category Health', async () => {
+    const response = await request(app).get('/api/campaigns?category=Health').expect(200);
+    expect(response.body.message).toBe('Success');
+  });
+  test('get campaines with name not exit', async () => {
+    const response = await request(app).get('/api/campaigns?category=food');
+    expect(response.body.data).toEqual([]);
+  });
+  test('get campaines with is available', async () => {
+    const response = await request(app).get('/api/campaigns?available=true').expect(200);
+    expect(response.body.message).toBe('Success');
+  });
+  test('get campaines with is not available', async () => {
+    const response = await request(app).get('/api/campaigns?available=false').expect(200);
+    expect(response.body.data).toEqual([]);
+  });
+  test('get campaines with limit 6', async () => {
+    const response = await request(app).get('/api/campaigns?limit=6').expect(200);
+    expect(response.body.data.length).toBe(6);
+  });
+  test('get error whene  string to page', async () => {
+    const response = await request(app).get('/api/campaigns?page="f').expect(400);
+    expect(response.body.message).toBe('"page" must be a number');
+  });
+  test('get error when limit is string', async () => {
+    const response = await request(app).get('/api/campaigns?limit=f').expect(400);
+    expect(response.body.message).toBe('"limit" must be a number');
+  });
+  test('get campaines with name summer clothes collection and category=Health', async () => {
+    const response = await request(app).get('/api/campaigns?search=summer%20clothes%20collection&category=Education').expect(200);
+    expect(response.body.data).toEqual([{
+      id: 3,
+      title: 'summer clothes collection',
+      description: 'This campaign aims to help poor families secure summer clothes by collecting clothes from donors or buying new clothes with financial donations',
+      target: 3000,
+      image_link: 'http://www.humanitygate.com/thumb/560x292/uploads//images/88e62e08915b10584950106f496140ca.jpg',
+      is_available: true,
+      categoryId: 2,
+      category: {
+        name: 'Education',
+        icon_url: 'https://i.pinimg.com/564x/dd/9d/c9/dd9dc9d83423bc037b511d73b29e6b80.jpg',
+      },
+    }]);
+  });
+  test('get three campaines with catergory education and available ', async () => {
+    const response = await request(app).get('/api/campaigns?category=Education&avilable=ture&limit=3').expect(200);
+    expect(response.body.data[0].category.name).toBe('Education');
+    expect(response.body.data.length).toBe(3);
+  });
+  test('test pagenation get the three campaines page 1', async () => {
+    const response = await request(app).get('/api/campaigns?page=1&limit=3', () => {
+      expect(response).toEqual(expect.arrayContaining([
+        expect.objectContaining({ id: 10 }),
+        expect.objectContaining({ id: 9 }),
+        expect.objectContaining({ id: 8 }),
+      ]));
+    });
+  });
+
+  test('test pagenation get the three campaines page 2', async () => {
+    const response = await request(app).get('/api/campaigns?page=2&limit=3', () => {
+      expect(response).toEqual(expect.arrayContaining([
+        expect.objectContaining({ id: 7 }),
+        expect.objectContaining({ id: 6 }),
+        expect.objectContaining({ id: 5 }),
+      ]));
+    });
+  });
+  test('test pagenation get the three campaines page 3', async () => {
+    const response = await request(app).get('/api/campaigns?page=3&limit=3', () => {
+      expect(response).toEqual(expect.arrayContaining([
+        expect.objectContaining({ id: 4 }),
+        expect.objectContaining({ id: 3 }),
+        expect.objectContaining({ id: 2 }),
+      ]));
+    });
   });
 });
 
