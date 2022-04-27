@@ -24,13 +24,13 @@ function Nav() {
   const user = useSelector((state) => state.user);
   return (
     <Layout className="layout">
-      <Header>
+      <Header className="layout-header">
         <div className="logo">InDonate</div>
         <Menu
+          className="menu-overflow"
           theme="dark"
           mode="horizontal"
           defaultSelectedKeys={1}
-          // eslint-disable-next-line max-len
           items={user.isUserAuthorized ? [...commonList, ...guestItem] : [...commonList, ...userItem]}
         />
       </Header>

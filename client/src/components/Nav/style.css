@@ -1,23 +1,23 @@
-.ant-layout {
+.layout {
   box-shadow: 0px 0px 2px 0 #888888;
 }
-.ant-menu-overflow  {
+.menu-overflow  {
   width: 700px;
   margin-right: 30px;
   justify-content: space-between;
 }
-.ant-menu-title-content a {
+.menu-overflow a {
   color: black !important; 
 }
-.ant-menu-dark.ant-menu-horizontal > .ant-menu-item:nth-child(5) , 
-.ant-menu-dark.ant-menu-horizontal > .ant-menu-item:nth-child(6) {
+.menu-overflow > li:nth-child(5) , 
+.menu-overflow > li:nth-child(6) {
   background-color: white !important;
 }
 .logo {
   color: #469D62;
   font-weight: bold;
 }
-.ant-layout-header {
+.layout-header {
   display: flex;
   justify-content: space-between;
 }
