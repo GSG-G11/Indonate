@@ -4,8 +4,9 @@
   "private": true,
   "proxy": "http://localhost:5001",
   "dependencies": {
-    "@craco/craco": "^6.4.3",
+    "@ant-design/icons": "^4.7.0",
     "@reduxjs/toolkit": "^1.8.1",
+    "@craco/craco": "^6.4.3",
     "antd": "^4.19.5",
     "axios": "^0.26.1",
     "craco-less": "^2.0.0",
