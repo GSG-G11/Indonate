@@ -1,23 +1,23 @@
-.layout {
+.nav-container .ant-layout {
   box-shadow: 0px 0px 2px 0 #888888;
 }
-.menu-overflow  {
+.nav-container .ant-menu-overflow  {
   width: 700px;
   margin-right: 30px;
   justify-content: space-between;
 }
-.menu-overflow a {
+.nav-container .ant-menu-title-content a {
   color: black !important; 
 }
-.menu-overflow > li:nth-child(5) , 
-.menu-overflow > li:nth-child(6) {
+.nav-container .ant-menu-dark.ant-menu-horizontal > .ant-menu-item:nth-child(5) , 
+.nav-container .ant-menu-dark.ant-menu-horizontal > .ant-menu-item:nth-child(6) {
   background-color: white !important;
 }
-.logo {
+.nav-container .logo {
   color: #469D62;
   font-weight: bold;
 }
-.layout-header {
+.nav-container .ant-layout-header {
   display: flex;
   justify-content: space-between;
 }

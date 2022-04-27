@@ -23,18 +23,21 @@ const guestItem = [
 function Nav() {
   const user = useSelector((state) => state.user);
   return (
-    <Layout className="layout">
-      <Header className="layout-header">
-        <div className="logo">InDonate</div>
-        <Menu
-          className="menu-overflow"
-          theme="dark"
-          mode="horizontal"
-          defaultSelectedKeys={1}
-          items={user.isUserAuthorized ? [...commonList, ...guestItem] : [...commonList, ...userItem]}
-        />
-      </Header>
-    </Layout>
+    <div className="nav-container">
+      <Layout>
+        <Header>
+          <div className="logo">InDonate</div>
+          <Menu
+            theme="dark"
+            mode="horizontal"
+            defaultSelectedKeys={1}
+            items={user.isUserAuthorized
+              ? [...commonList, ...guestItem]
+              : [...commonList, ...userItem]}
+          />
+        </Header>
+      </Layout>
+    </div>
   );
 }
 
