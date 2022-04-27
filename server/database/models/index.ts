@@ -10,8 +10,14 @@ import Capon from './capon';
 Campaign.belongsTo(Category);
 Campaign.belongsToMany(Family, { through: Capon });
 Family.belongsToMany(Campaign, { through: Capon });
-Campaign.belongsToMany(Donor, { through: Donation });
-Donor.belongsToMany(Campaign, { through: Donation });
+Campaign.belongsToMany(Donor, {
+  through: { model: Donation, unique: false },
+  constraints: false,
+});
+Donor.belongsToMany(Campaign, {
+  through: { model: Donation, unique: false },
+  constraints: false,
+});
 
 export {
   Donor,
