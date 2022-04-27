@@ -12,16 +12,16 @@ const items = [
   { label: <NavLink to="/about-us" style={{ color: 'black' }}> About Us </NavLink> },
   { label: <NavLink to="/campaigns" style={{ color: 'black' }}> Campaigns</NavLink> },
   { label: <NavLink to="/contact-us" style={{ color: 'black' }}> Contact Us</NavLink> },
-  { label: (<NavLink to="/signUp"><Button className="btn" type="primary">Sign Up</Button></NavLink>) },
-  { label: (<NavLink to="/login"><Button className="btn" type="primary">Login</Button></NavLink>) },
+  { label: <NavLink to="/signUp"><Button className="btn" type="primary">Sign Up</Button></NavLink> },
+  { label: <NavLink to="/login"><Button className="btn" type="primary">Login</Button></NavLink> },
 ];
 const items2 = [
   { label: <NavLink to="/" style={{ color: 'black' }}> Home </NavLink> },
   { label: <NavLink to="/about-us" style={{ color: 'black' }}> About Us </NavLink> },
   { label: <NavLink to="/campaigns" style={{ color: 'black' }}> Campaigns</NavLink> },
   { label: <NavLink to="/contact-us" style={{ color: 'black' }}> Contact Us</NavLink> },
-  { label: (<NavLink to="/logout"><Button className="btn" type="primary">Logout</Button></NavLink>) },
-  { label: (<NavLink to="/campaign"><Button className="btn" type="primary">Donate Now</Button></NavLink>) },
+  { label: <NavLink to="/logout"><Button className="btn" type="primary">Logout</Button></NavLink> },
+  { label: <NavLink to="/campaign"><Button className="btn" type="primary">Donate Now</Button></NavLink> },
 ];
 function Nav() {
   const user = useSelector((state) => state.user);
@@ -30,7 +30,6 @@ function Nav() {
       <Header>
         <h2 className="logo">InDonate</h2>
         <div style={{ display: 'flex' }}>
-
           <Menu
             theme="dark"
             mode="horizontal"
