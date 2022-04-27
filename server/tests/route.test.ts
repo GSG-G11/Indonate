@@ -218,6 +218,83 @@ describe('GET/categories', () => {
   });
 });
 
+describe('POST /donation/:id', () => {
+  test('Add donation to database - Unauthorized user', async () => {
+    const response = await request(app)
+      .post('/api/donation/1')
+      .send({
+        food: 1,
+        description: 'Donation',
+        location: 'Test Location',
+        deliver_time: '02/02/2020',
+      })
+      .expect(401);
+    expect(response.body.message).toEqual('Unauthorized user');
+  });
+  test('Add donation to database - Authorized user', async () => {
+    const response = await request(app)
+      .post('/api/donation/1')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxMDkyNzc5LCJleHAiOjE2NTM2ODQ3Nzl9.nrZI3QFlUn16xlm3ByPGBzCS-6YMwbVl7KuzVzRFsco',
+      ])
+      .send({
+        food: 1,
+        description: 'Donation',
+        location: 'Test Location',
+        deliver_time: '02/02/2020',
+      })
+      .expect(200);
+    expect(response.body.message).toEqual('Donation added successfully');
+  });
+  test('donation with not valid date', async () => {
+    const response = await request(app)
+      .post('/api/donation/1')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxMDkyNzc5LCJleHAiOjE2NTM2ODQ3Nzl9.nrZI3QFlUn16xlm3ByPGBzCS-6YMwbVl7KuzVzRFsco',
+      ])
+      .send({
+        food: 1,
+        description: 'Donation',
+        location: 'Test Location',
+        deliver_time: true,
+      })
+      .expect(400);
+    expect(response.body.message).toEqual(
+      '"deliver_time" must be a valid date',
+    );
+  });
+  test('donation with not entered date', async () => {
+    const response = await request(app)
+      .post('/api/donation/1')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxMDkyNzc5LCJleHAiOjE2NTM2ODQ3Nzl9.nrZI3QFlUn16xlm3ByPGBzCS-6YMwbVl7KuzVzRFsco',
+      ])
+      .send({
+        food: 1,
+        description: 'Donation',
+        location: 'Test Location',
+      })
+      .expect(400);
+    expect(response.body.message).toEqual('"deliver_time" is required');
+  });
+  test('donation with not entered Food/Clothes/Money', async () => {
+    const response = await request(app)
+      .post('/api/donation/1')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxMDkyNzc5LCJleHAiOjE2NTM2ODQ3Nzl9.nrZI3QFlUn16xlm3ByPGBzCS-6YMwbVl7KuzVzRFsco',
+      ])
+      .send({
+        description: 'Donation',
+        location: 'Test Location',
+        deliver_time: '02/02/2020',
+      })
+      .expect(400);
+    expect(response.body.message).toEqual(
+      'You should enter money, piece of clothes, number of meals',
+    );
+  });
+});
+
 afterAll(() => {
   connection.close();
 });
