@@ -11,7 +11,6 @@ function Compaigns() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        setCategories([]);
         const { data: { data: { categories: categoriesFromDB } } } = await axios('/api/categories');
         const categoriesNameArr = ['List All'];
         categoriesFromDB.map((item) => categoriesNameArr.push(item.name));
