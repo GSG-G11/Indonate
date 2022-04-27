@@ -1,5 +1,18 @@
 import CustomedError from './customedError';
-import signToken from './signToken';
-import loginSchema from './validation';
+import { signToken, verifyToken } from './token';
+import {
+  signUpSchema,
+  loginSchema,
+  paramsSchema,
+  reportsSchema,
+} from './validation';
 
-export { CustomedError, loginSchema, signToken };
+export {
+  CustomedError,
+  loginSchema,
+  signToken,
+  signUpSchema,
+  paramsSchema,
+  reportsSchema,
+  verifyToken,
+};
