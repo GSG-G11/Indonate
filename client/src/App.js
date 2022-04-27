@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import store from './app/store';
-import { getUserData } from './features/User';
-import Nav from './Components';
+import Nav from './components';
+import SignUp from './components/signUp';
+import store from './redux/app/store';
+import { getUserData } from './redux/feature/user/userSlice';
 
 function App() {
   useEffect(() => {
@@ -19,27 +20,21 @@ function App() {
             }
         />
         <Route
-          path="/about-us"
-          element={
-            <h1>about-us</h1>
-            }
-        />
-        <Route
           path="/campaigns"
           element={
             <h1>campaigns</h1>
             }
         />
         <Route
-          path="/contact-us"
+          path="/campaign/:id"
           element={
-            <h1>contact-us</h1>
+            <h1>campaign</h1>
             }
         />
         <Route
           path="/signUp"
           element={
-            <h1>signUp</h1>
+            <SignUp />
             }
         />
         <Route
