@@ -1,8 +1,8 @@
 import { Router } from 'express';
 import { getCampaignById } from '../controllers';
 
-const campaignRoutes = Router();
+const campaignRouter = Router();
 
-campaignRoutes.route('/campaign/:id').get(getCampaignById);
+campaignRouter.route('/campaign/:id').get(getCampaignById);
 
-export default campaignRoutes;
+export default campaignRouter;
