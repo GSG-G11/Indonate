@@ -110,6 +110,22 @@ describe('POST/login', () => {
     );
   });
 });
+describe('GET/checkAuth', () => {
+  test('Authorized', async () => {
+    const response = await request(app)
+      .get('/api/checkAuth')
+      .set('Cookie', [' ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwibmFtZSI6InNhcmFhYWFhIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTY1MTA4ODczNCwiZXhwIjoxNjUzNjgwNzM0fQ.0WLTAq9cljwNyJE2dUOnTa1rzBgNVvpMIE1GwXfNG8U'])
+      .expect(200);
+    expect(response.body.message).toBe('Authorized user');
+  });
+  test('unAuthorized uer ', async () => {
+    const response = await request(app)
+      .get('/api/checkAuth')
+      .set('Cookie', [' ACCESS_TOKEN=66666eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwibmFtZSI6InNhcmFhYWFhIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTY1MTA4ODczNCwiZXhwIjoxNjUzNjgwNzM0fQ.0WLTAq9cljwNyJE2dUOnTa1rzBgNVvpMIE1GwXfNG8U'])
+      .expect(200);
+    expect(response.body.message).toBe('Authorized user');
+  });
+});
 
 describe('POST/signUp', () => {
   test('sign up', async () => {
