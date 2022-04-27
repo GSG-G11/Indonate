@@ -1,25 +1,31 @@
 import React from 'react';
-import { Card, Image } from 'antd';
+import Proptypes from 'prop-types';
+import { Card, Image, Typography } from 'antd';
 import 'antd/dist/antd.css';
 
-function Comment() {
+const { Paragraph } = Typography;
+
+function Comment({ comment }) {
   return (
     <div className="site-card-border-less-wrapper">
-      <Card title="Comment title" bordered={false} style={{ width: 300 }}>
-        <p>
-          I love this page, its make donation easy I
-          love this page, its make ddda donation easy
-          I love this page, its make donation easy.
-        </p>
+      <Card title={comment.title} bordered={false} style={{ width: 300 }}>
+        <Paragraph>{comment.comment}</Paragraph>
         <Image
           className="comment-img"
           width={70}
           height={70}
-          src="https://www.kindpng.com/picc/m/163-1636340_user-avatar-icon-avatar-transparent-user-icon-png.png"
+          src={comment.imgSrc}
         />
       </Card>
     </div>
   );
 }
+Comment.propTypes = {
+  comment: Proptypes.shape({
+    title: Proptypes.string,
+    comment: Proptypes.string,
+    imgSrc: Proptypes.string,
+  }).isRequired,
+};
 
 export default Comment;
