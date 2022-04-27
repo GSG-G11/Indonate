@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
-import store from './app/store';
-import { getUserData } from './features/User';
+// import SignUp from './Component/signUp';
+import store from './redux/app/store';
+import { getUserData } from './redux/feature/user/userSlice';
 import Compaigns from './component/Campaigns';
 
 function App() {
@@ -11,6 +12,7 @@ function App() {
     <div className="App">
       <Compaigns />
       {' '}
+
     </div>
   );
 }
