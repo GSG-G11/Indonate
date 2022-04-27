@@ -6,20 +6,23 @@
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
     "@reduxjs/toolkit": "^1.8.1",
+    "@craco/craco": "^6.4.3",
     "antd": "^4.19.5",
     "axios": "^0.26.1",
+    "craco-less": "^2.0.0",
     "env2": "^2.2.2",
     "prop-types": "^15.8.1",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-redux": "^7.2.8",
+    "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test",
+    "eject": "craco eject",
     "lint": "eslint --ext .js,.jsx src/**",
     "lint-fix": "eslint --ext .js,.jsx src/** --fix"
   },
@@ -44,6 +47,8 @@
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-react": "^7.29.4",
-    "eslint-plugin-react-hooks": "^4.4.0"
+    "eslint-plugin-react-hooks": "^4.4.0",
+    "less": "^4.1.2",
+    "less-loader": "^10.2.0"
   }
 }

@@ -9,7 +9,9 @@ import {
   Input,
   message,
   Typography,
+  Anchor,
 } from 'antd';
+
 import { useDispatch } from 'react-redux';
 
 import { GoogleOutlined } from '@ant-design/icons';
@@ -17,9 +19,11 @@ import { GoogleOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import 'antd/dist/antd.min.css';
 import './index.css';
-import { setUser } from '../../slices/user';
+import { sign } from '../../redux/feature/user/userSlice';
 
-const { Title } = Typography;
+const { Title, Text } = Typography;
+const { Item } = Form;
+const { Link } = Anchor;
 
 const {
   Content,
@@ -48,15 +52,12 @@ function Signin() {
 
   const login = async () => {
     try {
-      const { data: { data: { name } } } = await axios.post('/api/signin', userData);
-      dispatch(setUser({ name, isLoggedIn: true }));
-      message.success(`Welcome back ${name}`);
-    } catch (err) {
+      const { data: { data } } = await axios.post('/api/login', userData);
+      dispatch(sign(data));
+      message.success(`Welcome back ${data.name}`);
+    } catch ({ response: { data: { message: errorMessage } } }) {
       message.error({
-        content: err,
-        style: {
-          marginTop: '20vh',
-        },
+        content: errorMessage,
       });
     }
   };
@@ -100,7 +101,7 @@ function Signin() {
                 Login
               </Title>
 
-              <Form.Item
+              <Item
                 name="email"
                 rules={[
                   {
@@ -114,9 +115,9 @@ function Signin() {
                   placeholder="Email"
                   onChange={handleInputChange}
                 />
-              </Form.Item>
+              </Item>
 
-              <Form.Item
+              <Item
                 name="password"
                 rules={[
                   {
@@ -131,18 +132,19 @@ function Signin() {
                   placeholder="Password"
                   onChange={handleInputChange}
                 />
-              </Form.Item>
-
-              <Form.Item>
+              </Item>
+              <Item>
                 <Button className="login_button" type="primary" htmlType="submit">
                   Login
                 </Button>
                 <div className="register_option">
-                  <p>Don`t have an account ?</p>
-                  <Typography.Link>Signup now</Typography.Link>
+                  <Text>Don`t have an account ?</Text>
+                  <Anchor affix>
+                    <Link href="/signup" title="Sign up" />
+                  </Anchor>
                 </div>
-              </Form.Item>
-              <Form.Item wrapperCol={{
+              </Item>
+              <Item wrapperCol={{
                 offset: 5,
                 span: 32,
               }}
@@ -150,7 +152,7 @@ function Signin() {
                 <Button type="primary" icon={<GoogleOutlined />}>
                   Sign in with Google
                 </Button>
-              </Form.Item>
+              </Item>
             </Form>
           </Col>
         </Row>

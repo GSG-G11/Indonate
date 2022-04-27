@@ -15,24 +15,6 @@
     height: 41.47px;
     width: 100%;
     color: white;
-    background-color: #469D62;
-    border-color: #469D62;
-}
-
-.login_button:hover {
-    height: 41.47px;
-    width: 100%;
-    color: white;
-    background-color: #469D62;
-    border-color: #469D62;
-}
-
-.login_button:active {
-    height: 41.47px;
-    width: 100%;
-    color: white;
-    background-color: #469D62;
-    border-color: #469D62;
 }
 
 .btn-text {
@@ -92,9 +74,21 @@ h2.ant-typography {
 }
 
 .register_option {
-    margin-top: 80px;
     display: flex;
+    align-items: center;
     justify-content: space-around;
+    margin-top: 80px;
+}
+
+.ant-anchor-link-title {
+    position: relative;
+    display: block;
+    margin-bottom: 6px;
+    overflow: hidden;
+    color:#40a9ff;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    transition: all .3s;
 }
 
 .register_text {
@@ -123,4 +117,3 @@ h2.ant-typography {
 a.ant-typography {
     color: green;
 }
-
