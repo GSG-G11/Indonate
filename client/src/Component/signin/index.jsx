@@ -18,12 +18,13 @@ import { GoogleOutlined } from '@ant-design/icons';
 
 import axios from 'axios';
 import 'antd/dist/antd.min.css';
-import './index.css';
+import './index.less';
 import { sign } from '../../redux/feature/user/userSlice';
 
 const { Title, Text } = Typography;
 const { Item } = Form;
 const { Link } = Anchor;
+const { Password } = Input;
 
 const {
   Content,
@@ -67,9 +68,8 @@ function Signin() {
       {/* --- Navbar --- */}
       <Content>
         <Row>
-          <Col span={12} className="login_image">
+          <Col span={12} className="customHeaderImage login_image">
             <Image
-              style={{ height: '100vh', width: '100vh' }}
               preview={false}
               src="https://i.postimg.cc/9FMJSScj/login-image.png"
             />
@@ -97,7 +97,7 @@ function Signin() {
               autoComplete="off"
               onFinish={login}
             >
-              <Title style={{ color: '#469D62', marginBottom: '68px' }}>
+              <Title className="login_title">
                 Login
               </Title>
 
@@ -127,7 +127,7 @@ function Signin() {
                   () => passwordValidation(),
                 ]}
               >
-                <Input.Password
+                <Password
                   name="password"
                   placeholder="Password"
                   onChange={handleInputChange}
