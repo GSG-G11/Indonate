@@ -15,8 +15,9 @@ export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    signUp: (state, action) => {
+    sign: (state, action) => {
       state.userData = action.payload;
+      state.isUserAuthorized = true;
     },
   },
   extraReducers: (builder) => {
@@ -35,6 +36,6 @@ export const userSlice = createSlice({
   },
 
 });
-export const { signUp } = userSlice.actions;
+export const { sign } = userSlice.actions;
 export default userSlice.reducer;
 export const selectUser = (state) => state.user.value;
