@@ -1,0 +1,13 @@
+.all-campaines-cards{
+    display: flex;
+    justify-content:center;
+    align-content: space-between;
+    flex-wrap: wrap;
+    width: 99vw;
+    padding: 50px;
+}
+.all-campaines-card{
+    margin-right: 30px;
+    margin-bottom: 50px;
+    
+}

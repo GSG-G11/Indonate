@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import Cards from './components/cards';
 // import SignUp from './Component/signup';
 // import Signin from './components/signin';
 import Header from './components/HeaderAllCampaines/index';
@@ -13,6 +14,7 @@ function App() {
     <div className="App">
       {/* <SignUp /> */}
       <Header />
+      <Cards />
 
     </div>
   );
