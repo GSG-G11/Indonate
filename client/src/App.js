@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Nav from './components';
-import SignUp from './components/signUp';
+import { Nav, SignUp, Signin } from './components';
 import store from './redux/app/store';
 import { getUserData } from './redux/feature/user/userSlice';
 
@@ -40,12 +39,11 @@ function App() {
         <Route
           path="/login"
           element={
-            <h1>login</h1>
+            <Signin />
             }
         />
       </Routes>
     </Router>
   );
 }
-
 export default App;

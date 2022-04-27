@@ -1,3 +1,9 @@
 import Nav from './Nav';
+import Signin from './signin';
+import SignUp from './signUp';
 
-export default Nav;
+export {
+  Nav,
+  Signin,
+  SignUp,
+};
