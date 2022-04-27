@@ -2,7 +2,7 @@ import React from 'react';
 import {
   Card, Button, Typography,
 } from 'antd';
-import styles from './campaign.less';
+import styles from './index.less';
 import 'antd/dist/antd.less';
 
 const { Text } = Typography;
