@@ -1,0 +1,7 @@
+body {
+  background-color: black;
+  padding: 100px;
+}
+.comment-img {
+  border-radius: 50%;
+}
