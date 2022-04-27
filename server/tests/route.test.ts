@@ -166,6 +166,68 @@ describe('Get/logout', () => {
     expect(response.body.message).toBe('logged out successfully!');
   });
 });
+describe('Get/campaign/:id', () => {
+  test('campaign/:id', async () => {
+    const id = 1;
+    const data = {
+      id: 1,
+      title: 'Helping poor families',
+      description: 'This campaign helps save an amount of money that guarantees 50 families for two months',
+      target: 50000,
+      is_available: true,
+    };
+    const response = await request(app)
+      .get(`/api/campaign/${id}`)
+      .expect(200);
+    expect(response.body.data).toMatchObject(data);
+    expect(response.body.message).toBe('Success');
+  });
+
+  test('campaign/:id => id dose not exist', async () => {
+    const id = 10;
+    const response = await request(app)
+      .get(`/api/campaign/${id}`)
+      .expect(400);
+    expect(response.body.data).toBe(undefined);
+    expect(response.body.message).toBe('There is no campaign');
+  });
+
+  test('campaign/:id => id is not a number', async () => {
+    const id = 'id';
+    const response = await request(app)
+      .get(`/api/campaign/${id}`)
+      .expect(400);
+    expect(response.body.data).toBe(undefined);
+    // eslint-disable-next-line no-useless-escape
+    expect(response.body.message).toBe('\"id\" must be a number');
+  });
+});
+describe('Post/reports', () => {
+  test('reports', async () => {
+    const response = await request(app)
+      .post('/api/reports')
+      .send({
+        name: 'reports',
+        email: 'report@gmail.com',
+        message: ' any message you want',
+      })
+      .expect(201);
+    expect(response.body.message).toBe('Report sent successfully');
+  });
+
+  test('Validation Email', async () => {
+    const response = await request(app)
+      .post('/api/reports')
+      .send({
+        name: 'reports',
+        email: 'report@gmail',
+        message: ' any message you want',
+      })
+      .expect(400);
+    // eslint-disable-next-line no-useless-escape
+    expect(response.body.message).toBe('\"email\" must be a valid email');
+  });
+});
 
 afterAll(() => {
   connection.close();
