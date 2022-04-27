@@ -13,6 +13,14 @@ const addDonation = async (req: any, res: Response, next: NextFunction) => {
     const {
       food, clothes, money, description, location, deliver_time,
     } = req.body;
+    if (!food && !clothes && !money) {
+      next(
+        new CustomedError(
+          'You should enter money, piece of clothes, number of meals',
+          400,
+        ),
+      );
+    }
     await Donation.create({
       campaignId: id,
       donorId,
