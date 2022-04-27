@@ -1,12 +1,17 @@
 import React, { useEffect } from 'react';
-import store from './app/store';
-import { getUserData } from './features/User';
+import SignUp from './Component/signUp';
+import store from './redux/app/store';
+import { getUserData } from './redux/feature/user/userSlice';
 
 function App() {
   useEffect(() => {
     store.dispatch(getUserData());
   }, []);
-  return <div>Hello</div>;
+  return (
+    <div className="App">
+      <SignUp />
+    </div>
+  );
 }
 
 export default App;
