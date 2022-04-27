@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import {
   message, Radio,
 } from 'antd';
-import './Campaigns.less';
+import './style.less';
 
 function Compaigns() {
   const [categories, setCategories] = useState([]);
