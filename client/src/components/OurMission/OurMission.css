@@ -1,0 +1,41 @@
+.our-mission-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10rem;
+}
+
+.our-mission-image-container {
+  position: relative;
+  height: 40rem;
+  width: 45%;
+  background-image: url(./../../assets/our-mission-background.jpg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  margin: 3rem 5rem 3rem 13rem;
+  border-radius: 5px;
+}
+.green-background {
+  width: 90%;
+  height: 90%;
+  background-color: #6aac6e;
+  position: absolute;
+  border-radius: inherit;
+  z-index: -1;
+  left: -5rem;
+  top: -5rem;
+}
+.our-mission-description-container {
+  width: 55%;
+  padding: 2rem 5rem;
+}
+.our-mission-description-title {
+  font-size: 6.4rem;
+  font-weight: 600;
+}
+.our-mission-description-paragraph {
+  font-size: 3.6rem;
+  font-weight: 400;
+  line-height: 4.5rem;
+}
