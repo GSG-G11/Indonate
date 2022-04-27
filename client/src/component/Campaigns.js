@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useEffect } from 'react';
-import { message } from 'antd';
+import { message, Segmented } from 'antd';
 
 function Compaigns() {
   useEffect(() => {
@@ -16,7 +16,7 @@ function Compaigns() {
   }, []);
   return (
     <div>
-      h1
+      <Segmented block options={[123, 456, 'longtext-longtext-longtext-longtext']} />
     </div>
   );
 }
