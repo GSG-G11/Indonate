@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 // import { useNavigate } from 'react-router-dom';
+import { GoogleOutlined } from '@ant-design/icons';
+
 import axios from 'axios';
 import {
   Form,
@@ -11,7 +13,7 @@ import {
   Typography,
 } from 'antd';
 
-import { signUp } from '../../redux/feature/user/userSlice';
+import { sign } from '../../redux/feature/user/userSlice';
 import './style.less';
 
 const { Password } = Input;
@@ -28,8 +30,9 @@ function SignUp() {
   const registor = async () => {
     try {
       const { data: { data } } = await axios.post('/api/signup', userInfo);
-      dispatch(signUp(data));
+      dispatch(sign(data));
       // navigate('/');// home page
+      message.success(`Welcome ${data.name}`);
     } catch ({ response: { data: { message: errorMessage } } }) {
       message.error({
         content: errorMessage,
@@ -62,7 +65,7 @@ function SignUp() {
         <Title
           level={3}
         >
-          Subsicribe with us to make yourself a contributor to charity and help people in need.
+          Subscribe with us to make yourself a contributor to charity and help people in need.
         </Title>
       </div>
       <div className="form-conatainer-signup">
@@ -163,8 +166,10 @@ function SignUp() {
               Sign Up
             </Button>
           </Form>
+          <Button type="primary" icon={<GoogleOutlined />}>
+            Sign in with Google
+          </Button>
         </Space>
-
       </div>
     </div>
   );
