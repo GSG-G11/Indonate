@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 // import SignUp from './Component/signup';
-import Signin from './Component/signin';
+// import Signin from './components/signin';
+import Header from './components/HeaderAllCampaines/index';
 import store from './redux/app/store';
 import { getUserData } from './redux/feature/user/userSlice';
 
@@ -11,7 +12,8 @@ function App() {
   return (
     <div className="App">
       {/* <SignUp /> */}
-      <Signin />
+      <Header />
+
     </div>
   );
 }
