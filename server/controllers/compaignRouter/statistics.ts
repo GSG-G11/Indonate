@@ -4,7 +4,7 @@ import {
   Donor,
   Family,
   sequelize,
-} from '../database/models';
+} from '../../database/models';
 
 const statistics = async (req: Request, res: Response, next:NextFunction) => {
   try {
