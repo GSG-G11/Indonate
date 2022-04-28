@@ -293,6 +293,23 @@ describe('POST /donation/:id', () => {
       'You should enter money, piece of clothes, number of meals',
     );
   });
+  test('campaign id not exists', async () => {
+    const response = await request(app)
+      .post('/api/donation/10')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxMDkyNzc5LCJleHAiOjE2NTM2ODQ3Nzl9.nrZI3QFlUn16xlm3ByPGBzCS-6YMwbVl7KuzVzRFsco',
+      ])
+      .send({
+        food: 1,
+        description: 'Donation',
+        location: 'Test Location',
+        deliver_time: '02/02/2020',
+      })
+      .expect(400);
+    expect(response.body.message).toEqual(
+      'Cannot add donation, campaign not exists',
+    );
+  });
 });
 
 afterAll(() => {

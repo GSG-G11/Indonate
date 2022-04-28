@@ -35,6 +35,8 @@ const addDonation = async (req: any, res: Response, next: NextFunction) => {
   } catch (error) {
     if (error.name === 'ValidationError') {
       next(new CustomedError(error.details[0].message, 400));
+    } else if (error.name === 'SequelizeForeignKeyConstraintError') {
+      next(new CustomedError('Cannot add donation, campaign not exists', 400));
     } else {
       next(error);
     }
