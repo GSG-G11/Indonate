@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 import { NextFunction, Response } from 'express';
-import { Donation } from '../../database/models';
+import { Campaign, Donation } from '../../database/models';
 import { CustomedError } from '../../utils';
 import { paramsSchema, donationSchema } from '../../utils/validation';
 
@@ -10,16 +10,20 @@ const addDonation = async (req: any, res: Response, next: NextFunction) => {
       user: { id: donorId },
     } = req;
     const {
-      params: { id },
+      params: { id: campaignId },
     } = req;
     const {
       body: {
         food, clothes, money, description, location, deliver_time,
       },
     } = req;
-
+    const campaign = await Campaign.findByPk(campaignId, {
+      raw: true,
+    });
+    if (!campaign) { throw new CustomedError('Cannot add donation, campaign not exists', 400); }
     await paramsSchema.validateAsync(req.params);
     await donationSchema.validateAsync(req.body);
+
     if (!food && !clothes && !money) {
       next(
         new CustomedError(
@@ -29,7 +33,7 @@ const addDonation = async (req: any, res: Response, next: NextFunction) => {
       );
     }
     await Donation.create({
-      campaignId: id,
+      campaignId,
       donorId,
       food,
       clothes,
@@ -42,8 +46,6 @@ const addDonation = async (req: any, res: Response, next: NextFunction) => {
   } catch (error) {
     if (error.name === 'ValidationError') {
       next(new CustomedError(error.details[0].message, 400));
-    } else if (error.name === 'SequelizeForeignKeyConstraintError') {
-      next(new CustomedError('Cannot add donation, campaign not exists', 400));
     } else {
       next(error);
     }
