@@ -4,6 +4,7 @@ import logout from './auth/logout';
 import getAllCategories from './categories/getAllCategories';
 import reports from './reportsRouter/reports';
 import getCampaignById from './compaignRouter/getCampaignById';
+import statistics from './compaignRouter/statistics';
 
 export {
   login,
@@ -12,4 +13,5 @@ export {
   getAllCategories,
   reports,
   getCampaignById,
+  statistics,
 };
