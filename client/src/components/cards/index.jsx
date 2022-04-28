@@ -4,10 +4,10 @@ import PropType from 'prop-types';
 import Card from '../common/campaignCard';
 import './style.css';
 
-function Cards({ campaines }) {
+function Cards({ campaigns }) {
   return (
     <div className="all-campaines-cards">
-      {campaines.map((item) => (
+      {campaigns.map((item) => (
         <div key={item.id} className="all-campaines-card">
           {' '}
           <Card
@@ -22,6 +22,6 @@ function Cards({ campaines }) {
   );
 }
 Cards.propTypes = {
-  campaines: PropType.instanceOf(Array).isRequired,
+  campaigns: PropType.instanceOf(Array).isRequired,
 };
 export default Cards;
