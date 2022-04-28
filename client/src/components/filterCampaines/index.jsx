@@ -1,4 +1,5 @@
 import axios from 'axios';
+import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import {
   message,
@@ -9,17 +10,15 @@ import {
 } from 'antd';
 import './style.less';
 
-// import { CloseOutlined, CheckOutlined } from '@ant-design/icons';
-
 const { Search } = Input;
-function Compaigns() {
+function Compaigns({ setCategory, setAvailable, setSearch }) {
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const { data: { data: { categories: categoriesFromDB } } } = await axios('/api/categories');
-        const categoriesNameArr = ['List All', 'Health2'];
+        const categoriesNameArr = ['List All'];
         categoriesFromDB.map((item) => categoriesNameArr.push(item.name));
         setCategories(categoriesNameArr);
       } catch ({ response: { data: { message: errorMessage } } }) {
@@ -28,36 +27,32 @@ function Compaigns() {
     };
     fetchData();
   }, []);
-  const onChange = (/* { target: { value } } */) => {
-
+  const handleChangeCategories = ({ target: { value } }) => {
+    setCategory(value);
+  };
+  const HandleSearchChange = ({ target: { value } }) => {
+    setSearch(value);
+  };
+  const handleAailableChange = (e) => {
+    setAvailable(e);
   };
   return (
     <div className="fliter-section">
-      <div className="category">
-        <Radio.Group onChange={onChange} defaultValue="List All" buttonStyle="solid">
+      <div>
+        <Radio.Group onChange={handleChangeCategories} defaultValue="List All" buttonStyle="solid">
           {categories.map((item) => <Radio.Button value={item}>{item}</Radio.Button>)}
         </Radio.Group>
       </div>
-      {/* <div>
-        Available campaigns:
-        {' '}
-        <Switch
-          checkedChildren={<CheckOutlined />}
-          unCheckedChildren={<CloseOutlined />}
-          defaultChecked
-        />
-      </div> */}
-      {/* <Radio.Group onChange={onChange} defaultValue="avilable" buttonStyle="solid">
-        <Radio.Button value="avilable">
-          Avilable
-        </Radio.Button>
-        <Radio.Button value="notavilable">Not avilable</Radio.Button>
-    </Radio.Group> */}
 
-      <Segmented options={['avilable', 'Not avilable']} />
-      <Search placeholder="input search text" className="search" style={{ width: '300px' }} />
+      <Segmented options={['avilable', 'Not avilable']} onChange={handleAailableChange} />
+      <Search placeholder="input search text" onChange={HandleSearchChange} style={{ width: '300px' }} />
     </div>
   );
 }
+Compaigns.propTypes = {
+  setCategory: PropTypes.func.isRequired,
+  setSearch: PropTypes.func.isRequired,
+  setAvailable: PropTypes.func.isRequired,
+};
 
 export default Compaigns;
