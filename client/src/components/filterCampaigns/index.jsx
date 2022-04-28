@@ -11,6 +11,7 @@ import {
 import './style.less';
 
 const { Search } = Input;
+const { Group } = Radio;
 function Campaigns({ setCategory, setAvailable, setSearch }) {
   const [categories, setCategories] = useState([]);
 
@@ -39,9 +40,9 @@ function Campaigns({ setCategory, setAvailable, setSearch }) {
   return (
     <div className="fliter-section">
       <div>
-        <Radio.Group onChange={handleCategoryChange} defaultValue="List All" buttonStyle="solid">
+        <Group onChange={handleCategoryChange} defaultValue="List All" buttonStyle="solid">
           {categories.map((item) => <Radio.Button value={item}>{item}</Radio.Button>)}
-        </Radio.Group>
+        </Group>
       </div>
 
       <Segmented options={['Avilable', 'Not Avilable']} onChange={handleAailableChange} />
