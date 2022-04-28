@@ -1,8 +1,4 @@
 import React, { useEffect } from 'react';
-// import SignUp from './Component/signup';
-// import Signin from './Component/signin';
-// import Review from './components';
-
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import {
   Nav, SignUp, Signin, Review,

@@ -5,16 +5,16 @@ import 'antd/dist/antd.css';
 
 const { Paragraph } = Typography;
 
-function Comment({ comment }) {
+function Comment({ comment: { title, comment, imgSrc } }) {
   return (
     <div className="site-card-border-less-wrapper">
-      <Card title={comment.title} bordered={false} style={{ width: 300 }}>
-        <Paragraph>{comment.comment}</Paragraph>
+      <Card title={title} bordered={false} style={{ width: 300 }}>
+        <Paragraph>{comment}</Paragraph>
         <Image
           className="comment-img"
           width={70}
           height={70}
-          src={comment.imgSrc}
+          src={imgSrc}
         />
       </Card>
     </div>
