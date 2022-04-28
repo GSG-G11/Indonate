@@ -1,6 +1,7 @@
 import { Response } from 'express';
 
 const checkUser = (req:any, res:Response) => {
-  res.json({ data: req.user, message: 'Authorized user' });
+  const { user } = req;
+  res.json({ data: user });
 };
 export default checkUser;

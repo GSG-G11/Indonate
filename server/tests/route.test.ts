@@ -116,14 +116,15 @@ describe('GET/checkAuth', () => {
       .get('/api/checkAuth')
       .set('Cookie', [' ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwibmFtZSI6InNhcmFhYWFhIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTY1MTA4ODczNCwiZXhwIjoxNjUzNjgwNzM0fQ.0WLTAq9cljwNyJE2dUOnTa1rzBgNVvpMIE1GwXfNG8U'])
       .expect(200);
-    expect(response.body.message).toBe('Authorized user');
+    expect(response.body.data).toEqual({
+      exp: 1653680734, iat: 1651088734, id: 6, isAdmin: false, name: 'saraaaaa',
+    });
   });
   test('unAuthorized uer ', async () => {
-    const response = await request(app)
+    await request(app)
       .get('/api/checkAuth')
       .set('Cookie', [' ACCESS_TOKEN=66666eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwibmFtZSI6InNhcmFhYWFhIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTY1MTA4ODczNCwiZXhwIjoxNjUzNjgwNzM0fQ.0WLTAq9cljwNyJE2dUOnTa1rzBgNVvpMIE1GwXfNG8U'])
-      .expect(200);
-    expect(response.body.message).toBe('Authorized user');
+      .expect(401);
   });
 });
 
