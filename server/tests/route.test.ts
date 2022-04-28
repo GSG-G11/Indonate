@@ -126,6 +126,12 @@ describe('GET/checkAuth', () => {
       .set('Cookie', [' ACCESS_TOKEN=66666eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwibmFtZSI6InNhcmFhYWFhIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTY1MTA4ODczNCwiZXhwIjoxNjUzNjgwNzM0fQ.0WLTAq9cljwNyJE2dUOnTa1rzBgNVvpMIE1GwXfNG8U'])
       .expect(401);
   });
+  test('test in there is not ACCESS_TOKEN ', async () => {
+    await request(app)
+      .get('/api/checkAuth')
+      .set('Cookie', [])
+      .expect(401);
+  });
 });
 
 describe('POST/signUp', () => {
