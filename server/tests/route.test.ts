@@ -243,7 +243,7 @@ describe('POST /donation/:id', () => {
         location: 'Test Location',
         deliver_time: '02/02/2020',
       })
-      .expect(200);
+      .expect(201);
     expect(response.body.message).toEqual('Donation added successfully');
   });
   test('donation with not valid date', async () => {

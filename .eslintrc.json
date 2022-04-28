@@ -25,7 +25,8 @@
             "ts": "never",
             "json": "never"
             }
-        ]       
+        ],
+        "camelcase": [0, {"properties": "never"}]
     },
     "settings": {
         "import/resolver": {

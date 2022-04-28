@@ -4,6 +4,6 @@ import authUser from '../middlewares/auth/user';
 
 const donationRouter = Router();
 
-donationRouter.post('/donation/:id', authUser, addDonation);
+donationRouter.post('/donation/:campaignId', authUser, addDonation);
 
 export default donationRouter;

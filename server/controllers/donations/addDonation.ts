@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 import { NextFunction, Response } from 'express';
 import { Campaign, Donation } from '../../database/models';
 import { CustomedError } from '../../utils';
@@ -10,7 +9,7 @@ const addDonation = async (req: any, res: Response, next: NextFunction) => {
       user: { id: donorId },
     } = req;
     const {
-      params: { id: campaignId },
+      params: { campaignId },
     } = req;
     const {
       body: {
@@ -20,8 +19,10 @@ const addDonation = async (req: any, res: Response, next: NextFunction) => {
     const campaign = await Campaign.findByPk(campaignId, {
       raw: true,
     });
-    if (!campaign) { throw new CustomedError('Cannot add donation, campaign not exists', 400); }
-    await paramsSchema.validateAsync(req.params);
+    if (!campaign) {
+      throw new CustomedError('Cannot add donation, campaign not exists', 400);
+    }
+    await paramsSchema.validateAsync({ id: campaignId });
     await donationSchema.validateAsync(req.body);
 
     if (!food && !clothes && !money) {
@@ -42,7 +43,7 @@ const addDonation = async (req: any, res: Response, next: NextFunction) => {
       location,
       deliver_time,
     });
-    res.json({ message: 'Donation added successfully' });
+    res.status(201).json({ message: 'Donation added successfully' });
   } catch (error) {
     if (error.name === 'ValidationError') {
       next(new CustomedError(error.details[0].message, 400));
