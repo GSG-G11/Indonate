@@ -266,7 +266,6 @@ describe('GET/campaines', () => {
       id: 3,
       title: 'summer clothes collection',
       description: 'This campaign aims to help poor families secure summer clothes by collecting clothes from donors or buying new clothes with financial donations',
-      target: 3000,
       image_link: 'http://www.humanitygate.com/thumb/560x292/uploads//images/88e62e08915b10584950106f496140ca.jpg',
       is_available: true,
       categoryId: 2,
@@ -277,7 +276,7 @@ describe('GET/campaines', () => {
     }]);
   });
   test('get three campaines with catergory education and available ', async () => {
-    const response = await request(app).get('/api/campaigns?category=Education&avilable=ture&limit=3').expect(200);
+    const response = await request(app).get('/api/campaigns?category=Education&available=true&limit=3').expect(200);
     expect(response.body.data.campaigns[0].category.name).toBe('Education');
     expect(response.body.data.campaigns.length).toBe(3);
   });
