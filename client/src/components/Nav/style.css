@@ -1,0 +1,23 @@
+.nav-container .ant-layout {
+  box-shadow: 0px 0px 2px 0 #888888;
+}
+.nav-container .ant-menu-overflow  {
+  width: 700px;
+  margin-right: 30px;
+  justify-content: space-between;
+}
+.nav-container .ant-menu-title-content a {
+  color: black !important; 
+}
+.nav-container .ant-menu-dark.ant-menu-horizontal > .ant-menu-item:nth-child(5) , 
+.nav-container .ant-menu-dark.ant-menu-horizontal > .ant-menu-item:nth-child(6) {
+  background-color: white !important;
+}
+.nav-container .logo {
+  color: #469D62;
+  font-weight: bold;
+}
+.nav-container .ant-layout-header {
+  display: flex;
+  justify-content: space-between;
+}

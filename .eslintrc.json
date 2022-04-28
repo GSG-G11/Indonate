@@ -25,7 +25,7 @@
             "ts": "never",
             "json": "never"
             }
-        ]       
+        ]
     },
     "settings": {
         "import/resolver": {

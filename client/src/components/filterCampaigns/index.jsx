@@ -31,7 +31,7 @@ function Campaigns({ setCategory, setAvailable, setSearch }) {
   const handleCategoryChange = ({ target: { value } }) => {
     setCategory(value);
   };
-  const HandleSearchChange = ({ target: { value } }) => {
+  const handleSearchChange = ({ target: { value } }) => {
     setSearch(value);
   };
   const handleAailableChange = (e) => {
@@ -46,7 +46,7 @@ function Campaigns({ setCategory, setAvailable, setSearch }) {
       </div>
 
       <Segmented options={['Avilable', 'Not Avilable']} onChange={handleAailableChange} />
-      <Search placeholder="input search text" onChange={HandleSearchChange} style={{ width: '300px' }} />
+      <Search placeholder="input search text" onChange={handleSearchChange} style={{ width: '300px' }} />
     </div>
   );
 }
