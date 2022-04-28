@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 // import Signin from './Component/signin';
 import store from './redux/app/store';
 import { getUserData } from './redux/feature/user/userSlice';
-import Compaigns from './components/filterCampaines';
+import Compaigns from './components/filterCampaigns';
 
 function App() {
   useEffect(() => {

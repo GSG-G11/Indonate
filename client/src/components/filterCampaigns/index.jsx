@@ -11,7 +11,7 @@ import {
 import './style.less';
 
 const { Search } = Input;
-function Compaigns({ setCategory, setAvailable, setSearch }) {
+function Campaigns({ setCategory, setAvailable, setSearch }) {
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
@@ -27,7 +27,7 @@ function Compaigns({ setCategory, setAvailable, setSearch }) {
     };
     fetchData();
   }, []);
-  const handleChangeCategories = ({ target: { value } }) => {
+  const handleCategoryChange = ({ target: { value } }) => {
     setCategory(value);
   };
   const HandleSearchChange = ({ target: { value } }) => {
@@ -39,20 +39,20 @@ function Compaigns({ setCategory, setAvailable, setSearch }) {
   return (
     <div className="fliter-section">
       <div>
-        <Radio.Group onChange={handleChangeCategories} defaultValue="List All" buttonStyle="solid">
+        <Radio.Group onChange={handleCategoryChange} defaultValue="List All" buttonStyle="solid">
           {categories.map((item) => <Radio.Button value={item}>{item}</Radio.Button>)}
         </Radio.Group>
       </div>
 
-      <Segmented options={['avilable', 'Not avilable']} onChange={handleAailableChange} />
+      <Segmented options={['Avilable', 'Not Avilable']} onChange={handleAailableChange} />
       <Search placeholder="input search text" onChange={HandleSearchChange} style={{ width: '300px' }} />
     </div>
   );
 }
-Compaigns.propTypes = {
+Campaigns.propTypes = {
   setCategory: PropTypes.func.isRequired,
   setSearch: PropTypes.func.isRequired,
   setAvailable: PropTypes.func.isRequired,
 };
 
-export default Compaigns;
+export default Campaigns;
