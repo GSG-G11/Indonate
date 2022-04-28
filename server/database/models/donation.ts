@@ -24,7 +24,7 @@ const Donation = sequelize.define('donations', {
   },
   description: {
     type: DataTypes.STRING,
-    allowNull: true,
+    allowNull: false,
   },
   deliver_time: {
     type: DataTypes.DATE,

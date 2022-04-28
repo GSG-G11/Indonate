@@ -13,16 +13,24 @@ const addDonation = async (req: any, res: Response, next: NextFunction) => {
     } = req;
     const {
       body: {
-        food, clothes, money, description, location, deliver_time,
+        food,
+        clothes,
+        money,
+        description,
+        location,
+        deliver_time: deliverTime,
       },
     } = req;
+
+    await paramsSchema.validateAsync({ id: campaignId });
+
     const campaign = await Campaign.findByPk(campaignId, {
       raw: true,
     });
     if (!campaign) {
       throw new CustomedError('Cannot add donation, campaign not exists', 400);
     }
-    await paramsSchema.validateAsync({ id: campaignId });
+
     await donationSchema.validateAsync(req.body);
 
     if (!food && !clothes && !money) {
@@ -33,6 +41,7 @@ const addDonation = async (req: any, res: Response, next: NextFunction) => {
         ),
       );
     }
+
     await Donation.create({
       campaignId,
       donorId,
@@ -41,7 +50,7 @@ const addDonation = async (req: any, res: Response, next: NextFunction) => {
       money,
       description,
       location,
-      deliver_time,
+      deliver_time: deliverTime,
     });
     res.status(201).json({ message: 'Donation added successfully' });
   } catch (error) {
