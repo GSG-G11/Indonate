@@ -124,9 +124,7 @@ describe('POST/signUp', () => {
       })
       .expect(201);
     expect(response.body.message).toBe('Sign up successfully');
-    expect(
-      response.headers['set-cookie'][0].startsWith('ACCESS_TOKEN'),
-    ).toEqual(true);
+    expect(response.headers['set-cookie'][0].startsWith('ACCESS_TOKEN')).toEqual(true);
   });
   test('Email is used', async () => {
     const response = await request(app)
@@ -215,6 +213,26 @@ describe('GET/categories', () => {
   test('get all categories from database', async () => {
     const response = await request(app).get('/api/categories').expect(200);
     expect(response.body.hasOwnProperty('data')).toEqual(true);
+  });
+});
+
+describe('GET /statistics', () => {
+  test('get all stats', async () => {
+    const response = await request(app)
+      .get('/api/statistics')
+      .expect(200);
+    const { data } = response.body;
+    expect(data).toStrictEqual({
+      families: 5,
+      doners: 5,
+      donations: [
+        {
+          money: '1000',
+          food: '100',
+          clothes: '100',
+        },
+      ],
+    });
   });
 });
 
