@@ -5,14 +5,21 @@ import { CustomedError } from '../../utils';
 import { paramsSchema, donationSchema } from '../../utils/validation';
 
 const addDonation = async (req: any, res: Response, next: NextFunction) => {
-  const donorId: number = req.user.id;
   try {
-    await paramsSchema.validateAsync(req.params);
-    const { id } = req.params;
-    await donationSchema.validateAsync(req.body);
     const {
-      food, clothes, money, description, location, deliver_time,
-    } = req.body;
+      user: { id: donorId },
+    } = req;
+    const {
+      params: { id },
+    } = req;
+    const {
+      body: {
+        food, clothes, money, description, location, deliver_time,
+      },
+    } = req;
+
+    await paramsSchema.validateAsync(req.params);
+    await donationSchema.validateAsync(req.body);
     if (!food && !clothes && !money) {
       next(
         new CustomedError(

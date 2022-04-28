@@ -322,7 +322,7 @@ describe('GET /statistics', () => {
       donations: [
         {
           money: '1000',
-          food: '100',
+          food: '101',
           clothes: '100',
         },
       ],

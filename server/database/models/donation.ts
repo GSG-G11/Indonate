@@ -32,7 +32,7 @@ const Donation = sequelize.define('donations', {
   },
   location: {
     type: DataTypes.STRING,
-    allowNull: true,
+    allowNull: false,
   },
 });
 
