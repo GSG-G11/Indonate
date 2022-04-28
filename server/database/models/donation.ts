@@ -9,15 +9,18 @@ const Donation = sequelize.define('donations', {
   },
   food: {
     type: DataTypes.INTEGER,
-    allowNull: true,
+    allowNull: false,
+    defaultValue: 0,
   },
   clothes: {
     type: DataTypes.INTEGER,
-    allowNull: true,
+    allowNull: false,
+    defaultValue: 0,
   },
   money: {
     type: DataTypes.INTEGER,
-    allowNull: true,
+    allowNull: false,
+    defaultValue: 0,
   },
   description: {
     type: DataTypes.STRING,

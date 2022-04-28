@@ -312,6 +312,24 @@ describe('POST /donation/:id', () => {
   });
 });
 
+describe('GET /statistics', () => {
+  test('get all stats', async () => {
+    const response = await request(app).get('/api/statistics').expect(200);
+    const { data } = response.body;
+    expect(data).toStrictEqual({
+      families: 5,
+      doners: 5,
+      donations: [
+        {
+          money: '1000',
+          food: '100',
+          clothes: '100',
+        },
+      ],
+    });
+  });
+});
+
 afterAll(() => {
   connection.close();
 });
