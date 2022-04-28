@@ -12,11 +12,11 @@ Campaign.belongsToMany(Family, { through: Capon });
 Family.belongsToMany(Campaign, { through: Capon });
 Campaign.belongsToMany(Donor, {
   through: { model: Donation, unique: false },
-  constraints: false,
+  constraints: true,
 });
 Donor.belongsToMany(Campaign, {
   through: { model: Donation, unique: false },
-  constraints: false,
+  constraints: true,
 });
 
 export {
