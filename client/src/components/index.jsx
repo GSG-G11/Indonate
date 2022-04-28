@@ -1,2 +1,3 @@
-// eslint-disable-next-line import/prefer-default-export
-export { default as OurMission } from './OurMission/OurMission';
+import OurMission from './OurMission';
+
+export default OurMission;
