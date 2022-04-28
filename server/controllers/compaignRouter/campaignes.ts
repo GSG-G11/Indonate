@@ -14,16 +14,13 @@ const campaigns = async (req:Request, res:Response, next:NextFunction) => {
     }:any = req.query;
 
     await querySchema.validateAsync(req.query);
-    const categoryObject = category ? { name: category } : {};
-    const searchObject = search ? { title: search } : {};
-    const availableObject = available ? { is_available: available } : {};
     const campaignesData:any = await Campaign.findAll({
       offset: ((page || 1) - 1) * (limit || 1),
       limit,
       attributes:
        ['id', 'title', 'description', 'image_link', 'is_available', 'categoryId'],
       where: {
-        [Op.and]: [searchObject, availableObject],
+        [Op.and]: [available && { is_available: available }, search && { title: search }],
       },
       order: [
         ['id', 'DESC'],
@@ -32,13 +29,14 @@ const campaigns = async (req:Request, res:Response, next:NextFunction) => {
       include: {
         model: Category,
         attributes: ['name', 'icon_url'],
-        where: categoryObject,
+        where: category && { name: category },
 
       },
     });
 
     res.json({ message: 'Success', data: { campaigns: campaignesData } });
   } catch (e) {
+    console.log(e);
     if (e.name === 'ValidationError') {
       next(new CustomedError(e.message, 400));
     }
