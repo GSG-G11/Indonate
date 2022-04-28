@@ -11,25 +11,18 @@ const campaigns = async (req:Request, res:Response, next:NextFunction) => {
       category,
       page,
       limit,
-    } = req.query;
-    const pageNum = page || 1;
+    }:any = req.query;
+
+    await querySchema.validateAsync({ page, limit });
     const categoryObject = category ? { name: category } : {};
     const searchObject = search ? { title: search } : {};
     const availableObject = available ? { is_available: available } : {};
 
-    const {
-      page: validatedPageNumber,
-      limit: validatedLimitNumber,
-    } = await querySchema.validateAsync({
-      page: pageNum,
-      limit,
-    });
-
     const campaignesData:any = await Campaign.findAll({
-      offset: (validatedPageNumber - 1) * (validatedLimitNumber || 1),
-      limit: validatedLimitNumber,
+      offset: ((page || 1) - 1) * (limit || 1),
+      limit,
       attributes:
-       ['id', 'title', 'description', 'target', 'image_link', 'is_available', 'categoryId'],
+       ['id', 'title', 'description', 'image_link', 'is_available', 'categoryId'],
       where: {
         [Op.and]: [searchObject, availableObject],
       },
