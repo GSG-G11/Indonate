@@ -41,7 +41,6 @@ const campaigns = async (req:Request, res:Response, next:NextFunction) => {
 
     res.json({ message: 'Success', data: { campaigns: campaignesData } });
   } catch (e) {
-    console.log(e);
     if (e.name === 'ValidationError') {
       next(new CustomedError(e.message, 400));
     }
