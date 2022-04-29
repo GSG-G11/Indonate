@@ -15,9 +15,9 @@ function App() {
       <Routes>
         <Route
           path="/"
-          element={
+          element={(
             <CollectionsPage />
-            }
+          )}
         />
         <Route
           path="/campaigns"

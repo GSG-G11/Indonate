@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
 import Proptypes from 'prop-types';
 import {
   Button,
@@ -14,17 +13,27 @@ import {
   Typography,
 } from 'antd';
 
-import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import './style.css';
 
 const { Text } = Typography;
+const { Group, Button: RButton } = Radio;
+const { Item } = Form;
 
-function CollectionCreateForm({
+function DonationForm({
   visible, onCreate, onCancel, setSelectedDate, selectedDate, msgError,
 }) {
   const [form] = Form.useForm();
   const [radioValue, setRadioValue] = useState();
+  const validationForm = () => {
+    form
+      .validateFields()
+      .then((values) => {
+        form.resetFields();
+        onCreate(values);
+      });
+  };
+  const radioType = ({ target: { value } }) => setRadioValue(value);
   return (
     <Modal
       className="modal"
@@ -33,17 +42,7 @@ function CollectionCreateForm({
       okText="add"
       cancelText="Cancel"
       onCancel={onCancel}
-      onOk={() => {
-        form
-          .validateFields()
-          .then((values) => {
-            form.resetFields();
-            onCreate(values);
-          })
-          .catch((info) => {
-            console.log('Validate Failed:', info);
-          });
-      }}
+      onOk={validationForm}
     >
       <Form
         form={form}
@@ -53,40 +52,39 @@ function CollectionCreateForm({
           modifier: 'public',
         }}
       >
-
-        <Form.Item
+        <Item
           name="type"
           label="Type Of Donation :"
           rules={[{ required: true, message: 'Please choose donation type!' }]}
         >
-          <Radio.Group name="type" onChange={({ target: { value } }) => setRadioValue(value)}>
-            <Radio.Button value="clothes">Clothes</Radio.Button>
-            <Radio.Button value="food">Food</Radio.Button>
-            <Radio.Button value="money">Money</Radio.Button>
-          </Radio.Group>
-        </Form.Item>
-        <Form.Item
+          <Group name="type" onChange={radioType}>
+            <RButton value="clothes">Clothes</RButton>
+            <RButton value="food">Food</RButton>
+            <RButton value="money">Money</RButton>
+          </Group>
+        </Item>
+        <Item
           label="Money count/  Piece of clothes/ Number of meals:"
           name={radioValue}
           rules={[{ required: true, message: 'Please fill this input!' }]}
         >
           <InputNumber min={0} defaultValue={0} name={radioValue} />
-        </Form.Item>
-        <Form.Item
+        </Item>
+        <Item
           name="description"
           label="Description"
           rules={[{ required: true, message: 'Please fill this input!' }]}
         >
           <Input type="textarea" name="description" />
-        </Form.Item>
-        <Form.Item
+        </Item>
+        <Item
           name="location"
           label="Location"
           rules={[{ required: true, message: 'Please fill this input!' }]}
         >
           <Input type="textarea" name="location" />
-        </Form.Item>
-        <Form.Item
+        </Item>
+        <Item
           name="deliver_time"
           label="Deliver Time:"
           rules={[{ required: true, message: 'Please fill this input!' }]}
@@ -99,56 +97,53 @@ function CollectionCreateForm({
               dateFormat="dd/MM/yyyy"
             />
           </Space>
-        </Form.Item>
+        </Item>
         <Text type="danger">{msgError}</Text>
       </Form>
     </Modal>
   );
 }
 
-function CollectionsPage() {
+function DonationButton({ campaignId }) {
   const [visible, setVisible] = useState(false);
   const [selectedDate, setSelectedDate] = useState(Date.now().toString());
   const [msgError, setMsgError] = useState();
-  const { id } = useSelector((state) => state.user.userData);
   const onCreate = async (values) => {
     try {
-      const { campaignId } = useParams();
       const donateInfo = {
-        ...values, deliver_time: selectedDate, donorId: id,
+        ...values, deliver_time: selectedDate,
       };
-      const response = await axios.post(`/api/donation/${campaignId}`, donateInfo);
+      const { data } = await axios.post(`/api/donation/${campaignId}`, donateInfo);
       setVisible(false);
-      message.success(response.data.message);
-    } catch (error) {
-      setMsgError(error.response.data.message);
+      message.success(data.message);
+    } catch ({ response: { data } }) {
+      setMsgError(data.message);
     }
+  };
+  const visibleToggle = () => {
+    setVisible((prev) => !prev);
   };
 
   return (
     <>
       <Button
         type="primary"
-        onClick={() => {
-          setVisible(true);
-        }}
+        onClick={visibleToggle}
       >
         Donate
       </Button>
-      <CollectionCreateForm
+      <DonationForm
         msgError={msgError}
         selectedDate={selectedDate}
         setSelectedDate={setSelectedDate}
         visible={visible}
         onCreate={onCreate}
-        onCancel={() => {
-          setVisible(false);
-        }}
+        onCancel={visibleToggle}
       />
     </>
   );
 }
-CollectionCreateForm.propTypes = {
+DonationForm.propTypes = {
   visible: Proptypes.bool.isRequired,
   onCancel: Proptypes.func.isRequired,
   onCreate: Proptypes.func.isRequired,
@@ -156,5 +151,8 @@ CollectionCreateForm.propTypes = {
   selectedDate: Proptypes.string.isRequired,
   msgError: Proptypes.string.isRequired,
 };
+DonationButton.propTypes = {
+  campaignId: Proptypes.number.isRequired,
+};
 
-export default CollectionsPage;
+export default DonationButton;
