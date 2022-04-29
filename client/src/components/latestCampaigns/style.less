@@ -12,19 +12,44 @@
 }
 
 h1.ant-typography {
+    margin: 20px;
     color: #469D62;
 
 }
 
 .cards {
     display: flex;
-    gap: 10%;
-    padding: 20px;
     justify-content: center;
+    flex-wrap: wrap;
+    gap: 8%;
+    padding: 20px;
+}
+
+.anchor {
+    display: flex;
+    justify-content: center;
+    margin: 20px;
 }
 
 .more_btn {
     display: flex;
     align-self: center;
     margin-top: 2%;
+    width: 170px;
+}
+
+.ant-anchor-ink {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .ant-card {
+        margin-bottom: 8%;
+    }
+}
+
+@media (max-width: 992px) {
+    .ant-card {
+        margin-bottom: 8%;
+    }
 }
