@@ -22,7 +22,11 @@ function latestCampaigns({ campaigns }) {
         {
           // campaigns is only three campagins
           campaigns.map((({
-            id, title, description, imgSrc, categoryIcon,
+            id,
+            title,
+            description,
+            imgSrc,
+            categoryIcon,
           }) => (
             <Campaign
               key={id}
