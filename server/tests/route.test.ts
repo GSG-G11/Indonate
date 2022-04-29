@@ -110,29 +110,6 @@ describe('POST/login', () => {
     );
   });
 });
-describe('GET/checkAuth', () => {
-  test('Authorized', async () => {
-    const response = await request(app)
-      .get('/api/checkAuth')
-      .set('Cookie', [' ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwibmFtZSI6InNhcmFhYWFhIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTY1MTA4ODczNCwiZXhwIjoxNjUzNjgwNzM0fQ.0WLTAq9cljwNyJE2dUOnTa1rzBgNVvpMIE1GwXfNG8U'])
-      .expect(200);
-    expect(response.body.data).toEqual({
-      exp: 1653680734, iat: 1651088734, id: 6, isAdmin: false, name: 'saraaaaa',
-    });
-  });
-  test('unAuthorized uer ', async () => {
-    await request(app)
-      .get('/api/checkAuth')
-      .set('Cookie', [' ACCESS_TOKEN=66666eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwibmFtZSI6InNhcmFhYWFhIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTY1MTA4ODczNCwiZXhwIjoxNjUzNjgwNzM0fQ.0WLTAq9cljwNyJE2dUOnTa1rzBgNVvpMIE1GwXfNG8U'])
-      .expect(401);
-  });
-  test('test in there is not ACCESS_TOKEN ', async () => {
-    await request(app)
-      .get('/api/checkAuth')
-      .set('Cookie', [])
-      .expect(401);
-  });
-});
 
 describe('POST/signUp', () => {
   test('sign up', async () => {
@@ -238,6 +215,124 @@ describe('GET/categories', () => {
   test('get all categories from database', async () => {
     const response = await request(app).get('/api/categories').expect(200);
     expect(response.body.hasOwnProperty('data')).toEqual(true);
+  });
+});
+
+describe('POST /donation/:id', () => {
+  test('Add donation to database - Unauthorized user', async () => {
+    const response = await request(app)
+      .post('/api/donation/1')
+      .send({
+        food: 1,
+        description: 'Donation',
+        location: 'Test Location',
+        deliver_time: '02/02/2020',
+      })
+      .expect(401);
+    expect(response.body.message).toEqual('Unauthorized user');
+  });
+  test('Add donation to database - Authorized user', async () => {
+    const response = await request(app)
+      .post('/api/donation/1')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxMDkyNzc5LCJleHAiOjE2NTM2ODQ3Nzl9.nrZI3QFlUn16xlm3ByPGBzCS-6YMwbVl7KuzVzRFsco',
+      ])
+      .send({
+        food: 1,
+        description: 'Donation',
+        location: 'Test Location',
+        deliver_time: '02/02/2020',
+      })
+      .expect(201);
+    expect(response.body.message).toEqual('Donation added successfully');
+  });
+  test('donation with not valid date', async () => {
+    const response = await request(app)
+      .post('/api/donation/4')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxMDkyNzc5LCJleHAiOjE2NTM2ODQ3Nzl9.nrZI3QFlUn16xlm3ByPGBzCS-6YMwbVl7KuzVzRFsco',
+      ])
+      .send({
+        food: 1,
+        description: 'Donation',
+        location: 'Test Location',
+        deliver_time: true,
+      })
+      .expect(400);
+    expect(response.body.message).toEqual(
+      '"deliver_time" must be a valid date',
+    );
+  });
+  test('donation with not entered date', async () => {
+    const response = await request(app)
+      .post('/api/donation/1')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxMDkyNzc5LCJleHAiOjE2NTM2ODQ3Nzl9.nrZI3QFlUn16xlm3ByPGBzCS-6YMwbVl7KuzVzRFsco',
+      ])
+      .send({
+        food: 1,
+        description: 'Donation',
+        location: 'Test Location',
+      })
+      .expect(400);
+    expect(response.body.message).toEqual('"deliver_time" is required');
+  });
+  test('campaign id not exists', async () => {
+    const response = await request(app)
+      .post('/api/donation/10')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxMDkyNzc5LCJleHAiOjE2NTM2ODQ3Nzl9.nrZI3QFlUn16xlm3ByPGBzCS-6YMwbVl7KuzVzRFsco',
+      ])
+      .send({
+        food: 1,
+        description: 'Donation',
+        location: 'Test Location',
+        deliver_time: '02/02/2020',
+      })
+      .expect(400);
+    expect(response.body.message).toEqual(
+      'Cannot add donation, campaign not exists',
+    );
+  });
+});
+
+describe('GET /statistics', () => {
+  test('get all stats', async () => {
+    const { body: { data } } = await request(app).get('/api/statistics').expect(200);
+    expect(data).toStrictEqual({
+      families: 5,
+      doners: 5,
+      donations: [
+        {
+          money: '1000',
+          food: '101',
+          clothes: '100',
+        },
+      ],
+    });
+  });
+});
+describe('GET/checkAuth', () => {
+  test('Authorized', async () => {
+    const response = await request(app)
+      .get('/api/checkAuth')
+      .set('Cookie', [' ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywibmFtZSI6ImF5YSIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE2NTEyNTA2MDAsImV4cCI6MTY1Mzg0MjYwMH0.C6_G19oENCkS2B47LdWZqvNDEFgPj3IsykSFOfBY48I'])
+      .expect(200);
+    expect(response.body.data).toEqual({
+      exp: 1653842600, iat: 1651250600, id: 7, isAdmin: false, name: 'aya',
+    });
+  });
+  test('unAuthorized uer ', async () => {
+    await request(app)
+      .get('/api/checkAuth')
+      .set('Cookie', [' ACCESS_TOKEN=666eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywibmFtZSI6ImF5YSIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE2NTEyNTA2MDAsImV4cCI6MTY1Mzg0MjYwMH0.C6_G19oENCkS2B47LdWZqvNDEFgPj3IsykSFOfBY48I'])
+      .expect(401);
+  });
+  test('test in there is not ACCESS_TOKEN ', async () => {
+    await request(app)
+      .get('/api/checkAuth')
+      .set('Cookie', [])
+      .expect(401);
   });
 });
 
