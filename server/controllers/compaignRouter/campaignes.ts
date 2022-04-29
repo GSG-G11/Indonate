@@ -14,7 +14,7 @@ const campaigns = async (req:Request, res:Response, next:NextFunction) => {
     }:any = req.query;
 
     await querySchema.validateAsync(req.query);
-    const campaignesData:any = await Campaign.findAll({
+    const campaignesData = await Campaign.findAll({
       offset: (page - 1) * limit,
       limit,
       attributes:

@@ -5,7 +5,7 @@ import request from 'supertest';
 import connection from '../database/config/connection';
 import app from '../app';
 import buildFakeData from '../database/fakeData/buildFakeData';
-import * as campaigns from './campaines.json';
+import * as campaigns from './getAllCampainesResult.json';
 
 beforeAll(() => buildFakeData());
 
@@ -342,7 +342,7 @@ describe('GET/campaines', () => {
     const response = await request(app).get('/api/campaigns?available=false').expect(200);
     expect(response.body.data.campaigns).toEqual([]);
   });
-  test('get campaines with name summer clothes collection and category=education', async () => {
+  test('get campaines with name Summer and category=education', async () => {
     const response = await request(app).get('/api/campaigns?search=summer%20clothes%20collection&category=Education').expect(200);
     expect(response.body.data.campaigns).toEqual([{
       id: 3,
