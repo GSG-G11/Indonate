@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { Op } from 'sequelize';
-import { Campaign, Category } from '../../database/models';
+import { Campaign, Category, sequelize } from '../../database/models';
 import { CustomedError, querySchema } from '../../utils';
 
 const campaigns = async (req:Request, res:Response, next:NextFunction) => {
@@ -9,19 +9,24 @@ const campaigns = async (req:Request, res:Response, next:NextFunction) => {
       search,
       available,
       category,
-      page,
-      limit,
+      page = 1,
+      limit = 6,
     }:any = req.query;
 
     await querySchema.validateAsync(req.query);
     const campaignesData:any = await Campaign.findAll({
-      offset: ((page || 1) - 1) * (limit || 1),
+      offset: (page - 1) * limit,
       limit,
       attributes:
        ['id', 'title', 'description', 'image_link', 'is_available', 'categoryId'],
+
       where: {
-        [Op.and]: [available && { is_available: available }, search && { title: search }],
+        [Op.and]: [available && { is_available: available }, search && {
+          title: sequelize.where(sequelize.fn('LOWER', sequelize.col('title')), { [Op.like]: `%${search.toLowerCase()}%` }),
+
+        }],
       },
+
       order: [
         ['id', 'DESC'],
       ],
@@ -29,7 +34,7 @@ const campaigns = async (req:Request, res:Response, next:NextFunction) => {
       include: {
         model: Category,
         attributes: ['name', 'icon_url'],
-        where: category && { name: category },
+        where: category && { name: sequelize.where(sequelize.fn('LOWER', sequelize.col('name')), { [Op.like]: `%${category.toLowerCase()}%` }) },
 
       },
     });
