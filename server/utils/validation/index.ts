@@ -1,6 +1,6 @@
 import signUpSchema from './signUpSchema';
 import loginSchema from './loginSchema';
-import querySchema from './QueryValidation'
+import querySchema from './QueryValidation';
 import paramsSchema from './paramsSchema';
 import reportsSchema from './reportsSchema';
 import donationSchema from './donationSchema';
@@ -11,5 +11,5 @@ export {
   paramsSchema,
   reportsSchema,
   donationSchema,
-  querySchema
+  querySchema,
 };
