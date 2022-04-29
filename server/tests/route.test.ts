@@ -266,7 +266,6 @@ describe('GET/campaines', () => {
   test('get campaines with name not exit', async () => {
     const response = await request(app).get('/api/campaigns?search=give people maney&category=Education').expect(200);
     expect(response.body.data.campaigns).toEqual([]);
-=======
 describe('POST /donation/:id', () => {
   test('Add donation to database - Unauthorized user', async () => {
     const response = await request(app)
