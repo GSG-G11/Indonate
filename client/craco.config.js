@@ -20,7 +20,6 @@ module.exports = {
               '@radio-button-hover-color': '#EB743A',
               '@radio-button-active-color': '#EB743A',
               '@layout-header-background': '#fff',
-              '@switch-color': '#EB743A',
 
             },
             javascriptEnabled: true,

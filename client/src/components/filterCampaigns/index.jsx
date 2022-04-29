@@ -5,28 +5,34 @@ import {
   message,
   Radio,
   Input,
-  Segmented,
+  Switch,
 
 } from 'antd';
+import { CloseOutlined, CheckOutlined } from '@ant-design/icons';
 import './style.less';
 
 const { Search } = Input;
-const { Group } = Radio;
+const { Group, Button } = Radio;
 function Campaigns({ setCategory, setAvailable, setSearch }) {
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
+    const source = axios.CancelToken.source();
+    const { token } = source;
+
     const fetchData = async () => {
       try {
-        const { data: { data: { categories: categoriesFromDB } } } = await axios('/api/categories');
-        const categoriesNameArr = ['List All'];
-        categoriesFromDB.map((item) => categoriesNameArr.push(item.name));
-        setCategories(categoriesNameArr);
+        const { data: { data: { categories: categoriesFromDB } } } = await axios('/api/categories', {
+          cancelToken: token,
+        });
+        const name = categoriesFromDB.map((item) => (item.name));
+        setCategories(['List All', ...name]);
       } catch ({ response: { data: { message: errorMessage } } }) {
         message.info(errorMessage);
       }
     };
     fetchData();
+    return () => source.cancel();
   }, []);
   const handleCategoryChange = ({ target: { value } }) => {
     setCategory(value);
@@ -38,15 +44,29 @@ function Campaigns({ setCategory, setAvailable, setSearch }) {
     setAvailable(e);
   };
   return (
-    <div className="fliter-section">
-      <div>
-        <Group onChange={handleCategoryChange} defaultValue="List All" buttonStyle="solid">
-          {categories.map((item) => <Radio.Button value={item}>{item}</Radio.Button>)}
-        </Group>
+    <div>
+      <div className="search-section">
+        <Search placeholder="input search text" onChange={handleSearchChange} className="searchInput" />
       </div>
+      <div className="fliter-section">
 
-      <Segmented options={['Avilable', 'Not Avilable']} onChange={handleAailableChange} />
-      <Search placeholder="input search text" onChange={handleSearchChange} style={{ width: '300px' }} />
+        <div>
+          <Group onChange={handleCategoryChange} defaultValue="List All" buttonStyle="solid">
+            {categories.map((item) => <Button key={item} value={item}>{item}</Button>)}
+          </Group>
+        </div>
+        <div>
+          Available campaigns:
+          {' '}
+          <Switch
+            checkedChildren={<CheckOutlined />}
+            unCheckedChildren={<CloseOutlined />}
+            defaultChecked
+            onChange={handleAailableChange}
+          />
+        </div>
+
+      </div>
     </div>
   );
 }

@@ -8,7 +8,7 @@ import buildFakeData from '../database/fakeData/buildFakeData';
 beforeAll(() => buildFakeData());
 
 describe('POST/login', () => {
-  /* test('User with admin role', async () => {
+  test('User with admin role', async () => {
     const response = await request(app)
       .post('/api/login')
       .send({
@@ -51,7 +51,7 @@ describe('POST/login', () => {
       .expect(400);
     expect(response.body.message).toBe('"email" must be a valid email');
     expect(response.headers['set-cookie']).toEqual(undefined);
-  }); */
+  });
 
   test('User with not valid password', async () => {
     const response = await request(app)
@@ -296,23 +296,23 @@ describe('POST /donation/:id', () => {
   });
 });
 
-describe('GET /statistics', () => {
+/* describe('GET /statistics', () => {
   test('get all stats', async () => {
-    const response = await request(app).get('/api/statistics').expect(200);
-    const { data } = response.body;
+    const { body: { data } } = await request(app).get('/api/statistics').expect(200);
+    console.log(data);
     expect(data).toStrictEqual({
       families: 5,
       doners: 5,
       donations: [
         {
-          money: '700',
-          food: '70',
-          clothes: '70',
+          money: '1000',
+          food: '101',
+          clothes: '100',
         },
       ],
     });
   });
-});
+}); */
 
 afterAll(() => {
   connection.close();
