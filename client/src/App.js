@@ -32,7 +32,9 @@ function App() {
   ];
   return (
     <>
+      <Review />
       <LatestCampaigns campaigns={campaigns} />
+
       <Router>
         <Nav />
         <Routes>
