@@ -11,7 +11,7 @@ module.exports = {
               '@primary-color': '#469D62',
               '@link-color': '#469D62',
               '@border-radius-base': '2px',
-
+              '@layout-header-background': 'white',
             },
             javascriptEnabled: true,
           },

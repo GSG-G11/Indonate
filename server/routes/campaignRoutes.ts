@@ -1,8 +1,10 @@
 import { Router } from 'express';
-import { getCampaignById, campaigns } from '../controllers';
+import { getCampaignById, campaigns,statistics } from '../controllers';
+const campaignRouter = Router();
 
-const campaignRoutes = Router();
 
 campaignRoutes.get('/campaigns', campaigns);
 campaignRoutes.route('/campaign/:id').get(getCampaignById);
-export default campaignRoutes;
+campaignRouter.route('/campaign/:id').get(getCampaignById);
+campaignRouter.get('/statistics', statistics);
+export default campaignRouter;

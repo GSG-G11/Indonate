@@ -1,4 +1,5 @@
 import CustomedError from './customedError';
+import { signToken, verifyToken } from './token';
 import {
   signUpSchema,
   loginSchema,
@@ -6,7 +7,6 @@ import {
   reportsSchema,
   querySchema,
 } from './validation';
-import signToken from './signToken';
 
 export {
   CustomedError,
@@ -16,4 +16,5 @@ export {
   paramsSchema,
   reportsSchema,
   querySchema,
+  verifyToken,
 };
