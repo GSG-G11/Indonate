@@ -1,15 +1,24 @@
-import React from 'react';
-import { Typography, Anchor } from 'antd';
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { Typography, Button } from 'antd';
 import Campaign from '../common/campaignCard';
 import './style.less';
 
-const { Link } = Anchor;
 const { Title, Text } = Typography;
 function latestCampaigns({ campaigns }) {
-  const toCampaignsPage = (e) => {
-    e.preventDefault();
-    // Navigate to /Campaigns
-  };
+  const navigate = useNavigate();
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const response = await axios.get('/api/campaigns');
+        console.log(response);
+      } catch (e) {
+        console.log('An error occurred');
+      }
+    };
+    getData();
+  });
   return (
     <section className="layout">
       <Title className="header_title" level={1}>
@@ -39,9 +48,8 @@ function latestCampaigns({ campaigns }) {
           ))
         }
       </div>
-      <Anchor className="anchor" onClick={toCampaignsPage}>
-        <Link href="/campaigns" className="more_btn ant-btn-primary ant-btn" title="See More Campaigns" />
-      </Anchor>
+      <Button className="more_btn ant-btn-primary ant-btn" type="primary" onClick={() => navigate('/campaigns/')}>See More Campaigns</Button>
+
     </section>
   );
 }

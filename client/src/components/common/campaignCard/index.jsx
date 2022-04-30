@@ -2,7 +2,6 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import PropTypes from 'prop-types';
-// import axios from 'axios';
 import {
   Card, Button, Typography,
 } from 'antd';
@@ -20,7 +19,6 @@ function Campaign({
   categoryIcon,
 }) {
   const navigate = useNavigate();
-
   const goToCampaign = (campaignId) => navigate(`/campaign/${campaignId}`);
   return (
     <Card
@@ -34,7 +32,6 @@ function Campaign({
       <Text type="secondary">{description}</Text>
       <Button
         type="primary"
-        onClick={() => console.log(id)}
       >
         Donate
       </Button>
