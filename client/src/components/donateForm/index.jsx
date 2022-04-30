@@ -23,7 +23,7 @@ const { Group, Button: RButton } = Radio;
 const { Item } = Form;
 
 function DonationForm({
-  visible, onCancel, campaignId = 1, setVisible,
+  visible, onCancel, campaignId, setVisible,
 }) {
   const [form] = Form.useForm();
   const [radioValue, setRadioValue] = useState();
