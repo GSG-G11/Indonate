@@ -1,12 +1,14 @@
 import React from 'react';
 import {
-  Form, Input, Button, message,
+  Form, Input, Button, message, Typography,
 } from 'antd';
 
 import axios from 'axios';
 import './style.less';
 
 const { TextArea } = Input;
+const { Title, Paragraph } = Typography;
+const { Item } = Form;
 
 function ReportsForm() {
   const [form] = Form.useForm();
@@ -34,11 +36,11 @@ function ReportsForm() {
   return (
     <div className="reports-form-container">
       <div className="reports-form-side-bar">
-        <p className="contact-us">CONTACT US</p>
-        <p className="description">
-          Got a question? We&apos;d love to hear from you. Send us a message and well
-          respond as soon as possible.
-        </p>
+        <Title className="contact-us">CONTACT US</Title>
+        <Paragraph className="description">
+          Got a question? We&apos;d love to hear from you. Send us a message and
+          well respond as soon as possible.
+        </Paragraph>
       </div>
       <Form
         form={form}
@@ -47,8 +49,8 @@ function ReportsForm() {
         labelCol={{ span: 8 }}
         className="reports-form"
       >
-        <Form.Item>
-          <Form.Item
+        <Item>
+          <Item
             name="name"
             noStyle
             rules={[{ required: true, message: 'Fullname is required' }]}
@@ -58,10 +60,10 @@ function ReportsForm() {
               placeholder="Username"
               size="large"
             />
-          </Form.Item>
-        </Form.Item>
-        <Form.Item>
-          <Form.Item
+          </Item>
+        </Item>
+        <Item>
+          <Item
             name="email"
             noStyle
             rules={[
@@ -80,9 +82,9 @@ function ReportsForm() {
               placeholder="Email"
               size="large"
             />
-          </Form.Item>
-        </Form.Item>
-        <Form.Item
+          </Item>
+        </Item>
+        <Item
           name="reportMsg"
           rules={[
             { required: true, message: 'You should add message or report.' },
@@ -90,9 +92,9 @@ function ReportsForm() {
           ]}
         >
           <TextArea rows={6} placeholder="Report" size="large" />
-        </Form.Item>
+        </Item>
 
-        <Form.Item label=" " colon={false}>
+        <Item label=" " colon={false}>
           <Button
             className="submit-report"
             type="primary"
@@ -101,7 +103,7 @@ function ReportsForm() {
           >
             Submit
           </Button>
-        </Form.Item>
+        </Item>
       </Form>
     </div>
   );
