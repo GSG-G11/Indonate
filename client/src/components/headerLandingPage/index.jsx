@@ -8,17 +8,15 @@ function HeaderLandingPage() {
   const [data, setData] = useState({});
 
   useEffect(() => {
-    const { CancelToken: { source } } = axios;
-    const { token, cancel } = source;
-
-    source();
+    const source = axios.CancelToken.source();
+    const { token } = source;
     const fetchData = async () => {
       const { data: { data: dataFromDB } } = await axios.get('/api/statistics', { cancelToken: token });
       setData(dataFromDB);
     };
     fetchData();
 
-    return () => cancel();
+    return () => source.cancel();
   }, []);
 
   return (
