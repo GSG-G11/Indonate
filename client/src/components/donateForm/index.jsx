@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import Proptypes from 'prop-types';
 import {
   Button,
@@ -120,15 +121,14 @@ function DonationForm({
 
 function DonationButton({ campaignId }) {
   const [visible, setVisible] = useState(false);
+  const navigate = useNavigate();
 
   const user = useSelector((state) => state.user);
   const visibleToggle = () => {
     setVisible((prev) => !prev);
   };
   function warning() {
-    Modal.warning({
-      title: 'You should Login or Sign Up to Donate',
-    });
+    navigate('/login');
   }
 
   return (
