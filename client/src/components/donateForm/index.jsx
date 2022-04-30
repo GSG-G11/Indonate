@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import Proptypes from 'prop-types';
 import {
   Button,
@@ -108,6 +109,7 @@ function DonationButton({ campaignId }) {
   const [visible, setVisible] = useState(false);
   const [selectedDate, setSelectedDate] = useState(Date.now().toString());
   const [msgError, setMsgError] = useState();
+  const user = useSelector((state) => state.user);
   const onCreate = async (values) => {
     try {
       const donateInfo = {
@@ -123,12 +125,17 @@ function DonationButton({ campaignId }) {
   const visibleToggle = () => {
     setVisible((prev) => !prev);
   };
+  function warning() {
+    Modal.warning({
+      title: 'You should Login or Sign Up to Donate',
+    });
+  }
 
   return (
     <>
       <Button
         type="primary"
-        onClick={visibleToggle}
+        onClick={user.isUserAuthorized ? visibleToggle : warning}
       >
         Donate
       </Button>

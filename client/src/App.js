@@ -5,6 +5,7 @@ import {
 } from './components';
 import store from './redux/app/store';
 import { getUserData } from './redux/feature/user/userSlice';
+import Campaign from './components/common/campaignCard';
 
 function App() {
   useEffect(() => {
@@ -17,7 +18,8 @@ function App() {
         <Route
           path="/"
           element={(
-            <Review />
+            // <Review />
+            <Campaign />
           )}
         />
         <Route
