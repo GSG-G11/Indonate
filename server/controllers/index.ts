@@ -1,3 +1,4 @@
+import checkUser from './auth/checkAuth';
 import signUp from './auth/signUp';
 import login from './auth/login';
 import logout from './auth/logout';
@@ -14,6 +15,7 @@ export {
   getAllCategories,
   reports,
   getCampaignById,
+  checkUser,
   addDonation,
   statistics,
 };
