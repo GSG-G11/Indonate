@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import Proptypes from 'prop-types';
 import {
-  Button,
   Modal,
   Form,
   Input,
@@ -19,7 +16,7 @@ import axios from 'axios';
 import './style.css';
 
 const { Text } = Typography;
-const { Group, Button: RButton } = Radio;
+const { Group, Button } = Radio;
 const { Item } = Form;
 
 function DonationForm({
@@ -73,9 +70,9 @@ function DonationForm({
           rules={[{ required: true, message: 'Please choose donation type!' }]}
         >
           <Group name="type" onChange={radioType}>
-            <RButton value="clothes">Clothes</RButton>
-            <RButton value="food">Food</RButton>
-            <RButton value="money">Money</RButton>
+            <Button value="clothes">Clothes</Button>
+            <Button value="food">Food</Button>
+            <Button value="money">Money</Button>
           </Group>
         </Item>
         <Item
@@ -119,43 +116,11 @@ function DonationForm({
   );
 }
 
-function DonationButton({ campaignId }) {
-  const [visible, setVisible] = useState(false);
-  const navigate = useNavigate();
-
-  const user = useSelector((state) => state.user);
-  const visibleToggle = () => {
-    setVisible((prev) => !prev);
-  };
-  function warning() {
-    navigate('/login');
-  }
-
-  return (
-    <>
-      <Button
-        type="primary"
-        onClick={user.isUserAuthorized ? visibleToggle : warning}
-      >
-        Donate
-      </Button>
-      <DonationForm
-        visible={visible}
-        onCancel={visibleToggle}
-        campaignId={campaignId}
-        setVisible={setVisible}
-      />
-    </>
-  );
-}
 DonationForm.propTypes = {
   visible: Proptypes.bool.isRequired,
   onCancel: Proptypes.func.isRequired,
   setVisible: Proptypes.func.isRequired,
   campaignId: Proptypes.number.isRequired,
 };
-DonationButton.propTypes = {
-  campaignId: Proptypes.number.isRequired,
-};
 
-export default DonationButton;
+export default DonationForm;
