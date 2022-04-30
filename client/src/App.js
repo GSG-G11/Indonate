@@ -25,26 +25,34 @@ function App() {
             <>
               <OurMission />
               <Review />
+              <ReportsForm />
             </>
           )}
         />
-        <Route path="/campaigns" element={<h1>campaigns</h1>} />
-        <Route path="/campaign/:id" element={<h1>campaign</h1>} />
-        <Route path="/signUp" element={<SignUp />} />
+        <Route
+          path="/campaigns"
+          element={
+            <h1>campaigns</h1>
+            }
+        />
+        <Route
+          path="/campaign/:id"
+          element={
+            <h1>campaign</h1>
+            }
+        />
+        <Route
+          path="/signUp"
+          element={
+            <SignUp />
+            }
+        />
         <Route
           path="/login"
           element={(
-            <>
-              <ReportsForm />
-              <Review />
-            </>
+            <Signin />
           )}
-          u
         />
-        <Route path="/campaigns" element={<h1>campaigns</h1>} />
-        <Route path="/campaign/:id" element={<h1>campaign</h1>} />
-        <Route path="/signUp" element={<SignUp />} />
-        <Route path="/login" element={<Signin />} />
       </Routes>
     </Router>
   );

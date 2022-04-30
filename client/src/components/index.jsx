@@ -3,6 +3,7 @@ import Nav from './Nav';
 import Signin from './signin';
 import SignUp from './signUp';
 import Review from './Review';
+import DonationButton from './donateForm/DonateButton';
 import ReportsForm from './ReportsForm';
 
 export {
@@ -11,5 +12,6 @@ export {
   SignUp,
   OurMission,
   Review,
+  DonationButton,
   ReportsForm,
 };
