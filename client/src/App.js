@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { Nav, SignUp, Signin } from './components';
+import {
+  Nav, SignUp, Signin, Review,
+} from './components';
 import store from './redux/app/store';
 import { getUserData } from './redux/feature/user/userSlice';
-import CollectionsPage from './components/donateForm';
 
 function App() {
   useEffect(() => {
@@ -16,7 +17,7 @@ function App() {
         <Route
           path="/"
           element={(
-            <CollectionsPage />
+            <Review />
           )}
         />
         <Route
