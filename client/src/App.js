@@ -1,7 +1,9 @@
 import React, { useEffect } from 'react';
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { Nav, SignUp, Signin } from './components';
+import {
+  Nav, SignUp, Signin, Review,
+} from './components';
 import store from './redux/app/store';
 import { getUserData } from './redux/feature/user/userSlice';
 
@@ -16,7 +18,7 @@ function App() {
         <Route
           path="/"
           element={
-            <h1>Home</h1>
+            <Review />
             }
         />
         <Route
