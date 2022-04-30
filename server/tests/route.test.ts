@@ -301,15 +301,11 @@ describe('GET /statistics', () => {
     const response = await request(app).get('/api/statistics').expect(200);
     const { data } = response.body;
     expect(data).toStrictEqual({
-      families: 5,
-      doners: 5,
-      donations: [
-        {
-          money: '1000',
-          food: '101',
-          clothes: '100',
-        },
-      ],
+      Families: 5,
+      Doners: 5,
+      Money: '1000',
+      Food: '101',
+      Clothes: '100',
     });
   });
 });
