@@ -13,9 +13,9 @@ function OurMission() {
       <div className="our-mission-description-container">
         <Paragraph className="title">Our Mission</Paragraph>
         <Paragraph className="description">
-          We At Our Company name, we give the best services for users and for
-          caregivers to donate their extra money so that we steal the money from
-          them.
+          Our mission is to help reach people in need and support them in providing a better life,
+          be hope for a hungry child or a father who cannot educate his children,
+          be hope for those in need
         </Paragraph>
       </div>
     </section>
