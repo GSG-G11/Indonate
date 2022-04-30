@@ -5,6 +5,7 @@ import {
   loginSchema,
   paramsSchema,
   reportsSchema,
+  querySchema,
 } from './validation';
 
 export {
@@ -14,5 +15,6 @@ export {
   signUpSchema,
   paramsSchema,
   reportsSchema,
+  querySchema,
   verifyToken,
 };
