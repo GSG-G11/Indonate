@@ -20,7 +20,6 @@ function latestCampaigns({ campaigns }) {
       </Title>
       <div className="cards">
         {
-          // campaigns is only three campagins
           campaigns.map((({
             id,
             title,
@@ -30,6 +29,7 @@ function latestCampaigns({ campaigns }) {
           }) => (
             <Campaign
               key={id}
+              id={id}
               title={title}
               description={description}
               imgSrc={imgSrc}
