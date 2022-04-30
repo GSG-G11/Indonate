@@ -298,8 +298,7 @@ describe('POST /donation/:id', () => {
 
 describe('GET /statistics', () => {
   test('get all stats', async () => {
-    const response = await request(app).get('/api/statistics').expect(200);
-    const { data } = response.body;
+    const { body: { data } } = await request(app).get('/api/statistics').expect(200);
     expect(data).toStrictEqual({
       families: 5,
       doners: 5,
@@ -311,6 +310,29 @@ describe('GET /statistics', () => {
         },
       ],
     });
+  });
+});
+describe('GET/checkAuth', () => {
+  test('Authorized', async () => {
+    const response = await request(app)
+      .get('/api/checkAuth')
+      .set('Cookie', [' ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywibmFtZSI6ImF5YSIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE2NTEyNTA2MDAsImV4cCI6MTY1Mzg0MjYwMH0.C6_G19oENCkS2B47LdWZqvNDEFgPj3IsykSFOfBY48I'])
+      .expect(200);
+    expect(response.body.data).toEqual({
+      exp: 1653842600, iat: 1651250600, id: 7, isAdmin: false, name: 'aya',
+    });
+  });
+  test('unAuthorized uer ', async () => {
+    await request(app)
+      .get('/api/checkAuth')
+      .set('Cookie', [' ACCESS_TOKEN=666eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywibmFtZSI6ImF5YSIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE2NTEyNTA2MDAsImV4cCI6MTY1Mzg0MjYwMH0.C6_G19oENCkS2B47LdWZqvNDEFgPj3IsykSFOfBY48I'])
+      .expect(401);
+  });
+  test('test in there is not ACCESS_TOKEN ', async () => {
+    await request(app)
+      .get('/api/checkAuth')
+      .set('Cookie', [])
+      .expect(401);
   });
 });
 
