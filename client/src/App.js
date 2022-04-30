@@ -18,8 +18,10 @@ function App() {
         <Route
           path="/"
           element={(
-            // <Review />
-            <Campaign />
+            <>
+              <Review />
+              <Campaign />
+            </>
           )}
         />
         <Route

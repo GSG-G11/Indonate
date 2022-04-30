@@ -22,17 +22,30 @@ const { Group, Button: RButton } = Radio;
 const { Item } = Form;
 
 function DonationForm({
-  visible, onCreate, onCancel, setSelectedDate, selectedDate, msgError,
+  visible, onCancel, campaignId = 1, setVisible,
 }) {
   const [form] = Form.useForm();
   const [radioValue, setRadioValue] = useState();
-  const validationForm = () => {
-    form
-      .validateFields()
-      .then((values) => {
-        form.resetFields();
-        onCreate(values);
-      });
+  const [msgError, setMsgError] = useState();
+  const [selectedDate, setSelectedDate] = useState('state');
+  const onCreate = async (values) => {
+    try {
+      const donateInfo = {
+        ...values, deliver_time: selectedDate,
+      };
+      const { data } = await axios.post(`/api/donation/${campaignId}`, donateInfo);
+      setMsgError('');
+      setVisible(false);
+      message.success(data.message);
+    } catch ({ response: { data } }) {
+      setMsgError(data.message);
+    }
+  };
+
+  const validationForm = async () => {
+    const values = await form.validateFields();
+    form.resetFields();
+    onCreate(onCreate(values));
   };
   const radioType = ({ target: { value } }) => setRadioValue(value);
   return (
@@ -107,21 +120,8 @@ function DonationForm({
 
 function DonationButton({ campaignId }) {
   const [visible, setVisible] = useState(false);
-  const [selectedDate, setSelectedDate] = useState(Date.now().toString());
-  const [msgError, setMsgError] = useState();
+
   const user = useSelector((state) => state.user);
-  const onCreate = async (values) => {
-    try {
-      const donateInfo = {
-        ...values, deliver_time: selectedDate,
-      };
-      const { data } = await axios.post(`/api/donation/${campaignId}`, donateInfo);
-      setVisible(false);
-      message.success(data.message);
-    } catch ({ response: { data } }) {
-      setMsgError(data.message);
-    }
-  };
   const visibleToggle = () => {
     setVisible((prev) => !prev);
   };
@@ -140,12 +140,10 @@ function DonationButton({ campaignId }) {
         Donate
       </Button>
       <DonationForm
-        msgError={msgError}
-        selectedDate={selectedDate}
-        setSelectedDate={setSelectedDate}
         visible={visible}
-        onCreate={onCreate}
         onCancel={visibleToggle}
+        campaignId={campaignId}
+        setVisible={setVisible}
       />
     </>
   );
@@ -153,10 +151,8 @@ function DonationButton({ campaignId }) {
 DonationForm.propTypes = {
   visible: Proptypes.bool.isRequired,
   onCancel: Proptypes.func.isRequired,
-  onCreate: Proptypes.func.isRequired,
-  setSelectedDate: Proptypes.func.isRequired,
-  selectedDate: Proptypes.string.isRequired,
-  msgError: Proptypes.string.isRequired,
+  setVisible: Proptypes.func.isRequired,
+  campaignId: Proptypes.number.isRequired,
 };
 DonationButton.propTypes = {
   campaignId: Proptypes.number.isRequired,
