@@ -5,10 +5,9 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from 'antd';
 import DonationForm from './DonationForm';
 
-function DonationButton({ campaignId }) {
+function DonationButton({ campaignId, isAvailable }) {
   const [visible, setVisible] = useState(false);
   const navigate = useNavigate();
-
   const user = useSelector((state) => state.user);
   const visibleToggle = () => {
     setVisible((prev) => !prev);
@@ -21,6 +20,8 @@ function DonationButton({ campaignId }) {
     <>
       <Button
         type="primary"
+        size="large"
+        disabled={!isAvailable}
         onClick={user.isUserAuthorized ? visibleToggle : login}
       >
         Donate
@@ -36,5 +37,6 @@ function DonationButton({ campaignId }) {
 }
 DonationButton.propTypes = {
   campaignId: Proptypes.number.isRequired,
+  isAvailable: Proptypes.bool.isRequired,
 };
 export default DonationButton;
