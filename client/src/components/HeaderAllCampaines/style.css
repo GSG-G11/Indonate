@@ -3,7 +3,7 @@
     margin: 0;
 }
 .Header-Image{
-    background-image: url('../assets/images/children.png');
+    background-image: url('../../assets/images/children.png');
     width: 100vw;
     height: 60vh;
     display: flex;
