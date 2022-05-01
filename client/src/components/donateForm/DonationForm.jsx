@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import moment from 'moment';
 import Proptypes from 'prop-types';
 import {
   Modal,
@@ -107,6 +108,7 @@ function DonationForm({
               name="deliver_time"
               onChange={(date, dateString) => setSelectedDate(dateString)}
               dateFormat="dd/MM/yyyy"
+              disabledDate={(current) => current && current < moment().startOf('day')}
             />
           </Item>
         </Space>
