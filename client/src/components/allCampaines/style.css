@@ -1,2 +1,11 @@
 @import '~antd/dist/antd.css';
+.all-campaines-container{
+    display: flex;
+    flex-direction: column;
+   
+}
 
+.pagination{
+    align-self: center;
+    margin-bottom: 100px;
+}

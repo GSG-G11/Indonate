@@ -6,8 +6,8 @@
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
     "@reduxjs/toolkit": "^1.8.1",
+    "antd": "^4.20.1",
     "@craco/craco": "^6.4.3",
-    "antd": "^4.19.5",
     "axios": "^0.26.1",
     "craco-less": "^2.0.0",
     "env2": "^2.2.2",
@@ -23,8 +23,8 @@
     "build": "craco build",
     "test": "craco test",
     "eject": "craco eject",
-    "lint": "eslint --ext .js,.jsx src/**",
-    "lint-fix": "eslint --ext .js,.jsx src/** --fix"
+    "lint": "eslint --ext \"**/*.{js,jsx}\"",
+    "lint-fix": "eslint --ext \"**/*.{js,jsx}\" --fix"
   },
   "eslintConfig": {
     "extends": "react-app"

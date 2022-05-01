@@ -1,9 +1,11 @@
+/* eslint-disable import/extensions */
 /* eslint-disable no-prototype-builtins */
 /* eslint-disable no-undef */
 import request from 'supertest';
 import connection from '../database/config/connection';
 import app from '../app';
 import buildFakeData from '../database/fakeData/buildFakeData';
+import * as campaigns from './getAllCampainesResult.json';
 
 beforeAll(() => buildFakeData());
 
@@ -184,7 +186,7 @@ describe('Get/campaign/:id', () => {
   });
 
   test('campaign/:id => id dose not exist', async () => {
-    const id = 10;
+    const id = 20;
     const response = await request(app).get(`/api/campaign/${id}`).expect(400);
     expect(response.body.data).toBe(undefined);
     expect(response.body.message).toBe('There is no campaign');
@@ -215,6 +217,171 @@ describe('GET/categories', () => {
   test('get all categories from database', async () => {
     const response = await request(app).get('/api/categories').expect(200);
     expect(response.body.hasOwnProperty('data')).toEqual(true);
+  });
+});
+describe('POST /donation/:id', () => {
+  test('Add donation to database - Unauthorized user', async () => {
+    const response = await request(app)
+      .post('/api/donation/1')
+      .send({
+        food: 1,
+        description: 'Donation',
+        location: 'Test Location',
+        deliver_time: '02/02/2020',
+      })
+      .expect(401);
+    expect(response.body.message).toEqual('Unauthorized user');
+  });
+  test('Add donation to database - Authorized user', async () => {
+    const response = await request(app)
+      .post('/api/donation/1')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxMDkyNzc5LCJleHAiOjE2NTM2ODQ3Nzl9.nrZI3QFlUn16xlm3ByPGBzCS-6YMwbVl7KuzVzRFsco',
+      ])
+      .send({
+        food: 1,
+        description: 'Donation',
+        location: 'Test Location',
+        deliver_time: '02/02/2020',
+      })
+      .expect(201);
+    expect(response.body.message).toEqual('Donation added successfully');
+  });
+  test('donation with not valid date', async () => {
+    const response = await request(app)
+      .post('/api/donation/4')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxMDkyNzc5LCJleHAiOjE2NTM2ODQ3Nzl9.nrZI3QFlUn16xlm3ByPGBzCS-6YMwbVl7KuzVzRFsco',
+      ])
+      .send({
+        food: 1,
+        description: 'Donation',
+        location: 'Test Location',
+        deliver_time: true,
+      })
+      .expect(400);
+    expect(response.body.message).toEqual(
+      '"deliver_time" must be a valid date',
+    );
+  });
+  test('donation with not entered date', async () => {
+    const response = await request(app)
+      .post('/api/donation/1')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxMDkyNzc5LCJleHAiOjE2NTM2ODQ3Nzl9.nrZI3QFlUn16xlm3ByPGBzCS-6YMwbVl7KuzVzRFsco',
+      ])
+      .send({
+        food: 1,
+        description: 'Donation',
+        location: 'Test Location',
+      })
+      .expect(400);
+    expect(response.body.message).toEqual('"deliver_time" is required');
+  });
+  test('campaign id not exists', async () => {
+    const response = await request(app)
+      .post('/api/donation/10')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxMDkyNzc5LCJleHAiOjE2NTM2ODQ3Nzl9.nrZI3QFlUn16xlm3ByPGBzCS-6YMwbVl7KuzVzRFsco',
+      ])
+      .send({
+        food: 1,
+        description: 'Donation',
+        location: 'Test Location',
+        deliver_time: '02/02/2020',
+      })
+      .expect(400);
+    expect(response.body.message).toEqual(
+      'Cannot add donation, campaign not exists',
+    );
+  });
+});
+
+describe('GET /statistics', () => {
+  test('get all stats', async () => {
+    const { body: { data } } = await request(app).get('/api/statistics').expect(200);
+    expect(data).toStrictEqual({
+      families: 5,
+      doners: 5,
+      donations: [
+        {
+          money: '1000',
+          food: '101',
+          clothes: '100',
+        },
+      ],
+    });
+  });
+});
+describe('GET/checkAuth', () => {
+  test('Authorized', async () => {
+    const response = await request(app)
+      .get('/api/checkAuth')
+      .set('Cookie', [' ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywibmFtZSI6ImF5YSIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE2NTEyNTA2MDAsImV4cCI6MTY1Mzg0MjYwMH0.C6_G19oENCkS2B47LdWZqvNDEFgPj3IsykSFOfBY48I'])
+      .expect(200);
+    expect(response.body.data).toEqual({
+      exp: 1653842600, iat: 1651250600, id: 7, isAdmin: false, name: 'aya',
+    });
+  });
+  test('unAuthorized uer ', async () => {
+    await request(app)
+      .get('/api/checkAuth')
+      .set('Cookie', [' ACCESS_TOKEN=666eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywibmFtZSI6ImF5YSIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE2NTEyNTA2MDAsImV4cCI6MTY1Mzg0MjYwMH0.C6_G19oENCkS2B47LdWZqvNDEFgPj3IsykSFOfBY48I'])
+      .expect(401);
+  });
+  test('test in there is not ACCESS_TOKEN ', async () => {
+    await request(app)
+      .get('/api/checkAuth')
+      .set('Cookie', [])
+      .expect(401);
+  });
+});
+
+describe('GET/campaines', () => {
+  test('get all campaines', async () => {
+    const response = await request(app).get('/api/campaigns').expect(200);
+
+    expect(response.body.data.campaigns[0]).toEqual(campaigns[0]);
+  });
+  test('test pagenation get the three campaines page 1', async () => {
+    const response = await request(app).get('/api/campaigns?page=1&limit=3', () => {
+      expect(response).toEqual(expect.arrayContaining([
+        expect.objectContaining({ id: 5 }),
+        expect.objectContaining({ id: 4 }),
+        expect.objectContaining({ id: 3 }),
+      ]));
+    });
+  });
+  test('get error when  string to page', async () => {
+    const response = await request(app).get('/api/campaigns?page="f').expect(400);
+    expect(response.body.message).toBe('"page" must be a number');
+  });
+  test('get error when limit is string', async () => {
+    const response = await request(app).get('/api/campaigns?limit=f').expect(400);
+    expect(response.body.message).toBe('"limit" must be a number');
+  });
+  test('get campaines with is not available', async () => {
+    const response = await request(app).get('/api/campaigns?available=false').expect(200);
+    expect(response.body.data.campaigns).toEqual([]);
+  });
+  test('get campaines with name Summer and category=education', async () => {
+    const response = await request(app).get('/api/campaigns?search=summer%20clothes%20collection&category=Education').expect(200);
+    expect(response.body.data.campaigns).toEqual([{
+      id: 3,
+      title: 'summer clothes collection',
+      description: 'This campaign aims to help poor families secure summer clothes by collecting clothes from donors or buying new clothes with financial donations',
+      image_link: 'http://www.humanitygate.com/thumb/560x292/uploads//images/88e62e08915b10584950106f496140ca.jpg',
+      is_available: true,
+      categoryId: 2,
+      category: {
+        name: 'Education',
+        icon_url: 'https://i.pinimg.com/564x/dd/9d/c9/dd9dc9d83423bc037b511d73b29e6b80.jpg',
+      },
+    }]);
+  });
+  test('get campaines with name not exit', async () => {
+    const response = await request(app).get('/api/campaigns?search=give people maney&category=Education').expect(200);
+    expect(response.body.data.campaigns).toEqual([]);
   });
 });
 

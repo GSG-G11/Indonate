@@ -1,7 +1,14 @@
 import React, { useEffect } from 'react';
-import AllCampaines from './components/allCampaines';
-// import SignUp from './Component/signup';
-// import Signin from './components/signin';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import {
+  Nav,
+  SignUp,
+  Signin,
+  Review,
+  ReportsForm,
+  OurMission,
+  AllCampaines,
+} from './components';
 import store from './redux/app/store';
 import { getUserData } from './redux/feature/user/userSlice';
 
@@ -10,10 +17,45 @@ function App() {
     store.dispatch(getUserData());
   }, []);
   return (
-    <div className="App">
-      {/* <SignUp /> */}
-      <AllCampaines />
-    </div>
+    <Router>
+      <Nav />
+      <Routes>
+        <Route
+          path="/"
+          element={(
+            <>
+              <OurMission />
+              <Review />
+              <ReportsForm />
+            </>
+          )}
+        />
+        <Route
+          path="/campaigns"
+          element={
+            <AllCampaines />
+            }
+        />
+        <Route
+          path="/campaign/:id"
+          element={
+            <h1>campaign</h1>
+            }
+        />
+        <Route
+          path="/signUp"
+          element={
+            <SignUp />
+            }
+        />
+        <Route
+          path="/login"
+          element={(
+            <Signin />
+          )}
+        />
+      </Routes>
+    </Router>
   );
 }
 export default App;
