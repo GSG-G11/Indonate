@@ -20,12 +20,12 @@ const { Group, Button } = Radio;
 const { Item } = Form;
 
 function DonationForm({
-  visible, onCancel, campaignId = 1, setVisible,
+  visible, onCancel, campaignId, setVisible,
 }) {
   const [form] = Form.useForm();
   const [radioValue, setRadioValue] = useState();
   const [msgError, setMsgError] = useState();
-  const [selectedDate, setSelectedDate] = useState('state');
+  const [selectedDate, setSelectedDate] = useState();
   const onCreate = async (values) => {
     try {
       const donateInfo = {
