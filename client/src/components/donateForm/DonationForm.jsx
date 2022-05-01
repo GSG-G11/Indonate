@@ -20,7 +20,7 @@ const { Group, Button } = Radio;
 const { Item } = Form;
 
 function DonationForm({
-  visible, onCancel, campaignId, setVisible,
+  visible, onCancel, campaignId = 1, setVisible,
 }) {
   const [form] = Form.useForm();
   const [radioValue, setRadioValue] = useState();
@@ -96,20 +96,20 @@ function DonationForm({
         >
           <Input type="textarea" name="location" />
         </Item>
-        <Item
-          name="deliver_time"
-          label="Deliver Time:"
-          rules={[{ required: true, message: 'Please fill this input!' }]}
-        >
-          <Space name="deliver_time" direction="vertical">
+        <Space direction="vertical">
+          <Item
+            name="deliver_time"
+            label="Deliver Time:"
+            rules={[{ required: true, message: 'Please fill this input!' }]}
+          >
             <DatePicker
               selected={selectedDate}
               name="deliver_time"
               onChange={(date, dateString) => setSelectedDate(dateString)}
               dateFormat="dd/MM/yyyy"
             />
-          </Space>
-        </Item>
+          </Item>
+        </Space>
         <Text type="danger">{msgError}</Text>
       </Form>
     </Modal>
