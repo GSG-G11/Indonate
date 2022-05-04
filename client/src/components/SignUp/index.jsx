@@ -167,7 +167,7 @@ function SignUp() {
             </Button>
           </Form>
           <Button type="primary" icon={<GoogleOutlined />}>
-            Sign in with Google
+            Login with Google
           </Button>
         </Space>
       </div>

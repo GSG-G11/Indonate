@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import {
   Nav,
   SignUp,
-  Signin,
+  Login,
   Review,
   ReportsForm,
   OurMission,
@@ -42,7 +42,7 @@ function App() {
             }
         />
         <Route
-          path="/signUp"
+          path="/signup"
           element={
             <SignUp />
             }
@@ -50,7 +50,7 @@ function App() {
         <Route
           path="/login"
           element={(
-            <Signin />
+            <Login />
           )}
         />
       </Routes>

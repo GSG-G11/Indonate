@@ -23,11 +23,9 @@ const { Title, Text } = Typography;
 const { Item } = Form;
 const { Link } = Anchor;
 const { Password } = Input;
-const {
-  Content,
-} = Layout;
+const { Content } = Layout;
 
-function Signin() {
+function Login() {
   const [userData, setUserData] = useState({ email: '', password: '' });
   const dispatch = useDispatch();
 
@@ -44,16 +42,24 @@ function Signin() {
       if (value.length >= 6) {
         return Promise.resolve();
       }
-      return Promise.reject(new Error('password should be at least 6 characters'));
+      return Promise.reject(
+        new Error('password should be at least 6 characters'),
+      );
     },
   });
 
   const login = async () => {
     try {
-      const { data: { data } } = await axios.post('/api/login', userData);
+      const {
+        data: { data },
+      } = await axios.post('/api/login', userData);
       dispatch(sign(data));
       message.success(`Welcome back ${data.name}`);
-    } catch ({ response: { data: { message: errorMessage } } }) {
+    } catch ({
+      response: {
+        data: { message: errorMessage },
+      },
+    }) {
       message.error({
         content: errorMessage,
       });
@@ -66,16 +72,10 @@ function Signin() {
       <Content>
         <Row>
           <Col span={12} className="customHeaderImage login_image">
-            <Image
-              preview={false}
-              src={background}
-            />
-            <Title
-              level={2}
-              className="text_image"
-            >
-              Subscribe with us to make yourself a contributor to charity and help people in need.
-
+            <Image preview={false} src={background} />
+            <Title level={2} className="text_image">
+              Subscribe with us to make yourself a contributor to charity and
+              help people in need.
             </Title>
           </Col>
           <Col span={12} className="form_section">
@@ -94,9 +94,7 @@ function Signin() {
               autoComplete="off"
               onFinish={login}
             >
-              <Title className="login_title">
-                Login
-              </Title>
+              <Title className="login_title">Login</Title>
 
               <Item
                 name="email"
@@ -131,7 +129,11 @@ function Signin() {
                 />
               </Item>
               <Item>
-                <Button className="login_button" type="primary" htmlType="submit">
+                <Button
+                  className="login_button"
+                  type="primary"
+                  htmlType="submit"
+                >
                   Login
                 </Button>
                 <div className="register_option">
@@ -141,13 +143,14 @@ function Signin() {
                   </Anchor>
                 </div>
               </Item>
-              <Item wrapperCol={{
-                offset: 5,
-                span: 32,
-              }}
+              <Item
+                wrapperCol={{
+                  offset: 5,
+                  span: 32,
+                }}
               >
                 <Button type="primary" icon={<GoogleOutlined />}>
-                  Sign in with Google
+                  Login with Google
                 </Button>
               </Item>
             </Form>
@@ -157,4 +160,4 @@ function Signin() {
     </Layout>
   );
 }
-export default Signin;
+export default Login;
