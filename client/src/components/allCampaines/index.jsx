@@ -12,15 +12,17 @@ function AllCampaines() {
   const [category, setCategory] = useState('');
   const [available, setAvailable] = useState(true);
   const [page, setPage] = useState(1);
+  const [totalCount, setTotalCount] = useState(0);
 
   useEffect(() => {
     const source = axios.CancelToken.source();
     const { token } = source;
     const fetchData = async () => {
       try {
-        const { data: { data: { campaigns: campaignsFromDB } } } = await axios(`/api/campaigns?search=${search}&category=${category}&available=${available}&page=${page} &limit=6`, {
+        const { data: { data: { campaigns: campaignsFromDB, count } } } = await axios(`/api/campaigns?search=${search}&category=${category}&available=${available}&page=${page}&limit=6`, {
           cancelToken: token,
         });
+        setTotalCount(count);
         setCampaigns(campaignsFromDB);
       } catch ({ response: { dara: { message: errorMessage } } }) {
         message.error({
@@ -46,13 +48,16 @@ function AllCampaines() {
 
       <Cards campaigns={campaigns} />
 
-      <Pagination
-        className="pagination"
-        defaultCurrent={page}
-        total={8}
-        defaultPageSize={1}
-        onChange={(e) => handlepageChange(e)}
-      />
+      { totalCount > 6 ? (
+
+        <Pagination
+          className="pagination"
+          defaultCurrent={page}
+          total={Math.ceil(totalCount / 6)}
+          defaultPageSize={1}
+          onChange={(e) => handlepageChange(e)}
+        />
+      ) : null }
 
     </div>
   );

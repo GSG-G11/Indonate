@@ -11,8 +11,6 @@ module.exports = {
               '@primary-color': '#469D62',
               '@link-color': '#469D62',
               '@border-radius-base': '2px',
-              '@pagination-item-link-bg': '#469D62',
-              '@pagination-item-disabled-color-active': '#469D62',
               '@layout-header-background': '#fff',
               '@menu-dark-selected-item-text-color': 'red',
               '@radio-dot-color': '#EB743A',
