@@ -10,7 +10,7 @@ import 'antd/dist/antd.less';
 const { Text } = Typography;
 const { Meta } = Card;
 
-function Campaign({
+function CampaignCard({
   id,
   title,
   description,
@@ -31,9 +31,9 @@ function Campaign({
   );
 }
 
-export default Campaign;
+export default CampaignCard;
 
-Campaign.propTypes = {
+CampaignCard.propTypes = {
   id: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
