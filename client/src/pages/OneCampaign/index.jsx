@@ -12,14 +12,11 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import './style.less';
-import { useSelector } from 'react-redux';
 import { TeamOutlined } from '@ant-design/icons';
 import { DonationButton } from '../../components';
 
 const { Title, Paragraph } = Typography;
 function OneCampaign({ id }) {
-  const user = useSelector((state) => state.user);
-  console.log(user);
   const [campaign, setCampaign] = useState({});
   const [current, setCurrent] = useState(0);
   const [target, setTarget] = useState(0);
@@ -35,7 +32,7 @@ function OneCampaign({ id }) {
           cancelToken: source.token,
         });
         setCampaign(data.campaignInfo);
-        setCurrent(data.current.current);
+        setCurrent(data.current);
         setTarget(data.campaignInfo.target);
         setFamilies(data.families);
       } catch ({
@@ -96,7 +93,7 @@ function OneCampaign({ id }) {
             '0%': '#108ee9',
             '100%': '#87d068',
           }}
-          percent={(100 * +current) / target}
+          percent={((100 * +current) / target).toFixed(2)}
         />
         <Paragraph className="target">
           Target:
