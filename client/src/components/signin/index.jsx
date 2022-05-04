@@ -11,12 +11,10 @@ import {
   Typography,
   Anchor,
 } from 'antd';
-
 import { useDispatch } from 'react-redux';
-
 import { GoogleOutlined } from '@ant-design/icons';
-
 import axios from 'axios';
+import background from '../../assets/Images/login-signup-background.jpg';
 import 'antd/dist/antd.min.css';
 import './index.less';
 import { sign } from '../../redux/feature/user/userSlice';
@@ -25,7 +23,6 @@ const { Title, Text } = Typography;
 const { Item } = Form;
 const { Link } = Anchor;
 const { Password } = Input;
-
 const {
   Content,
 } = Layout;
@@ -71,7 +68,7 @@ function Signin() {
           <Col span={12} className="customHeaderImage login_image">
             <Image
               preview={false}
-              src="https://i.postimg.cc/9FMJSScj/login-image.png"
+              src={background}
             />
             <Title
               level={2}

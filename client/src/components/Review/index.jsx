@@ -1,6 +1,6 @@
 import React from 'react';
 import Comment from './Comment';
-import './style.css';
+import './style.less';
 
 const comments = [
   {
