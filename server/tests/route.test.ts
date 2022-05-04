@@ -188,9 +188,7 @@ describe('Get/campaign/:id', () => {
         target: 50000,
         title: 'Helping poor families',
       },
-      current: {
-        current: 120,
-      },
+      current: 120,
       families: 1,
     };
     const response = await request(app).get(`/api/campaign/${id}`).expect(200);

@@ -1,6 +1,10 @@
 import { Request, Response, NextFunction } from 'express';
 import {
-  Campaign, Capon, Category, Donation, sequelize,
+  Campaign,
+  Capon,
+  Category,
+  Donation,
+  sequelize,
 } from '../../database/models';
 import { CustomedError } from '../../utils';
 import { paramsSchema } from '../../utils/validation';
@@ -26,15 +30,18 @@ const getCampaignById = async (
         attributes: ['name', 'icon_url'],
       },
     });
-    const current = await Donation.findOne({
+    const current: any = await Donation.findAll({
       where: {
         campaignId: id,
       },
       raw: true,
       attributes: [
         [
-          sequelize.literal(
-            'COALESCE(food, 0) + COALESCE(clothes, 0) + COALESCE(money, 0)',
+          sequelize.fn(
+            'SUM',
+            sequelize.literal(
+              'COALESCE(food, 0) + COALESCE(clothes, 0) + COALESCE(money, 0)',
+            ),
           ),
           'current',
         ],
@@ -47,14 +54,11 @@ const getCampaignById = async (
       },
       raw: true,
     });
-
     if (!campaignInfo) throw new CustomedError('There is no campaign', 400);
-    res
-      .status(200)
-      .json({
-        message: 'Success',
-        data: { campaignInfo, current, families: numOfFamilies.length },
-      });
+    res.status(200).json({
+      message: 'Success',
+      data: { campaignInfo, current: +current[0].current, families: numOfFamilies.length },
+    });
   } catch (error) {
     if (error.name === 'ValidationError') {
       next(new CustomedError(error.details[0].message, 400));
