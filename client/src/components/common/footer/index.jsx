@@ -13,7 +13,6 @@ import indonate from './logo.svg';
 const {
   Text,
 } = Typography;
-
 function Footer() {
   return (
     <section className="footer_container">
@@ -26,7 +25,7 @@ function Footer() {
         <GoogleOutlined />
         <hr className="line" />
       </div>
-      <div className="logo_container">
+      <div className="info_container">
         <img className="logo" src={indonate} alt="indonate" />
         <Text>Copyright © 2022 Indonate, Inc.</Text>
       </div>
