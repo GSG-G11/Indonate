@@ -68,7 +68,7 @@ function SignUp() {
           Subscribe with us to make yourself a contributor to charity and help people in need.
         </Title>
       </div>
-      <div className="form-conatainer-signup">
+      <div className="form-container-signup">
         <Space
           className="space-component"
           direction="horizontal"
