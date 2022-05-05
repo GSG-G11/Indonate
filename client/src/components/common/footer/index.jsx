@@ -7,7 +7,12 @@ import {
   InstagramOutlined,
   YoutubeOutlined,
 } from '@ant-design/icons';
-import indonate from './indonate.svg';
+import { Typography } from 'antd';
+import indonate from './logo.svg';
+
+const {
+  Text,
+} = Typography;
 
 function Footer() {
   return (
@@ -21,9 +26,9 @@ function Footer() {
         <GoogleOutlined />
         <hr className="line" />
       </div>
-      <div>
+      <div className="logo_container">
         <img className="logo" src={indonate} alt="indonate" />
-
+        <Text>Copyright © 2022 Indonate, Inc.</Text>
       </div>
     </section>
   );
