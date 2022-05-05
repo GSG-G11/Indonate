@@ -1,20 +1,24 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { Typography, Button } from 'antd';
+import { Typography, Button, message } from 'antd';
 import Campaign from '../common/campaignCard';
 import './style.less';
 
 const { Title, Text } = Typography;
-function latestCampaigns({ campaigns }) {
+function latestCampaigns() {
+  const [theCampaigns, setCampaigns] = useState([]);
   const navigate = useNavigate();
   useEffect(() => {
     const getData = async () => {
       try {
-        const response = await axios.get('/api/campaigns');
-        console.log(response);
-      } catch (e) {
-        console.log('An error occurred');
+        const { data: { data: { campaigns } } } = await axios.get('/api/campaigns/?limit=3');
+        setCampaigns(campaigns);
+        console.log(campaigns);
+      } catch ({ response: { data: { message: errorMessage } } }) {
+        message.error({
+          content: errorMessage,
+        });
       }
     };
     getData();
@@ -29,12 +33,12 @@ function latestCampaigns({ campaigns }) {
       </Title>
       <div className="cards">
         {
-          campaigns.map((({
+          theCampaigns.map((({
             id,
             title,
             description,
-            imgSrc,
-            categoryIcon,
+            image_link: imgSrc,
+            category: categoryIcon,
           }) => (
             <Campaign
               key={id}
