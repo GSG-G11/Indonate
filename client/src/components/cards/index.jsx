@@ -1,5 +1,7 @@
 import React from 'react';
 import PropType from 'prop-types';
+import { Result } from 'antd';
+import { SmileOutlined } from '@ant-design/icons';
 import CampaignCard from '../common/campaignCard';
 import './style.css';
 
@@ -29,7 +31,12 @@ function Cards({ campaigns }) {
             ))}
           </>
 
-        ) : <div className="noResult">No Result Found</div>}
+        ) : (
+          <Result
+            title="No Result Found!"
+            icon={<SmileOutlined />}
+          />
+        )}
     </div>
   );
 }

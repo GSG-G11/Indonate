@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Pagination, message } from 'antd';
+import { Pagination, message, Spin } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import Header from '../HeaderAllCampaines';
 import FilterCampaigns from '../filterCampaigns';
@@ -13,6 +14,7 @@ function AllCampaines() {
   const [available, setAvailable] = useState(true);
   const [page, setPage] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const source = axios.CancelToken.source();
@@ -24,6 +26,7 @@ function AllCampaines() {
         });
         setTotalCount(count);
         setCampaigns(campaignsFromDB);
+        setLoading(false);
       } catch ({ response: { dara: { message: errorMessage } } }) {
         message.error({
           content: errorMessage,
@@ -40,13 +43,17 @@ function AllCampaines() {
   return (
     <div className="all-campaines-container">
       <Header />
-      <FilterCampaigns
-        setCategory={setCategory}
-        setAvailable={setAvailable}
-        setSearch={setSearch}
-      />
-
-      <Cards campaigns={campaigns} />
+      {!loading
+        ? (
+          <>
+            <FilterCampaigns
+              setCategory={setCategory}
+              setAvailable={setAvailable}
+              setSearch={setSearch}
+            />
+            <Cards campaigns={campaigns} />
+          </>
+        ) : <Spin indicator={<LoadingOutlined className="loading" />} />}
 
       { totalCount > 6 ? (
 
