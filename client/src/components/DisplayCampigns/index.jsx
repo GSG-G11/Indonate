@@ -39,7 +39,7 @@ function DisplayCampaigns() {
   const handlepageChange = (e) => {
     setPage(e);
   };
-  console.log(loading);
+
   return (
     <div className="all-campaines-container">
       {!loading

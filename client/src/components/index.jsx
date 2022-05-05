@@ -6,9 +6,9 @@ import Review from './Review';
 import FilterCampaigns from './filterCampaigns';
 import DonationButton from './donateForm/DonateButton';
 import ReportsForm from './ReportsForm';
-import DisplayCampaigns from './DisplayCampaigns';
+import DisplayCampaigns from './DisplayCampigns';
 import Campaign from './common/campaignCard';
-import Header from './HeaderAllCampaigns';
+import Header from './HeaderAllCampaines';
 
 export {
   Header,

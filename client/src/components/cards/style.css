@@ -3,12 +3,10 @@
     justify-content:center;
     align-content: space-between;
     flex-wrap: wrap;
-    width: 98.7vw;
-    padding: 50px ;
+    
 }
 .all-campaines-card{
-    margin-right: 50px;
-    margin-bottom: 50px;
+    margin: 30px;
     
 }
 .noResult{
