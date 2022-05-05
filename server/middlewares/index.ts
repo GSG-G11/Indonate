@@ -1,5 +1,5 @@
-import pageNotFoundError from './error/pageNotFoundError';
+import notFoundError from './error/notFoundError';
 import serverError from './error/serverError';
 import authUser from './auth/user';
 
-export { serverError, pageNotFoundError, authUser };
+export { serverError, notFoundError, authUser };
