@@ -1,7 +1,7 @@
 import CustomedError from './customedError';
 import { signToken, verifyToken } from './jwtPromise';
 import {
-  signUpSchema,
+  signupSchema,
   loginSchema,
   paramsSchema,
   reportsSchema,
@@ -12,7 +12,7 @@ export {
   CustomedError,
   loginSchema,
   signToken,
-  signUpSchema,
+  signupSchema,
   paramsSchema,
   reportsSchema,
   querySchema,

@@ -2,14 +2,14 @@
 import { NextFunction, Request, Response } from 'express';
 import { hash } from 'bcryptjs';
 import { Op } from 'sequelize';
-import { signUpSchema, CustomedError, signToken } from '../../utils';
+import { signupSchema, CustomedError, signToken } from '../../utils';
 import { Donor } from '../../database/models';
 
 require('env2')('.env');
 
 const signUp = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const validationResult = await signUpSchema.validateAsync(req.body);
+    const validationResult = await signupSchema.validateAsync(req.body);
     const {
       name,
       email,

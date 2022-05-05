@@ -1,6 +1,6 @@
 import Joi from 'joi';
 
-const signUpSchema = Joi.object({
+const signupSchema = Joi.object({
   name: Joi.string().required(),
   email: Joi.string().max(250).min(4).email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } })
     .required(),
@@ -9,4 +9,4 @@ const signUpSchema = Joi.object({
   phone: Joi.string().required(),
 });
 
-export default signUpSchema;
+export default signupSchema;
