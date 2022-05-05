@@ -2,7 +2,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { hash } from 'bcryptjs';
 import { Op } from 'sequelize';
-import { signupSchema, customError, signToken } from '../../utils';
+import { signupSchema, CustomError, signToken } from '../../utils';
 import { Donor } from '../../database/models';
 
 require('env2')('.env');
@@ -28,12 +28,12 @@ const signup = async (req: Request, res: Response, next: NextFunction) => {
     });
 
     if (check?.email === email) {
-      throw new customError(
+      throw new CustomError(
         'Email is used try another one',
         400,
       );
     } else if (check?.phone === phone) {
-      throw new customError(
+      throw new CustomError(
         'phone is used try another one',
         400,
       );
@@ -65,7 +65,7 @@ const signup = async (req: Request, res: Response, next: NextFunction) => {
       data: payload,
     });
   } catch (error) {
-    if (error.name === 'ValidationError') next(new customError(error.details[0].message, 400));
+    if (error.name === 'ValidationError') next(new CustomError(error.details[0].message, 400));
     next(error);
   }
 };

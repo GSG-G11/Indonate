@@ -1,4 +1,4 @@
-import customError from './customError';
+import CustomError from './CustomError';
 import { signToken, verifyToken } from './jwtPromise';
 import {
   signupSchema,
@@ -9,7 +9,7 @@ import {
 } from './validation';
 
 export {
-  customError,
+  CustomError,
   loginSchema,
   signToken,
   signupSchema,

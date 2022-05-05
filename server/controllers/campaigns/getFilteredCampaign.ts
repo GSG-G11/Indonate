@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { Op } from 'sequelize';
 import { Campaign, Category, sequelize } from '../../database/models';
-import { customError, querySchema } from '../../utils';
+import { CustomError, querySchema } from '../../utils';
 
 const getFilteredCampaign = async (req:Request, res:Response, next:NextFunction) => {
   try {
@@ -42,7 +42,7 @@ const getFilteredCampaign = async (req:Request, res:Response, next:NextFunction)
     res.json({ message: 'Success', data: { campaigns: campaignesData } });
   } catch (e) {
     if (e.name === 'ValidationError') {
-      next(new customError(e.message, 400));
+      next(new CustomError(e.message, 400));
     }
     next(e);
   }

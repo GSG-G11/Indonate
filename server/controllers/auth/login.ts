@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { compare } from 'bcryptjs';
-import { loginSchema, customError, signToken } from '../../utils';
+import { loginSchema, CustomError, signToken } from '../../utils';
 import { Donor } from '../../database/models';
 
 const login = async (req: Request, res: Response, next: NextFunction) => {
@@ -14,7 +14,7 @@ const login = async (req: Request, res: Response, next: NextFunction) => {
       },
     });
     if (!user) {
-      throw new customError(
+      throw new CustomError(
         "Email doesn't exists, Try another one or sign up",
         400,
       );
@@ -25,7 +25,7 @@ const login = async (req: Request, res: Response, next: NextFunction) => {
       user?.getDataValue('password'),
     );
     if (!isPasswordValidate) {
-      throw new customError('Incorrect password, please try again', 400);
+      throw new CustomError('Incorrect password, please try again', 400);
     }
 
     const payload = {
@@ -43,7 +43,7 @@ const login = async (req: Request, res: Response, next: NextFunction) => {
       })
       .json({ message: 'Successfully logged in', data: payload });
   } catch (error) {
-    if (error.name === 'ValidationError') next(new customError(error.details[0].message, 400));
+    if (error.name === 'ValidationError') next(new CustomError(error.details[0].message, 400));
     else next(error);
   }
 };

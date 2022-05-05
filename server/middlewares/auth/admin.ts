@@ -1,5 +1,5 @@
 import { Response, NextFunction } from 'express';
-import { customError } from '../../utils';
+import { CustomError } from '../../utils';
 
 const authAdmin = async (
   req: any,
@@ -8,7 +8,7 @@ const authAdmin = async (
 ) => {
   const { user } = req;
   if (!user.isAdmin) {
-    next(new customError('Unauthorized', 401));
+    next(new CustomError('Unauthorized', 401));
   }
   next();
 };

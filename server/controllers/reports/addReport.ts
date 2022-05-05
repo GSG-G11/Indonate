@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { customError, reportsSchema } from '../../utils';
+import { CustomError, reportsSchema } from '../../utils';
 import { Contact } from '../../database/models';
 
 const reports = async (req: Request, res: Response, next: NextFunction) => {
@@ -8,7 +8,7 @@ const reports = async (req: Request, res: Response, next: NextFunction) => {
     await Contact.create(result);
     res.status(201).json({ message: 'Report sent successfully' });
   } catch (error) {
-    if (error.name === 'ValidationError') next(new customError(error.details[0].message, 400));
+    if (error.name === 'ValidationError') next(new CustomError(error.details[0].message, 400));
     next(error);
   }
 };
