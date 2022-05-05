@@ -1,13 +1,7 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import {
-  Nav,
-  SignUp,
-  Login,
-  Review,
-  ReportsForm,
-  OurMission,
-} from './components';
+import { Routes, Route } from 'react-router-dom';
+import { Nav } from './components';
+import { Landing, Campaigns, SingleCampaign, Login, SignUp } from './pages';
 import store from './redux/app/store';
 import { getUserData } from './redux/feature/user/userSlice';
 
@@ -16,45 +10,16 @@ function App() {
     store.dispatch(getUserData());
   }, []);
   return (
-    <Router>
+    <>
       <Nav />
       <Routes>
-        <Route
-          path="/"
-          element={(
-            <>
-              <OurMission />
-              <Review />
-              <ReportsForm />
-            </>
-          )}
-        />
-        <Route
-          path="/campaigns"
-          element={
-            <h1>campaigns</h1>
-            }
-        />
-        <Route
-          path="/campaign/:id"
-          element={
-            <h1>campaign</h1>
-            }
-        />
-        <Route
-          path="/signup"
-          element={
-            <SignUp />
-            }
-        />
-        <Route
-          path="/login"
-          element={(
-            <Login />
-          )}
-        />
+        <Route path="/" element={<Landing />} />
+        <Route path="/campaigns" element={<Campaigns />} />
+        <Route path="/campaign/:id" element={<SingleCampaign />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
-    </Router>
+    </>
   );
 }
 export default App;
