@@ -1,5 +1,5 @@
 import OurMission from './OurMission';
-import Nav from './Nav';
+import Nav from './common/Nav';
 import Login from './Login';
 import SignUp from './SignUp';
 import Review from './Review';

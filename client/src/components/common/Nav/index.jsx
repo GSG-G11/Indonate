@@ -13,7 +13,7 @@ const commonList = [
   { label: <NavLink to="/contact-us"> Contact Us</NavLink> },
 ];
 const userItem = [
-  { label: <NavLink to="/signUp"><Button className="btn" type="primary">Sign Up</Button></NavLink> },
+  { label: <NavLink to="/signup"><Button className="btn" type="primary">Sign Up</Button></NavLink> },
   { label: <NavLink to="/login"><Button className="btn" type="primary">Login</Button></NavLink> },
 ];
 const guestItem = [
