@@ -1,5 +1,5 @@
 import CustomedError from './customedError';
-import { signToken, verifyToken } from './token';
+import { signToken, verifyToken } from './jwtPromise';
 import {
   signUpSchema,
   loginSchema,
