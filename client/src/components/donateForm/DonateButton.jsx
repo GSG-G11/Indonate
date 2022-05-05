@@ -21,7 +21,7 @@ function DonationButton({ campaignId }) {
     confirm({
       title: 'You Should login to Donate!',
       okText: 'Login',
-      cancelText: 'No',
+      cancelText: 'Cancel',
       onOk: () => login(),
     });
   }
