@@ -9,5 +9,5 @@ export {
   Campaigns,
   SingleCampaign,
   Signup,
-  Login
+  Login,
 };

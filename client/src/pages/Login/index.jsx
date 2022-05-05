@@ -15,7 +15,6 @@ import { useDispatch } from 'react-redux';
 import { GoogleOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import background from '../../assets/Images/login-signup-background.jpg';
-import 'antd/dist/antd.min.css';
 import './index.less';
 import { sign } from '../../redux/feature/user/userSlice';
 

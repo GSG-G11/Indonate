@@ -2,7 +2,6 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { Layout, Menu, Button } from 'antd';
 import { useSelector } from 'react-redux';
-import 'antd/dist/antd.css';
 import './style.css';
 
 const { Header } = Layout;
