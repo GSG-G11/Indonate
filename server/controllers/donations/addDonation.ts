@@ -1,6 +1,6 @@
 import { NextFunction, Response } from 'express';
 import { Campaign, Donation } from '../../database/models';
-import { CustomedError } from '../../utils';
+import { customError } from '../../utils';
 import { paramsSchema, donationSchema } from '../../utils/validation';
 
 const addDonation = async (req: any, res: Response, next: NextFunction) => {
@@ -28,14 +28,14 @@ const addDonation = async (req: any, res: Response, next: NextFunction) => {
       raw: true,
     });
     if (!campaign) {
-      throw new CustomedError('Cannot add donation, campaign not exists', 400);
+      throw new customError('Cannot add donation, campaign not exists', 400);
     }
 
     await donationSchema.validateAsync(req.body);
 
     if (!food && !clothes && !money) {
       next(
-        new CustomedError(
+        new customError(
           'You should enter money, piece of clothes, number of meals',
           400,
         ),
@@ -55,7 +55,7 @@ const addDonation = async (req: any, res: Response, next: NextFunction) => {
     res.status(201).json({ message: 'Donation added successfully' });
   } catch (error) {
     if (error.name === 'ValidationError') {
-      next(new CustomedError(error.details[0].message, 400));
+      next(new customError(error.details[0].message, 400));
     } else {
       next(error);
     }
