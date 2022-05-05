@@ -50,7 +50,7 @@ function FilterCampaigns({ setCategory, setAvailable, setSearch }) {
   return (
     <div>
       <div className="search-section">
-        <Search placeholder="input search text" size="large" onChange={handleSearchChange} className="searchInput" style={{ width: '550px' }} />
+        <Search placeholder="input search text" size="large" onChange={handleSearchChange} className="searchInput" />
       </div>
       <div className="fliter-section">
 
