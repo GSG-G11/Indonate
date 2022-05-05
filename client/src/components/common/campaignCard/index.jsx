@@ -3,8 +3,9 @@ import { useNavigate } from 'react-router-dom';
 
 import PropTypes from 'prop-types';
 import {
-  Card, Button, Typography,
+  Card, Typography,
 } from 'antd';
+import { DonateButton } from '../../donateForm';
 import styles from './index.less';
 import 'antd/dist/antd.less';
 
@@ -29,11 +30,7 @@ function Campaign({
       <img className="category" alt="Category" src={categoryIcon} />
       <Meta className={styles.title} title={title} />
       <Text type="secondary">{description}</Text>
-      <Button
-        type="primary"
-      >
-        Donate
-      </Button>
+      <DonateButton campaignId={id} />
     </Card>
   );
 }

@@ -1,7 +1,13 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import {
-  Nav, SignUp, Signin, Review, LatestCampaigns,
+  Nav,
+  SignUp,
+  Signin,
+  Review,
+  LatestCampaigns,
+  ReportsForm,
+  OurMission,
 } from './components';
 import store from './redux/app/store';
 import { getUserData } from './redux/feature/user/userSlice';
@@ -18,8 +24,10 @@ function App() {
           path="/"
           element={(
             <>
-              <Review />
               <LatestCampaigns />
+              <OurMission />
+              <Review />
+              <ReportsForm />
             </>
           )}
         />
@@ -43,9 +51,9 @@ function App() {
         />
         <Route
           path="/login"
-          element={
+          element={(
             <Signin />
-          }
+          )}
         />
       </Routes>
     </Router>
