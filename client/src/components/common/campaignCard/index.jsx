@@ -22,10 +22,10 @@ function Campaign({
   const navigate = useNavigate();
   return (
     <Card
-      onClick={() => navigate(`/campaign/${id}`)}
       className="customCard"
       hoverable
       cover={<img alt="card cover" src={imgSrc} />}
+      onClick={() => navigate(`/campaign/${id}`)}
     >
       <img className="category" alt="Category" src={categoryIcon} />
       <Meta className={styles.title} title={title} />

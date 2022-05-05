@@ -23,7 +23,6 @@ function latestCampaigns() {
            },
         } = await axios.get('/api/campaigns/?limit=3');
         setCampaigns(dbCampaigns);
-        console.log(dbCampaigns);
       } catch ({
         response:
          {
@@ -40,7 +39,7 @@ function latestCampaigns() {
   }, []);
   return (
     <section className="layout">
-      <Title className="header_title" level={1}>
+      <Title className="custom_header_title" level={1}>
         <Text>
           Latest
         </Text>
