@@ -116,7 +116,7 @@ describe('POST/login', () => {
 describe('POST/signUp', () => {
   test('sign up', async () => {
     const response = await request(app)
-      .post('/api/signUp')
+      .post('/api/signup')
       .send({
         name: 'mohammed',
         email: 'mohaammed@gmail.com',
@@ -132,7 +132,7 @@ describe('POST/signUp', () => {
   });
   test('Email is used', async () => {
     const response = await request(app)
-      .post('/api/signUp')
+      .post('/api/signup')
       .send({
         name: 'Ahmed',
         email: 'Ahmed@gmail.com',
@@ -145,7 +145,7 @@ describe('POST/signUp', () => {
   });
   test('phone is used', async () => {
     const response = await request(app)
-      .post('/api/signUp')
+      .post('/api/signup')
       .send({
         name: 'Ahmed',
         email: 'Ahmed1@gmail.com',
