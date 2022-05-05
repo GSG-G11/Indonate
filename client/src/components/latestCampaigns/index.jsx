@@ -23,6 +23,7 @@ function latestCampaigns() {
            },
         } = await axios.get('/api/campaigns/?limit=3');
         setCampaigns(dbCampaigns);
+        console.log(dbCampaigns);
       } catch ({
         response:
          {
@@ -52,7 +53,7 @@ function latestCampaigns() {
             title,
             description,
             image_link: imgSrc,
-            category: categoryIcon,
+            category: { icon_url: iconUrl },
           }) => (
             <Campaign
               key={id}
@@ -60,7 +61,7 @@ function latestCampaigns() {
               title={title}
               description={description}
               imgSrc={imgSrc}
-              categoryIcon={categoryIcon}
+              categoryIcon={iconUrl}
             />
           )
           ))
