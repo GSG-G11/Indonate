@@ -13,7 +13,7 @@
     font-weight: 400;
     font-size: 40px;
     line-height: 48px;
-    color:#ffff;
+    color:#ffff !important;
     text-align: center;
 }
 .description-Header-div{
@@ -31,34 +31,40 @@
     transform: translate(0, -50%);
     background-color: #6AAC6E;
     width: 80vw;
-    height: 25vh;
+    height: 30vh;
     padding:0 80px;
     display: flex;
     justify-content: space-between;
 }
 .statistic-card{
-    width: 15%;
+    width: 16%;
     height: 25vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-top: 8vh;
+
 }
 .statictic-data{
     font-family: 'Roboto';
     font-style: normal;
     font-weight: bold;
-    font-size: 25px;
-    line-height: 30px;
-    color: rgba(254, 225, 129, 0.85);
-    margin-top: 15px;
+    font-size: 45px;
+    line-height: 25px;
+    color: rgba(254, 225, 129, 0.85) !important;
+    
 
 }
 .statictic-title{ 
-    font-family: 'Roboto';
     font-style: normal;
-    font-weight: 800;
-    font-size: 30px;
+    font-weight: bold;
+    font-size: 20px;
     line-height: 14px;
     color: rgba(0, 0, 0, 0.85);
+    margin-top: 20px;
+}
+.description-title{
+    margin-top: 10px;
+    font-size: 15px;
+    font-weight: 500;
 }

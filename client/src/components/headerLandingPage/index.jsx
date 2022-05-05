@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Typography } from 'antd';
-import './style.less';
+import './style.css';
 
 const { Text } = Typography;
+const descriptions = ['Got help from us', 'Contribute with us', 'Collected for families', 'Collected for families ', 'Collected for families '];
 function HeaderLandingPage() {
   const [data, setData] = useState({});
 
@@ -32,12 +33,16 @@ function HeaderLandingPage() {
       </div>
       <div className="statistic-section">
 
-        {Object.keys(data).map((item) => (
+        {Object.keys(data).map((item, index) => (
           <div className="statistic-card" key={item}>
-            <Text className="statictic-title">{item}</Text>
             <Text className="statictic-data">{data[item]}</Text>
+            <Text className="statictic-title">{item}</Text>
+            <Text className="description-title">{descriptions[index]}</Text>
+
           </div>
+
         ))}
+
       </div>
     </div>
   );

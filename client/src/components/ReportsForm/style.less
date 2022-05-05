@@ -1,0 +1,46 @@
+.reports-form-container {
+  display: flex;
+  margin-block: 2rem;
+  justify-content: center;
+}
+.reports-form-side-bar {
+  width: 20%;
+  background-color: #469d62;
+  padding: 2rem;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
+}
+.reports-form {
+  width: 30%;
+  padding: 2rem;
+  background-color: rgba(229, 229, 229, 0.5);
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
+}
+.reports-form-side-bar .contact-us {
+  font-size: 30px;
+  color: #ffdb83;
+  text-align: center;
+}
+.reports-form-side-bar .description {
+  font-size: 18px;
+  color: #fff;
+}
+.submit-report {
+  margin-top: 15px;
+  width: 50%;
+  height: 50px;
+}
+
+@media (max-width: 992px) {
+  .reports-form-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  .reports-form,
+  .reports-form-side-bar {
+    width: 80%;
+  }
+  .reports-form-side-bar .description {
+    // display: none;
+  }
+
+}

@@ -12,9 +12,9 @@ const statistics = async (req: Request, res: Response, next:NextFunction) => {
       [families,
         doners,
         [{
-          money: Money,
-          food: Food,
-          clothes: Clothes,
+          money: MONEY,
+          food: FOODS,
+          clothes: CLOTHES,
         }],
       ] :any = await Promise.all([
         Family.count(), Donor.count(),
@@ -28,11 +28,11 @@ const statistics = async (req: Request, res: Response, next:NextFunction) => {
     res.json({
       message: 'Success',
       data: {
-        Families: families,
-        Doners: doners,
-        Food,
-        Money,
-        Clothes,
+        FAMILIES: families,
+        DONORS: doners,
+        FOODS,
+        MONEY,
+        CLOTHES,
       },
     });
   } catch (error) {
