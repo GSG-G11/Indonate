@@ -7,7 +7,7 @@ import { Donor } from '../../database/models';
 
 require('env2')('.env');
 
-const signUp = async (req: Request, res: Response, next: NextFunction) => {
+const signup = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const validationResult = await signupSchema.validateAsync(req.body);
     const {
@@ -70,4 +70,4 @@ const signUp = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-export default signUp;
+export default signup;

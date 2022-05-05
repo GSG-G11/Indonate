@@ -6,7 +6,7 @@ import {
   sequelize,
 } from '../../database/models';
 
-const statistics = async (req: Request, res: Response, next:NextFunction) => {
+const getStatistics = async (req: Request, res: Response, next:NextFunction) => {
   try {
     const [families, doners, donations] = await Promise.all([
       Family.count(), Donor.count(),
@@ -22,4 +22,4 @@ const statistics = async (req: Request, res: Response, next:NextFunction) => {
   }
 };
 
-export default statistics;
+export default getStatistics;

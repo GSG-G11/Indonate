@@ -3,7 +3,7 @@ import { Op } from 'sequelize';
 import { Campaign, Category, sequelize } from '../../database/models';
 import { CustomedError, querySchema } from '../../utils';
 
-const campaigns = async (req:Request, res:Response, next:NextFunction) => {
+const getFilteredCampaign = async (req:Request, res:Response, next:NextFunction) => {
   try {
     const {
       search,
@@ -47,4 +47,4 @@ const campaigns = async (req:Request, res:Response, next:NextFunction) => {
     next(e);
   }
 };
-export default campaigns;
+export default getFilteredCampaign;
