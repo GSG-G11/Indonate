@@ -11,8 +11,7 @@ function Header() {
         Home/
         {' '}
         <span className="Donation-title">Donation</span>
-      </Text
-      >
+      </Text>
     </div>
   );
 }

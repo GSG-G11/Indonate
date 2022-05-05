@@ -2,12 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { Pagination, message, Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import axios from 'axios';
-import Header from '../HeaderAllCampaines';
 import FilterCampaigns from '../filterCampaigns';
 import Cards from '../cards';
 import './style.css';
 
-function AllCampaines() {
+function DisplayCampaigns() {
   const [campaigns, setCampaigns] = useState([]);
   const [search, setSearch] = useState('');
   const [category, setCategory] = useState('');
@@ -27,7 +26,7 @@ function AllCampaines() {
         setTotalCount(count);
         setCampaigns(campaignsFromDB);
         setLoading(false);
-      } catch ({ response: { dara: { message: errorMessage } } }) {
+      } catch ({ response: { data: { message: errorMessage } } }) {
         message.error({
           content: errorMessage,
         });
@@ -40,9 +39,9 @@ function AllCampaines() {
   const handlepageChange = (e) => {
     setPage(e);
   };
+  console.log(loading);
   return (
     <div className="all-campaines-container">
-      <Header />
       {!loading
         ? (
           <>
@@ -70,4 +69,4 @@ function AllCampaines() {
   );
 }
 
-export default AllCampaines;
+export default DisplayCampaigns;
