@@ -19,10 +19,9 @@ function Campaign({
   categoryIcon,
 }) {
   const navigate = useNavigate();
-  const goToCampaign = (campaignId) => navigate(`/campaign/${campaignId}`);
   return (
     <Card
-      onClick={() => goToCampaign(id)}
+      onClick={() => navigate(`/campaign/${id}`)}
       className="customCard"
       hoverable
       cover={<img alt="card cover" src={imgSrc} />}

@@ -12,9 +12,24 @@ function latestCampaigns() {
   useEffect(() => {
     const getData = async () => {
       try {
-        const { data: { data: { campaigns: dbCampaigns } } } = await axios.get('/api/campaigns/?limit=3');
+        const {
+          data:
+           {
+             data:
+             {
+               campaigns:
+               dbCampaigns,
+             },
+           },
+        } = await axios.get('/api/campaigns/?limit=3');
         setCampaigns(dbCampaigns);
-      } catch ({ response: { data: { message: errorMessage } } }) {
+      } catch ({
+        response:
+         {
+           data:
+           { message: errorMessage },
+         },
+      }) {
         message.error({
           content: errorMessage,
         });
@@ -51,7 +66,13 @@ function latestCampaigns() {
           ))
         }
       </div>
-      <Button className="more_btn ant-btn-primary ant-btn" type="primary" onClick={() => navigate('/campaigns/')}>See More Campaigns</Button>
+      <Button
+        className="more_btn ant-btn-primary ant-btn"
+        type="primary"
+        onClick={() => navigate('/campaigns/')}
+      >
+        See More Campaigns
+      </Button>
     </section>
   );
 }
