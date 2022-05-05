@@ -8,7 +8,7 @@ import DonationButton from './donateForm/DonateButton';
 import ReportsForm from './ReportsForm';
 import DisplayCampaigns from './DisplayCampigns';
 import Campaign from './common/campaignCard';
-import Header from './HeaderAllCampaines';
+import Header from './HeaderAllCampaigns';
 
 export {
   Header,
