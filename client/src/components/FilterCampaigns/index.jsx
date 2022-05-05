@@ -40,7 +40,7 @@ function FilterCampaigns({ setCategory, setAvailable, setSearch }) {
   const handleSearchChange = ({ target: { value } }) => {
     setSearch(value);
   };
-  const handleAailableChange = (e) => {
+  const handleAvailableChange = (e) => {
     setAvailable(e);
   };
   return (
@@ -48,7 +48,7 @@ function FilterCampaigns({ setCategory, setAvailable, setSearch }) {
       <div className="search-section">
         <Search placeholder="input search text" size="large" onChange={handleSearchChange} className="searchInput" />
       </div>
-      <div className="fliter-section">
+      <div className="filter-section">
 
         <div>
           <Group onChange={handleCategoryChange} defaultValue="List All" buttonStyle="solid">
@@ -62,7 +62,7 @@ function FilterCampaigns({ setCategory, setAvailable, setSearch }) {
             checkedChildren={<CheckOutlined />}
             unCheckedChildren={<CloseOutlined />}
             defaultChecked
-            onChange={handleAailableChange}
+            onChange={handleAvailableChange}
           />
         </div>
 

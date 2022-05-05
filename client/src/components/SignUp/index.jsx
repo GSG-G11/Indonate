@@ -27,7 +27,7 @@ function SignUp() {
     name: '', email: '', password: '', phone: '', address: 'Gaza',
   });
 
-  const registor = async () => {
+  const register = async () => {
     try {
       const { data: { data } } = await axios.post('/api/signup', userInfo);
       dispatch(sign(data));
@@ -61,7 +61,7 @@ function SignUp() {
   };
   return (
     <div className="sign-up-container">
-      <div className="img-side-sgin-up">
+      <div className="img-side-sign-up">
         <Title
           level={3}
         >
@@ -82,7 +82,7 @@ function SignUp() {
           <Form
             className="Form-sign-up"
             name="register"
-            onFinish={registor}
+            onFinish={register}
           >
             <Item
               name="name"

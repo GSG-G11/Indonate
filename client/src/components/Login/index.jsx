@@ -68,7 +68,6 @@ function Login() {
 
   return (
     <Layout>
-      {/* --- Navbar --- */}
       <Content>
         <Row>
           <Col span={12} className="customHeaderImage login_image">

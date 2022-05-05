@@ -53,7 +53,7 @@ function ReportsForm() {
           <Item
             name="name"
             noStyle
-            rules={[{ required: true, message: 'Fullname is required' }]}
+            rules={[{ required: true, message: 'Full Name is required' }]}
           >
             <Input
               className="report-fullname-input"
