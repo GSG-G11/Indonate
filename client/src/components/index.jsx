@@ -4,6 +4,7 @@ import Review from './Review';
 import FilterCampaigns from './FilterCampaigns';
 import DonationButton from './DonateForm/DonateButton';
 import ReportsForm from './ReportsForm';
+import Container from './Container';
 
 export {
   FilterCampaigns,
@@ -12,4 +13,5 @@ export {
   Review,
   DonationButton,
   ReportsForm,
+  Container,
 };

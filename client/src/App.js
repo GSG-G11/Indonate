@@ -10,6 +10,7 @@ import {
 } from './pages';
 import store from './redux/app/store';
 import 'antd/dist/antd.less';
+import './App.css';
 import { getUserData } from './redux/feature/user/userSlice';
 
 function App() {

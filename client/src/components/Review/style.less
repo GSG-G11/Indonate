@@ -7,11 +7,52 @@
   background-attachment: fixed;
   background-size: cover;
   background-position: center;
-  height: 400px;
+  height: fit-content;
   width: auto;
   position: relative;
   display: flex;
   justify-content: space-around;
   align-items: center;
-  padding: 0 75px;
+  padding: 10rem;
+}
+
+.comment-card {
+  margin-inline: 2.5rem !important;
+  margin-block: 2rem !important;
+  height: 40rem;
+  width: 28vw !important;
+}
+.comment-title {
+  font-size: 3rem !important;
+}
+.comment-paragraph {
+  font-size: 2rem !important;
+}
+
+
+
+@media (max-width: 900px) {
+  .comment-paragraph{
+    font-size: 2.5rem !important;
+  }
+  .comment-card {
+    width: 90vw !important;
+    height: 30rem;
+    margin-inline: 0 !important;
+  }
+  .review-comment {
+    padding: 5rem;
+    flex-direction: column;
+  }
+}
+@media (max-width: 660px) {
+  .comment-card {
+    height: 37rem ;
+  }
+}
+
+@media (max-width: 400px) {
+  .comment-card {
+    height: 40rem ;
+  }
 }

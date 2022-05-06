@@ -5,13 +5,15 @@
 }
 .reports-form-side-bar {
   width: 20%;
+  border-radius: 5px 0 0 5px;
   background-color: #469d62;
   padding: 2rem;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
 }
 .reports-form {
-  width: 30%;
-  padding: 2rem;
+  border-radius: 0 5px 5px 0;
+  width: 60% !important;
+  padding: 2rem !important;
   background-color: rgba(229, 229, 229, 0.5);
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
 }
@@ -30,17 +32,32 @@
   height: 50px;
 }
 
-@media (max-width: 992px) {
+.report-form-description {
+  color: #fff !important;
+  font-size: 2.4rem;
+}
+
+@media (max-width: 550px) {
+  .reports-form-side-bar .contact-us {
+    margin: 0;
+  }
+  .report-form-description {
+    display: none !important;
+  }
+}
+@media (max-width: 1200px) {
   .reports-form-container {
     flex-direction: column;
     align-items: center;
   }
   .reports-form,
   .reports-form-side-bar {
-    width: 80%;
+    width: 90% !important;
   }
-  .reports-form-side-bar .description {
-    // display: none;
+  .reports-form {
+    border-radius: 0 0 5px 5px;
   }
-
+  .reports-form-side-bar {
+    border-radius: 5px 5px 0 0;
+  }
 }
