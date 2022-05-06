@@ -28,7 +28,7 @@ function SignUp() {
     try {
       const { data: { data } } = await axios.post('/api/signup', userInfo);
       dispatch(sign(data));
-      navigate('/');// home page
+      navigate('/');
       message.success(`Welcome ${data.name}`);
     } catch ({ response: { data: { message: errorMessage } } }) {
       message.error({
@@ -64,7 +64,7 @@ function SignUp() {
             <Anchor affix={false}>
               <Link
                 href="/login"
-                title="Sign in"
+                title="Sign In"
               />
             </Anchor>
           </div>

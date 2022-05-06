@@ -4,6 +4,7 @@ import {
   Typography,
   message,
   Space,
+  Anchor,
 } from 'antd';
 import { useDispatch } from 'react-redux';
 import { GoogleOutlined } from '@ant-design/icons';
@@ -12,7 +13,9 @@ import { sign } from '../../redux/feature/user/userSlice';
 import '../signup/style.less';
 import SignForm from '../../components/common/SignForm';
 
-const { Title } = Typography;
+const { Link } = Anchor;
+
+const { Title, Text } = Typography;
 
 function Signin() {
   const dispatch = useDispatch();
@@ -51,7 +54,16 @@ function Signin() {
           >
             LOGIN
           </Title>
-          <SignForm getUserInfo={login} type="login" />
+          <SignForm getUserInfo={login} items="login" />
+          <div className="register_option">
+            <Text>Don`t have an account ?</Text>
+            <Anchor affix={false}>
+              <Link
+                href="/signup"
+                title="Sign Up"
+              />
+            </Anchor>
+          </div>
           <Button type="primary" icon={<GoogleOutlined />}>
             Sign in with Google
           </Button>

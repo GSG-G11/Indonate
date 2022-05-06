@@ -134,9 +134,8 @@ function SignForm({ getUserInfo, type }) {
           <Password placeholder="Confirm password" />
         </Item>
       ) : null}
-
       <Button className="sign-up-btn" type="primary" htmlType="submit">
-        Sign Up
+        { type === 'register' ? 'Sign up' : 'Sign in'}
       </Button>
     </Form>
   );
