@@ -170,9 +170,12 @@ function SignUp() {
               Sign Up
             </Button>
             <div className="register_option">
-              <Text>Don`t have an account ?</Text>
-              <Anchor affix>
-                <Link href="/login" title="Sign in" />
+              <Text>Already have an account ?</Text>
+              <Anchor affix={false}>
+                <Link
+                  href="/login"
+                  title="Sign in"
+                />
               </Anchor>
             </div>
           </Form>

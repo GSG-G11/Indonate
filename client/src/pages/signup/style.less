@@ -1,5 +1,10 @@
 @import '~antd/dist/antd.less';
 
+*{
+    // overflow: hidden; /* Hide scrollbars */
+
+}
+
 .sign-up-btn {
     width: 100%;
 }
@@ -9,11 +14,13 @@
 }
 
 .img-side-sgin-up {
+    display: flex;
+    justify-content: center;
+    text-align: left;
     width: 50vw;
     height: 100vh;
     background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../../components/assets/images/poor.png');
     background-size: cover;
-    text-align: center;
     padding: 20vw 5vw;
 
 }
@@ -41,6 +48,7 @@ h2.ant-typography {
 }
 
 h3.ant-typography {
+    font-size: 35px;
     color: #fff
 }
 
@@ -96,5 +104,5 @@ h2.ant-typography {
 
 .ant-anchor-link-title:only-child {
     color: #68ab7b;
-    margin-bottom: 0;
+    margin-bottom: 10px;
 }
