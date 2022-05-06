@@ -10,7 +10,7 @@ import { useDispatch } from 'react-redux';
 import { GoogleOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import { sign } from '../../redux/feature/user/userSlice';
-import '../signup/style.less';
+import '../signup/index.less';
 import SignForm from '../../components/common/SignForm';
 
 const { Link } = Anchor;
@@ -38,6 +38,7 @@ function Signin() {
       <div className="img-side-sgin-up">
 
         <Title
+          className="custom-header-text"
           level={3}
         >
           Subscribe with us to make yourself a contributor to charity and help people in need.

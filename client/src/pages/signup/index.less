@@ -1,15 +1,31 @@
 @import '~antd/dist/antd.less';
 
-* {
-    overflow: hidden;
-}
-
-.sign-up-btn {
-    width: 100%;
-}
 
 .sign-up-container {
     display: flex;
+    overflow: hidden;
+
+    h2.ant-typography {
+        font-weight: 600;
+        font-size: 38px;
+        line-height: 1.23;
+        color: #469D62;
+    }
+
+    h3.ant-typography {
+        font-size: 35px;
+        margin-bottom: 200px;
+        color: #fff;
+    }
+
+    .ant-anchor-link-title {
+        color: #68ab7b;
+        font-size: 16px;
+    }
+
+}
+.sign-up-btn {
+    width: 100%;
 }
 
 .img-side-sgin-up {
@@ -21,7 +37,6 @@
     background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../../components/assets/images/poor.png');
     background-size: cover;
     padding: 20vw 5vw;
-
 }
 
 .form-conatainer-signup {
@@ -42,14 +57,7 @@
 
 }
 
-h2.ant-typography {
-    color: #469D62
-}
 
-h3.ant-typography {
-    font-size: 35px;
-    color: #fff
-}
 
 @media (max-width: 567px) {
 
@@ -87,23 +95,10 @@ h3.ant-typography {
 
 @media (min-width: 1200px) {}
 
-
-h2.ant-typography {
-    font-weight: 600;
-    font-size: 38px;
-    line-height: 1.23;
-    color: #469D62;
-}
-
 .register_option {
     display: flex;
     align-items: center;
     justify-content: space-around;
     font-size: 15px;
     margin: 20px 20px;
-}
-
-.ant-anchor-link-title:only-child {
-    color: #68ab7b;
-    font-size: 16px;
 }

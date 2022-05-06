@@ -13,7 +13,7 @@ import {
 } from 'antd';
 
 import { sign } from '../../redux/feature/user/userSlice';
-import './style.less';
+import './index.less';
 import SignForm from '../../components/common/SignForm';
 
 const { Link } = Anchor;
@@ -42,6 +42,7 @@ function SignUp() {
       <div className="img-side-sgin-up">
 
         <Title
+          className="custom-header-text"
           level={3}
         >
           Subscribe with us to make yourself a contributor to charity and help people in need.
