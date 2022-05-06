@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { GoogleOutlined } from '@ant-design/icons';
 
 import axios from 'axios';
@@ -11,17 +11,20 @@ import {
   message,
   Space,
   Typography,
+  Anchor,
 } from 'antd';
 
 import { sign } from '../../redux/feature/user/userSlice';
 import './style.less';
 
+const { Link } = Anchor;
+
 const { Password } = Input;
 const { Item } = Form;
-const { Title } = Typography;
+const { Title, Text } = Typography;
 
 function SignUp() {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [userInfo, setUserInfo] = useState({
     name: '', email: '', password: '', phone: '', address: 'Gaza',
@@ -31,7 +34,7 @@ function SignUp() {
     try {
       const { data: { data } } = await axios.post('/api/signup', userInfo);
       dispatch(sign(data));
-      // navigate('/');// home page
+      navigate('/');// home page
       message.success(`Welcome ${data.name}`);
     } catch ({ response: { data: { message: errorMessage } } }) {
       message.error({
@@ -62,6 +65,7 @@ function SignUp() {
   return (
     <div className="sign-up-container">
       <div className="img-side-sgin-up">
+
         <Title
           level={3}
         >
@@ -77,7 +81,7 @@ function SignUp() {
           <Title
             level={2}
           >
-            Sign Up
+            Register
           </Title>
           <Form
             className="Form-sign-up"
@@ -165,6 +169,12 @@ function SignUp() {
             <Button className="sign-up-btn" type="primary" htmlType="submit">
               Sign Up
             </Button>
+            <div className="register_option">
+              <Text>Don`t have an account ?</Text>
+              <Anchor affix>
+                <Link href="/login" title="Sign in" />
+              </Anchor>
+            </div>
           </Form>
           <Button type="primary" icon={<GoogleOutlined />}>
             Sign in with Google

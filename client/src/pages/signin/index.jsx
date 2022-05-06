@@ -3,7 +3,6 @@ import {
   Layout,
   Row,
   Col,
-  Image,
   Form,
   Button,
   Input,
@@ -69,10 +68,7 @@ function Signin() {
       <Content>
         <Row>
           <Col span={12} className="customHeaderImage login_image">
-            <Image
-              preview={false}
-              src="https://i.postimg.cc/9FMJSScj/login-image.png"
-            />
+
             <Title
               level={2}
               className="text_image"
