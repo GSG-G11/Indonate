@@ -1,5 +1,4 @@
 import React from 'react';
-
 import {
   Button,
   Typography,
@@ -8,9 +7,7 @@ import {
 } from 'antd';
 import { useDispatch } from 'react-redux';
 import { GoogleOutlined } from '@ant-design/icons';
-
 import axios from 'axios';
-
 import { sign } from '../../redux/feature/user/userSlice';
 import '../signup/style.less';
 import SignForm from '../../components/common/SignForm';
@@ -20,7 +17,8 @@ const { Title } = Typography;
 function Signin() {
   const dispatch = useDispatch();
 
-  const login = async (userInfo) => {
+  const login = async ({ email, password }) => {
+    const userInfo = { email, password };
     try {
       const { data: { data } } = await axios.post('/api/login', userInfo);
       dispatch(sign(data));
@@ -53,7 +51,7 @@ function Signin() {
           >
             LOGIN
           </Title>
-          <SignForm getUserInfo={login} />
+          <SignForm getUserInfo={login} type="login" />
           <Button type="primary" icon={<GoogleOutlined />}>
             Sign in with Google
           </Button>

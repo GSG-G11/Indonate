@@ -5,18 +5,14 @@ import {
   Form,
   Button,
   Input,
-  Typography,
-  Anchor,
 } from 'antd';
 
-const { Link } = Anchor;
 const { Password } = Input;
 const { Item } = Form;
-const { Text } = Typography;
 
-function SignForm({ getUserInfo }) {
+function SignForm({ getUserInfo, type }) {
   const [userInfo, setUserInfo] = useState({
-    email: '', password: '',
+    name: '', email: '', password: '', phone: '', address: 'Gaza',
   });
 
   const passwordValidation = () => ({
@@ -25,6 +21,14 @@ function SignForm({ getUserInfo }) {
         return Promise.resolve();
       }
       return Promise.reject(new Error('password should have at least 6 character '));
+    },
+  });
+  const confirmPasswordValidation = (getFieldValue) => ({
+    validator(_, value) {
+      if (!value || getFieldValue('password') === value) {
+        return Promise.resolve();
+      }
+      return Promise.reject(new Error('The two passwords that you entered do not match!'));
     },
   });
 
@@ -42,6 +46,26 @@ function SignForm({ getUserInfo }) {
       name="register"
       onFinish={sendUserData}
     >
+      {type === 'register'
+        ? (
+          <Item
+            name="name"
+            rules={[
+              {
+                required: true,
+                message: 'Please input your name!',
+                whitespace: true,
+              },
+            ]}
+          >
+            <Input
+              name="name"
+              placeholder="Name"
+              onChange={(e) => handleChange(e)}
+            />
+          </Item>
+        ) : null}
+
       <Item
         name="email"
         rules={[
@@ -61,6 +85,24 @@ function SignForm({ getUserInfo }) {
           onChange={(e) => handleChange(e)}
         />
       </Item>
+      {type === 'register'
+        ? (
+          <Item
+            name="phone"
+            rules={[
+              {
+                required: true,
+                message: 'Please input your phone number!',
+              },
+            ]}
+          >
+            <Input
+              placeholder="Phone Number"
+              name="phone"
+              onChange={(e) => handleChange(e)}
+            />
+          </Item>
+        ) : null}
 
       <Item
         name="password"
@@ -78,18 +120,24 @@ function SignForm({ getUserInfo }) {
           onChange={(e) => handleChange(e)}
         />
       </Item>
+      {type === 'register' ? (
+        <Item
+          name="confirm"
+          rules={[
+            {
+              required: true,
+              message: 'Please confirm your password!',
+            },
+            ({ getFieldValue }) => confirmPasswordValidation(getFieldValue),
+          ]}
+        >
+          <Password placeholder="Confirm password" />
+        </Item>
+      ) : null}
+
       <Button className="sign-up-btn" type="primary" htmlType="submit">
-        Sign In
+        Sign Up
       </Button>
-      <div className="register_option">
-        <Text>Don`t have an account ?</Text>
-        <Anchor affix={false}>
-          <Link
-            href="/signup"
-            title="Sign up"
-          />
-        </Anchor>
-      </div>
     </Form>
   );
 }
@@ -98,4 +146,5 @@ export default SignForm;
 
 SignForm.propTypes = {
   getUserInfo: PropTypes.func.isRequired,
+  type: PropTypes.string.isRequired,
 };
