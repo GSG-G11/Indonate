@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import Proptypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { Button } from 'antd';
+import { Button, Modal } from 'antd';
 import DonationForm from './DonationForm';
 
+const { confirm } = Modal;
 function DonationButton({ campaignId }) {
   const [visible, setVisible] = useState(false);
   const navigate = useNavigate();
@@ -15,12 +16,20 @@ function DonationButton({ campaignId }) {
   function login() {
     navigate('/login');
   }
+  function authConfirm() {
+    confirm({
+      title: 'You Should login to Donate!',
+      okText: 'Login',
+      cancelText: 'Cancel',
+      onOk: () => login(),
+    });
+  }
 
   return (
     <>
       <Button
         type="primary"
-        onClick={user.isUserAuthorized ? visibleToggle : login}
+        onClick={user.isUserAuthorized ? visibleToggle : authConfirm}
       >
         Donate
       </Button>
