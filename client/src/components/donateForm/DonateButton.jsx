@@ -8,7 +8,6 @@ import DonationForm from './DonationForm';
 function DonationButton({ campaignId }) {
   const [visible, setVisible] = useState(false);
   const navigate = useNavigate();
-
   const user = useSelector((state) => state.user);
   const visibleToggle = () => {
     setVisible((prev) => !prev);
