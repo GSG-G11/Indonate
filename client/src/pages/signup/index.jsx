@@ -81,7 +81,7 @@ function SignUp() {
           <Title
             level={2}
           >
-            Register
+            REGISTER
           </Title>
           <Form
             className="Form-sign-up"
