@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Card, Typography,
+  Card, Typography, Skeleton, Image, Avatar,
 } from 'antd';
 import { DonationButton } from '../../index';
 import styles from './index.less';
@@ -16,17 +16,28 @@ function Campaign({
   description,
   imgSrc,
   categoryIcon,
+  loading,
 }) {
   return (
     <Card
       className="customCard"
       hoverable
-      cover={<img alt="card cover" src={imgSrc} />}
+      cover={!loading && (
+        <Image
+          alt="Category"
+          src={imgSrc}
+        />
+      )}
     >
-      <img className="category" alt="Category" src={categoryIcon} />
-      <Meta className={styles.title} title={title} />
-      <Text type="secondary">{description}</Text>
-      <DonationButton campaignId={id} />
+      <Skeleton loading={loading} avatar active>
+        <Meta
+          className={styles.title}
+          title={title}
+          avatar={<Avatar src={categoryIcon} />}
+        />
+        <Text type="secondary">{description}</Text>
+        <DonationButton campaignId={id} />
+      </Skeleton>
     </Card>
   );
 }
@@ -39,4 +50,5 @@ Campaign.propTypes = {
   description: PropTypes.string.isRequired,
   imgSrc: PropTypes.string.isRequired,
   categoryIcon: PropTypes.string.isRequired,
+  loading: PropTypes.string.isRequired,
 };
