@@ -39,7 +39,7 @@ function SignUp() {
 
   return (
     <div className="sign-up-container">
-      <div className="img-side-sgin-up">
+      <div className="img-side-sign-up">
 
         <Title
           className="custom-header-text"
