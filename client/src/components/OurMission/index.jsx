@@ -6,7 +6,7 @@ const { Paragraph } = Typography;
 
 function OurMission() {
   return (
-    <section className="our-mission-section">
+    <section className="our-mission-section" id="our-mission-section">
       <div className="our-mission-image-container">
         <div className="green-background" />
       </div>

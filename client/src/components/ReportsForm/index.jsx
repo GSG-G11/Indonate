@@ -34,7 +34,7 @@ function ReportsForm() {
     addReport({ name, email, reportMsg });
   };
   return (
-    <div className="reports-form-container">
+    <div className="reports-form-container" id="reports-form-container">
       <div className="reports-form-side-bar">
         <Title className="contact-us">CONTACT US</Title>
         <Paragraph className="description">
