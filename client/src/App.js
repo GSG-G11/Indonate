@@ -8,7 +8,7 @@ import {
   ReportsForm,
   OurMission,
 } from './components';
-import OneCampaign from './pages/OneCampaign';
+import Campaign from './pages';
 import store from './redux/app/store';
 import { getUserData } from './redux/feature/user/userSlice';
 
@@ -30,30 +30,10 @@ function App() {
             </>
           )}
         />
-        <Route
-          path="/campaigns"
-          element={
-            <OneCampaign id={2} />
-            }
-        />
-        <Route
-          path="/campaign/:id"
-          element={
-            <h1>campaign</h1>
-            }
-        />
-        <Route
-          path="/signUp"
-          element={
-            <SignUp />
-            }
-        />
-        <Route
-          path="/login"
-          element={(
-            <Signin />
-          )}
-        />
+        <Route path="/campaigns" element={<> </>} />
+        <Route path="/campaign/:id" element={<Campaign />} />
+        <Route path="/signUp" element={<SignUp />} />
+        <Route path="/login" element={<Signin />} />
       </Routes>
     </Router>
   );
