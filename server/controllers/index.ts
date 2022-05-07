@@ -8,6 +8,7 @@ import reports from './reportsRouter/reports';
 import getCampaignById from './compaignRouter/getCampaignById';
 import addDonation from './donations/addDonation';
 import statistics from './compaignRouter/statistics';
+import addFamily from './admin';
 
 export {
   login,
@@ -20,4 +21,5 @@ export {
   checkUser,
   addDonation,
   statistics,
+  addFamily,
 };
