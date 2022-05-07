@@ -71,7 +71,7 @@ const getCampaignById = async (
     ]);
 
     if (!campaignInfo) throw new CustomedError('There is no campaign', 400);
-    res.status(200).json({
+    res.json({
       message: 'Success',
       data: {
         campaignInfo,
