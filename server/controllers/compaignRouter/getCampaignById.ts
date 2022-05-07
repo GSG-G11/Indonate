@@ -51,6 +51,15 @@ const getCampaignById = async (
             sequelize.fn('SUM', sequelize.literal('COALESCE(money, 0)')),
             'current_money',
           ],
+          [
+            sequelize.fn(
+              'SUM',
+              sequelize.literal(
+                'COALESCE(food, 0) + COALESCE(clothes, 0) + COALESCE(money, 0)',
+              ),
+            ),
+            'current',
+          ],
         ],
       }),
       Capon.findAll({
@@ -67,6 +76,7 @@ const getCampaignById = async (
       data: {
         campaignInfo,
         current: {
+          current: +current[0].current,
           current_food: +current[0].current_food,
           current_clothes: +current[0].current_clothes,
           current_money: +current[0].current_money,

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -35,6 +36,7 @@ function Campaign() {
           cancelToken: source.token,
         });
         setCampaign(data || {});
+        console.log(data);
         setIsLoading(false);
       } catch ({
         response: {
@@ -108,30 +110,77 @@ function Campaign() {
                   '100%': '#87d068',
                 }}
                 percent={(
-                  (100 * +campaign.current)
-                  / campaign.campaignInfo.target
-                ).toFixed(2)}
+                  (100 * campaign.current.current)
+                  / (campaign.campaignInfo.food_target
+                    + campaign.campaignInfo.clothes_target
+                    + campaign.campaignInfo.money_target)
+                ).toFixed(1)}
               />
-              <Paragraph className="target">
-                Target:
-                {' '}
-                {campaign.campaignInfo.target}
-              </Paragraph>
               <Paragraph className="current">
                 Current:
                 {' '}
-                {campaign.current}
+                {campaign.current.current}
               </Paragraph>
               <Divider plain />
               <Row gutter={100}>
                 <Col span={30}>
                   <Statistic
-                    title="Beneficiary families"
+                    title="Beneficiary families:"
+                    loading={isLoading}
                     value={campaign.families}
                     prefix={<TeamOutlined />}
                   />
                 </Col>
               </Row>
+              <Divider plain />
+              <Paragraph className="target-progress">
+                Food:
+                {' '}
+                {campaign.current.current_food}
+              </Paragraph>
+              <Progress
+                percent={(
+                  (100 * campaign.current.current_food)
+                  / campaign.campaignInfo.food_target
+                ).toFixed(1)}
+                size="default"
+                strokeColor={{
+                  '0%': '#108ee9',
+                  '100%': '#87d068',
+                }}
+              />
+              <Paragraph className="target-progress">
+                Money:
+                {' '}
+                {campaign.current.current_money}
+              </Paragraph>
+              <Progress
+                percent={(
+                  (100 * campaign.current.current_money)
+                  / campaign.campaignInfo.money_target
+                ).toFixed(1)}
+                size="default"
+                strokeColor={{
+                  '0%': '#108ee9',
+                  '100%': '#87d068',
+                }}
+              />
+              <Paragraph className="target-progress">
+                Clothes:
+                {' '}
+                {campaign.current.current_clothes}
+              </Paragraph>
+              <Progress
+                percent={(
+                  (100 * campaign.current.current_clothes)
+                  / campaign.campaignInfo.clothes_target
+                ).toFixed(1)}
+                size="default"
+                strokeColor={{
+                  '0%': '#108ee9',
+                  '100%': '#87d068',
+                }}
+              />
             </>
           ) : (
             <Skeleton active />

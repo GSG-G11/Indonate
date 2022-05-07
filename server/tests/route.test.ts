@@ -191,6 +191,7 @@ describe('Get/campaign/:id', () => {
         title: 'Helping poor families',
       },
       current: {
+        current: 120,
         current_clothes: 10,
         current_food: 10,
         current_money: 100,
