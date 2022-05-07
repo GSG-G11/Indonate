@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom';
 import {
   Card,
   Typography,
@@ -22,18 +23,21 @@ function Campaign({
   categoryIcon,
   loading,
 }) {
+  const navigate = useNavigate();
+
   return (
     <div className="card">
       <Card
         className="customCard"
         hoverable
         cover={!loading && (
-        <Image
-          preview={false}
-          alt="Error img"
-          src={imgSrc}
-        />
+          <Image
+            preview={false}
+            alt="Error img"
+            src={imgSrc}
+          />
         )}
+        onClick={() => navigate(`/campaign/${id}`)}
       >
         <Skeleton loading={loading} avatar active>
           <Meta
