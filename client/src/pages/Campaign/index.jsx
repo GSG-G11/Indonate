@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -6,12 +5,10 @@ import {
   Col,
   Divider,
   Image,
-  message,
   Progress,
   Row,
   Statistic,
   Typography,
-  Spin,
   Result,
   Button,
   Skeleton,
