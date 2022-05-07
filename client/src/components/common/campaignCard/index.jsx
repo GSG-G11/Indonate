@@ -1,7 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Card, Typography, Skeleton, Image, Avatar,
+  Card,
+  Typography,
+  Skeleton,
+  Image,
+  Avatar,
 } from 'antd';
 import { DonationButton } from '../../index';
 import styles from './index.less';

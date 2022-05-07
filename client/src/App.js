@@ -6,8 +6,8 @@ import {
   Signin,
   Review,
   ReportsForm,
+  OurMission,
 } from './components';
-import Test from './components/test';
 import store from './redux/app/store';
 import { getUserData } from './redux/feature/user/userSlice';
 
@@ -23,8 +23,7 @@ function App() {
           path="/"
           element={(
             <>
-              {/* our mission */}
-              <Test />
+              <OurMission />
               <Review />
               <ReportsForm />
             </>
