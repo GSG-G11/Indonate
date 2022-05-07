@@ -185,10 +185,16 @@ describe('Get/campaign/:id', () => {
         image_link:
           'https://media.voltron.alhurra.com/Drupal/01live-116/styles/sourced/s3/2019-12/AFC8DF4B-8C6D-4968-87B2-CEAFD63DED97.jpg?itok=Y3YypJNm',
         is_available: true,
-        target: 50000,
+        food_target: 1000,
+        clothes_target: 200,
+        money_target: 2000,
         title: 'Helping poor families',
       },
-      current: 120,
+      current: {
+        current_clothes: 10,
+        current_food: 10,
+        current_money: 100,
+      },
       families: 1,
     };
     const response = await request(app).get(`/api/campaign/${id}`).expect(200);

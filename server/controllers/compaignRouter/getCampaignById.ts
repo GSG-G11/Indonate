@@ -23,7 +23,9 @@ const getCampaignById = async (
           'description',
           'image_link',
           'is_available',
-          'target',
+          'food_target',
+          'clothes_target',
+          'money_target',
           'title',
         ],
         include: {
@@ -38,13 +40,16 @@ const getCampaignById = async (
         raw: true,
         attributes: [
           [
-            sequelize.fn(
-              'SUM',
-              sequelize.literal(
-                'COALESCE(food, 0) + COALESCE(clothes, 0) + COALESCE(money, 0)',
-              ),
-            ),
-            'current',
+            sequelize.fn('SUM', sequelize.literal('COALESCE(food, 0)')),
+            'current_food',
+          ],
+          [
+            sequelize.fn('SUM', sequelize.literal('COALESCE(clothes, 0)')),
+            'current_clothes',
+          ],
+          [
+            sequelize.fn('SUM', sequelize.literal('COALESCE(money, 0)')),
+            'current_money',
           ],
         ],
       }),
@@ -61,7 +66,11 @@ const getCampaignById = async (
       message: 'Success',
       data: {
         campaignInfo,
-        current: +current[0].current,
+        current: {
+          current_food: +current[0].current_food,
+          current_clothes: +current[0].current_clothes,
+          current_money: +current[0].current_money,
+        },
         families: numOfFamilies.length,
       },
     });
