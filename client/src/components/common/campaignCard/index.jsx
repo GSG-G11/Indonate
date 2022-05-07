@@ -19,26 +19,29 @@ function Campaign({
   loading,
 }) {
   return (
-    <Card
-      className="customCard"
-      hoverable
-      cover={!loading && (
+    <div className="card">
+      <Card
+        className="customCard"
+        hoverable
+        cover={!loading && (
         <Image
-          alt="Category"
+          preview={false}
+          alt="Error img"
           src={imgSrc}
         />
-      )}
-    >
-      <Skeleton loading={loading} avatar active>
-        <Meta
-          className={styles.title}
-          title={title}
-          avatar={<Avatar src={categoryIcon} />}
-        />
-        <Text type="secondary">{description}</Text>
-        <DonationButton campaignId={id} />
-      </Skeleton>
-    </Card>
+        )}
+      >
+        <Skeleton loading={loading} avatar active>
+          <Meta
+            className={styles.title}
+            title={title}
+            avatar={<Avatar src={categoryIcon} />}
+          />
+          <Text type="secondary">{description}</Text>
+          <DonationButton campaignId={id} />
+        </Skeleton>
+      </Card>
+    </div>
   );
 }
 
