@@ -36,7 +36,6 @@ function Campaign() {
           cancelToken: source.token,
         });
         setCampaign(data || {});
-        console.log(data);
         setIsLoading(false);
       } catch ({
         response: {
