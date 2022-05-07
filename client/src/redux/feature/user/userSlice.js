@@ -19,6 +19,10 @@ export const userSlice = createSlice({
       state.userData = action.payload;
       state.isUserAuthorized = true;
     },
+    logout: (state) => {
+      state.userData = userSlice.initialState;
+      state.isUserAuthorized = false;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getUserData.pending, (state) => {
@@ -36,6 +40,6 @@ export const userSlice = createSlice({
   },
 
 });
-export const { sign } = userSlice.actions;
+export const { sign, logout } = userSlice.actions;
 export default userSlice.reducer;
 export const selectUser = (state) => state.user.value;
