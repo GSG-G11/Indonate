@@ -426,6 +426,40 @@ describe('GET/campaigns', () => {
     expect(response.body.data.campaigns).toEqual([]);
   });
 });
+describe('POST /api/admin/family', () => {
+  test('case: succeeded | added successfully', async () => {
+    const response = await request(app)
+      .post('/api/admin/family')
+      .send({
+        name: 'mohammed',
+        phone: '0599522660',
+        address: 'Gaza',
+      })
+      .expect(201);
+    expect(response.body.message).toBe('Family added successfully');
+  });
+  test('case: Failed | phone is used', async () => {
+    const response = await request(app)
+      .post('/api/admin/family')
+      .send({
+        name: 'mohammed',
+        phone: '0599888620',
+        address: 'Gaza',
+      })
+      .expect(400);
+    expect(response.body.message).toBe('phone is used try another one');
+  });
+  test('case: Failed | "address" does not exist', async () => {
+    const response = await request(app)
+      .post('/api/admin/family')
+      .send({
+        name: 'mohammed',
+        phone: '0599888622',
+      })
+      .expect(400);
+    expect(response.body.message).toBe('"address" is required');
+  });
+});
 
 afterAll(() => {
   connection.close();
