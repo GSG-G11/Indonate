@@ -1,9 +1,11 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import PropTypes from 'prop-types';
 import {
   Card, Typography,
 } from 'antd';
-import DonationButton from '../../donateForm/DonateButton';
+import { DonateButton } from '../../donateForm';
 import styles from './index.less';
 import 'antd/dist/antd.less';
 
