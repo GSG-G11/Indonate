@@ -5,10 +5,11 @@ import {
   SignUp,
   Signin,
   Review,
+  HeaderLandingPage,
   ReportsForm,
   OurMission,
 } from './components';
-import Campaign from './pages';
+import { Campaigns, Campaign } from './pages';
 import store from './redux/app/store';
 import { getUserData } from './redux/feature/user/userSlice';
 
@@ -24,13 +25,14 @@ function App() {
           path="/"
           element={(
             <>
+              <HeaderLandingPage />
               <OurMission />
               <Review />
               <ReportsForm />
             </>
           )}
         />
-        <Route path="/campaigns" element={<> </>} />
+        <Route path="/campaigns" element={<Campaigns />} />
         <Route path="/campaign/:id" element={<Campaign />} />
         <Route path="/signUp" element={<SignUp />} />
         <Route path="/login" element={<Signin />} />
