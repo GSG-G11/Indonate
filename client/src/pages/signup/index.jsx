@@ -1,11 +1,9 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { GoogleOutlined } from '@ant-design/icons';
 
 import axios from 'axios';
 import {
-  Button,
   message,
   Space,
   Typography,
@@ -69,9 +67,9 @@ function SignUp() {
               />
             </Anchor>
           </div>
-          <Button type="primary" icon={<GoogleOutlined />}>
+          <button type="button" className="login-with-google-btn">
             Sign in with Google
-          </Button>
+          </button>
         </Space>
       </div>
     </div>

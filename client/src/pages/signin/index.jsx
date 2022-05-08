@@ -1,13 +1,11 @@
 import React from 'react';
 import {
-  Button,
   Typography,
   message,
   Space,
   Anchor,
 } from 'antd';
 import { useDispatch } from 'react-redux';
-import { GoogleOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import { sign } from '../../redux/feature/user/userSlice';
 import '../signup/index.less';
@@ -65,9 +63,9 @@ function Signin() {
               />
             </Anchor>
           </div>
-          <Button type="primary" icon={<GoogleOutlined />}>
+          <button type="button" className="login-with-google-btn">
             Sign in with Google
-          </Button>
+          </button>
         </Space>
       </div>
     </div>
