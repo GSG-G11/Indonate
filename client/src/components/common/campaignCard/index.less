@@ -1,7 +1,12 @@
-
 .customCard {
+
     max-width: 270px;
-    
+
+    .ant-card {
+        width: 45%;
+    }
+
+
     .ant-card-body {
         position: relative;
         display: flex;
@@ -9,11 +14,6 @@
         justify-content: center;
         align-items: center;
         box-shadow: 1px 2px #cac9c9;
-    }
-
-    .ant-card-cover img {
-        height: 260px;
-        border-radius: 5px 5px 0 0;
     }
 
     .ant-card-meta-title {
@@ -43,10 +43,24 @@
 
     .category {
         padding: 10px;
-        width: 60px;
-        height: 60px;
+        width: 70px;
+        height: 70px;
         position: absolute;
-        right: 110px;
-        top: -30px;
-      }
+    }
+
+    .ant-card-cover img {
+        height: 250px;
+        border-radius: 5px 5px 0 0;
+    }
+
+    .ant-card-meta-avatar {
+        position: absolute;
+        top: -17px;
+        right: 103px;
+    }
+
+    .ant-skeleton {
+        height: 412px;
+        width: 212px;
+    }
 }
