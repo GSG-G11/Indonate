@@ -8,7 +8,7 @@ import {
   YoutubeOutlined,
 } from '@ant-design/icons';
 import { Typography } from 'antd';
-import indonate from './logo.svg';
+import indonate from '../../assets/images/footer-logo.svg';
 
 const {
   Text,
