@@ -5,7 +5,7 @@ import request from 'supertest';
 import connection from '../database/config/connection';
 import app from '../app';
 import buildFakeData from '../database/fakeData/buildFakeData';
-import * as campaigns from './getAllCampainesResult.json';
+import * as campaigns from './getAllCampaignsResult.json';
 
 beforeAll(() => buildFakeData());
 
@@ -344,13 +344,13 @@ describe('GET/checkAuth', () => {
   });
 });
 
-describe('GET/campaines', () => {
-  test('get all campaines', async () => {
+describe('GET /campaigns', () => {
+  test('get all campaigns', async () => {
     const response = await request(app).get('/api/campaigns').expect(200);
 
     expect(response.body.data.campaigns[0]).toEqual(campaigns[0]);
   });
-  test('test pagenation get the three campaines page 1', async () => {
+  test('test pagination get the three campaigns page 1', async () => {
     const response = await request(app).get(
       '/api/campaigns?page=1&limit=3',
       () => {
@@ -376,13 +376,13 @@ describe('GET/campaines', () => {
       .expect(400);
     expect(response.body.message).toBe('"limit" must be a number');
   });
-  test('get campaines with is not available', async () => {
+  test('get campaigns with is not available', async () => {
     const response = await request(app)
       .get('/api/campaigns?available=false')
       .expect(200);
     expect(response.body.data.campaigns).toEqual([]);
   });
-  test('get campaines with name Summer and category=education', async () => {
+  test('get campaigns with name Summer and category=education', async () => {
     const response = await request(app)
       .get(
         '/api/campaigns?search=summer%20clothes%20collection&category=Education',
@@ -406,7 +406,7 @@ describe('GET/campaines', () => {
       },
     ]);
   });
-  test('get campaines with name not exit', async () => {
+  test('get campaigns with name not exit', async () => {
     const response = await request(app)
       .get('/api/campaigns?search=give people maney&category=Education')
       .expect(200);
