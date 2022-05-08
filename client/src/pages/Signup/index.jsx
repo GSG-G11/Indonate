@@ -20,7 +20,7 @@ const { Link } = Anchor;
 
 const { Title, Text } = Typography;
 
-function SignUp() {
+function Signup() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [userInfo, setUserInfo] = useState({
@@ -190,4 +190,4 @@ function SignUp() {
   );
 }
 
-export default SignUp;
+export default Signup;

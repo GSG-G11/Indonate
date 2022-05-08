@@ -16,17 +16,17 @@ import '../Signup/index.less';
 
 const { Password } = Input;
 const { Item } = Form;
-
 const { Link } = Anchor;
-
 const { Title, Text } = Typography;
 
 function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const [userInfo, setUserInfo] = useState({
     email: '', password: '',
   });
+
   const passwordValidation = () => ({
     validator(_, value) {
       if (value.length >= 6) {
@@ -56,7 +56,6 @@ function Login() {
   return (
     <div className="sign-up-container">
       <div className="img-side-sign-up">
-
         <Title
           className="custom-header-text"
           level={3}
