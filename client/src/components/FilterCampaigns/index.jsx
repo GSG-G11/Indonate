@@ -9,7 +9,6 @@ import {
   Skeleton,
 
 } from 'antd';
-import { CloseOutlined, CheckOutlined } from '@ant-design/icons';
 import './style.less';
 
 const { Search } = Input;
@@ -63,7 +62,11 @@ const FilterCampaigns = ({ setCategory, setAvailable, setSearch }) => {
 
         <div>
 
-          <Group onChange={handleCategoryChange} defaultValue="List All" buttonStyle="solid">
+          <Group
+            onChange={handleCategoryChange}
+            defaultValue="List All"
+            buttonStyle="solid"
+          >
             {categories.map((item) => (
               loading
                 ? (
@@ -79,14 +82,13 @@ const FilterCampaigns = ({ setCategory, setAvailable, setSearch }) => {
         <div>
           Available campaigns:
           <Switch
-            checkedChildren={<CheckOutlined />}
-            unCheckedChildren={<CloseOutlined />}
             defaultChecked
             onChange={handleAvailableChange}
           />
         </div>
 
       </div>
+
     </div>
   );
 };
