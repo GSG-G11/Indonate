@@ -14,6 +14,6 @@ router.use(authRouter);
 router.use(categoryRouter);
 router.use(campaignRouter);
 router.use(reportsRouter);
-router.use(adminDonors);
+router.use('/admin', adminDonors);
 
 export default router;
