@@ -3,6 +3,7 @@ import Nav from './Nav';
 import Signin from './signin';
 import SignUp from './signUp';
 import Review from './Review';
+import HeaderLandingPage from './headerLandingPage';
 import FilterCampaigns from './filterCampaigns';
 import DonationButton from './donateForm/DonateButton';
 import ReportsForm from './ReportsForm';
@@ -14,6 +15,7 @@ export {
   SignUp,
   OurMission,
   Review,
+  HeaderLandingPage,
   DonationButton,
   ReportsForm,
 };
