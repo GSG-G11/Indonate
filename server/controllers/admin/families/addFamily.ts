@@ -1,11 +1,11 @@
 import { NextFunction, Response, Request } from 'express';
 import { Family } from '../../../database/models';
 import { CustomError } from '../../../utils';
-import { addFamilySchema } from '../../../utils/validation';
+import { familySchema } from '../../../utils/validation';
 
 const addFamily = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const familyInfo = await addFamilySchema.validateAsync(req.body);
+    const familyInfo = await familySchema.validateAsync(req.body);
     const { phone } = familyInfo;
     const checkPhone: object | null = await Family.findOne({
       where: {
