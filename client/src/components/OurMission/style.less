@@ -2,7 +2,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-block: 10rem;
+  margin-bottom: 10rem;
 }
 
 .our-mission-image-container {
@@ -19,7 +19,7 @@
 .green-background {
   width: 90%;
   height: 90%;
-  background-color: #6aac6e;
+  background-color: #469D62;
   position: absolute;
   border-radius: inherit;
   z-index: -1;
@@ -33,13 +33,12 @@
 .title {
   font-size: 6.4rem;
   font-weight: 600;
-  line-height: 7rem;
   margin-bottom: 2rem;
 }
-.description {
+.our-mission-description {
   font-size: 3.6rem;
   font-weight: 400;
-  line-height: 4.5rem;
+  line-height: 5rem;
 }
 
 @media (max-width: 992px) {
@@ -52,5 +51,13 @@
   .title {
     font-size: 6rem;
     text-align: center;
+  }
+}
+@media (max-width: 550px) {
+  .our-mission-description {
+    font-size: 3rem;
+  }
+  .title {
+    font-size: 5rem;
   }
 }

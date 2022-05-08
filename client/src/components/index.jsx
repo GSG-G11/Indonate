@@ -1,29 +1,29 @@
+import Nav from './common/Nav';
+import Footer from './common/Footer';
+import Campaign from './common/CampaignCard';
 import OurMission from './OurMission';
-import Nav from './Nav';
-import Signin from './signin';
-import SignUp from './signUp';
 import Review from './Review';
-import LatestCampaigns from './latestCampaigns';
-import HeaderLandingPage from './headerLandingPage';
-import FilterCampaigns from './filterCampaigns';
-import DonationButton from './donateForm/DonateButton';
+import FilterCampaigns from './FilterCampaigns';
+import DonationButton from './DonateForm/DonateButton';
+import LatestCampaigns from './LatestCampaigns';
+import HeaderLandingPage from './HeaderLandingPage';
 import ReportsForm from './ReportsForm';
+import Container from './Container';
 import DisplayCampaigns from './DisplayCampaigns';
-import Campaign from './common/campaignCard';
 import Header from './HeaderAllCampaigns';
 
 export {
   Header,
+  Footer,
   Campaign,
   DisplayCampaigns,
   FilterCampaigns,
   Nav,
-  Signin,
-  SignUp,
   OurMission,
   Review,
   LatestCampaigns,
   HeaderLandingPage,
   DonationButton,
   ReportsForm,
+  Container,
 };

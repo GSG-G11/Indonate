@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Pagination, message } from 'antd';
 import axios from 'axios';
-import FilterCampaigns from '../filterCampaigns';
-import Cards from '../campaignList';
+import FilterCampaigns from '../FilterCampaigns';
+import Cards from '../CampaignList';
 import './style.css';
 
 function DisplayCampaigns() {
@@ -34,12 +34,12 @@ function DisplayCampaigns() {
     return () => source.cancel();
   }, [page, available, category, search]);
 
-  const handlepageChange = (e) => {
+  const handlePageChange = (e) => {
     setPage(e);
   };
 
   return (
-    <div className="all-campaines-container">
+    <div className="all-campaigns-container">
       <FilterCampaigns
         setCategory={setCategory}
         setAvailable={setAvailable}
@@ -54,7 +54,7 @@ function DisplayCampaigns() {
           defaultCurrent={page}
           total={Math.ceil(totalCount / 6)}
           defaultPageSize={1}
-          onChange={(e) => handlepageChange(e)}
+          onChange={(e) => handlePageChange(e)}
         />
       ) : null }
 
