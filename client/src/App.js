@@ -5,6 +5,7 @@ import {
   SignUp,
   Signin,
   Review,
+  LatestCampaigns,
   HeaderLandingPage,
   ReportsForm,
   OurMission,
@@ -26,6 +27,7 @@ function App() {
           element={(
             <>
               <HeaderLandingPage />
+              <LatestCampaigns />
               <OurMission />
               <Review />
               <ReportsForm />
@@ -42,13 +44,13 @@ function App() {
           path="/campaign/:id"
           element={
             <h1>campaign</h1>
-            }
+          }
         />
         <Route
           path="/signUp"
           element={
             <SignUp />
-            }
+          }
         />
         <Route
           path="/login"

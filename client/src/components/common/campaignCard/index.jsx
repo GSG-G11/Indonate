@@ -1,9 +1,11 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import PropTypes from 'prop-types';
 import {
   Card, Typography,
 } from 'antd';
-import DonationButton from '../../donateForm/DonateButton';
+import { DonateButton } from '../../donateForm';
 import styles from './index.less';
 import 'antd/dist/antd.less';
 
@@ -17,11 +19,13 @@ function Campaign({
   imgSrc,
   categoryIcon,
 }) {
+  const navigate = useNavigate();
   return (
     <Card
       className="customCard"
       hoverable
       cover={<img alt="card cover" src={imgSrc} />}
+      onClick={() => navigate(`/campaign/${id}`)}
     >
 
       <img className="category" alt="Category" src={categoryIcon} />
@@ -31,7 +35,7 @@ function Campaign({
         {' '}
         know more ...
       </Text>
-      <DonationButton campaignId={id} />
+      <DonateButton campaignId={id} />
     </Card>
   );
 }
