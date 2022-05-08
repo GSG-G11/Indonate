@@ -1,9 +1,16 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import PropTypes from 'prop-types';
 import {
-  Card, Typography,
+  Card,
+  Typography,
+  Skeleton,
+  Image,
+  Avatar,
 } from 'antd';
-import { DonationButton } from '../../index';
+import { DonateButton } from '../../donateForm';
+
 import styles from './index.less';
 import 'antd/dist/antd.less';
 
@@ -16,18 +23,38 @@ function Campaign({
   description,
   imgSrc,
   categoryIcon,
+  loading,
+  isAvailable,
 }) {
+  const navigate = useNavigate();
   return (
-    <Card
-      className="customCard"
-      hoverable
-      cover={<img alt="card cover" src={imgSrc} />}
-    >
-      <img className="category" alt="Category" src={categoryIcon} />
-      <Meta className={styles.title} title={title} />
-      <Text type="secondary">{description}</Text>
-      <DonationButton campaignId={id} />
-    </Card>
+    <div className="card">
+      <Card
+        className="customCard"
+        hoverable
+        cover={!loading && (
+          <Image
+            preview={false}
+            alt="Error img"
+            src={imgSrc}
+          />
+        )}
+        onClick={() => navigate(`/campaign/${id}`)}
+      >
+        <Skeleton loading={loading} avatar active width="200%" height="300px">
+          <Meta
+            className={styles.title}
+            title={title}
+            avatar={<Avatar src={categoryIcon} />}
+          />
+          <Text type="secondary">
+            {description.slice(0, 90)}
+            know more ...
+          </Text>
+          <DonateButton campaignId={id} isAvailable={isAvailable} />
+        </Skeleton>
+      </Card>
+    </div>
   );
 }
 
@@ -39,4 +66,6 @@ Campaign.propTypes = {
   description: PropTypes.string.isRequired,
   imgSrc: PropTypes.string.isRequired,
   categoryIcon: PropTypes.string.isRequired,
+  loading: PropTypes.bool.isRequired,
+  isAvailable: PropTypes.bool.isRequired,
 };

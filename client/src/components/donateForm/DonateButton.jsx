@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import Proptypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { Button } from 'antd';
+import { Button, Modal } from 'antd';
 import DonationForm from './DonationForm';
 
-function DonationButton({ campaignId }) {
+const { confirm } = Modal;
+function DonationButton({ campaignId, isAvailable }) {
   const [visible, setVisible] = useState(false);
   const navigate = useNavigate();
-
   const user = useSelector((state) => state.user);
   const visibleToggle = () => {
     setVisible((prev) => !prev);
@@ -16,12 +16,21 @@ function DonationButton({ campaignId }) {
   function login() {
     navigate('/login');
   }
-
+  function authConfirm() {
+    confirm({
+      title: 'You Should login to Donate!',
+      okText: 'Login',
+      cancelText: 'Cancel',
+      onOk: () => login(),
+    });
+  }
   return (
     <>
       <Button
         type="primary"
-        onClick={user.isUserAuthorized ? visibleToggle : login}
+        onClick={user.isUserAuthorized ? visibleToggle : authConfirm}
+        size="large"
+        disabled={!isAvailable}
       >
         Donate
       </Button>
@@ -36,5 +45,6 @@ function DonationButton({ campaignId }) {
 }
 DonationButton.propTypes = {
   campaignId: Proptypes.number.isRequired,
+  isAvailable: Proptypes.bool.isRequired,
 };
 export default DonationButton;

@@ -15,7 +15,15 @@ const Campaign = sequelize.define('campaigns', {
     type: DataTypes.TEXT,
     allowNull: false,
   },
-  target: {
+  food_target: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+  clothes_target: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+  money_target: {
     type: DataTypes.INTEGER,
     allowNull: false,
   },

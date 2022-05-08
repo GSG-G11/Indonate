@@ -8,14 +8,14 @@ import {
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import { sign } from '../../redux/feature/user/userSlice';
-import '../signup/index.less';
+import '../Signup/index.less';
 import SignForm from '../../components/common/SignForm';
 
 const { Link } = Anchor;
 
 const { Title, Text } = Typography;
 
-function Signin() {
+function Login() {
   const dispatch = useDispatch();
 
   const login = async ({ email, password }) => {
@@ -72,4 +72,4 @@ function Signin() {
   );
 }
 
-export default Signin;
+export default Login;
