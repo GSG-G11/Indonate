@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { Typography, Button, message } from 'antd';
+import {
+  Typography, Button, message, Anchor,
+} from 'antd';
+import { ArrowRightOutlined } from '@ant-design/icons';
 import Campaign from '../common/CampaignCard';
 import './style.less';
 
 const { Title, Text } = Typography;
+const { Link } = Anchor;
+
 function latestCampaigns() {
   const [campaigns, setCampaigns] = useState([]);
   const navigate = useNavigate();
@@ -61,6 +66,7 @@ function latestCampaigns() {
               description={description}
               imgSrc={imgSrc}
               categoryIcon={iconUrl}
+              isAvailable
             />
           )
           ))
@@ -70,9 +76,17 @@ function latestCampaigns() {
         className="more_btn ant-btn-primary ant-btn"
         type="primary"
         onClick={() => navigate('/campaigns/')}
-      >
-        See More Campaigns
-      </Button>
+      />
+      <div className="more-campaigns-btn">
+        <Anchor affix={false}>
+          <Link
+            onClick={() => navigate('/campaigns')}
+            href="/campaigns"
+            title="See More Campaigns"
+          />
+        </Anchor>
+        <ArrowRightOutlined />
+      </div>
     </section>
   );
 }
