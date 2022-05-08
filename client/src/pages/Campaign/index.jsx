@@ -115,11 +115,6 @@ function Campaign() {
                     + campaign.campaignInfo.money_target)
                 ).toFixed(1)}
               />
-              <Paragraph className="current">
-                Current:
-                {' '}
-                {campaign.current.current}
-              </Paragraph>
               <Divider plain />
               <Row gutter={100}>
                 <Col span={30}>
@@ -135,7 +130,11 @@ function Campaign() {
               <Paragraph className="target-progress">
                 Food:
                 {' '}
-                {campaign.current.current_food}
+                <span className="donation-type">
+                  {campaign.current.current_food}
+                  {' '}
+                  Meal.
+                </span>
               </Paragraph>
               <Progress
                 percent={(
@@ -151,7 +150,10 @@ function Campaign() {
               <Paragraph className="target-progress">
                 Money:
                 {' '}
-                {campaign.current.current_money}
+                <span className="donation-type">
+                  {campaign.current.current_money}
+                  $
+                </span>
               </Paragraph>
               <Progress
                 percent={(
@@ -167,7 +169,11 @@ function Campaign() {
               <Paragraph className="target-progress">
                 Clothes:
                 {' '}
-                {campaign.current.current_clothes}
+                <span className="donation-type">
+                  {campaign.current.current_clothes}
+                  {' '}
+                  Piece.
+                </span>
               </Paragraph>
               <Progress
                 percent={(
