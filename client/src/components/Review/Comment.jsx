@@ -13,7 +13,13 @@ function Comment({ comment: { title, comment, imgSrc } }) {
         bordered={false}
       >
         <Paragraph className="comment-paragraph">{comment}</Paragraph>
-        <Image className="comment-img" width={70} height={70} src={imgSrc} />
+        <Image
+          className="comment-img"
+          width={70}
+          height={70}
+          src={imgSrc}
+          preview={false}
+        />
       </Card>
     </div>
   );

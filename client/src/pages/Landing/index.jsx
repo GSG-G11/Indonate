@@ -1,9 +1,12 @@
 import React from 'react';
-import { OurMission, ReportsForm, Review } from '../../components';
+import {
+  HeaderLandingPage, OurMission, ReportsForm, Review,
+} from '../../components';
 
 function Landing() {
   return (
     <>
+      <HeaderLandingPage />
       <OurMission />
       <Review />
       <ReportsForm />

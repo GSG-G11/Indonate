@@ -95,17 +95,14 @@ function ReportsForm() {
           >
             <TextArea rows={6} placeholder="Report" size="large" />
           </Item>
-
-          <Item label=" " colon={false}>
-            <Button
-              className="submit-report"
-              type="primary"
-              htmlType="submit"
-              size="large"
-            >
-              Submit
-            </Button>
-          </Item>
+          <Button
+            className="submit-report"
+            type="primary"
+            htmlType="submit"
+            size="large"
+          >
+            Submit
+          </Button>
         </Form>
       </div>
     </Container>
