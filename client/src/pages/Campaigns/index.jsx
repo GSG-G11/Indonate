@@ -1,11 +1,12 @@
 import React from 'react';
-import { Header, DisplayCampaigns } from '../../components';
+import { Header, DisplayCampaigns, Footer } from '../../components';
 
 function Campaigns() {
   return (
     <>
       <Header />
       <DisplayCampaigns />
+      <Footer />
     </>
   );
 }

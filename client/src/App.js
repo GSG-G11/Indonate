@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { Nav } from './components';
 import {
-  Landing, Campaigns, Campaign, Login, Signup,
+  Landing, Campaign, Login, Signup, Campaigns,
 } from './pages';
 import store from './redux/app/store';
 import 'antd/dist/antd.less';

@@ -1,5 +1,7 @@
-import OurMission from './OurMission';
 import Nav from './common/Nav';
+import Footer from './common/Footer';
+import Campaign from './common/CampaignCard';
+import OurMission from './OurMission';
 import Review from './Review';
 import FilterCampaigns from './FilterCampaigns';
 import DonationButton from './DonateForm/DonateButton';
@@ -8,11 +10,11 @@ import HeaderLandingPage from './HeaderLandingPage';
 import ReportsForm from './ReportsForm';
 import Container from './Container';
 import DisplayCampaigns from './DisplayCampaigns';
-import Campaign from './common/CampaignCard';
 import Header from './HeaderAllCampaigns';
 
 export {
   Header,
+  Footer,
   Campaign,
   DisplayCampaigns,
   FilterCampaigns,

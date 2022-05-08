@@ -6,7 +6,6 @@ import {
 } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import './style.css';
-import 'antd/dist/antd.css';
 
 import { logout } from '../../../redux/feature/user/userSlice';
 
