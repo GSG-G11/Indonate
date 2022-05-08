@@ -55,7 +55,7 @@ function Nav() {
   const guestItem = [
     {
       label: (
-        <NavLink to="/logout">
+        <NavLink to="/">
           <Button onClick={logoutFun} className="btn" type="primary">
             Logout
           </Button>
