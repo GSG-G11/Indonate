@@ -13,7 +13,7 @@ import './style.less';
 
 const { Search } = Input;
 const { Group, Button } = Radio;
-const FilterCampaigns=({ setCategory, setAvailable, setSearch }) =>{
+function FilterCampaigns({ setCategory, setAvailable, setSearch }) {
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {

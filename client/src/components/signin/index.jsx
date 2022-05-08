@@ -30,7 +30,7 @@ const {
   Content,
 } = Layout;
 
-const Signin=() =>{
+function Signin() {
   const [userData, setUserData] = useState({ email: '', password: '' });
   const dispatch = useDispatch();
 
@@ -107,6 +107,24 @@ const Signin=() =>{
                   {
                     required: true,
                     message: 'Please input your email!',
+                  },
+
+                  {
+                    type: 'email',
+                    message: 'The input is not valid E-mail!',
+
+                  },
+                  {
+                    required: true,
+                    message: 'Please input your E-mail!',
+                  },
+                  {
+                    max: 250,
+                    message: 'Value should be less than 250 character',
+                  },
+                  {
+                    min: 4,
+                    message: 'Value should be more than 4 character',
                   },
                 ]}
               >

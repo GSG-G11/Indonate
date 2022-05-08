@@ -10,7 +10,7 @@ const { TextArea } = Input;
 const { Title, Paragraph } = Typography;
 const { Item } = Form;
 
-const ReportsForm=() =>{
+function ReportsForm() {
   const [form] = Form.useForm();
 
   const addReport = async ({ name, email, reportMsg }) => {
@@ -74,6 +74,14 @@ const ReportsForm=() =>{
               {
                 required: true,
                 message: 'Please input your E-mail!',
+              },
+              {
+                max: 250,
+                message: 'Value should be less than 250 character',
+              },
+              {
+                min: 4,
+                message: 'Value should be more than 4 character',
               },
             ]}
           >
