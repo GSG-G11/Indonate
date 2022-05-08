@@ -101,6 +101,19 @@ const Login = () => {
                     required: true,
                     message: 'Please input your email!',
                   },
+                  {
+                    type: 'email',
+                    message: 'The input is not valid E-mail!',
+
+                  },
+                  {
+                    max: 250,
+                    message: 'Value should be less than 250 character',
+                  },
+                  {
+                    min: 4,
+                    message: 'Value should be more than 4 character',
+                  },
                 ]}
               >
                 <Input
