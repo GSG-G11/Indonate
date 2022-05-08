@@ -8,8 +8,14 @@ import HeaderLandingPage from './headerLandingPage';
 import FilterCampaigns from './filterCampaigns';
 import DonationButton from './donateForm/DonateButton';
 import ReportsForm from './ReportsForm';
+import DisplayCampaigns from './DisplayCampaigns';
+import Campaign from './common/campaignCard';
+import Header from './HeaderAllCampaigns';
 
 export {
+  Header,
+  Campaign,
+  DisplayCampaigns,
   FilterCampaigns,
   Nav,
   Signin,

@@ -27,9 +27,14 @@ function Campaign({
       cover={<img alt="card cover" src={imgSrc} />}
       onClick={() => navigate(`/campaign/${id}`)}
     >
+
       <img className="category" alt="Category" src={categoryIcon} />
       <Meta className={styles.title} title={title} />
-      <Text type="secondary">{description}</Text>
+      <Text type="secondary">
+        {description.slice(0, 90) }
+        {' '}
+        know more ...
+      </Text>
       <DonateButton campaignId={id} />
     </Card>
   );
