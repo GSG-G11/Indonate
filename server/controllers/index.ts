@@ -7,7 +7,7 @@ import getAllCategories from './categories/getAllCategories';
 import reports from './reports/addReport';
 import getCampaignById from './campaigns/getCampaignById';
 import addDonation from './donations/addDonation';
-import getStatistics from './campaigns/getStatistics';
+import getStatistics from './statistics/getStatistics';
 
 export {
   login,

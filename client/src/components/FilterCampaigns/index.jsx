@@ -35,7 +35,11 @@ function FilterCampaigns({ setCategory, setAvailable, setSearch }) {
     return () => source.cancel();
   }, []);
   const handleCategoryChange = ({ target: { value } }) => {
-    setCategory(value);
+    if (value === 'List All') {
+      setCategory('');
+    } else {
+      setCategory(value);
+    }
   };
   const handleSearchChange = ({ target: { value } }) => {
     setSearch(value);

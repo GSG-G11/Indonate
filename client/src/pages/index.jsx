@@ -11,3 +11,5 @@ export {
   Signup,
   Login,
 };
+
+export default Campaigns;

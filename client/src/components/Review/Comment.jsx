@@ -15,8 +15,10 @@ function Comment({ comment: { title, comment, imgSrc } }) {
         <Paragraph className="comment-paragraph">{comment}</Paragraph>
         <Image
           className="comment-img"
-          width={70}
-          height={70}
+          style={{
+            width: '70px',
+            height: '70px',
+          }}
           src={imgSrc}
           preview={false}
         />

@@ -1,8 +1,12 @@
 import React from 'react';
+import { Header, DisplayCampaigns } from '../../components';
 
 function Campaigns() {
   return (
-    <div>Campaigns Page</div>
+    <>
+      <Header />
+      <DisplayCampaigns />
+    </>
   );
 }
 
