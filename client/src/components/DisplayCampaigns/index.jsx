@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Pagination, message, Spin } from 'antd';
-import { LoadingOutlined } from '@ant-design/icons';
+import { Pagination, message } from 'antd';
 import axios from 'axios';
 import FilterCampaigns from '../FilterCampaigns';
 import Cards from '../CampaignList';
@@ -14,7 +13,6 @@ function DisplayCampaigns() {
   const [page, setPage] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
   const [loading, setLoading] = useState(true);
-
   useEffect(() => {
     const source = axios.CancelToken.source();
     const { token } = source;
@@ -36,23 +34,18 @@ function DisplayCampaigns() {
     return () => source.cancel();
   }, [page, available, category, search]);
 
-  const handlepageChange = (e) => {
+  const handlePageChange = (e) => {
     setPage(e);
   };
 
   return (
     <div className="all-campaigns-container">
-      {!loading
-        ? (
-          <>
-            <FilterCampaigns
-              setCategory={setCategory}
-              setAvailable={setAvailable}
-              setSearch={setSearch}
-            />
-            <Cards campaigns={campaigns} />
-          </>
-        ) : <Spin indicator={<LoadingOutlined className="loading" />} />}
+      <FilterCampaigns
+        setCategory={setCategory}
+        setAvailable={setAvailable}
+        setSearch={setSearch}
+      />
+      <Cards campaigns={campaigns} loading={loading} />
 
       { totalCount > 6 ? (
 
@@ -61,7 +54,7 @@ function DisplayCampaigns() {
           defaultCurrent={page}
           total={Math.ceil(totalCount / 6)}
           defaultPageSize={1}
-          onChange={(e) => handlepageChange(e)}
+          onChange={(e) => handlePageChange(e)}
         />
       ) : null }
 
