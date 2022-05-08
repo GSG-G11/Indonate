@@ -1,7 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import {
   Donation,
-  Donor,
   Family,
   sequelize,
 } from '../../database/models';
@@ -10,14 +9,13 @@ const statistics = async (req: Request, res: Response, next:NextFunction) => {
   try {
     const
       [families,
-        doners,
         [{
           money: MONEY,
           food: FOODS,
           clothes: CLOTHES,
         }],
       ] :any = await Promise.all([
-        Family.count(), Donor.count(),
+        Family.count(),
         Donation.findAll({
           attributes: [[sequelize.fn('SUM', sequelize.col('money')), 'money'],
             [sequelize.fn('SUM', sequelize.col('food')), 'food'],
@@ -29,13 +27,13 @@ const statistics = async (req: Request, res: Response, next:NextFunction) => {
       message: 'Success',
       data: {
         FAMILIES: families,
-        DONORS: doners,
         FOODS,
         MONEY,
         CLOTHES,
       },
     });
   } catch (error) {
+    console.log(error);
     next(error);
   }
 };

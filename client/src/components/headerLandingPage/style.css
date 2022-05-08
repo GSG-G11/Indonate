@@ -24,35 +24,41 @@
      background-image: url('../assets/images/landingPageHeader.png');
      width: 98.9vw;
      height: 90vh;
- 
 
 }
 .statistic-section{
     transform: translate(0, -50%);
     background-color: #6AAC6E;
     width: 80vw;
-    height: 30vh;
-    padding:0 80px;
+    height: 40vh;
+    padding:0 65px;
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    border-radius: 2px;
 }
+
 .statistic-card{
-    width: 16%;
-    height: 25vh;
+    width: 20%;
+    height: 30vh;
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 8vh;
-
+    background-color: #FFF!important;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 2px;
 }
 .statictic-data{
+
     font-family: 'Roboto';
     font-style: normal;
     font-weight: bold;
     font-size: 45px;
     line-height: 25px;
-    color: rgba(254, 225, 129, 0.85) !important;
-    
+    color: #6AAC6E !important;
+    margin-bottom: 30px;
 
 }
 .statictic-title{ 
@@ -61,10 +67,10 @@
     font-size: 20px;
     line-height: 14px;
     color: rgba(0, 0, 0, 0.85);
-    margin-top: 20px;
+     margin-bottom: 5px;
 }
 .description-title{
     margin-top: 10px;
     font-size: 15px;
-    font-weight: 500;
+    font-weight: 800;
 }

@@ -4,7 +4,7 @@ import { Typography } from 'antd';
 import './style.css';
 
 const { Text } = Typography;
-const descriptions = ['Got help from us', 'Contribute with us', 'Collected for families', 'Collected for families ', 'Collected for families '];
+const descriptions = ['Got help from us', 'Collected for families', 'Collected for families ', 'Collected for families '];
 function HeaderLandingPage() {
   const [data, setData] = useState({});
 

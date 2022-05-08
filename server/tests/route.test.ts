@@ -302,7 +302,6 @@ describe('GET /statistics', () => {
     const { body: { data } } = await request(app).get('/api/statistics').expect(200);
     expect(data).toStrictEqual({
       FAMILIES: 5,
-      DONORS: 5,
       MONEY: '1000',
       FOODS: '101',
       CLOTHES: '100',
