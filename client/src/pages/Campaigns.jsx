@@ -1,7 +1,7 @@
 import React from 'react';
 import { Header, DisplayCampaigns } from '../components';
 
-function AllCampaigns() {
+function Campaigns() {
   return (
     <>
       <Header />
@@ -11,4 +11,4 @@ function AllCampaigns() {
   );
 }
 
-export default AllCampaigns;
+export default Campaigns;

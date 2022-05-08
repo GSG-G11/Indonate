@@ -1,3 +1,3 @@
-import AllCampaigns from './AllCampaigns';
+import Campaigns from './Campaigns';
 
-export default AllCampaigns;
+export default Campaigns;

@@ -6,11 +6,10 @@ const { Text } = Typography;
 function Header() {
   return (
     <div className="Header-Image">
-      <Text className="text">Donation Listing</Text>
+      <Text className="text">Campaigns Listing</Text>
       <Text className="text">
         Home/
-        {' '}
-        <span className="Donation-title">Donation</span>
+        <span className="Donation-title">Campaigns</span>
       </Text>
     </div>
   );

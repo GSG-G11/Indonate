@@ -3,7 +3,7 @@ import { Pagination, message, Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import FilterCampaigns from '../filterCampaigns';
-import Cards from '../cards';
+import Cards from '../campaignList';
 import './style.css';
 
 function DisplayCampaigns() {
