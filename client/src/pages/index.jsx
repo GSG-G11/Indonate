@@ -1,15 +1,13 @@
 import Landing from './Landing';
+import Campaign from './Campaign';
 import Campaigns from './Campaigns';
-import SingleCampaign from './SingleCampaign';
 import Signup from './Signup';
 import Login from './Login';
 
 export {
   Landing,
   Campaigns,
-  SingleCampaign,
+  Campaign,
   Signup,
   Login,
 };
-
-export default Campaigns;

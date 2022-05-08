@@ -173,12 +173,30 @@ describe('Get/campaign/:id', () => {
   test('campaign/:id', async () => {
     const id = 1;
     const data = {
-      id: 1,
-      title: 'Helping poor families',
-      description:
-        'This campaign helps save an amount of money that guarantees 50 families for two months',
-      target: 50000,
-      is_available: true,
+      campaignInfo: {
+        category: {
+          icon_url:
+            'https://i.pinimg.com/564x/dd/9d/c9/dd9dc9d83423bc037b511d73b29e6b80.jpg',
+          name: 'Health',
+        },
+        description:
+          'This campaign helps save an amount of money that guarantees 50 families for two months',
+        id: 1,
+        image_link:
+          'https://media.voltron.alhurra.com/Drupal/01live-116/styles/sourced/s3/2019-12/AFC8DF4B-8C6D-4968-87B2-CEAFD63DED97.jpg?itok=Y3YypJNm',
+        is_available: true,
+        food_target: 1000,
+        clothes_target: 200,
+        money_target: 2000,
+        title: 'Helping poor families',
+      },
+      current: {
+        current: 120,
+        current_clothes: 10,
+        current_food: 10,
+        current_money: 100,
+      },
+      families: 1,
     };
     const response = await request(app).get(`/api/campaign/${id}`).expect(200);
     expect(response.body.data).toMatchObject(data);
@@ -299,7 +317,9 @@ describe('POST /donation/:id', () => {
 
 describe('GET /statistics', () => {
   test('get all stats', async () => {
-    const { body: { data } } = await request(app).get('/api/statistics').expect(200);
+    const {
+      body: { data },
+    } = await request(app).get('/api/statistics').expect(200);
     expect(data).toStrictEqual({
       FAMILIES: 5,
       MONEY: '1000',
@@ -312,23 +332,28 @@ describe('GET/checkAuth', () => {
   test('Authorized', async () => {
     const response = await request(app)
       .get('/api/checkAuth')
-      .set('Cookie', [' ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywibmFtZSI6ImF5YSIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE2NTEyNTA2MDAsImV4cCI6MTY1Mzg0MjYwMH0.C6_G19oENCkS2B47LdWZqvNDEFgPj3IsykSFOfBY48I'])
+      .set('Cookie', [
+        ' ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywibmFtZSI6ImF5YSIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE2NTEyNTA2MDAsImV4cCI6MTY1Mzg0MjYwMH0.C6_G19oENCkS2B47LdWZqvNDEFgPj3IsykSFOfBY48I',
+      ])
       .expect(200);
     expect(response.body.data).toEqual({
-      exp: 1653842600, iat: 1651250600, id: 7, isAdmin: false, name: 'aya',
+      exp: 1653842600,
+      iat: 1651250600,
+      id: 7,
+      isAdmin: false,
+      name: 'aya',
     });
   });
   test('unAuthorized uer ', async () => {
     await request(app)
       .get('/api/checkAuth')
-      .set('Cookie', [' ACCESS_TOKEN=666eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywibmFtZSI6ImF5YSIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE2NTEyNTA2MDAsImV4cCI6MTY1Mzg0MjYwMH0.C6_G19oENCkS2B47LdWZqvNDEFgPj3IsykSFOfBY48I'])
+      .set('Cookie', [
+        ' ACCESS_TOKEN=666eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywibmFtZSI6ImF5YSIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE2NTEyNTA2MDAsImV4cCI6MTY1Mzg0MjYwMH0.C6_G19oENCkS2B47LdWZqvNDEFgPj3IsykSFOfBY48I',
+      ])
       .expect(401);
   });
   test('test in there is not ACCESS_TOKEN ', async () => {
-    await request(app)
-      .get('/api/checkAuth')
-      .set('Cookie', [])
-      .expect(401);
+    await request(app).get('/api/checkAuth').set('Cookie', []).expect(401);
   });
 });
 
@@ -338,44 +363,66 @@ describe('GET/campaigns', () => {
 
     expect(response.body.data.campaigns[0]).toEqual(campaigns[0]);
   });
-  test('test pagenation get the three campaigns page 1', async () => {
-    const response = await request(app).get('/api/campaigns?page=1&limit=3', () => {
-      expect(response).toEqual(expect.arrayContaining([
-        expect.objectContaining({ id: 5 }),
-        expect.objectContaining({ id: 4 }),
-        expect.objectContaining({ id: 3 }),
-      ]));
-    });
+  test('test pagination get the three campaigns page 1', async () => {
+    const response = await request(app).get(
+      '/api/campaigns?page=1&limit=3',
+      () => {
+        expect(response).toEqual(
+          expect.arrayContaining([
+            expect.objectContaining({ id: 5 }),
+            expect.objectContaining({ id: 4 }),
+            expect.objectContaining({ id: 3 }),
+          ]),
+        );
+      },
+    );
   });
   test('get error when  string to page', async () => {
-    const response = await request(app).get('/api/campaigns?page="f').expect(400);
+    const response = await request(app)
+      .get('/api/campaigns?page="f')
+      .expect(400);
     expect(response.body.message).toBe('"page" must be a number');
   });
   test('get error when limit is string', async () => {
-    const response = await request(app).get('/api/campaigns?limit=f').expect(400);
+    const response = await request(app)
+      .get('/api/campaigns?limit=f')
+      .expect(400);
     expect(response.body.message).toBe('"limit" must be a number');
   });
   test('get campaigns with is not available', async () => {
-    const response = await request(app).get('/api/campaigns?available=false').expect(200);
+    const response = await request(app)
+      .get('/api/campaigns?available=false')
+      .expect(200);
     expect(response.body.data.campaigns).toEqual([]);
   });
   test('get campaigns with name Summer and category=education', async () => {
-    const response = await request(app).get('/api/campaigns?search=summer%20clothes%20collection&category=Education').expect(200);
-    expect(response.body.data.campaigns).toEqual([{
-      id: 3,
-      title: 'summer clothes collection',
-      description: 'This campaign aims to help poor families secure summer clothes by collecting clothes from donors or buying new clothes with financial donations',
-      image_link: 'http://www.humanitygate.com/thumb/560x292/uploads//images/88e62e08915b10584950106f496140ca.jpg',
-      is_available: true,
-      categoryId: 2,
-      category: {
-        name: 'Education',
-        icon_url: 'https://i.pinimg.com/564x/dd/9d/c9/dd9dc9d83423bc037b511d73b29e6b80.jpg',
+    const response = await request(app)
+      .get(
+        '/api/campaigns?search=summer%20clothes%20collection&category=Education',
+      )
+      .expect(200);
+    expect(response.body.data.campaigns).toEqual([
+      {
+        id: 3,
+        title: 'summer clothes collection',
+        description:
+          'This campaign aims to help poor families secure summer clothes by collecting clothes from donors or buying new clothes with financial donations',
+        image_link:
+          'http://www.humanitygate.com/thumb/560x292/uploads//images/88e62e08915b10584950106f496140ca.jpg',
+        is_available: true,
+        categoryId: 2,
+        category: {
+          name: 'Education',
+          icon_url:
+            'https://i.pinimg.com/564x/dd/9d/c9/dd9dc9d83423bc037b511d73b29e6b80.jpg',
+        },
       },
-    }]);
+    ]);
   });
   test('get campaigns with name not exit', async () => {
-    const response = await request(app).get('/api/campaigns?search=give people maney&category=Education').expect(200);
+    const response = await request(app)
+      .get('/api/campaigns?search=give people money&category=Education')
+      .expect(200);
     expect(response.body.data.campaigns).toEqual([]);
   });
 });

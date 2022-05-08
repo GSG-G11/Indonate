@@ -2,12 +2,11 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import PropTypes from 'prop-types';
-import {
-  Card, Typography,
-} from 'antd';
-import { DonateButton } from '../../DonateForm';
+
+import { Card, Typography } from 'antd';
+import DonationButton from '../../DonateForm/DonateButton';
+
 import styles from './index.less';
-import 'antd/dist/antd.less';
 
 const { Text } = Typography;
 const { Meta } = Card;
@@ -18,6 +17,7 @@ function CampaignCard({
   description,
   imgSrc,
   categoryIcon,
+  isAvailable,
 }) {
   const navigate = useNavigate();
   return (
@@ -27,15 +27,14 @@ function CampaignCard({
       cover={<img alt="card cover" src={imgSrc} />}
       onClick={() => navigate(`/campaign/${id}`)}
     >
-
       <img className="category" alt="Category" src={categoryIcon} />
       <Meta className={styles.title} title={title} />
       <Text type="secondary">
-        {description.slice(0, 90) }
+        {description.slice(0, 90)}
         {' '}
         know more ...
       </Text>
-      <DonateButton campaignId={id} />
+      <DonationButton campaignId={id} isAvailable={isAvailable} />
     </Card>
   );
 }
@@ -48,4 +47,5 @@ CampaignCard.propTypes = {
   description: PropTypes.string.isRequired,
   imgSrc: PropTypes.string.isRequired,
   categoryIcon: PropTypes.string.isRequired,
+  isAvailable: PropTypes.bool.isRequired,
 };
