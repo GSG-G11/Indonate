@@ -5,10 +5,13 @@ import {
   SignUp,
   Signin,
   Review,
+  LatestCampaigns,
+  HeaderLandingPage,
   ReportsForm,
   OurMission,
 } from './components';
 import Footer from './components/common/footer';
+import AllCampaigns from './pages';
 import store from './redux/app/store';
 import { getUserData } from './redux/feature/user/userSlice';
 
@@ -24,6 +27,8 @@ function App() {
           path="/"
           element={(
             <>
+              <HeaderLandingPage />
+              <LatestCampaigns />
               <OurMission />
               <Review />
               <ReportsForm />
@@ -34,20 +39,20 @@ function App() {
         <Route
           path="/campaigns"
           element={
-            <h1>campaigns</h1>
+            <AllCampaigns />
             }
         />
         <Route
           path="/campaign/:id"
           element={
             <h1>campaign</h1>
-            }
+          }
         />
         <Route
           path="/signUp"
           element={
             <SignUp />
-            }
+          }
         />
         <Route
           path="/login"

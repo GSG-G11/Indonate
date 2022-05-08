@@ -1,0 +1,76 @@
+
+.Header-section{
+    width:98.9vw;
+    display: flex;
+   padding-bottom: 100px;
+   flex-direction: column;
+   align-items: center;
+   flex-wrap: nowrap;
+}
+.Header-description{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 40px;
+    line-height: 48px;
+    color:#ffff !important;
+    text-align: center;
+}
+.description-Header-div{
+    padding-top: 25vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+     background-image: url('../assets/images/landingPageHeader.png');
+     width: 98.9vw;
+     height: 90vh;
+
+}
+.statistic-section{
+    transform: translate(0, -50%);
+    background-color: #6AAC6E;
+    width: 80vw;
+    height: 40vh;
+    padding:0 65px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 2px;
+}
+
+.statistic-card{
+    width: 20%;
+    height: 30vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #FFF!important;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 2px;
+}
+.statictic-data{
+
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: bold;
+    font-size: 45px;
+    line-height: 25px;
+    color: #6AAC6E !important;
+    margin-bottom: 30px;
+
+}
+.statictic-title{ 
+    font-style: normal;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 14px;
+    color: rgba(0, 0, 0, 0.85);
+     margin-bottom: 5px;
+}
+.description-title{
+    margin-top: 10px;
+    font-size: 15px;
+    font-weight: 800;
+}

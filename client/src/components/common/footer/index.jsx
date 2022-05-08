@@ -1,5 +1,5 @@
 import React from 'react';
-import './style.less';
+import './style.css';
 import {
   FacebookOutlined,
   TwitterOutlined,
@@ -8,7 +8,6 @@ import {
   YoutubeOutlined,
 } from '@ant-design/icons';
 import { Typography } from 'antd';
-import indonate from '../../assets/images/footer-logo.svg';
 
 const {
   Text,
@@ -26,7 +25,6 @@ function Footer() {
         <hr className="line" />
       </div>
       <div className="info_container">
-        <img className="logo" src={indonate} alt="indonate" />
         <Text>Copyright © 2022 Indonate, Inc.</Text>
       </div>
     </section>
