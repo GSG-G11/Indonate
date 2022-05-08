@@ -10,6 +10,7 @@ import {
   ReportsForm,
   OurMission,
 } from './components';
+import Footer from './components/common/footer';
 import { Campaigns, Campaign } from './pages';
 import store from './redux/app/store';
 import { getUserData } from './redux/feature/user/userSlice';
@@ -31,6 +32,7 @@ function App() {
               <OurMission />
               <Review />
               <ReportsForm />
+              <Footer />
             </>
           )}
         />
