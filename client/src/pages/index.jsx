@@ -1,3 +1,7 @@
+import Campaign from './Campaign';
 import Campaigns from './Campaigns';
 
-export default Campaigns;
+export {
+  Campaigns,
+  Campaign,
+};
