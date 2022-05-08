@@ -5,6 +5,7 @@ import {
   SignUp,
   Signin,
   Review,
+  LatestCampaigns,
   HeaderLandingPage,
   ReportsForm,
   OurMission,
@@ -26,6 +27,7 @@ function App() {
           element={(
             <>
               <HeaderLandingPage />
+              <LatestCampaigns />
               <OurMission />
               <Review />
               <ReportsForm />
