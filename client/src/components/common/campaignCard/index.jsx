@@ -1,6 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
+
+import PropTypes from 'prop-types';
 import {
   Card,
   Typography,
@@ -8,7 +9,7 @@ import {
   Image,
   Avatar,
 } from 'antd';
-import { DonationButton } from '../../index';
+import { DonateButton } from '../../donateForm';
 import styles from './index.less';
 import 'antd/dist/antd.less';
 
@@ -39,14 +40,18 @@ function Campaign({
         )}
         onClick={() => navigate(`/campaign/${id}`)}
       >
-        <Skeleton loading={loading} avatar active>
+        <Skeleton loading={loading} avatar active width="200%" height="300px">
           <Meta
             className={styles.title}
             title={title}
             avatar={<Avatar src={categoryIcon} />}
           />
-          <Text type="secondary">{description}</Text>
-          <DonationButton campaignId={id} />
+          <Text type="secondary">
+            {description.slice(0, 90)}
+            {' '}
+            know more ...
+          </Text>
+          <DonateButton campaignId={id} />
         </Skeleton>
       </Card>
     </div>

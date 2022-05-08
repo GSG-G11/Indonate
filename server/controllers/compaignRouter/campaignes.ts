@@ -14,7 +14,7 @@ const campaigns = async (req:Request, res:Response, next:NextFunction) => {
     }:any = req.query;
 
     await querySchema.validateAsync(req.query);
-    const campaignesData = await Campaign.findAll({
+    const { count, rows: campaignesData } = await Campaign.findAndCountAll({
       offset: (page - 1) * limit,
       limit,
       attributes:
@@ -38,8 +38,7 @@ const campaigns = async (req:Request, res:Response, next:NextFunction) => {
 
       },
     });
-
-    res.json({ message: 'Success', data: { campaigns: campaignesData } });
+    res.json({ message: 'Success', data: { campaigns: campaignesData, count } });
   } catch (e) {
     if (e.name === 'ValidationError') {
       next(new CustomedError(e.message, 400));
