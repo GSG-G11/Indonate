@@ -6,7 +6,6 @@ function Campaigns() {
     <>
       <Header />
       <DisplayCampaigns />
-
     </>
   );
 }

@@ -17,6 +17,7 @@ function Cards({ campaigns }) {
               description,
               image_link: imgSrc,
               category: { icon_url: categoryIcon },
+              is_available: isAvailable,
             }) => (
               <div key={id} className="all-campaines-card">
                 {' '}
@@ -26,6 +27,7 @@ function Cards({ campaigns }) {
                   description={description}
                   imgSrc={imgSrc}
                   categoryIcon={categoryIcon}
+                  isAvailable={isAvailable}
                 />
               </div>
             ))}

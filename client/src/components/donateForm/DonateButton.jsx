@@ -24,7 +24,7 @@ function DonationButton({ campaignId, isAvailable }) {
       onOk: () => login(),
     });
   }
-
+  console.log(isAvailable);
   return (
     <>
       <Button
