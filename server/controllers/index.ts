@@ -22,4 +22,5 @@ export {
   addDonation,
   getStatistics,
   getDonors,
+
 };

@@ -5,7 +5,7 @@ import categoryRouter from './category';
 import campaignRouter from './campaign';
 import reportsRouter from './reports';
 import donationRouter from './donation';
-import donorsRoute from './donors';
+import donorsRouter from './donors';
 
 const router = Router();
 
@@ -14,6 +14,5 @@ router.use(authRouter);
 router.use(categoryRouter);
 router.use(campaignRouter);
 router.use(reportsRouter);
-router.use(donorsRoute);
-
+router.use(donorsRouter);
 export default router;

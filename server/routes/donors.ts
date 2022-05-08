@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { getDonors } from '../controllers';
 
-const donorsRoute = Router();
-donorsRoute.get('/admin/donors', getDonors);
-export default donorsRoute;
+const donorsRouter = Router();
+donorsRouter.get('/admin/donors', getDonors);
+
+export default donorsRouter;
