@@ -40,10 +40,10 @@ function latestCampaigns() {
   return (
     <section className="layout">
       <Title className="custom_header_title" level={1}>
-        <Text>
-          Latest
+        Latest
+        <Text className="campaigns_text">
+          Campaigns
         </Text>
-        Campaigns
       </Title>
       <div className="cards">
         {
