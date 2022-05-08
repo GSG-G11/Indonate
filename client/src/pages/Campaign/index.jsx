@@ -14,7 +14,7 @@ import {
   Button,
   Skeleton,
 } from 'antd';
-import './style.less';
+import './style.css';
 import { TeamOutlined } from '@ant-design/icons';
 import { DonationButton, Footer } from '../../components';
 
