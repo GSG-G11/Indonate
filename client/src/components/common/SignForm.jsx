@@ -135,7 +135,7 @@ function SignForm({ getUserInfo, type }) {
         </Item>
       ) : null}
       <Button className="sign-up-btn" type="primary" htmlType="submit">
-        { type === 'register' ? 'Sign up' : 'Sign in'}
+        { type === 'register' ? 'Sign up' : 'Login'}
       </Button>
     </Form>
   );

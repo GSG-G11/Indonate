@@ -13,8 +13,10 @@
     }
 
     h3.ant-typography {
+        font-weight: 400;
         font-size: 35px;
-        margin-bottom: 200px;
+        display: flex;
+        align-items: center;
         color: #fff;
     }
 
@@ -25,6 +27,9 @@
 
     input:-webkit-autofill {
         border: 2px solid #68ab7b;
+    }
+    .ant-anchor-ink::before {
+       display: none;
     }
 }
 
@@ -37,7 +42,7 @@
     justify-content: center;
     text-align: left;
     width: 50vw;
-    height: 100vh;
+    height:calc(100vh - 64px) ;
     background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../../components/assets/images/poor.png');
     background-size: cover;
     padding: 12vw 5vw;
@@ -45,7 +50,7 @@
 
 .form-conatainer-signup {
     width: 50vw;
-    height: 100vh;
+    height:calc(100vh - 64px) ;
 }
 
 .Form-sign-up {
@@ -57,7 +62,7 @@
     flex-direction: column;
     height: '100%';
     width: '100%';
-    margin-top: 15vh;
+    margin-top: 10vh;
 }
 
 
@@ -103,5 +108,5 @@
     align-items: center;
     justify-content: space-around;
     font-size: 15px;
-    margin: 20px 20px;
+    margin: 10px 20px;
 }
