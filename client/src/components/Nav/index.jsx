@@ -20,7 +20,7 @@ const guestItem = [
   { label: <NavLink to="/logout"><Button className="btn" type="primary">Logout</Button></NavLink> },
   { label: <NavLink to="/campaign"><Button className="btn" type="primary">Donate Now</Button></NavLink> },
 ];
-function Nav() {
+const Nav =()=> {
   const user = useSelector((state) => state.user);
   return (
     <div className="nav-container">

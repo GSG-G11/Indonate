@@ -14,13 +14,16 @@
         "ecmaVersion": "latest",
         "sourceType": "module"
     },
-    "plugins": [
-        "react"
-    ],
+    "plugins": ["react-prefer-function-component"],
+
     "root": true,
     "rules": {
         "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
         "linebreak-style": 0,
-        "no-param-reassign":"off"
+        "no-param-reassign":"off",
+        "react-prefer-function-component/react-prefer-function-component": [
+      "error",
+      { "allowComponentDidCatch": false }
+    ]
     }
 }

@@ -10,13 +10,13 @@ import 'antd/dist/antd.less';
 const { Text } = Typography;
 const { Meta } = Card;
 
-function Campaign({
+const Campaign=({
   id,
   title,
   description,
   imgSrc,
   categoryIcon,
-}) {
+}) =>{
   return (
     <Card
       className="customCard"

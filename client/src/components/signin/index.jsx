@@ -30,7 +30,7 @@ const {
   Content,
 } = Layout;
 
-function Signin() {
+const Signin=() =>{
   const [userData, setUserData] = useState({ email: '', password: '' });
   const dispatch = useDispatch();
 

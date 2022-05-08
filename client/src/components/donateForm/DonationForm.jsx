@@ -20,9 +20,9 @@ const { Text } = Typography;
 const { Group, Button } = Radio;
 const { Item } = Form;
 
-function DonationForm({
+const DonationForm=({
   visible, onCancel, campaignId, setVisible,
-}) {
+})=> {
   const [form] = Form.useForm();
   const [radioValue, setRadioValue] = useState();
   const [msgError, setMsgError] = useState();

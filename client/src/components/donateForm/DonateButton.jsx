@@ -6,7 +6,7 @@ import { Button, Modal } from 'antd';
 import DonationForm from './DonationForm';
 
 const { confirm } = Modal;
-function DonationButton({ campaignId }) {
+const DonationButton=({ campaignId })=> {
   const [visible, setVisible] = useState(false);
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);

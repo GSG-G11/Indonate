@@ -4,7 +4,7 @@ import { Typography } from 'antd';
 
 const { Paragraph } = Typography;
 
-function OurMission() {
+const OurMission=()=>{
   return (
     <section className="our-mission-section">
       <div className="our-mission-image-container">
