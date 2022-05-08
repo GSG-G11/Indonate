@@ -8,7 +8,7 @@ const getReports = async (req: Request, res: Response, next: NextFunction) => {
         exclude: ['createdAt', 'updatedAt'],
       },
     });
-    res.json({ message: 'Success', data: reports });
+    res.json({ message: 'Success', data: { reports } });
   } catch (error) {
     next(error);
   }
