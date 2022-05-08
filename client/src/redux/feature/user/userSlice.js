@@ -20,7 +20,8 @@ export const userSlice = createSlice({
       state.isUserAuthorized = true;
     },
     logout: (state) => {
-      state.userData = userSlice.initialState;
+      state.userData = {};
+      state.loading = false;
       state.isUserAuthorized = false;
     },
   },
