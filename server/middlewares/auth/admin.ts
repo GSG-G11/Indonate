@@ -8,7 +8,7 @@ const authAdmin = async (
 ) => {
   const { user } = req;
   if (!user.isAdmin) {
-    next(new CustomedError('Unauthorized', 401));
+    next(new CustomedError('Unauthorized admin', 401));
   }
   next();
 };
