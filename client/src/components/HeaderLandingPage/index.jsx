@@ -27,7 +27,6 @@ function HeaderLandingPage() {
         <Text className="Header-description">
           Short description for our work, and how we can
           <br />
-          {' '}
           affect to People lives
         </Text>
       </div>
@@ -38,7 +37,6 @@ function HeaderLandingPage() {
             <Text className="statistic-data">{data[item]}</Text>
             <Text className="statistic-title">{item}</Text>
             <Text className="description-title">{descriptions[index]}</Text>
-
           </div>
 
         ))}

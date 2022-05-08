@@ -39,7 +39,7 @@ function Nav() {
   const userItem = [
     {
       label: (
-        <NavLink to="/signUp">
+        <NavLink to="/signup">
           <Button type="primary">Sign Up</Button>
         </NavLink>
       ),
