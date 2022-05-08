@@ -5,6 +5,7 @@ import {
   SignUp,
   Signin,
   Review,
+  HeaderLandingPage,
   ReportsForm,
   OurMission,
 } from './components';
@@ -24,6 +25,7 @@ function App() {
           path="/"
           element={(
             <>
+              <HeaderLandingPage />
               <OurMission />
               <Review />
               <ReportsForm />
