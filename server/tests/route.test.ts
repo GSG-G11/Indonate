@@ -64,7 +64,7 @@ describe('POST/login', () => {
       })
       .expect(400);
     expect(response.body.message).toBe(
-      '"password" length must be at least 3 characters long',
+      '"password" length must be at least 6 characters long',
     );
   });
 

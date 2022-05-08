@@ -20,9 +20,9 @@ const { Text } = Typography;
 const { Group, Button } = Radio;
 const { Item } = Form;
 
-const DonationForm=({
+const DonationForm = ({
   visible, onCancel, campaignId, setVisible,
-})=> {
+}) => {
   const [form] = Form.useForm();
   const [radioValue, setRadioValue] = useState();
   const [msgError, setMsgError] = useState();
@@ -116,7 +116,7 @@ const DonationForm=({
       </Form>
     </Modal>
   );
-}
+};
 
 DonationForm.propTypes = {
   visible: Proptypes.bool.isRequired,

@@ -10,26 +10,24 @@ import 'antd/dist/antd.less';
 const { Text } = Typography;
 const { Meta } = Card;
 
-const Campaign=({
+const Campaign = ({
   id,
   title,
   description,
   imgSrc,
   categoryIcon,
-}) =>{
-  return (
-    <Card
-      className="customCard"
-      hoverable
-      cover={<img alt="card cover" src={imgSrc} />}
-    >
-      <img className="category" alt="Category" src={categoryIcon} />
-      <Meta className={styles.title} title={title} />
-      <Text type="secondary">{description}</Text>
-      <DonationButton campaignId={id} />
-    </Card>
-  );
-}
+}) => (
+  <Card
+    className="customCard"
+    hoverable
+    cover={<img alt="card cover" src={imgSrc} />}
+  >
+    <img className="category" alt="Category" src={categoryIcon} />
+    <Meta className={styles.title} title={title} />
+    <Text type="secondary">{description}</Text>
+    <DonationButton campaignId={id} />
+  </Card>
+);
 
 export default Campaign;
 
