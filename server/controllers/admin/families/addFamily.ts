@@ -1,6 +1,6 @@
 import { NextFunction, Response, Request } from 'express';
 import { Family } from '../../../database/models';
-import { CustomedError } from '../../../utils';
+import { CustomError } from '../../../utils';
 import { addFamilySchema } from '../../../utils/validation';
 
 const addFamily = async (req: Request, res: Response, next: NextFunction) => {
@@ -13,12 +13,12 @@ const addFamily = async (req: Request, res: Response, next: NextFunction) => {
       },
     });
     if (checkPhone) {
-      throw new CustomedError('phone is used try another one', 400);
+      throw new CustomError('phone is used try another one', 400);
     }
     await Family.create(familyInfo);
     res.status(201).json({ message: 'Family added successfully' });
   } catch (error) {
-    if (error.name === 'ValidationError') next(new CustomedError(error.details[0].message, 400));
+    if (error.name === 'ValidationError') next(new CustomError(error.details[0].message, 400));
     next(error);
   }
 };
