@@ -5,7 +5,7 @@ import request from 'supertest';
 import connection from '../database/config/connection';
 import app from '../app';
 import buildFakeData from '../database/fakeData/buildFakeData';
-import * as campaigns from './getAllcampaignsResult.json';
+import * as campaigns from './getAllCampaignsResult.json';
 
 beforeAll(() => buildFakeData());
 
