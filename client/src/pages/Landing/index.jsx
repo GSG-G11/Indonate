@@ -1,7 +1,11 @@
 import React from 'react';
 import {
-  HeaderLandingPage, OurMission, ReportsForm, Review,
+  HeaderLandingPage,
+  OurMission,
+  ReportsForm,
+  Review,
 } from '../../components';
+import Footer from '../../components/common/Footer';
 
 function Landing() {
   return (
@@ -10,6 +14,7 @@ function Landing() {
       <OurMission />
       <Review />
       <ReportsForm />
+      <Footer />
     </>
   );
 }
