@@ -8,7 +8,6 @@ import {
   ReportsForm,
   OurMission,
 } from './components';
-import Campaign from './components/common/campaignCard';
 import store from './redux/app/store';
 import { getUserData } from './redux/feature/user/userSlice';
 
@@ -24,7 +23,6 @@ function App() {
           path="/"
           element={(
             <>
-              <Campaign />
               <OurMission />
               <Review />
               <ReportsForm />
