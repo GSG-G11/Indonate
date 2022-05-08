@@ -384,6 +384,36 @@ describe('GET/campaines', () => {
     expect(response.body.data.campaigns).toEqual([]);
   });
 });
+describe('get admin/campaign/donor/:campaignId', () => {
+  test('get data successfully', async () => {
+    const campaignId = 2;
+    const donor = {
+      id: 1,
+      name: 'admin',
+      email: 'admin@gmail.com',
+      address: 'Gaza',
+      phone: '0599888611',
+      profile_img: 'https://w7.pngwing.com/pngs/481/915/png-transparent-computer-icons-user-avatar-woman-avatar-computer-business-conversation.png',
+      is_admin: true,
+    };
+    const response = await request(app)
+      .get(`/api/admin/campaign/donors/${campaignId}`).expect(200);
+    expect(response.body.data.donors[0]).toMatchObject(donor);
+    expect(response.body.message).toBe('Success');
+  });
+  test('campaign id dose not exist', async () => {
+    const campaignId = 6;
+    const response = await request(app)
+      .get(`/api/admin/campaign/donors/${campaignId}`).expect(400);
+    expect(response.body.message).toBe('Campaign does not exist');
+  });
+  test('campaign id dose not a number', async () => {
+    const campaignId = 'w';
+    const response = await request(app)
+      .get(`/api/admin/campaign/donors/${campaignId}`).expect(400);
+    expect(response.body.message).toBe('"id" must be a number');
+  });
+});
 
 afterAll(() => {
   connection.close();
