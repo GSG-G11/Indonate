@@ -1,0 +1,121 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;500;600;700;800;900&family=Fredoka&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+.one-campaign-page {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 2rem;
+}
+.main {
+  width: 50%;
+  margin: 1rem 1rem;
+  display: flex;
+  flex-direction: column;
+}
+.campaign-statistics {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 1rem 1rem;
+  width: 25%;
+  border: 1px solid #e3e3e3bc;
+  border-radius: 5px;
+  height: fit-content;
+  padding: 1rem 2rem;
+}
+.statistics-title {
+  align-self: center;
+  margin: 0 !important;
+}
+.progress {
+  margin-bottom: 10px;
+}
+.target,
+.current {
+  font-size: 20px;
+  margin: 0 !important;
+}
+
+.image-container {
+  position: relative;
+  align-self: center;
+  width: 100%;
+}
+.category-icon {
+  border-radius: 50% 50% 0 50%;
+}
+#category-icon {
+  position: absolute;
+  width: 80px;
+  right: 0%;
+  top: 100%;
+  transform: translate(0, -100%);
+}
+.campaign-image {
+  height: 400px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+.donation-btn {
+  display: flex;
+}
+.campaign-title {
+  font-size: 36px;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+.campaign-description {
+  font-size: 20px;
+}
+.donation-btn {
+  align-self: end;
+  display: flex;
+  align-items: center;
+}
+.ended-campaign {
+  font-size: large;
+  background-color: red;
+  color: #fff !important;
+  border-radius: 5px;
+  margin: 0 !important;
+  margin-right: 10px !important;
+  padding: 2px 10px;
+}
+.ant-statistic-content {
+  display: flex;
+  justify-content: center;
+}
+.not-auth-message {
+  font-size: large;
+}
+.ant-progress {
+  display: flex;
+  justify-content: center;
+}
+.target-progress {
+  margin: 0 !important;
+  margin-top: 15px !important;
+  font-size: 18px;
+}
+.donation-type{
+  font-weight: bold;
+}
+@media (max-width: 800px) {
+  .main {
+    width: auto;
+  }
+  .campaign-image {
+    height: auto;
+  }
+  .one-campaign-page {
+    flex-direction: column;
+    align-items: center;
+  }
+  .campaign-statistics {
+    width: 100%;
+  }
+  .campaign-title{
+    font-family: 'Cairo', sans-serif;
+    font-size: 150% !important;
+    font-weight: 900 !important;
+  }
+}

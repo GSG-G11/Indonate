@@ -10,6 +10,7 @@ import {
   Avatar,
 } from 'antd';
 import { DonateButton } from '../../donateForm';
+
 import styles from './index.less';
 import 'antd/dist/antd.less';
 
@@ -23,9 +24,9 @@ function Campaign({
   imgSrc,
   categoryIcon,
   loading,
+  isAvailable,
 }) {
   const navigate = useNavigate();
-
   return (
     <div className="card">
       <Card
@@ -51,7 +52,7 @@ function Campaign({
             {' '}
             know more ...
           </Text>
-          <DonateButton campaignId={id} />
+          <DonateButton campaignId={id} isAvailable={isAvailable} />
         </Skeleton>
       </Card>
     </div>
@@ -66,5 +67,6 @@ Campaign.propTypes = {
   description: PropTypes.string.isRequired,
   imgSrc: PropTypes.string.isRequired,
   categoryIcon: PropTypes.string.isRequired,
-  loading: PropTypes.string.isRequired,
+  loading: PropTypes.bool.isRequired,
+  isAvailable: PropTypes.bool.isRequired,
 };

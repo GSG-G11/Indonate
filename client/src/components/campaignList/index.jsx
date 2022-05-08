@@ -17,9 +17,9 @@ function Cards({ campaigns, loading }) {
               description,
               image_link: imgSrc,
               category: { icon_url: categoryIcon },
+              is_available: isAvailable,
             }) => (
               <div key={id} className="all-campaines-card">
-                {' '}
                 <CampaignCard
                   id={id}
                   title={title}
@@ -27,6 +27,7 @@ function Cards({ campaigns, loading }) {
                   imgSrc={imgSrc}
                   categoryIcon={categoryIcon}
                   loading={loading}
+                  isAvailable={isAvailable}
                 />
               </div>
             ))}
@@ -43,6 +44,6 @@ function Cards({ campaigns, loading }) {
 }
 Cards.propTypes = {
   campaigns: PropType.instanceOf(Array).isRequired,
-  loading: PropType.string.isRequired,
+  loading: PropType.bool.isRequired,
 };
 export default Cards;

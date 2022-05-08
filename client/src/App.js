@@ -10,7 +10,8 @@ import {
   ReportsForm,
   OurMission,
 } from './components';
-import AllCampaigns from './pages';
+import Footer from './components/common/footer';
+import { Campaigns, Campaign } from './pages';
 import store from './redux/app/store';
 import { getUserData } from './redux/feature/user/userSlice';
 
@@ -31,33 +32,14 @@ function App() {
               <OurMission />
               <Review />
               <ReportsForm />
+              <Footer />
             </>
           )}
         />
-        <Route
-          path="/campaigns"
-          element={
-            <AllCampaigns />
-            }
-        />
-        <Route
-          path="/campaign/:id"
-          element={
-            <h1>campaign</h1>
-          }
-        />
-        <Route
-          path="/signUp"
-          element={
-            <SignUp />
-          }
-        />
-        <Route
-          path="/login"
-          element={(
-            <Signin />
-          )}
-        />
+        <Route path="/campaigns" element={<Campaigns />} />
+        <Route path="/campaign/:id" element={<Campaign />} />
+        <Route path="/signUp" element={<SignUp />} />
+        <Route path="/login" element={<Signin />} />
       </Routes>
     </Router>
   );

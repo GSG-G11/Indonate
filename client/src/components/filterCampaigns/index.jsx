@@ -64,9 +64,11 @@ function FilterCampaigns({ setCategory, setAvailable, setSearch }) {
             {categories.map((item) => (
               loading
                 ? (
-                  <Skeleton.Button loading Button>
-                    <Button key={item} value={item}>{item}</Button>
-                  </Skeleton.Button>
+                  <div key={item}>
+                    <Skeleton.Button loading Button>
+                      <Button key={item} value={item}>{item}</Button>
+                    </Skeleton.Button>
+                  </div>
                 )
                 : <Button key={item} value={item}>{item}</Button>
 
