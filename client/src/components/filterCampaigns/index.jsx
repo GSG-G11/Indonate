@@ -6,6 +6,7 @@ import {
   Radio,
   Input,
   Switch,
+  Skeleton,
 
 } from 'antd';
 import { CloseOutlined, CheckOutlined } from '@ant-design/icons';
@@ -13,8 +14,10 @@ import './style.less';
 
 const { Search } = Input;
 const { Group, Button } = Radio;
+// const { Button: SklButton } = Skeleton;
 function FilterCampaigns({ setCategory, setAvailable, setSearch }) {
   const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const source = axios.CancelToken.source();
@@ -27,6 +30,7 @@ function FilterCampaigns({ setCategory, setAvailable, setSearch }) {
         });
         const name = categoriesFromDB.map((item) => (item.name));
         setCategories(['List All', ...name]);
+        setLoading(false);
       } catch ({ response: { data: { message: errorMessage } } }) {
         message.info(errorMessage);
       }
@@ -48,20 +52,29 @@ function FilterCampaigns({ setCategory, setAvailable, setSearch }) {
     setAvailable(e);
   };
   return (
-    <div>
+    <div className="categories">
       <div className="search-section">
         <Search placeholder="input search text" size="large" onChange={handleSearchChange} className="searchInput" />
       </div>
       <div className="fliter-section">
 
         <div>
+
           <Group onChange={handleCategoryChange} defaultValue="List All" buttonStyle="solid">
-            {categories.map((item) => <Button key={item} value={item}>{item}</Button>)}
+            {categories.map((item) => (
+              loading
+                ? (
+                  <Skeleton.Button loading Button>
+                    <Button key={item} value={item}>{item}</Button>
+                  </Skeleton.Button>
+                )
+                : <Button key={item} value={item}>{item}</Button>
+
+            ))}
           </Group>
         </div>
         <div>
           Available campaigns:
-          {' '}
           <Switch
             checkedChildren={<CheckOutlined />}
             unCheckedChildren={<CloseOutlined />}

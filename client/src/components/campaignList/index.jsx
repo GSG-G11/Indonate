@@ -5,7 +5,7 @@ import { SmileOutlined } from '@ant-design/icons';
 import CampaignCard from '../common/campaignCard';
 import './style.css';
 
-function Cards({ campaigns }) {
+function Cards({ campaigns, loading }) {
   return (
     <div className="all-campaines-cards">
       {campaigns.length
@@ -26,6 +26,7 @@ function Cards({ campaigns }) {
                   description={description}
                   imgSrc={imgSrc}
                   categoryIcon={categoryIcon}
+                  loading={loading}
                 />
               </div>
             ))}
@@ -42,5 +43,6 @@ function Cards({ campaigns }) {
 }
 Cards.propTypes = {
   campaigns: PropType.instanceOf(Array).isRequired,
+  loading: PropType.string.isRequired,
 };
 export default Cards;
