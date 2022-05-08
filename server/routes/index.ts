@@ -1,10 +1,10 @@
 import { Router } from 'express';
 
-import authRouter from './authRoutes';
-import categoryRouter from './categoryRoutes';
-import campaignRouter from './campaignRoutes';
-import reportsRouter from './reportsRoutes';
-import donationRouter from './donationRoutes';
+import authRouter from './auth';
+import categoryRouter from './category';
+import campaignRouter from './campaign';
+import reportsRouter from './reports';
+import donationRouter from './donation';
 import adminDonorRouter from './adminDonorRoutes';
 
 const router = Router();
