@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {
   Card, Typography,
 } from 'antd';
-import { DonationButton } from '../../index';
+import DonationButton from '../../donateForm/DonateButton';
 import styles from './index.less';
 import 'antd/dist/antd.less';
 
@@ -24,7 +24,10 @@ const Campaign = ({
   >
     <img className="category" alt="Category" src={categoryIcon} />
     <Meta className={styles.title} title={title} />
-    <Text type="secondary">{description}</Text>
+    <Text type="secondary">
+      {description.slice(0, 90) }
+      know more ...
+    </Text>
     <DonationButton campaignId={id} />
   </Card>
 );
