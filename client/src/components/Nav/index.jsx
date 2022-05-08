@@ -33,12 +33,12 @@ function Nav() {
   ];
 
   const userItem = [
-    { label: <NavLink to="/signUp"><Button className="btn" type="primary">Sign Up</Button></NavLink> },
-    { label: <NavLink to="/login" className="btnt"><Button className="btn" type="primary">Login</Button></NavLink> },
+    { label: <NavLink to="/signUp"><Button type="primary">Sign Up</Button></NavLink> },
+    { label: <NavLink to="/login"><Button type="primary">Login</Button></NavLink> },
   ];
   const guestItem = [
-    { label: <NavLink to="/logout" className="btnt"><Button onClick={logoutFun} className="btn" type="primary">Logout</Button></NavLink> },
-    { label: <NavLink to="/campaign" className="btnt"><Button className="btn" type="primary">Donate Now</Button></NavLink> },
+    { label: <NavLink to="/logout"><Button onClick={logoutFun} className="btn" type="primary">Logout</Button></NavLink> },
+    { label: <NavLink to="/campaign"><Button type="primary">Donate Now</Button></NavLink> },
   ];
 
   return (

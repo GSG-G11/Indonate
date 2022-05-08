@@ -1,3 +1,6 @@
+html {
+  scroll-behavior: smooth;
+}
 .nav-container .ant-layout {
   box-shadow: 0px 0px 2px 0 #888888;
 }
