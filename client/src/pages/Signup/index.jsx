@@ -12,7 +12,7 @@ import {
   Button,
 } from 'antd';
 import { sign } from '../../redux/feature/user/userSlice';
-import './index.less';
+import './style.less';
 
 const { Password } = Input;
 const { Item } = Form;

@@ -1,6 +1,6 @@
 
 .Header-Image{
-    background-image: url('../../assets/images/children.png');
+    background-image: url('../../assets/images/comments-background.jpg');
     width: 100vw;
     background-repeat: no-repeat;
     height: 60vh;
@@ -11,7 +11,6 @@
     justify-content: center;
     flex-wrap: wrap;
     color:#fff;
- 
 }
 .text{
     font-family: 'Roboto';

@@ -1,18 +1,12 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
+import { Nav } from './components';
 import {
-  Nav,
-  Review,
-  LatestCampaigns,
-  HeaderLandingPage,
-  ReportsForm,
-  OurMission,
-} from './components';
-import {
-  Signup, Login, Campaigns, Campaign,
+  Landing, Campaign, Login, Signup, Campaigns,
 } from './pages';
-import Footer from './components/common/footer';
 import store from './redux/app/store';
+import 'antd/dist/antd.less';
+import './App.css';
 import { getUserData } from './redux/feature/user/userSlice';
 
 function App() {
@@ -20,28 +14,16 @@ function App() {
     store.dispatch(getUserData());
   }, []);
   return (
-    <Router>
+    <>
       <Nav />
       <Routes>
-        <Route
-          path="/"
-          element={(
-            <>
-              <HeaderLandingPage />
-              <LatestCampaigns />
-              <OurMission />
-              <Review />
-              <ReportsForm />
-              <Footer />
-            </>
-          )}
-        />
+        <Route path="/" element={<Landing />} />
         <Route path="/campaigns" element={<Campaigns />} />
         <Route path="/campaign/:id" element={<Campaign />} />
-        <Route path="/signUp" element={<Signup />} />
+        <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
       </Routes>
-    </Router>
+    </>
   );
 }
 export default App;
