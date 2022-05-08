@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import moment from 'moment';
 import Proptypes from 'prop-types';
 import {
   Modal,
@@ -25,7 +26,7 @@ function DonationForm({
   const [form] = Form.useForm();
   const [radioValue, setRadioValue] = useState();
   const [msgError, setMsgError] = useState();
-  const [selectedDate, setSelectedDate] = useState('state');
+  const [selectedDate, setSelectedDate] = useState();
   const onCreate = async (values) => {
     try {
       const donateInfo = {
@@ -96,20 +97,21 @@ function DonationForm({
         >
           <Input type="textarea" name="location" />
         </Item>
-        <Item
-          name="deliver_time"
-          label="Deliver Time:"
-          rules={[{ required: true, message: 'Please fill this input!' }]}
-        >
-          <Space name="deliver_time" direction="vertical">
+        <Space direction="vertical">
+          <Item
+            name="deliver_time"
+            label="Deliver Time:"
+            rules={[{ required: true, message: 'Please fill this input!' }]}
+          >
             <DatePicker
               selected={selectedDate}
               name="deliver_time"
               onChange={(date, dateString) => setSelectedDate(dateString)}
               dateFormat="dd/MM/yyyy"
+              disabledDate={(current) => current && current < moment().startOf('day')}
             />
-          </Space>
-        </Item>
+          </Item>
+        </Space>
         <Text type="danger">{msgError}</Text>
       </Form>
     </Modal>
