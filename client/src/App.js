@@ -9,7 +9,7 @@ import {
   OurMission,
 } from './components';
 import {
-  Signup, Signin, Campaigns, Campaign,
+  Signup, Login, Campaigns, Campaign,
 } from './pages';
 import Footer from './components/common/footer';
 import store from './redux/app/store';
@@ -39,7 +39,7 @@ function App() {
         <Route path="/campaigns" element={<Campaigns />} />
         <Route path="/campaign/:id" element={<Campaign />} />
         <Route path="/signUp" element={<Signup />} />
-        <Route path="/login" element={<Signin />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
     </Router>
   );

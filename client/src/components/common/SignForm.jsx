@@ -46,25 +46,22 @@ function SignForm({ getUserInfo, type }) {
       name="register"
       onFinish={sendUserData}
     >
-      {type === 'register'
-        ? (
-          <Item
-            name="name"
-            rules={[
-              {
-                required: true,
-                message: 'Please input your name!',
-                whitespace: true,
-              },
-            ]}
-          >
-            <Input
-              name="name"
-              placeholder="Name"
-              onChange={(e) => handleChange(e)}
-            />
-          </Item>
-        ) : null}
+      <Item
+        name="name"
+        rules={[
+          {
+            required: true,
+            message: 'Please input your name!',
+            whitespace: true,
+          },
+        ]}
+      >
+        <Input
+          name="name"
+          placeholder="Name"
+          onChange={(e) => handleChange(e)}
+        />
+      </Item>
 
       <Item
         name="email"
@@ -85,24 +82,21 @@ function SignForm({ getUserInfo, type }) {
           onChange={(e) => handleChange(e)}
         />
       </Item>
-      {type === 'register'
-        ? (
-          <Item
-            name="phone"
-            rules={[
-              {
-                required: true,
-                message: 'Please input your phone number!',
-              },
-            ]}
-          >
-            <Input
-              placeholder="Phone Number"
-              name="phone"
-              onChange={(e) => handleChange(e)}
-            />
-          </Item>
-        ) : null}
+      <Item
+        name="phone"
+        rules={[
+          {
+            required: true,
+            message: 'Please input your phone number!',
+          },
+        ]}
+      >
+        <Input
+          placeholder="Phone Number"
+          name="phone"
+          onChange={(e) => handleChange(e)}
+        />
+      </Item>
 
       <Item
         name="password"
@@ -120,22 +114,20 @@ function SignForm({ getUserInfo, type }) {
           onChange={(e) => handleChange(e)}
         />
       </Item>
-      {type === 'register' ? (
-        <Item
-          name="confirm"
-          rules={[
-            {
-              required: true,
-              message: 'Please confirm your password!',
-            },
-            ({ getFieldValue }) => confirmPasswordValidation(getFieldValue),
-          ]}
-        >
-          <Password placeholder="Confirm password" />
-        </Item>
-      ) : null}
+      <Item
+        name="confirm"
+        rules={[
+          {
+            required: true,
+            message: 'Please confirm your password!',
+          },
+          ({ getFieldValue }) => confirmPasswordValidation(getFieldValue),
+        ]}
+      >
+        <Password placeholder="Confirm password" />
+      </Item>
       <Button className="sign-up-btn" type="primary" htmlType="submit">
-        { type === 'register' ? 'Sign up' : 'Login'}
+        {type === 'register' ? 'Sign up' : 'Login'}
       </Button>
     </Form>
   );

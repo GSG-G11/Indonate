@@ -1,28 +1,50 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import axios from 'axios';
 import {
   Typography,
   message,
   Space,
   Anchor,
+  Form,
+  Button,
+  Input,
 } from 'antd';
-import { useDispatch } from 'react-redux';
-import axios from 'axios';
 import { sign } from '../../redux/feature/user/userSlice';
 import '../Signup/index.less';
-import SignForm from '../../components/common/SignForm';
+
+const { Password } = Input;
+const { Item } = Form;
 
 const { Link } = Anchor;
 
 const { Title, Text } = Typography;
 
 function Login() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [userInfo, setUserInfo] = useState({
+    email: '', password: '',
+  });
+  const passwordValidation = () => ({
+    validator(_, value) {
+      if (value.length >= 6) {
+        return Promise.resolve();
+      }
+      return Promise.reject(new Error('password should have at least 6 character '));
+    },
+  });
 
-  const login = async ({ email, password }) => {
-    const userInfo = { email, password };
+  const handleChange = ({ target: { name, value } }) => {
+    setUserInfo({ ...userInfo, [name]: value });
+  };
+
+  const login = async () => {
     try {
       const { data: { data } } = await axios.post('/api/login', userInfo);
       dispatch(sign(data));
+      navigate('/');
       message.success(`Welcome back ${data.name}`);
     } catch ({ response: { data: { message: errorMessage } } }) {
       message.error({
@@ -53,7 +75,51 @@ function Login() {
           >
             LOGIN
           </Title>
-          <SignForm getUserInfo={login} items="login" />
+          <Form
+            className="Form-sign-up"
+            name="register"
+            onFinish={login}
+          >
+            <Item
+              name="email"
+              rules={[
+                {
+                  type: 'email',
+                  message: 'The input is not valid E-mail!',
+                },
+                {
+                  required: true,
+                  message: 'Please input your E-mail!',
+                },
+              ]}
+            >
+              <Input
+                name="email"
+                placeholder="Email"
+                onChange={(e) => handleChange(e)}
+              />
+            </Item>
+
+            <Item
+              name="password"
+              rules={[
+                {
+                  required: true,
+                  message: 'Please input your password!',
+                },
+                () => passwordValidation(),
+              ]}
+            >
+              <Password
+                placeholder="Password"
+                name="password"
+                onChange={(e) => handleChange(e)}
+              />
+            </Item>
+            <Button className="sign-up-btn" type="primary" htmlType="submit">
+              Login
+            </Button>
+          </Form>
           <div className="register_option">
             <Text>Don`t have an account ?</Text>
             <Anchor affix={false}>
