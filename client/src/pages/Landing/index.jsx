@@ -7,16 +7,14 @@ import {
   Review,
 } from '../../components';
 
-function Landing() {
-  return (
-    <>
-      <HeaderLandingPage />
-      <OurMission />
-      <Review />
-      <ReportsForm />
-      <Footer />
-    </>
-  );
-}
+const Landing = () => (
+  <>
+    <HeaderLandingPage />
+    <OurMission />
+    <Review />
+    <ReportsForm />
+    <Footer />
+  </>
+);
 
 export default Landing;

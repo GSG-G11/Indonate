@@ -17,7 +17,7 @@ import styles from './style.less';
 const { Text } = Typography;
 const { Meta } = Card;
 
-function CampaignCard({
+const CampaignCard = ({
   id,
   title,
   description,
@@ -25,7 +25,7 @@ function CampaignCard({
   categoryIcon,
   loading,
   isAvailable,
-}) {
+}) => {
   const navigate = useNavigate();
   return (
     <div className="card">
@@ -57,7 +57,7 @@ function CampaignCard({
       </Card>
     </div>
   );
-}
+};
 
 export default CampaignCard;
 

@@ -12,23 +12,21 @@ import { Typography } from 'antd';
 const {
   Text,
 } = Typography;
-function Footer() {
-  return (
-    <section className="footer_container">
-      <div className="hr_lines">
-        <hr className="line" />
-        <FacebookOutlined />
-        <InstagramOutlined />
-        <YoutubeOutlined />
-        <TwitterOutlined />
-        <GoogleOutlined />
-        <hr className="line" />
-      </div>
-      <div className="info_container">
-        <Text>Copyright © 2022 Indonate, Inc.</Text>
-      </div>
-    </section>
-  );
-}
+const Footer = () => (
+  <section className="footer_container">
+    <div className="hr_lines">
+      <hr className="line" />
+      <FacebookOutlined />
+      <InstagramOutlined />
+      <YoutubeOutlined />
+      <TwitterOutlined />
+      <GoogleOutlined />
+      <hr className="line" />
+    </div>
+    <div className="info_container">
+      <Text>Copyright © 2022 Indonate, Inc.</Text>
+    </div>
+  </section>
+);
 
 export default Footer;

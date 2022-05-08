@@ -5,7 +5,8 @@ import './style.css';
 
 const { Text } = Typography;
 const descriptions = ['Got help from us', 'Collected for families', 'Collected for families ', 'Collected for families '];
-function HeaderLandingPage() {
+
+const HeaderLandingPage = () => {
   const [data, setData] = useState({});
 
   useEffect(() => {
@@ -46,6 +47,6 @@ function HeaderLandingPage() {
       </div>
     </div>
   );
-}
+};
 
 export default HeaderLandingPage;

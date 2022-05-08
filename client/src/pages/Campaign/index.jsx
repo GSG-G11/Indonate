@@ -20,7 +20,7 @@ import { DonationButton, Footer } from '../../components';
 
 const { Title, Paragraph } = Typography;
 
-function Campaign() {
+const Campaign = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [campaign, setCampaign] = useState({});
@@ -211,6 +211,6 @@ function Campaign() {
       <Footer />
     </>
   );
-}
+};
 
 export default Campaign;

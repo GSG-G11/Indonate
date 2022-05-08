@@ -24,7 +24,7 @@ const { Link } = Anchor;
 const { Password } = Input;
 const { Content } = Layout;
 
-function Login() {
+const Login = () => {
   const [userData, setUserData] = useState({ email: '', password: '' });
   const dispatch = useDispatch();
 
@@ -157,5 +157,5 @@ function Login() {
       </Content>
     </Layout>
   );
-}
+};
 export default Login;

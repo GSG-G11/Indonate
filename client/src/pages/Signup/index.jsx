@@ -20,7 +20,7 @@ const { Password } = Input;
 const { Item } = Form;
 const { Title } = Typography;
 
-function Signup() {
+const Signup = () => {
   // const navigate = useNavigate();
   const dispatch = useDispatch();
   const [userInfo, setUserInfo] = useState({
@@ -173,6 +173,6 @@ function Signup() {
       </div>
     </div>
   );
-}
+};
 
 export default Signup;

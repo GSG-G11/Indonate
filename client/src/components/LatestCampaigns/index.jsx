@@ -6,7 +6,7 @@ import Campaign from '../common/CampaignCard';
 import './style.less';
 
 const { Title, Text } = Typography;
-function latestCampaigns() {
+const latestCampaigns = () => {
   const [campaigns, setCampaigns] = useState([]);
   const navigate = useNavigate();
   useEffect(() => {
@@ -75,6 +75,6 @@ function latestCampaigns() {
       </Button>
     </section>
   );
-}
+};
 
 export default latestCampaigns;
