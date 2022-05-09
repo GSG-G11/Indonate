@@ -441,14 +441,25 @@ describe('GET /admin/reports', () => {
       .expect(401);
     expect(response.body.message).toEqual('Unauthorized admin');
   });
-  test('Get all reports  <Authorized admin>', async () => {
+  test('Get all reports  <Authorized admin> <page 1>', async () => {
     const response = await request(app)
-      .get('/api/admin/reports')
+      .get('/api/admin/reports?page=1')
       .set('Cookie', [
         'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
       ])
       .expect(200);
     expect(response.body.data.reports.length).toEqual(5);
+    expect(response.body.data.count).toEqual(5);
+  });
+  test('Get all reports  <Authorized admin> <page 2>', async () => {
+    const response = await request(app)
+      .get('/api/admin/reports?page=2')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
+      ])
+      .expect(200);
+    expect(response.body.data.reports.length).toEqual(0);
+    expect(response.body.data.count).toEqual(5);
   });
 });
 
