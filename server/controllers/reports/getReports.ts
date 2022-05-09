@@ -3,12 +3,15 @@ import { Report } from '../../database/models';
 
 const getReports = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const reports = await Report.findAll({
+    const { page = 1, limit = 10 }: any = req.query;
+    const { count, rows: reports } = await Report.findAndCountAll({
+      limit,
+      offset: (page - 1) * limit,
       attributes: {
         exclude: ['createdAt', 'updatedAt'],
       },
     });
-    res.json({ message: 'Success', data: { reports } });
+    res.json({ message: 'Success', data: { reports, count } });
   } catch (error) {
     next(error);
   }
