@@ -432,6 +432,9 @@ describe('DELETE /api/admin/donor/:donorId', () => {
     const donorId = 2;
     const response = await request(app)
       .delete(`/api/admin/donor/${donorId}`)
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
+      ])
       .expect(200);
     expect(response.body.message).toBe('Deleted successfully');
   });
@@ -440,6 +443,9 @@ describe('DELETE /api/admin/donor/:donorId', () => {
     const donorId = 10;
     const response = await request(app)
       .delete(`/api/admin/donor/${donorId}`)
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
+      ])
       .expect(400);
     expect(response.body.message).toBe('ID does not exist');
   });
@@ -447,6 +453,9 @@ describe('DELETE /api/admin/donor/:donorId', () => {
     const donorId = 'w';
     const response = await request(app)
       .delete(`/api/admin/donor/${donorId}`)
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
+      ])
       .expect(400);
     expect(response.body.message).toBe('"id" must be a number');
   });
