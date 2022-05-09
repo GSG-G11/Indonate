@@ -426,6 +426,61 @@ describe('GET/campaigns', () => {
     expect(response.body.data.campaigns).toEqual([]);
   });
 });
+describe('PATCH /api/admin/family', () => {
+  test('case: succeeded | updated successfully', async () => {
+    const id = 1;
+    const response = await request(app)
+      .patch(`/api/admin/family/${id}`)
+      .send({
+        name: 'mohammed',
+        phone: '0599522660',
+        address: 'Gaza',
+      }).set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
+      ])
+      .expect(200);
+    expect(response.body.message).toBe('updated successfully');
+  });
+  test('case: Failed | updated successfully', async () => {
+    const id = 1;
+    const response = await request(app)
+      .patch(`/api/admin/family/${id}`)
+      .send({
+        name: 'mohammed',
+        phone: '0597086162',
+        address: 'Gaza',
+      }).set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
+      ])
+      .expect(400);
+    expect(response.body.message).toBe('Phone is used');
+  });
+  test('case: Failed | updated Failed', async () => {
+    const id = 111;
+    const response = await request(app)
+      .patch(`/api/admin/family/${id}`)
+      .send({
+        name: 'Marwani',
+        phone: '0599888620',
+        address: 'Gaza al remal street',
+      }).set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
+      ])
+      .expect(400);
+    expect(response.body.message).toBe('updated Failed');
+  });
+  test('case: Failed | Unauthorized user', async () => {
+    const id = 1;
+    const response = await request(app)
+      .patch(`/api/admin/family/${id}`)
+      .send({
+        name: 'Marwani',
+        phone: '0599888620',
+        address: 'Gaza al remal street',
+      }).expect(401);
+    expect(response.body.message).toBe('Unauthorized user');
+  });
+});
 
 afterAll(() => {
   connection.close();
