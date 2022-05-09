@@ -1,6 +1,6 @@
 import { NextFunction, Response, Request } from 'express';
 import { Family } from '../../../database/models';
-import { CustomedError } from '../../../utils';
+import { CustomError } from '../../../utils';
 import { paramsSchema, familySchema } from '../../../utils/validation';
 
 const editFamily = async (req: Request, res: Response, next: NextFunction) => {
@@ -11,7 +11,7 @@ const editFamily = async (req: Request, res: Response, next: NextFunction) => {
     const { dataValues }: any = await Family.findByPk(id, {
       attributes: { exclude: ['createdAt', 'updatedAt'] },
     });
-    if (!dataValues) throw new CustomedError('ID does not exist', 400);
+    if (!dataValues) throw new CustomError('ID does not exist', 400);
     //     await Donor.destroy({
     //       where: { id },
     //     });
@@ -27,10 +27,10 @@ const editFamily = async (req: Request, res: Response, next: NextFunction) => {
     console.log(updatedData);
 
     // console.log(updatedData, 'kkkkkkkkkkkkk');
-    // if (!update) next(new CustomedError('Failed update', 400));
+    // if (!update) next(new CustomError('Failed update', 400));
     res.status(200).json({ message: 'updated successfully', data });
   } catch (error) {
-    if (error.name === 'ValidationError') next(new CustomedError(error.details[0].message, 400));
+    if (error.name === 'ValidationError') next(new CustomError(error.details[0].message, 400));
     next(error);
   }
 };
