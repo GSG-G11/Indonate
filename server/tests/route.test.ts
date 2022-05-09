@@ -428,32 +428,41 @@ describe('GET/campaigns', () => {
 });
 describe('get admin/campaign/donor/:campaignId', () => {
   test('get data successfully', async () => {
-    const campaignId = 2;
+    const campaignId = 3;
     const donor = {
-      id: 1,
-      name: 'admin',
-      email: 'admin@gmail.com',
+      id: 4,
+      name: 'sami',
+      email: 'sami@gmail.com',
       address: 'Gaza',
-      phone: '0599888611',
+      phone: '0599848610',
       profile_img: 'https://w7.pngwing.com/pngs/481/915/png-transparent-computer-icons-user-avatar-woman-avatar-computer-business-conversation.png',
-      is_admin: true,
+      is_admin: false,
     };
     const response = await request(app)
-      .get(`/api/admin/campaign/donors/${campaignId}`).expect(200);
-    expect(response.body.data.donors[0]).toMatchObject(donor);
+      .get(`/api/admin/campaign/donors/${campaignId}`)
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
+      ]).expect(200);
+    console.log(response.body.data.rows);
+
+    expect(response.body.data.rows[0]).toMatchObject(donor);
     expect(response.body.message).toBe('Success');
   });
-  test('campaign id dose not exist', async () => {
-    const campaignId = 6;
-    const response = await request(app)
-      .get(`/api/admin/campaign/donors/${campaignId}`).expect(400);
-    expect(response.body.message).toBe('Campaign does not exist');
-  });
+
   test('campaign id dose not a number', async () => {
     const campaignId = 'w';
     const response = await request(app)
-      .get(`/api/admin/campaign/donors/${campaignId}`).expect(400);
+      .get(`/api/admin/campaign/donors/${campaignId}`)
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
+      ]).expect(400);
     expect(response.body.message).toBe('"id" must be a number');
+  });
+  test('Unauthorized user', async () => {
+    const campaignId = 3;
+    const response = await request(app)
+      .get(`/api/admin/campaign/donors/${campaignId}`).expect(401);
+    expect(response.body.message).toBe('Unauthorized user');
   });
 });
 
