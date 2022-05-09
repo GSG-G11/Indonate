@@ -5,7 +5,7 @@ import categoryRouter from './category';
 import campaignRouter from './campaign';
 import reportsRouter from './reports';
 import donationRouter from './donation';
-import adminDonorRouter from './adminDonorRoutes';
+import adminDonorRouter from './adminDonor';
 
 const router = Router();
 
