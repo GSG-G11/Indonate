@@ -443,8 +443,6 @@ describe('get admin/campaign/donor/:campaignId', () => {
       .set('Cookie', [
         'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
       ]).expect(200);
-    console.log(response.body.data.rows);
-
     expect(response.body.data.rows[0]).toMatchObject(donor);
     expect(response.body.message).toBe('Success');
   });
