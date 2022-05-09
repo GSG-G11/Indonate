@@ -447,7 +447,7 @@ describe('DELETE /api/admin/donor/:donorId', () => {
         'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
       ])
       .expect(400);
-    expect(response.body.message).toBe('ID does not exist');
+    expect(response.body.message).toBe('The donor you are trying to delete does not exist');
   });
   test('case: Failed | id is not a number', async () => {
     const donorId = 'w';
