@@ -427,6 +427,31 @@ describe('GET/campaigns', () => {
   });
 });
 
+describe('DELETE /api/admin/donor/:donorId', () => {
+  test('case: succeeded | Deleted successfully', async () => {
+    const donorId = 2;
+    const response = await request(app)
+      .delete(`/api/admin/donor/${donorId}`)
+      .expect(200);
+    expect(response.body.message).toBe('Deleted successfully');
+  });
+
+  test('case: Failed | id does not exist', async () => {
+    const donorId = 10;
+    const response = await request(app)
+      .delete(`/api/admin/donor/${donorId}`)
+      .expect(400);
+    expect(response.body.message).toBe('ID does not exist');
+  });
+  test('case: Failed | id is not a number', async () => {
+    const donorId = 'w';
+    const response = await request(app)
+      .delete(`/api/admin/donor/${donorId}`)
+      .expect(400);
+    expect(response.body.message).toBe('"id" must be a number');
+  });
+});
+
 afterAll(() => {
   connection.close();
 });
