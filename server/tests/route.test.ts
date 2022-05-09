@@ -459,6 +459,13 @@ describe('DELETE /api/admin/donor/:donorId', () => {
       .expect(400);
     expect(response.body.message).toBe('"id" must be a number');
   });
+  test('case: Failed | Unauthorized user', async () => {
+    const donorId = 2;
+    const response = await request(app)
+      .delete(`/api/admin/donor/${donorId}`)
+      .expect(401);
+    expect(response.body.message).toBe('Unauthorized user');
+  });
 });
 
 afterAll(() => {
