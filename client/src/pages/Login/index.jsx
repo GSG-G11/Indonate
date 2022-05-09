@@ -1,64 +1,52 @@
-import { React, useState } from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import axios from 'axios';
 import {
-  Layout,
-  Row,
-  Col,
-  Image,
+  Typography,
+  message,
+  Space,
+  Anchor,
   Form,
   Button,
   Input,
-  message,
-  Typography,
-  Anchor,
 } from 'antd';
-import { useDispatch } from 'react-redux';
-import { GoogleOutlined } from '@ant-design/icons';
-import axios from 'axios';
-import background from '../../assets/images/login-signup-background.jpg';
-import './index.less';
 import { sign } from '../../redux/feature/user/userSlice';
+import '../Signup/style.less';
 
-const { Title, Text } = Typography;
+const { Password } = Input;
 const { Item } = Form;
 const { Link } = Anchor;
-const { Password } = Input;
-const { Content } = Layout;
+const { Title, Text } = Typography;
 
 function Login() {
-  const [userData, setUserData] = useState({ email: '', password: '' });
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setUserData({
-      ...userData,
-      [name]: value,
-    });
-  };
+  const [userInfo, setUserInfo] = useState({
+    email: '', password: '',
+  });
 
   const passwordValidation = () => ({
     validator(_, value) {
       if (value.length >= 6) {
         return Promise.resolve();
       }
-      return Promise.reject(
-        new Error('password should be at least 6 characters'),
-      );
+      return Promise.reject(new Error('password should have at least 6 character '));
     },
   });
 
+  const handleChange = ({ target: { name, value } }) => {
+    setUserInfo({ ...userInfo, [name]: value });
+  };
+
   const login = async () => {
     try {
-      const {
-        data: { data },
-      } = await axios.post('/api/login', userData);
+      const { data: { data } } = await axios.post('/api/login', userInfo);
       dispatch(sign(data));
+      navigate('/');
       message.success(`Welcome back ${data.name}`);
-    } catch ({
-      response: {
-        data: { message: errorMessage },
-      },
-    }) {
+    } catch ({ response: { data: { message: errorMessage } } }) {
       message.error({
         content: errorMessage,
       });
@@ -66,96 +54,87 @@ function Login() {
   };
 
   return (
-    <Layout>
-      <Content>
-        <Row>
-          <Col span={12} className="customHeaderImage login_image">
-            <Image preview={false} src={background} />
-            <Title level={2} className="text_image">
-              Subscribe with us to make yourself a contributor to charity and
-              help people in need.
-            </Title>
-          </Col>
-          <Col span={12} className="form_section">
-            <Form
-              className="login_form"
-              name="basic"
-              labelCol={{
-                span: 8,
-              }}
-              wrapperCol={{
-                span: 16,
-              }}
-              initialValues={{
-                remember: true,
-              }}
-              autoComplete="off"
-              onFinish={login}
+    <div className="sign-up-container">
+      <div className="img-side-sign-up">
+        <Title
+          className="custom-header-text"
+          level={3}
+        >
+          Subscribe with us to make yourself a contributor to charity and help people in need.
+        </Title>
+      </div>
+      <div className="form-conatainer-signup">
+        <Space
+          className="space-component"
+          direction="horizontal"
+          align="center"
+        >
+          <Title
+            level={2}
+          >
+            LOGIN
+          </Title>
+          <Form
+            className="Form-sign-up"
+            name="register"
+            onFinish={login}
+          >
+            <Item
+              name="email"
+              rules={[
+                {
+                  type: 'email',
+                  message: 'The input is not valid E-mail!',
+                },
+                {
+                  required: true,
+                  message: 'Please input your E-mail!',
+                },
+              ]}
             >
-              <Title className="login_title">Login</Title>
-
-              <Item
+              <Input
                 name="email"
-                rules={[
-                  {
-                    required: true,
-                    message: 'Please input your email!',
-                  },
-                ]}
-              >
-                <Input
-                  name="email"
-                  placeholder="Email"
-                  onChange={handleInputChange}
-                />
-              </Item>
+                placeholder="Email"
+                onChange={(e) => handleChange(e)}
+              />
+            </Item>
 
-              <Item
+            <Item
+              name="password"
+              rules={[
+                {
+                  required: true,
+                  message: 'Please input your password!',
+                },
+                () => passwordValidation(),
+              ]}
+            >
+              <Password
+                placeholder="Password"
                 name="password"
-                rules={[
-                  {
-                    required: true,
-                    message: 'Please input your password!',
-                  },
-                  () => passwordValidation(),
-                ]}
-              >
-                <Password
-                  name="password"
-                  placeholder="Password"
-                  onChange={handleInputChange}
-                />
-              </Item>
-              <Item>
-                <Button
-                  className="login_button"
-                  type="primary"
-                  htmlType="submit"
-                >
-                  Login
-                </Button>
-                <div className="register_option">
-                  <Text>Don`t have an account ?</Text>
-                  <Anchor affix>
-                    <Link href="/signup" title="Sign up" />
-                  </Anchor>
-                </div>
-              </Item>
-              <Item
-                wrapperCol={{
-                  offset: 5,
-                  span: 32,
-                }}
-              >
-                <Button type="primary" icon={<GoogleOutlined />}>
-                  Login with Google
-                </Button>
-              </Item>
-            </Form>
-          </Col>
-        </Row>
-      </Content>
-    </Layout>
+                onChange={(e) => handleChange(e)}
+              />
+            </Item>
+            <Button className="sign-up-btn" type="primary" htmlType="submit">
+              Login
+            </Button>
+          </Form>
+          <div className="register_option">
+            <Text>Don`t have an account ?</Text>
+            <Anchor affix={false}>
+              <Link
+                href="/signup"
+                title="Sign Up"
+              />
+            </Anchor>
+          </div>
+          <button type="button" className="login-with-google-btn">
+            Sign in with Google
+          </button>
+        </Space>
+      </div>
+    </div>
   );
 }
+
 export default Login;

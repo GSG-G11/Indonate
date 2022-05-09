@@ -5,6 +5,7 @@ import {
   OurMission,
   ReportsForm,
   Review,
+  LatestCampaigns,
 } from '../../components';
 
 function Landing() {
@@ -12,6 +13,7 @@ function Landing() {
     <>
       <HeaderLandingPage />
       <OurMission />
+      <LatestCampaigns />
       <Review />
       <ReportsForm />
       <Footer />
