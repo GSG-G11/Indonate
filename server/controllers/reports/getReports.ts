@@ -4,11 +4,11 @@ import { CustomError, querySchema } from '../../utils';
 
 const getReports = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { page = 1, limit = 10 }: any = req.query;
+    const { page = 1 }: any = req.query;
     await querySchema.validateAsync(req.query);
     const { count, rows: reports } = await Report.findAndCountAll({
-      limit,
-      offset: (page - 1) * limit,
+      limit: 10,
+      offset: (page - 1) * 10,
       attributes: {
         exclude: ['createdAt', 'updatedAt'],
       },
