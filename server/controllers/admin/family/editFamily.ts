@@ -1,34 +1,23 @@
 import { NextFunction, Response, Request } from 'express';
 import { Family } from '../../../database/models';
-import { CustomError } from '../../../utils';
-import { paramsSchema, familySchema } from '../../../utils/validation';
+import { paramsSchema, familySchema, CustomError } from '../../../utils';
 
 const editFamily = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    console.log('hello from edit family info');
-
     const { id } = await paramsSchema.validateAsync(req.params);
-    const { dataValues }: any = await Family.findByPk(id, {
-      attributes: { exclude: ['createdAt', 'updatedAt'] },
+    const checkPhone: any = await Family.findOne({
+      where:
+        { phone: req.body.phone },
     });
-    if (!dataValues) throw new CustomError('ID does not exist', 400);
-    //     await Donor.destroy({
-    //       where: { id },
-    //     });
-    console.log(dataValues);
-    console.log(req.body);
+    if (checkPhone && checkPhone.id !== id) throw new CustomError('Phone is used', 400);
+
     const data: any = await familySchema.validateAsync(req.body);
     const { name, phone, address } = data;
-    const update: any = {
-      id, name, phone, address,
-    };
+    const update: any = { name, phone, address };
 
-    const updatedData = await Family.update(id, update);
-    console.log(updatedData);
-
-    // console.log(updatedData, 'kkkkkkkkkkkkk');
-    // if (!update) next(new CustomError('Failed update', 400));
-    res.status(200).json({ message: 'updated successfully', data });
+    const updatedData = await Family.update(update, { where: { id } });
+    if (updatedData[0] === 0) throw new CustomError('updated Failed', 400);
+    res.status(200).json({ message: 'updated successfully', data: update });
   } catch (error) {
     if (error.name === 'ValidationError') next(new CustomError(error.details[0].message, 400));
     next(error);
