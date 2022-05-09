@@ -451,6 +451,12 @@ describe('DELETE /api/admin/family/:id', () => {
       .expect(400);
     expect(response.body.message).toEqual("The family you are trying to delete doesn't exist");
   });
+  test('Delete family <Authorized admin> <Not valid id param>', async () => {
+    const response = await request(app)
+      .delete('/api/admin/family/gd').set('Cookie', ['ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUyMTIxODI0LCJleHAiOjE2NTQ3MTM4MjR9.Ue8JhWn8jAgLNzUdoHiWZAXoRtF5vooY3itRjw1yjyM'])
+      .expect(400);
+    expect(response.body.message).toEqual('"id" must be a number');
+  });
 });
 
 afterAll(() => {
