@@ -415,16 +415,11 @@ describe('GET /campaigns', () => {
 });
 
 describe('GET /admin/reports', () => {
-  test('get all reports  <with admin role>', async () => {
-    const response = await request(app)
-      .get('/api/admin/reports')
-      .set('Cookie', [
-        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
-      ])
-      .expect(200);
-    expect(response.body.data.reports.length).toEqual(5);
+  test('Get all reports  <Unauthorized user>', async () => {
+    const response = await request(app).get('/api/admin/reports').expect(401);
+    expect(response.body.message).toEqual('Unauthorized user');
   });
-  test('get all reports  <with user role>', async () => {
+  test('Get all reports  <Unauthorized admin>', async () => {
     const response = await request(app)
       .get('/api/admin/reports')
       .set('Cookie', [
@@ -433,9 +428,14 @@ describe('GET /admin/reports', () => {
       .expect(401);
     expect(response.body.message).toEqual('Unauthorized admin');
   });
-  test('get all reports  <with no role>', async () => {
-    const response = await request(app).get('/api/admin/reports').expect(401);
-    expect(response.body.message).toEqual('Unauthorized user');
+  test('Get all reports  <Authorized admin>', async () => {
+    const response = await request(app)
+      .get('/api/admin/reports')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
+      ])
+      .expect(200);
+    expect(response.body.data.reports.length).toEqual(5);
   });
 });
 
