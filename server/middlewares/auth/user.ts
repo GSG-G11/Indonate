@@ -1,5 +1,5 @@
 import { Response, NextFunction } from 'express';
-import { verifyToken, CustomedError } from '../../utils';
+import { verifyToken, CustomError } from '../../utils';
 
 const authUser = async (req: any, res: Response, next: NextFunction) => {
   try {
@@ -9,7 +9,7 @@ const authUser = async (req: any, res: Response, next: NextFunction) => {
     req.user = user;
     next();
   } catch (e) {
-    next(new CustomedError('Unauthorized user', 401));
+    next(new CustomError('Unauthorized user', 401));
   }
 };
 
