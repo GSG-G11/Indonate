@@ -1,16 +1,13 @@
 import { NextFunction, Response, Request } from 'express';
 import { Family } from '../../../database/models';
-import { CustomError } from '../../../utils';
-import { familySchema } from '../../../utils/validation';
+import { familySchema, CustomError } from '../../../utils';
 
 const addFamily = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const familyInfo = await familySchema.validateAsync(req.body);
     const { phone } = familyInfo;
     const checkPhone: object | null = await Family.findOne({
-      where: {
-        phone,
-      },
+      where: { phone },
     });
     if (checkPhone) {
       throw new CustomError('phone is used try another one', 400);
