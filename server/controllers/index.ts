@@ -1,25 +1,25 @@
 import checkUser from './auth/checkAuth';
-import signUp from './auth/signUp';
+import signup from './auth/signup';
 import login from './auth/login';
 import logout from './auth/logout';
-import campaigns from './compaignRouter/campaignes';
+import getFilteredCampaign from './campaigns/getFilteredCampaign';
 import getAllCategories from './categories/getAllCategories';
-import reports from './reportsRouter/reports';
-import getCampaignById from './compaignRouter/getCampaignById';
+import reports from './reports/addReport';
+import getCampaignById from './campaigns/getCampaignById';
 import addDonation from './donations/addDonation';
-import statistics from './compaignRouter/statistics';
-import getReports from './reportsRouter/getReports';
+import getReports from './reports/getReports';
+import getStatistics from './statistics/getStatistics';
 
 export {
   login,
-  signUp,
+  signup,
   logout,
-  campaigns,
+  getFilteredCampaign,
   getAllCategories,
   reports,
   getCampaignById,
   checkUser,
   addDonation,
-  statistics,
   getReports,
+  getStatistics,
 };

@@ -116,7 +116,7 @@ describe('POST/login', () => {
 describe('POST/signUp', () => {
   test('sign up', async () => {
     const response = await request(app)
-      .post('/api/signUp')
+      .post('/api/signup')
       .send({
         name: 'mohammed',
         email: 'mohaammed@gmail.com',
@@ -132,7 +132,7 @@ describe('POST/signUp', () => {
   });
   test('Email is used', async () => {
     const response = await request(app)
-      .post('/api/signUp')
+      .post('/api/signup')
       .send({
         name: 'Ahmed',
         email: 'Ahmed@gmail.com',
@@ -145,7 +145,7 @@ describe('POST/signUp', () => {
   });
   test('phone is used', async () => {
     const response = await request(app)
-      .post('/api/signUp')
+      .post('/api/signup')
       .send({
         name: 'Ahmed',
         email: 'Ahmed1@gmail.com',
@@ -173,12 +173,30 @@ describe('Get/campaign/:id', () => {
   test('campaign/:id', async () => {
     const id = 1;
     const data = {
-      id: 1,
-      title: 'Helping poor families',
-      description:
-        'This campaign helps save an amount of money that guarantees 50 families for two months',
-      target: 50000,
-      is_available: true,
+      campaignInfo: {
+        category: {
+          icon_url:
+            'https://i.pinimg.com/564x/dd/9d/c9/dd9dc9d83423bc037b511d73b29e6b80.jpg',
+          name: 'Health',
+        },
+        description:
+          'This campaign helps save an amount of money that guarantees 50 families for two months',
+        id: 1,
+        image_link:
+          'https://media.voltron.alhurra.com/Drupal/01live-116/styles/sourced/s3/2019-12/AFC8DF4B-8C6D-4968-87B2-CEAFD63DED97.jpg?itok=Y3YypJNm',
+        is_available: true,
+        food_target: 1000,
+        clothes_target: 200,
+        money_target: 2000,
+        title: 'Helping poor families',
+      },
+      current: {
+        current: 120,
+        current_clothes: 10,
+        current_food: 10,
+        current_money: 100,
+      },
+      families: 1,
     };
     const response = await request(app).get(`/api/campaign/${id}`).expect(200);
     expect(response.body.data).toMatchObject(data);
@@ -303,15 +321,10 @@ describe('GET /statistics', () => {
       body: { data },
     } = await request(app).get('/api/statistics').expect(200);
     expect(data).toStrictEqual({
-      families: 5,
-      doners: 5,
-      donations: [
-        {
-          money: '1000',
-          food: '101',
-          clothes: '100',
-        },
-      ],
+      FAMILIES: 5,
+      MONEY: '1000',
+      FOODS: '101',
+      CLOTHES: '100',
     });
   });
 });
@@ -408,7 +421,7 @@ describe('GET /campaigns', () => {
   });
   test('get campaigns with name not exit', async () => {
     const response = await request(app)
-      .get('/api/campaigns?search=give people maney&category=Education')
+      .get('/api/campaigns?search=give people money&category=Education')
       .expect(200);
     expect(response.body.data.campaigns).toEqual([]);
   });
