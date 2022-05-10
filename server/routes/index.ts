@@ -5,7 +5,7 @@ import categoryRouter from './category';
 import campaignRouter from './campaign';
 import reportsRouter from './reports';
 import donationRouter from './donation';
-import familyRouter from './family';
+import familyRouter from './adminFamily';
 
 const router = Router();
 
@@ -14,6 +14,6 @@ router.use(authRouter);
 router.use(categoryRouter);
 router.use(campaignRouter);
 router.use(reportsRouter);
-router.use(familyRouter);
+router.use('/admin', familyRouter);
 
 export default router;

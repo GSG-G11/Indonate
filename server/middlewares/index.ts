@@ -4,5 +4,8 @@ import authUser from './auth/user';
 import authAdmin from './auth/admin';
 
 export {
-  serverError, notFoundError, authUser, authAdmin,
+  serverError,
+  notFoundError,
+  authUser,
+  authAdmin,
 };
