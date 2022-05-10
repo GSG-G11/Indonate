@@ -657,6 +657,22 @@ describe('POST /api/admin/campaigns', () => {
       .expect(401);
     expect(response.body.message).toBe('Unauthorized user');
   });
+  test('post new campaign', async () => {
+    const response = await request(app).post('/api/admin/campaigns')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
+      ])
+      .send({
+        title: 'campaign title',
+        description: 'campaign description',
+        food_target: 500,
+        clothes_target: 500,
+        money_target: 500,
+        image_link: 'link to an img',
+      })
+      .expect(201);
+    expect(response.body.message).toBe('Campaign added successfully');
+  });
 });
 afterAll(() => {
   connection.close();
