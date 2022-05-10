@@ -11,6 +11,7 @@ import getStatistics from './statistics/getStatistics';
 import {
   addFamily,
   deleteFamilyById,
+  deleteDonorById,
 } from './admin';
 
 export {
@@ -23,7 +24,8 @@ export {
   getCampaignById,
   checkUser,
   addDonation,
-  addFamily,
   getStatistics,
   deleteFamilyById,
+  deleteDonorById,
+  addFamily,
 };

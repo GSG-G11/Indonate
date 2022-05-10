@@ -528,6 +528,48 @@ describe('DELETE /api/admin/family/:id', () => {
     expect(response.body.message).toEqual('"id" must be a number');
   });
 });
+describe('DELETE /api/admin/donor/:donorId', () => {
+  test('case: succeeded | Deleted successfully', async () => {
+    const donorId = 2;
+    const response = await request(app)
+      .delete(`/api/admin/donor/${donorId}`)
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
+      ])
+      .expect(200);
+    expect(response.body.message).toBe('Donor deleted successfully');
+  });
+
+  test('case: Failed | id does not exist', async () => {
+    const donorId = 10;
+    const response = await request(app)
+      .delete(`/api/admin/donor/${donorId}`)
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
+      ])
+      .expect(400);
+    expect(response.body.message).toBe(
+      'The donor you are trying to delete does not exist',
+    );
+  });
+  test('case: Failed | id is not a number', async () => {
+    const donorId = 'w';
+    const response = await request(app)
+      .delete(`/api/admin/donor/${donorId}`)
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
+      ])
+      .expect(400);
+    expect(response.body.message).toBe('"id" must be a number');
+  });
+  test('case: Failed | Unauthorized user', async () => {
+    const donorId = 2;
+    const response = await request(app)
+      .delete(`/api/admin/donor/${donorId}`)
+      .expect(401);
+    expect(response.body.message).toBe('Unauthorized user');
+  });
+});
 
 afterAll(() => {
   connection.close();
