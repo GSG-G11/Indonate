@@ -1,6 +1,5 @@
 import { React, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import {
   Layout,
   Row,
@@ -31,7 +30,6 @@ const {
 } = Layout;
 
 function Signin() {
-  const navigate = useNavigate();
   const [userData, setUserData] = useState({ email: '', password: '' });
   const dispatch = useDispatch();
 
@@ -51,18 +49,11 @@ function Signin() {
       return Promise.reject(new Error('password should be at least 6 characters'));
     },
   });
-  const admin = () => {
-    navigate('/admin');
-  };
-  const home = () => {
-    navigate('/');
-  };
+
   const login = async () => {
     try {
       const { data: { data } } = await axios.post('/api/login', userData);
       dispatch(sign(data));
-      if (data.isAdmin) admin();
-      else home();
       message.success(`Welcome back ${data.name}`);
     } catch ({ response: { data: { message: errorMessage } } }) {
       message.error({

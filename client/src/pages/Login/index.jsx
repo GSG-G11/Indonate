@@ -39,12 +39,19 @@ function Login() {
   const handleChange = ({ target: { name, value } }) => {
     setUserInfo({ ...userInfo, [name]: value });
   };
+  const admin = () => {
+    navigate('/admin');
+  };
+  const home = () => {
+    navigate('/');
+  };
 
   const login = async () => {
     try {
       const { data: { data } } = await axios.post('/api/login', userInfo);
       dispatch(sign(data));
-      navigate('/');
+      if (data.isAdmin) admin();
+      else home();
       message.success(`Welcome back ${data.name}`);
     } catch ({ response: { data: { message: errorMessage } } }) {
       message.error({

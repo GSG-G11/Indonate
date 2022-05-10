@@ -1,7 +1,4 @@
 import React, { useEffect } from 'react';
-// import {
-//   BrowserRouter as Router, Routes, Route,
-// } from 'react-router-dom';
 import { Routes, Route } from 'react-router-dom';
 import { Nav } from './components';
 import {
