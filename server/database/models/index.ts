@@ -18,6 +18,10 @@ Donor.belongsToMany(Campaign, {
   through: { model: Donation, unique: false },
   constraints: true,
 });
+Campaign.hasMany(Donation);
+Donation.belongsTo(Campaign);
+Donor.hasMany(Donation);
+Donation.belongsTo(Donor);
 
 export {
   Donor,

@@ -12,7 +12,7 @@ require('env2')('.env');
 const app:Application = express();
 const { NODE_ENV } = process.env;
 
-app.set('port', process.env.PORT || 8080);
+app.set('port', process.env.PORT || 3033);
 app.use(cors());
 app.use(cookieParser());
 app.use(express.json());

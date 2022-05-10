@@ -1,34 +1,43 @@
 import { NextFunction, Request, Response } from 'express';
-import { Campaign, Donor } from '../../database/models';
+import {
+  Donation, Donor, sequelize,
+} from '../../database/models';
 import { CustomError } from '../../utils';
 import { donorsQuerySchema } from '../../utils/validation';
 
 const getDonors = async (req:Request, res:Response, next:NextFunction) => {
   try {
+    const { page = 1, limit = 6 } = req.query;
     await donorsQuerySchema.validateAsync(req.query);
     const { rows: donors, count } = await Donor.findAndCountAll({
+      offset: (+page - 1) * +limit,
+      limit: +limit,
+      include: [{
+        model: Donation,
+        required: false,
+        duplicating: false,
+        attributes: [],
+      }],
 
-      include: {
-        model: Campaign,
-        attributes: ['id', 'title'],
-        through: {
-          attributes: ['food', 'clothes', 'money'],
-        },
-      },
-      attributes: {
-        exclude: ['createdAt', 'updatedAt', 'profile_img', 'password', 'is_admin'],
-      },
-      order: [
-        ['id', 'DESC'],
-      ],
-
+      attributes: [
+        'id',
+        'name',
+        'email',
+        'address',
+        'phone',
+        [sequelize.fn('SUM', sequelize.col('donations.food')), 'totalFood'],
+        [sequelize.fn('SUM', sequelize.col('donations.money')), 'totalMoney'],
+        [sequelize.fn('SUM', sequelize.col('donations.clothes')), 'totalClothes']],
+      group: ['donors.id'],
+      order: [['id', 'DESC']],
     });
 
-    res.json({ message: 'Success', data: { donors, count } });
-  } catch (e) {
-    if (e.name === 'ValidationError') {
-      next(new CustomError(e.message, 400));
+    res.json({ message: 'Success', data: { donors, count: count.length } });
+  } catch (error) {
+    if (error.name === 'ValidationError') {
+      next(new CustomError(error.message, 400));
     }
+    next(error);
   }
 };
 export default getDonors;
