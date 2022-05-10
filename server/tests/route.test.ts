@@ -357,7 +357,7 @@ describe('GET/checkAuth', () => {
   });
 });
 
-describe('GET/campaigns', () => {
+describe('GET /campaigns', () => {
   test('get all campaigns', async () => {
     const response = await request(app).get('/api/campaigns').expect(200);
 
@@ -463,6 +463,7 @@ describe('get admin/campaign/:campaignId/donor', () => {
     expect(response.body.message).toBe('Unauthorized user');
   });
 });
+
 describe('POST /api/admin/family', () => {
   test('case: succeeded | added successfully', async () => {
     const response = await request(app)
@@ -471,7 +472,8 @@ describe('POST /api/admin/family', () => {
         name: 'mohammed',
         phone: '0599522660',
         address: 'Gaza',
-      }).set('Cookie', [
+      })
+      .set('Cookie', [
         'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
       ])
       .expect(201);
@@ -484,7 +486,8 @@ describe('POST /api/admin/family', () => {
         name: 'mohammed',
         phone: '0599888620',
         address: 'Gaza',
-      }).set('Cookie', [
+      })
+      .set('Cookie', [
         'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
       ])
       .expect(400);
@@ -496,7 +499,8 @@ describe('POST /api/admin/family', () => {
       .send({
         name: 'mohammed',
         phone: '0599888622',
-      }).set('Cookie', [
+      })
+      .set('Cookie', [
         'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
       ])
       .expect(400);
@@ -514,7 +518,97 @@ describe('POST /api/admin/family', () => {
     expect(response.body.message).toBe('Unauthorized user');
   });
 });
+describe('GET /admin/reports', () => {
+  test('Get all reports  <Unauthorized user>', async () => {
+    const response = await request(app).get('/api/admin/reports').expect(401);
+    expect(response.body.message).toEqual('Unauthorized user');
+  });
+  test('Get all reports  <Unauthorized admin>', async () => {
+    const response = await request(app)
+      .get('/api/admin/reports')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmFtZSI6IkFobWVkIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTY1MTk5OTY3OSwiZXhwIjoxNjU0NTkxNjc5fQ.Z0Tq0XxGNbQ72J4BRAp06Qo6xYq41jb59-5uRK1JfuA',
+      ])
+      .expect(401);
+    expect(response.body.message).toEqual('Unauthorized admin');
+  });
+  test('Get all reports  <Authorized admin> <page 1>', async () => {
+    const response = await request(app)
+      .get('/api/admin/reports?page=1')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
+      ])
+      .expect(200);
+    expect(response.body.data.reports.length).toEqual(5);
+    expect(response.body.data.count).toEqual(5);
+  });
+  test('Get all reports  <Authorized admin> <page 2>', async () => {
+    const response = await request(app)
+      .get('/api/admin/reports?page=2')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
+      ])
+      .expect(200);
+    expect(response.body.data.reports.length).toEqual(0);
+    expect(response.body.data.count).toEqual(5);
+  });
+  test('Get all reports  <Authorized admin> <not valid page>', async () => {
+    const response = await request(app)
+      .get('/api/admin/reports?page=a')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
+      ])
+      .expect(401);
+    expect(response.body.message).toBe('"page" must be a number');
+  });
+});
 
+describe('DELETE /api/admin/family/:id', () => {
+  test('Delete family <Unauthorized user>', async () => {
+    const response = await request(app)
+      .delete('/api/admin/family/1')
+      .expect(401);
+    expect(response.body.message).toEqual('Unauthorized user');
+  });
+  test('Delete family <Unauthorized admin>', async () => {
+    const response = await request(app)
+      .delete('/api/admin/family/1')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IkFobWVkIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTY1MjExOTI4OSwiZXhwIjoxNjU0NzExMjg5fQ.WNuAaN7EcIrUx7RV2EMj_E46vbRP4FU5e8vsjMcwCpY',
+      ])
+      .expect(401);
+    expect(response.body.message).toEqual('Unauthorized admin');
+  });
+  test('Delete family <Authorized admin> <Family exists>', async () => {
+    const response = await request(app)
+      .delete('/api/admin/family/1')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUyMTIxODI0LCJleHAiOjE2NTQ3MTM4MjR9.Ue8JhWn8jAgLNzUdoHiWZAXoRtF5vooY3itRjw1yjyM',
+      ])
+      .expect(200);
+    expect(response.body.message).toEqual('Family deleted successfully');
+  });
+  test('Delete family <Authorized admin> <Family exists>', async () => {
+    const response = await request(app)
+      .delete('/api/admin/family/10')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUyMTIxODI0LCJleHAiOjE2NTQ3MTM4MjR9.Ue8JhWn8jAgLNzUdoHiWZAXoRtF5vooY3itRjw1yjyM',
+      ])
+      .expect(400);
+    expect(response.body.message).toEqual(
+      'The family you are trying to delete does not exist',
+    );
+  });
+  test('Delete family <Authorized admin> <Not valid id param>', async () => {
+    const response = await request(app)
+      .delete('/api/admin/family/gd')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUyMTIxODI0LCJleHAiOjE2NTQ3MTM4MjR9.Ue8JhWn8jAgLNzUdoHiWZAXoRtF5vooY3itRjw1yjyM',
+      ])
+      .expect(400);
+    expect(response.body.message).toEqual('"id" must be a number');
+  });
+});
 describe('DELETE /api/admin/donor/:donorId', () => {
   test('case: succeeded | Deleted successfully', async () => {
     const donorId = 2;
@@ -535,7 +629,9 @@ describe('DELETE /api/admin/donor/:donorId', () => {
         'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
       ])
       .expect(400);
-    expect(response.body.message).toBe('The donor you are trying to delete does not exist');
+    expect(response.body.message).toBe(
+      'The donor you are trying to delete does not exist',
+    );
   });
   test('case: Failed | id is not a number', async () => {
     const donorId = 'w';
