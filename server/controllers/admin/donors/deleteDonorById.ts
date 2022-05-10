@@ -9,7 +9,7 @@ const deleteDonorById = async (req: Request, res: Response, next: NextFunction) 
       where: { id },
     });
     if (!deletedDonor) throw new CustomError('The donor you are trying to delete does not exist', 400);
-    res.json({ message: 'Deleted successfully' });
+    res.json({ message: 'Donor deleted successfully' });
   } catch (error) {
     if (error.name === 'ValidationError') next(new CustomError(error.details[0].message, 400));
     next(error);
