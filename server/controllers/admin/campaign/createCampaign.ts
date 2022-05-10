@@ -1,29 +1,16 @@
 import { Request, Response, NextFunction } from 'express';
+import { CustomError } from '../../../utils';
 import { Campaign } from '../../../database/models';
+import { campaignSchema } from '../../../utils/validation';
 
 const createCampaign = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const {
-      title, description,
-      food_target: foodTarget,
-      clothes_target: clothesTarget,
-      money_target: moneyTarget,
-      image_link: imageLink,
-    } = req.body;
-
-    const response = await Campaign.create({
-      title,
-      description,
-      food_target: foodTarget,
-      clothes_target: clothesTarget,
-      money_target: moneyTarget,
-      image_link: imageLink,
-    });
-    console.log(response);
+    const campaign = await campaignSchema.validateAsync(req.body);
+    await Campaign.create(campaign);
     res.status(201).json({ message: 'Campaign added successfully' });
   } catch (e) {
-    res.json(e.name);
-    next();
+    if (e.name === 'ValidationError') { next(new CustomError(e.message, 400)); }
+    next(e);
   }
 };
 export default createCampaign;
