@@ -651,7 +651,13 @@ describe('DELETE /api/admin/donor/:donorId', () => {
     expect(response.body.message).toBe('Unauthorized user');
   });
 });
-
+describe('POST /api/admin/campaigns', () => {
+  test('unauthorized admin', async () => {
+    const response = await request(app).post('/api/admin/campaigns')
+      .expect(401);
+    expect(response.body.message).toBe('Unauthorized user');
+  });
+});
 afterAll(() => {
   connection.close();
 });
