@@ -13,6 +13,7 @@ import {
   addFamily,
   deleteFamilyById,
   deleteDonorById,
+  getDonorsByCampaignId,
 } from './admin';
 
 export {
@@ -25,6 +26,7 @@ export {
   getCampaignById,
   checkUser,
   addDonation,
+  getDonorsByCampaignId,
   getReports,
   getStatistics,
   deleteFamilyById,
