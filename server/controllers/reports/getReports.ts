@@ -12,6 +12,7 @@ const getReports = async (req: Request, res: Response, next: NextFunction) => {
       attributes: {
         exclude: ['createdAt', 'updatedAt'],
       },
+      order: [['id', 'DESC']],
     });
     res.json({ message: 'Success', data: { reports, count } });
   } catch (error) {
