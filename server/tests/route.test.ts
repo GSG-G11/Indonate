@@ -439,7 +439,7 @@ describe('get admin/campaign/donor/:campaignId', () => {
       is_admin: false,
     };
     const response = await request(app)
-      .get(`/api/admin/campaign/donors/${campaignId}`)
+      .get(`/api/admin/campaign/${campaignId}/donors`)
       .set('Cookie', [
         'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
       ]).expect(200);
@@ -450,7 +450,7 @@ describe('get admin/campaign/donor/:campaignId', () => {
   test('campaign id dose not a number', async () => {
     const campaignId = 'w';
     const response = await request(app)
-      .get(`/api/admin/campaign/donors/${campaignId}`)
+      .get(`/api/admin/campaign/${campaignId}/donors`)
       .set('Cookie', [
         'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
       ]).expect(400);
@@ -459,7 +459,7 @@ describe('get admin/campaign/donor/:campaignId', () => {
   test('Unauthorized user', async () => {
     const campaignId = 3;
     const response = await request(app)
-      .get(`/api/admin/campaign/donors/${campaignId}`).expect(401);
+      .get(`/api/admin/campaign/${campaignId}/donors`).expect(401);
     expect(response.body.message).toBe('Unauthorized user');
   });
 });

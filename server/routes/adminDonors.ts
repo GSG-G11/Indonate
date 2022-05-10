@@ -4,6 +4,6 @@ import { authUser, authAdmin } from '../middlewares';
 
 const adminDonors = Router();
 
-adminDonors.get('/campaign/donors/:id', authUser, authAdmin, getDonorsByCampaignId);
+adminDonors.get('/campaign/:id/donors', authUser, authAdmin, getDonorsByCampaignId);
 
 export default adminDonors;
