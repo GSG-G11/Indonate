@@ -6,7 +6,7 @@ const getDonorsByCampaignId = async (req: Request, res: Response, next: NextFunc
   try {
     const { page = 1 } = req.query;
     const { id } = await paramsSchema.validateAsync(req.params);
-    const donors = await Donor.findAndCountAll({
+    const { count, rows: donors } = await Donor.findAndCountAll({
       offset: (+page - 1) * 6,
       limit: 6,
       include: {
@@ -17,7 +17,7 @@ const getDonorsByCampaignId = async (req: Request, res: Response, next: NextFunc
         exclude: ['password', 'createdAt', 'updatedAt'],
       },
     });
-    res.json({ message: 'Success', data: donors });
+    res.json({ message: 'Success', data: { count, donors } });
   } catch (error) {
     if (error.name === 'ValidationError') next(new CustomError(error.details[0].message, 400));
     next(error);

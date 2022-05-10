@@ -426,7 +426,7 @@ describe('GET/campaigns', () => {
     expect(response.body.data.campaigns).toEqual([]);
   });
 });
-describe('get admin/campaign/donor/:campaignId', () => {
+describe('get admin/campaign/:campaignId/donor', () => {
   test('get data successfully', async () => {
     const campaignId = 3;
     const donor = {
@@ -443,7 +443,7 @@ describe('get admin/campaign/donor/:campaignId', () => {
       .set('Cookie', [
         'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
       ]).expect(200);
-    expect(response.body.data.rows[0]).toMatchObject(donor);
+    expect(response.body.data.donors[0]).toMatchObject(donor);
     expect(response.body.message).toBe('Success');
   });
 
@@ -460,6 +460,98 @@ describe('get admin/campaign/donor/:campaignId', () => {
     const campaignId = 3;
     const response = await request(app)
       .get(`/api/admin/campaign/${campaignId}/donors`).expect(401);
+    expect(response.body.message).toBe('Unauthorized user');
+  });
+});
+describe('POST /api/admin/family', () => {
+  test('case: succeeded | added successfully', async () => {
+    const response = await request(app)
+      .post('/api/admin/family')
+      .send({
+        name: 'mohammed',
+        phone: '0599522660',
+        address: 'Gaza',
+      }).set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
+      ])
+      .expect(201);
+    expect(response.body.message).toBe('Family added successfully');
+  });
+  test('case: Failed | phone is used', async () => {
+    const response = await request(app)
+      .post('/api/admin/family')
+      .send({
+        name: 'mohammed',
+        phone: '0599888620',
+        address: 'Gaza',
+      }).set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
+      ])
+      .expect(400);
+    expect(response.body.message).toBe('Phone is used, Try another one.');
+  });
+  test('case: Failed | "address" does not exist', async () => {
+    const response = await request(app)
+      .post('/api/admin/family')
+      .send({
+        name: 'mohammed',
+        phone: '0599888622',
+      }).set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
+      ])
+      .expect(400);
+    expect(response.body.message).toBe('"address" is required');
+  });
+  test('case: Failed | Unauthorized user', async () => {
+    const response = await request(app)
+      .post('/api/admin/family')
+      .send({
+        name: 'mohammed',
+        phone: '0599888622',
+        address: 'Gaza',
+      })
+      .expect(401);
+    expect(response.body.message).toBe('Unauthorized user');
+  });
+});
+
+describe('DELETE /api/admin/donor/:donorId', () => {
+  test('case: succeeded | Deleted successfully', async () => {
+    const donorId = 2;
+    const response = await request(app)
+      .delete(`/api/admin/donor/${donorId}`)
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
+      ])
+      .expect(200);
+    expect(response.body.message).toBe('Donor deleted successfully');
+  });
+
+  test('case: Failed | id does not exist', async () => {
+    const donorId = 10;
+    const response = await request(app)
+      .delete(`/api/admin/donor/${donorId}`)
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
+      ])
+      .expect(400);
+    expect(response.body.message).toBe('The donor you are trying to delete does not exist');
+  });
+  test('case: Failed | id is not a number', async () => {
+    const donorId = 'w';
+    const response = await request(app)
+      .delete(`/api/admin/donor/${donorId}`)
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
+      ])
+      .expect(400);
+    expect(response.body.message).toBe('"id" must be a number');
+  });
+  test('case: Failed | Unauthorized user', async () => {
+    const donorId = 2;
+    const response = await request(app)
+      .delete(`/api/admin/donor/${donorId}`)
+      .expect(401);
     expect(response.body.message).toBe('Unauthorized user');
   });
 });

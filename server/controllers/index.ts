@@ -7,8 +7,8 @@ import getAllCategories from './categories/getAllCategories';
 import reports from './reports/addReport';
 import getCampaignById from './campaigns/getCampaignById';
 import addDonation from './donations/addDonation';
-import getDonorsByCampaignId from './admin';
 import getStatistics from './statistics/getStatistics';
+import { deleteDonorById, addFamily, getDonorsByCampaignId } from './admin';
 
 export {
   login,
@@ -22,4 +22,6 @@ export {
   addDonation,
   getDonorsByCampaignId,
   getStatistics,
+  deleteDonorById,
+  addFamily,
 };
