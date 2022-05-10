@@ -17,6 +17,10 @@ const getAllFamilies = async (req: Request, res: Response, next: NextFunction) =
         [sequelize.fn('sum', sequelize.col('capons.food')), 'food'],
       ],
       group: ['families.id'],
+      order: [
+        ['id', 'DESC'],
+        ['name', 'ASC'],
+      ],
     });
 
     res.json(families);
