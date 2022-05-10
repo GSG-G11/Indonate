@@ -1,3 +1,7 @@
 import addFamily from './families/addFamily';
+import deleteFamilyById from './families/deleteFamilyById';
 
-export default addFamily;
+export {
+  addFamily,
+  deleteFamilyById,
+};

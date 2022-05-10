@@ -515,7 +515,7 @@ describe('DELETE /api/admin/family/:id', () => {
       ])
       .expect(400);
     expect(response.body.message).toEqual(
-      "The family you are trying to delete doesn't exist",
+      'The family you are trying to delete does not exist',
     );
   });
   test('Delete family <Authorized admin> <Not valid id param>', async () => {

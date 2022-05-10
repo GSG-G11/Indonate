@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
-import { Family } from '../../database/models';
-import { CustomError, paramsSchema } from '../../utils';
+import { Family } from '../../../database/models';
+import { CustomError, paramsSchema } from '../../../utils';
 
 const deleteFamilyById = async (
   req: Request,
@@ -17,7 +17,7 @@ const deleteFamilyById = async (
     });
     if (!deletedFamily) {
       throw new CustomError(
-        "The family you are trying to delete doesn't exist",
+        'The family you are trying to delete does not exist',
         400,
       );
     } else {
