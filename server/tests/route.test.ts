@@ -426,6 +426,57 @@ describe('GET /campaigns', () => {
     expect(response.body.data.campaigns).toEqual([]);
   });
 });
+describe('POST /api/admin/family', () => {
+  test('case: succeeded | added successfully', async () => {
+    const response = await request(app)
+      .post('/api/admin/family')
+      .send({
+        name: 'mohammed',
+        phone: '0599522660',
+        address: 'Gaza',
+      }).set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
+      ])
+      .expect(201);
+    expect(response.body.message).toBe('Family added successfully');
+  });
+  test('case: Failed | phone is used', async () => {
+    const response = await request(app)
+      .post('/api/admin/family')
+      .send({
+        name: 'mohammed',
+        phone: '0599888620',
+        address: 'Gaza',
+      }).set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
+      ])
+      .expect(400);
+    expect(response.body.message).toBe('Phone is used, Try another one.');
+  });
+  test('case: Failed | "address" does not exist', async () => {
+    const response = await request(app)
+      .post('/api/admin/family')
+      .send({
+        name: 'mohammed',
+        phone: '0599888622',
+      }).set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
+      ])
+      .expect(400);
+    expect(response.body.message).toBe('"address" is required');
+  });
+  test('case: Failed | Unauthorized user', async () => {
+    const response = await request(app)
+      .post('/api/admin/family')
+      .send({
+        name: 'mohammed',
+        phone: '0599888622',
+        address: 'Gaza',
+      })
+      .expect(401);
+    expect(response.body.message).toBe('Unauthorized user');
+  });
+});
 
 describe('GET /admin/reports', () => {
   test('Get all reports  <Unauthorized user>', async () => {

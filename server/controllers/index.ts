@@ -8,6 +8,7 @@ import reports from './reports/addReport';
 import getCampaignById from './campaigns/getCampaignById';
 import addDonation from './donations/addDonation';
 import getReports from './reports/getReports';
+import addFamily from './admin';
 import getStatistics from './statistics/getStatistics';
 
 export {
@@ -21,5 +22,6 @@ export {
   checkUser,
   addDonation,
   getReports,
+  addFamily,
   getStatistics,
 };
