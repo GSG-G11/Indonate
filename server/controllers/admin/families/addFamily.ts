@@ -10,7 +10,7 @@ const addFamily = async (req: Request, res: Response, next: NextFunction) => {
       where: { phone },
     });
     if (checkPhone) {
-      throw new CustomError('phone is used try another one', 400);
+      throw new CustomError('Phone is used, Try another one.', 400);
     }
     await Family.create(familyInfo);
     res.status(201).json({ message: 'Family added successfully' });

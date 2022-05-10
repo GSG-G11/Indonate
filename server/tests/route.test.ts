@@ -451,7 +451,7 @@ describe('POST /api/admin/family', () => {
         'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
       ])
       .expect(400);
-    expect(response.body.message).toBe('phone is used try another one');
+    expect(response.body.message).toBe('Phone is used, Try another one.');
   });
   test('case: Failed | "address" does not exist', async () => {
     const response = await request(app)
