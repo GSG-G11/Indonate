@@ -2,9 +2,12 @@ import { Request, Response, NextFunction } from 'express';
 import {
   Capon, Family, sequelize,
 } from '../../database/models';
+import { CustomError, paramsSchema } from '../../utils';
 
 const getAllFamilies = async (req: Request, res: Response, next: NextFunction) => {
   try {
+    const page = await paramsSchema.validateAsync(req.query);
+    console.log(page);
     const families = await Family.findAll({
       include: [{
         model: Capon,
@@ -21,10 +24,13 @@ const getAllFamilies = async (req: Request, res: Response, next: NextFunction) =
         ['id', 'DESC'],
         ['name', 'ASC'],
       ],
-    });
 
-    res.json(families);
+    });
+    res.json({ message: 'Success', data: { families } });
   } catch (e) {
+    if (e.name === 'ValidationError') {
+      next(new CustomError(e.message, 401));
+    }
     next(e);
   }
 };
