@@ -4,7 +4,6 @@ import querySchema from './querySchema';
 import paramsSchema from './paramsSchema';
 import reportsSchema from './reportsSchema';
 import donationSchema from './donationSchema';
-import pageSchema from './pageSchema';
 
 export {
   loginSchema,
@@ -13,5 +12,4 @@ export {
   reportsSchema,
   donationSchema,
   querySchema,
-  pageSchema,
 };

@@ -2,15 +2,14 @@ import { Request, Response, NextFunction } from 'express';
 import {
   Capon, Family, sequelize,
 } from '../../database/models';
-import { CustomError, pageSchema } from '../../utils';
+import { CustomError, querySchema } from '../../utils';
 
 const getAllFamilies = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { page = 1 }:any = await pageSchema.validateAsync(req.query);
+    const { page = 1 }:any = await querySchema.validateAsync(req.query);
     const families = await Family.findAll({
-
-      offset: (+page - 1) * 1,
-      limit: 1,
+      limit: 10,
+      offset: (+page - 1) * 10,
       include: [{
         duplicating: false,
         model: Capon,
@@ -34,7 +33,6 @@ const getAllFamilies = async (req: Request, res: Response, next: NextFunction) =
     if (e.name === 'ValidationError') {
       next(new CustomError(e.message, 401));
     }
-    console.log(e);
     next(e);
   }
 };

@@ -6,7 +6,6 @@ import {
   paramsSchema,
   reportsSchema,
   querySchema,
-  pageSchema,
 } from './validation';
 
 export {
@@ -18,5 +17,4 @@ export {
   reportsSchema,
   querySchema,
   verifyToken,
-  pageSchema,
 };
