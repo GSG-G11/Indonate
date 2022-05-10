@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
 import {
   Capon, Family, sequelize,
-} from '../../database/models';
-import { CustomError, querySchema } from '../../utils';
+} from '../../../database/models';
+import { CustomError, querySchema } from '../../../utils';
 
 const getAllFamilies = async (req: Request, res: Response, next: NextFunction) => {
   try {

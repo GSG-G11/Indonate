@@ -6,6 +6,7 @@ import {
   paramsSchema,
   reportsSchema,
   querySchema,
+  familySchema,
 } from './validation';
 
 export {
@@ -17,4 +18,5 @@ export {
   reportsSchema,
   querySchema,
   verifyToken,
+  familySchema,
 };
