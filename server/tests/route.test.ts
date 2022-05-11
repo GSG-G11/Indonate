@@ -686,6 +686,52 @@ describe('DELETE/admin/reports/id', () => {
     expect(response.body.message).toBe('The report does not exist');
   });
 });
+describe('PATCH/api/admin/campaign/id', () => {
+  test('edit campaign exist', async () => {
+    const response = await request(app).patch('/api/admin/campaign/3')
+      .send({
+        title: 'summer clothes collection',
+        description: 'This campaign aims to help poor families to heat their homes in the winter by collecting clothes from donors or buying new clothes from financial donations',
+        categoryId: 2,
+        food_target: 0,
+        clothes_target: 800,
+        money_target: 0,
+        image_link: 'https://media.voltron.alhurra.com/Drupal/01live-116/styles/sourced/s3/2019-12/AFC8DF4B-8C6D-4968-87B2-CEAFD63DED97.jpg?itok=Y3YypJNm',
+        is_available: false,
+      }).set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUyMTIxODI0LCJleHAiOjE2NTQ3MTM4MjR9.Ue8JhWn8jAgLNzUdoHiWZAXoRtF5vooY3itRjw1yjyM',
+      ]);
+    expect(200);
+    expect(response.body.data.campaign).toEqual({
+      title: 'summer clothes collection',
+      description: 'This campaign aims to help poor families to heat their homes in the winter by collecting clothes from donors or buying new clothes from financial donations',
+      categoryId: 2,
+      food_target: 0,
+      clothes_target: 800,
+      money_target: 0,
+      image_link: 'https://media.voltron.alhurra.com/Drupal/01live-116/styles/sourced/s3/2019-12/AFC8DF4B-8C6D-4968-87B2-CEAFD63DED97.jpg?itok=Y3YypJNm',
+      is_available: false,
+    });
+  });
+  test('edit campaign exist not exist', async () => {
+    const response = await request(app).patch('/api/admin/campaign/6')
+      .send({
+        title: 'summer clothes collection',
+        description: 'This campaign aims to help poor families to heat their homes in the winter by collecting clothes from donors or buying new clothes from financial donations',
+        categoryId: 2,
+        food_target: 0,
+        clothes_target: 800,
+        money_target: 0,
+        image_link: 'https://media.voltron.alhurra.com/Drupal/01live-116/styles/sourced/s3/2019-12/AFC8DF4B-8C6D-4968-87B2-CEAFD63DED97.jpg?itok=Y3YypJNm',
+        is_available: false,
+      }).set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUyMTIxODI0LCJleHAiOjE2NTQ3MTM4MjR9.Ue8JhWn8jAgLNzUdoHiWZAXoRtF5vooY3itRjw1yjyM',
+      ]);
+
+    expect(200);
+    expect(response.body.message).toBe('Fail to update');
+  });
+});
 afterAll(() => {
   connection.close();
 });

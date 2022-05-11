@@ -14,7 +14,7 @@ const updateCampaign = async (req:Request, res:Response, next:NextFunction) => {
     if (!result[0]) {
       throw new CustomError('Fail to update', 400);
     }
-    res.json({ message: 'Success', data: { Campaign: campaignData } });
+    res.json({ message: 'Success', data: { campaign: campaignData } });
   } catch (error) {
     if (error.name === 'ValidationError') next(new CustomError(error.message, 400));
     next(error);
