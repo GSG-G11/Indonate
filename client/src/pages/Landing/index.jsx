@@ -5,12 +5,14 @@ import {
   OurMission,
   ReportsForm,
   Review,
+  LatestCampaigns,
 } from '../../components';
 
 const Landing = () => (
   <>
     <HeaderLandingPage />
     <OurMission />
+    <LatestCampaigns />
     <Review />
     <ReportsForm />
     <Footer />

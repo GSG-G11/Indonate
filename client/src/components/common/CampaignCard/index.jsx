@@ -49,7 +49,6 @@ const CampaignCard = ({
           />
           <Text type="secondary">
             {description.slice(0, 90)}
-            {' '}
             know more ...
           </Text>
           <DonationButton campaignId={id} isAvailable={isAvailable} />

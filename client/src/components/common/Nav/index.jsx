@@ -39,7 +39,7 @@ const Nav = () => {
   const userItem = [
     {
       label: (
-        <NavLink to="/signUp">
+        <NavLink to="/signup">
           <Button type="primary">Sign Up</Button>
         </NavLink>
       ),
@@ -55,7 +55,7 @@ const Nav = () => {
   const guestItem = [
     {
       label: (
-        <NavLink to="/logout">
+        <NavLink to="/">
           <Button onClick={logoutFun} className="btn" type="primary">
             Logout
           </Button>

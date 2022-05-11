@@ -1,44 +1,32 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-// import { useNavigate } from 'react-router-dom';
-import { GoogleOutlined } from '@ant-design/icons';
-
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import {
-  Form,
-  Button,
-  Input,
   message,
   Space,
   Typography,
+  Anchor,
+  Form,
+  Input,
+  Button,
 } from 'antd';
-
 import { sign } from '../../redux/feature/user/userSlice';
 import './style.less';
 
 const { Password } = Input;
 const { Item } = Form;
-const { Title } = Typography;
+const { Link } = Anchor;
+
+const { Title, Text } = Typography;
 
 const Signup = () => {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [userInfo, setUserInfo] = useState({
     name: '', email: '', password: '', phone: '', address: 'Gaza',
   });
 
-  const register = async () => {
-    try {
-      const { data: { data } } = await axios.post('/api/signup', userInfo);
-      dispatch(sign(data));
-      // navigate('/');// home page
-      message.success(`Welcome ${data.name}`);
-    } catch ({ response: { data: { message: errorMessage } } }) {
-      message.error({
-        content: errorMessage,
-      });
-    }
-  };
   const passwordValidation = () => ({
     validator(_, value) {
       if (value.length >= 6) {
@@ -59,16 +47,32 @@ const Signup = () => {
   const handleChange = ({ target: { name, value } }) => {
     setUserInfo({ ...userInfo, [name]: value });
   };
+
+  const register = async () => {
+    try {
+      const { data: { data } } = await axios.post('/api/signup', userInfo);
+      dispatch(sign(data));
+      navigate('/');
+      message.success(`Welcome ${data.name}`);
+    } catch ({ response: { data: { message: errorMessage } } }) {
+      message.error({
+        content: errorMessage,
+      });
+    }
+  };
+
   return (
     <div className="sign-up-container">
       <div className="img-side-sign-up">
+
         <Title
+          className="custom-header-text"
           level={3}
         >
           Subscribe with us to make yourself a contributor to charity and help people in need.
         </Title>
       </div>
-      <div className="form-container-signup">
+      <div className="form-conatainer-signup">
         <Space
           className="space-component"
           direction="horizontal"
@@ -77,7 +81,7 @@ const Signup = () => {
           <Title
             level={2}
           >
-            Sign Up
+            REGISTER
           </Title>
           <Form
             className="Form-sign-up"
@@ -100,6 +104,7 @@ const Signup = () => {
                 onChange={(e) => handleChange(e)}
               />
             </Item>
+
             <Item
               name="email"
               rules={[
@@ -142,6 +147,7 @@ const Signup = () => {
                 onChange={(e) => handleChange(e)}
               />
             </Item>
+
             <Item
               name="password"
               rules={[
@@ -171,12 +177,21 @@ const Signup = () => {
               <Password placeholder="Confirm password" />
             </Item>
             <Button className="sign-up-btn" type="primary" htmlType="submit">
-              Sign Up
+              Sign up
             </Button>
           </Form>
-          <Button type="primary" icon={<GoogleOutlined />}>
-            Login with Google
-          </Button>
+          <div className="register_option">
+            <Text>Already have an account ?</Text>
+            <Anchor affix={false}>
+              <Link
+                href="/login"
+                title="Sign In"
+              />
+            </Anchor>
+          </div>
+          <button type="button" className="login-with-google-btn">
+            Sign in with Google
+          </button>
         </Space>
       </div>
     </div>
