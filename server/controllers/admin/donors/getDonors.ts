@@ -1,9 +1,9 @@
 import { NextFunction, Request, Response } from 'express';
 import {
   Donation, Donor, sequelize,
-} from '../../database/models';
-import { CustomError } from '../../utils';
-import { donorsQuerySchema } from '../../utils/validation';
+} from '../../../database/models';
+import { CustomError } from '../../../utils';
+import { donorsQuerySchema } from '../../../utils/validation';
 
 const getDonors = async (req:Request, res:Response, next:NextFunction) => {
   try {

@@ -2,7 +2,7 @@ import sequelize from '../config/connection';
 import Donor from './donor';
 import Family from './family';
 import Donation from './donation';
-import Contact from './contact';
+import Report from './report';
 import Category from './category';
 import Campaign from './campaign';
 import Capon from './capon';
@@ -27,7 +27,7 @@ export {
   Donor,
   Family,
   Donation,
-  Contact,
+  Report,
   Category,
   Campaign,
   Capon,

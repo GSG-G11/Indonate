@@ -5,6 +5,7 @@ import paramsSchema from './paramsSchema';
 import reportsSchema from './reportsSchema';
 import donationSchema from './donationSchema';
 import donorsQuerySchema from './donorsQuerySchema';
+import familySchema from './familySchema';
 
 export {
   donorsQuerySchema,
@@ -14,5 +15,5 @@ export {
   reportsSchema,
   donationSchema,
   querySchema,
-
+  familySchema,
 };
