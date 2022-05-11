@@ -6,5 +6,5 @@ const reportsRouter = Router();
 
 reportsRouter.route('/reports').post(reports);
 reportsRouter.route('/admin/reports').get(authUser, authAdmin, getReports);
-reportsRouter.delete('/admin/reports/:id', deleteReports);
+reportsRouter.delete('/admin/report/:id', authUser, authAdmin, deleteReports);
 export default reportsRouter;
