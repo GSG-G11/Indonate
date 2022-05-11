@@ -668,7 +668,24 @@ describe('DELETE /api/admin/donor/:donorId', () => {
     expect(response.body.message).toBe('Unauthorized user');
   });
 });
-
+describe('DELETE/admin/reports/id', () => {
+  test('delete report that exist', async () => {
+    const response = await request(app).delete('/api/admin/report/3')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUyMTIxODI0LCJleHAiOjE2NTQ3MTM4MjR9.Ue8JhWn8jAgLNzUdoHiWZAXoRtF5vooY3itRjw1yjyM',
+      ]);
+    expect(200);
+    expect(response.body.message).toBe('Report deleted successfuly');
+  });
+  test('delete report that does not exist', async () => {
+    const response = await request(app).delete('/api/admin/report/10')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUyMTIxODI0LCJleHAiOjE2NTQ3MTM4MjR9.Ue8JhWn8jAgLNzUdoHiWZAXoRtF5vooY3itRjw1yjyM',
+      ]);
+    expect(400);
+    expect(response.body.message).toBe('The report does not exist');
+  });
+});
 afterAll(() => {
   connection.close();
 });
