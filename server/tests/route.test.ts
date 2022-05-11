@@ -678,7 +678,7 @@ describe('DELETE/admin/reports/id', () => {
     expect(response.body.message).toBe('Report deleted successfuly');
   });
   test('delete report that does not exist', async () => {
-    const response = await request(app).delete('/api/admin/report/10')
+    const response = await request(app).delete('/api/admin/report/9')
       .set('Cookie', [
         'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUyMTIxODI0LCJleHAiOjE2NTQ3MTM4MjR9.Ue8JhWn8jAgLNzUdoHiWZAXoRtF5vooY3itRjw1yjyM',
       ]);
