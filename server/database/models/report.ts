@@ -1,7 +1,7 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '../config/connection';
 
-const Contact = sequelize.define('contacts', {
+const Reports = sequelize.define('reports', {
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
@@ -21,4 +21,4 @@ const Contact = sequelize.define('contacts', {
   },
 });
 
-export default Contact;
+export default Reports;
