@@ -668,6 +668,32 @@ describe('DELETE /api/admin/donor/:donorId', () => {
     expect(response.body.message).toBe('Unauthorized user');
   });
 });
+describe('GET /api/families/campaigns/:id', () => {
+  test('unauthorized admin', async () => {
+    const response = await request(app)
+      .get('/api/admin/families/campaigns/1');
+    expect(400);
+    expect(response.body.message).toBe('Unauthorized user');
+  });
+  test('params id must be number', async () => {
+    const response = await request(app)
+      .get('/api/admin/families/campaigns/string')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
+      ]);
+    expect(400);
+    expect(response.body.message).toBe('"id" must be a number');
+  });
+  test('family doesnt exist', async () => {
+    const response = await request(app)
+      .get('/api/admin/families/campaigns/500')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
+      ]);
+    expect(400);
+    expect(response.body.message).toBe("Family doesn't exist");
+  });
+});
 
 afterAll(() => {
   connection.close();
