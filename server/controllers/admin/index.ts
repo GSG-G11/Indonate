@@ -1,3 +1,4 @@
+import deleteReports from '../reports/deleteReports';
 import getDonorsByCampaignId from './campaign/getDonorsByCampaignId';
 import deleteDonorById from './donors/deleteDonorById';
 import addFamily from './families/addFamily';
@@ -10,4 +11,5 @@ export {
   addFamily,
   getDonorsByCampaignId,
   editFamily,
+  deleteReports,
 };
