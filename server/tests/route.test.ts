@@ -719,6 +719,22 @@ describe('/GET/api/admin/donors', () => {
       },
     ]);
   });
+  test('get donors with limit and page', async () => {
+    const response = await request(app)
+      .get('/api/admin/donors?limit=1&page=2')
+      .expect(200);
+    expect(response.body.data.donors)
+      .toEqual([{
+        id: 4,
+        name: 'sami',
+        email: 'sami@gmail.com',
+        address: 'Gaza',
+        phone: '0599848610',
+        totalFood: '40',
+        totalMoney: '400',
+        totalClothes: '40',
+      }]);
+  });
 });
 
 afterAll(() => {
