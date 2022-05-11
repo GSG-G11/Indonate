@@ -669,6 +669,37 @@ describe('DELETE /api/admin/donor/:donorId', () => {
   });
 });
 
+describe('GET/admin/donor/campaigns/:id', () => {
+  test('get campaigns for donor that have id 1', async () => {
+    const response = await request(app).get('/api/admin/donor/campagins/1')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
+      ]);
+    expect(200);
+    expect(response.body.data.campaigns.campaigns).toEqual([{
+      title: 'Helping poor families',
+    },
+    {
+      title: 'winter clothes collection',
+    }]);
+  });
+  test('get campaings for donor id not exist', async () => {
+    const response = await request(app).get('/api/admin/donor/campagins/20')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
+      ]);
+    expect(400);
+    expect(response.body.message).toBe('There is no donor');
+  });
+  test('get campaings for Authorized user', async () => {
+    const response = await request(app).get('/api/admin/donor/campagins/1')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IkFobWVkIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTY1MjExOTI4OSwiZXhwIjoxNjU0NzExMjg5fQ.WNuAaN7EcIrUx7RV2EMj_E46vbRP4FU5e8vsjMcwCpY',
+      ]);
+    expect(401);
+    expect(response.body.message).toBe('Unauthorized admin');
+  });
+});
 afterAll(() => {
   connection.close();
 });
