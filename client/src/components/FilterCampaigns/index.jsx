@@ -30,11 +30,8 @@ const FilterCampaigns = ({ setCategory, setAvailable, setSearch }) => {
         const name = categoriesFromDB?.map((item) => (item.name));
         setCategories(['List All', ...name]);
         setLoading(false);
-      } catch (error) {
-        if (error.message) {
-          const { response: { data: { message: errorMessage } } } = error;
-          message.error(errorMessage);
-        }
+      } catch ({ response: { data: { message: errorMessage } } }) {
+        message.error(errorMessage);
       }
     };
     fetchData();

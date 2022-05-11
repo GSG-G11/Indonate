@@ -25,11 +25,8 @@ const DisplayCampaigns = () => {
         setTotalCount(count);
         setCampaigns(campaignsFromDB);
         setLoading(false);
-      } catch (e) {
-        if (e.message) {
-          const { response: { data: { message: errorMessage } } } = e;
-          message.error(errorMessage);
-        }
+      } catch ({ response: { data: { message: errorMessage } } }) {
+        message.error(errorMessage);
       }
     };
     fetchData();
