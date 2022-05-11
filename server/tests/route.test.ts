@@ -674,6 +674,9 @@ describe('/GET/api/admin/donors', () => {
   test('get donors', async () => {
     const response = await request(app)
       .get('/api/admin/donors')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
+      ])
       .expect(200);
     expect(response.body.data.donors).toEqual([
 
@@ -722,6 +725,9 @@ describe('/GET/api/admin/donors', () => {
   test('get donors with limit and page', async () => {
     const response = await request(app)
       .get('/api/admin/donors?limit=1&page=2')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
+      ])
       .expect(200);
     expect(response.body.data.donors)
       .toEqual([{
