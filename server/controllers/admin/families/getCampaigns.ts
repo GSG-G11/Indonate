@@ -5,17 +5,9 @@ import { CustomError, paramsSchema } from '../../../utils';
 const getCampagins = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { id } = await paramsSchema.validateAsync(req.params);
-
-    const response = await Family.findAll({
-      where: { id },
-      attributes: ['id'],
-      include: [
-        {
-          model: Campaign,
-          attributes: ['id', 'title'],
-          through: { attributes: [] },
-        },
-      ],
+    const response = await Campaign.findAll({
+      attributes: ['title'],
+      include: { model: Family, attributes: [], where: { id } },
     });
     if (!response.length) {
       throw new CustomError("Family doesn't exist", 400);

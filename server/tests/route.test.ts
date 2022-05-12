@@ -703,13 +703,7 @@ describe('GET /api/families/campaigns/:id', () => {
       message: 'Success',
       data: [
         {
-          id: 4,
-          campaigns: [
-            {
-              id: 3,
-              title: 'summer clothes collection',
-            },
-          ],
+          title: 'summer clothes collection',
         },
       ],
     });
