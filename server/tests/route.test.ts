@@ -536,6 +536,51 @@ describe('POST /api/admin/family', () => {
   });
 });
 
+describe('GET /admin/campaigns?page=<number>', () => {
+  test('Get all reports  <Unauthorized user>', async () => {
+    const response = await request(app).get('/api/admin/campaigns').expect(401);
+    expect(response.body.message).toEqual('Unauthorized user');
+  });
+  test('Get all reports  <Unauthorized admin>', async () => {
+    const response = await request(app)
+      .get('/api/admin/campaigns')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmFtZSI6IkFobWVkIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTY1MTk5OTY3OSwiZXhwIjoxNjU0NTkxNjc5fQ.Z0Tq0XxGNbQ72J4BRAp06Qo6xYq41jb59-5uRK1JfuA',
+      ])
+      .expect(401);
+    expect(response.body.message).toEqual('Unauthorized admin');
+  });
+  test('Get all reports  <Authorized admin> <page 1>', async () => {
+    const response = await request(app)
+      .get('/api/admin/campaigns?page=1')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
+      ])
+      .expect(200);
+    expect(response.body.data.campaigns.length).toEqual(5);
+    expect(response.body.data.count).toEqual(5);
+  });
+  test('Get all reports  <Authorized admin> <page 2>', async () => {
+    const response = await request(app)
+      .get('/api/admin/campaigns?page=2')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
+      ])
+      .expect(200);
+    expect(response.body.data.campaigns.length).toEqual(0);
+    expect(response.body.data.count).toEqual(5);
+  });
+  test('Get all reports  <Authorized admin> <not valid page>', async () => {
+    const response = await request(app)
+      .get('/api/admin/campaigns?page=a')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
+      ])
+      .expect(401);
+    expect(response.body.message).toBe('"page" must be a number');
+  });
+});
+
 describe('GET /admin/reports', () => {
   test('Get all reports  <Unauthorized user>', async () => {
     const response = await request(app).get('/api/admin/reports').expect(401);
