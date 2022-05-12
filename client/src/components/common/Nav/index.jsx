@@ -6,7 +6,7 @@ import {
 } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import './style.less';
-import logo from '../../../assets/images/footer-logo.svg';
+import logo from '../../../assets/images/indonate-logo.svg';
 
 import { logout } from '../../../redux/feature/user/userSlice';
 
