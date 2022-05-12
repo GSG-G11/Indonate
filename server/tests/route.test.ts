@@ -693,6 +693,27 @@ describe('GET /api/families/campaigns/:id', () => {
     expect(400);
     expect(response.body.message).toBe("Family doesn't exist");
   });
+  test('get family campaigns', async () => {
+    const response = await request(app)
+      .get('/api/admin/families/campaigns/4')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
+      ]);
+    expect(response.body).toEqual({
+      message: 'Success',
+      data: [
+        {
+          id: 4,
+          campaigns: [
+            {
+              id: 3,
+              title: 'summer clothes collection',
+            },
+          ],
+        },
+      ],
+    });
+  });
 });
 
 afterAll(() => {

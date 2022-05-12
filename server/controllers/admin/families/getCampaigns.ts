@@ -13,8 +13,8 @@ const getCampagins = async (req: Request, res: Response, next: NextFunction) => 
         {
           model: Campaign,
           attributes: ['id', 'title'],
+          through: { attributes: [] },
         },
-
       ],
     });
     if (!response.length) {
