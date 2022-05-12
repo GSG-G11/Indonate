@@ -5,10 +5,12 @@ import {
   getStatistics,
 } from '../controllers';
 import getCampaigns from '../controllers/campaigns/getCampaigns';
+import { createCampaign } from '../controllers/admin';
+
 import { authAdmin, authUser } from '../middlewares';
 
 const campaignRouter = Router();
-
+campaignRouter.post('/admin/campaigns', authUser, authAdmin, createCampaign);
 campaignRouter.get('/campaigns', getFilteredCampaign);
 campaignRouter.get('/admin/campaigns', authUser, authAdmin, getCampaigns);
 campaignRouter.route('/campaign/:id').get(getCampaignById);
