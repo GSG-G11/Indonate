@@ -19,7 +19,7 @@ const { Item } = Form;
 const { Link } = Anchor;
 const { Title, Text } = Typography;
 
-function Login() {
+const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -83,20 +83,29 @@ function Login() {
               name="email"
               rules={[
                 {
-                  type: 'email',
-                  message: 'The input is not valid E-mail!',
+                  required: true,
+                  message: 'Please input your email!',
                 },
                 {
-                  required: true,
-                  message: 'Please input your E-mail!',
+                  type: 'email',
+                  message: 'The input is not valid E-mail!',
+
+                },
+                {
+                  max: 250,
+                  message: 'Value should be less than 250 character',
+                },
+                {
+                  min: 4,
+                  message: 'Value should be more than 4 character',
                 },
               ]}
             >
               <Input
                 name="email"
-                placeholder="Email"
                 onChange={(e) => handleChange(e)}
               />
+
             </Item>
 
             <Item
@@ -135,6 +144,5 @@ function Login() {
       </div>
     </div>
   );
-}
-
+};
 export default Login;

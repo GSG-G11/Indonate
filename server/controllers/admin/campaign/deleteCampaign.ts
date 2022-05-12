@@ -12,7 +12,6 @@ const deleteCampaign = async (req: Request, res: Response, next: NextFunction) =
       throw new CustomError("Campaign doesn't exist", 400);
     }
     res.json({ message: 'Campaign deleted successfully' });
-    next();
   } catch (e) {
     if (e.name === 'ValidationError') {
       next(new CustomError(e.message, 400));
