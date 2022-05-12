@@ -668,6 +668,47 @@ describe('DELETE /api/admin/donor/:donorId', () => {
     expect(response.body.message).toBe('Unauthorized user');
   });
 });
+describe('PATCH /api/admin/donors/:id', () => {
+  test('success update donor', async () => {
+    const response = await request(app)
+      .patch('/api/admin/donors/3')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUyMTIxODI0LCJleHAiOjE2NTQ3MTM4MjR9.Ue8JhWn8jAgLNzUdoHiWZAXoRtF5vooY3itRjw1yjyM',
+      ])
+      .send({
+        name: 'New Name',
+        email: 'email@gmail.com',
+        phone: '123456789',
+        address: 'New Location',
+      })
+      .expect(200);
+    expect(response.body.message).toEqual('Donor updated successfully');
+  });
+  test('failed updating donor', async () => {
+    const response = await request(app)
+      .patch('/api/admin/donors/2')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUyMTIxODI0LCJleHAiOjE2NTQ3MTM4MjR9.Ue8JhWn8jAgLNzUdoHiWZAXoRtF5vooY3itRjw1yjyM',
+      ])
+      .expect(400);
+    expect(response.body.message).toEqual('Update donor failed');
+  });
+  test('id must be a number', async () => {
+    const response = await request(app)
+      .patch('/api/admin/donors/string')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUyMTIxODI0LCJleHAiOjE2NTQ3MTM4MjR9.Ue8JhWn8jAgLNzUdoHiWZAXoRtF5vooY3itRjw1yjyM',
+      ])
+      .expect(400);
+    expect(response.body.message).toEqual('"id" must be a number');
+  });
+  test('Unauthorized user', async () => {
+    const response = await request(app)
+      .patch('/api/admin/donors/string')
+      .expect(401);
+    expect(response.body.message).toBe('Unauthorized user');
+  });
+});
 
 afterAll(() => {
   connection.close();
