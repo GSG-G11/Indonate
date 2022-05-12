@@ -11,7 +11,7 @@ const { TextArea } = Input;
 const { Title, Paragraph } = Typography;
 const { Item } = Form;
 
-function ReportsForm() {
+const ReportsForm = () => {
   const [form] = Form.useForm();
 
   const addReport = async ({ name, email, reportMsg }) => {
@@ -107,6 +107,6 @@ function ReportsForm() {
       </div>
     </Container>
   );
-}
+};
 
 export default ReportsForm;

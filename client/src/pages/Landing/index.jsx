@@ -8,17 +8,15 @@ import {
   LatestCampaigns,
 } from '../../components';
 
-function Landing() {
-  return (
-    <>
-      <HeaderLandingPage />
-      <OurMission />
-      <LatestCampaigns />
-      <Review />
-      <ReportsForm />
-      <Footer />
-    </>
-  );
-}
+const Landing = () => (
+  <>
+    <HeaderLandingPage />
+    <OurMission />
+    <LatestCampaigns />
+    <Review />
+    <ReportsForm />
+    <Footer />
+  </>
+);
 
 export default Landing;
