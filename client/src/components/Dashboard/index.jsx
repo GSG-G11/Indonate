@@ -18,7 +18,7 @@ const {
 } = Layout;
 const { Item } = Menu;
 
-function Dashboard() {
+const Dashboard = () => {
   const user = useSelector((state) => state.user);
   const [collapsed, setCollapsed] = useState(false);
   const onCollapse = (collapse) => {
@@ -74,6 +74,6 @@ function Dashboard() {
       </Layout>
     </Layout>
   ) : <Navigate to="/" />);
-}
+};
 
 export default Dashboard;
