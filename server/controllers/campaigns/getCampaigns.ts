@@ -24,6 +24,7 @@ const getCampaigns = async (
         'image_link',
         'is_available',
         'categoryId',
+
         [sequelize.fn('SUM', sequelize.col('donations.food')), 'current_food'],
         [
           sequelize.fn('SUM', sequelize.col('donations.money')),
@@ -40,6 +41,7 @@ const getCampaigns = async (
         duplicating: false,
         attributes: [],
       },
+      order: [['updatedAt', 'DESC']],
     });
     res.json({ message: 'Success', data: { campaigns, count: count.length } });
   } catch (error) {
