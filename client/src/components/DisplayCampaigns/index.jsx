@@ -5,7 +5,7 @@ import FilterCampaigns from '../FilterCampaigns';
 import Cards from '../CampaignList';
 import './style.css';
 
-function DisplayCampaigns() {
+const DisplayCampaigns = () => {
   const [campaigns, setCampaigns] = useState([]);
   const [search, setSearch] = useState('');
   const [category, setCategory] = useState('');
@@ -13,6 +13,7 @@ function DisplayCampaigns() {
   const [page, setPage] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
   const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     const source = axios.CancelToken.source();
     const { token } = source;
@@ -25,9 +26,7 @@ function DisplayCampaigns() {
         setCampaigns(campaignsFromDB);
         setLoading(false);
       } catch ({ response: { data: { message: errorMessage } } }) {
-        message.error({
-          content: errorMessage,
-        });
+        message.error(errorMessage);
       }
     };
     fetchData();
@@ -60,6 +59,6 @@ function DisplayCampaigns() {
 
     </div>
   );
-}
+};
 
 export default DisplayCampaigns;
