@@ -27,9 +27,9 @@ const { donors } = donorModule;
 const { donations } = donationModule;
 
 const buildFakeData = async () => {
-  // await sequelize.sync({ force: true });
+  await sequelize.sync({ force: true });
   await Promise.all([
-    /* categories.map(async (category: any) => {
+    categories.map(async (category: any) => {
       await Category.create(category);
     }),
     campaigns.map(async (campaign: any) => {
@@ -47,7 +47,7 @@ const buildFakeData = async () => {
     }),
     donations.map(async (donation: any) => {
       await Donation.create(donation);
-    }), */
+    }),
     capons.map(async (capon: any) => {
       await Capon.create(capon);
     }),

@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { Campaign, Capon, Family } from '../../../database/models';
+import { Campaign, Capon } from '../../../database/models';
 import { CustomError, paramsSchema } from '../../../utils';
 
 const postCampaignFamilies = async (req:Request, res:Response, next:NextFunction) => {
