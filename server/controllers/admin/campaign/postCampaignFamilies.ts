@@ -1,20 +1,33 @@
 import { NextFunction, Request, Response } from 'express';
-import { Campaign } from '../../../database/models';
+import { Campaign, Capon, Family } from '../../../database/models';
 import { CustomError, paramsSchema } from '../../../utils';
 
 const postCampaignFamilies = async (req:Request, res:Response, next:NextFunction) => {
   try {
     const { params: { id: campaignId } } = req;
+    const {
+      body: {
+        id: familiesId,
+        food,
+        clothes,
+        money,
+      },
+    } = req;
     await paramsSchema.validateAsync(req.params);
-    const result = await Campaign.update({ is_available: false }, { where: { campaignId } });
+    const result = await Campaign.update({ is_available: false }, { where: { id: campaignId } });
     if (!result[0]) throw new CustomError('Update campaigns failed', 400);
-    res.json(result);
+    await Promise.all(JSON.parse(familiesId).map(async (familyId:any) => {
+      await Capon.create({
+        campaignId, familyId, food, clothes, money,
+      });
+    }));
+    res.json({ message: 'Success' });
   } catch (error) {
     if (error.name === 'ValidationError') {
       next(new CustomError(error.message, 400));
     }
-    console.log(error);
     next(error);
+    console.log(error);
   }
 };
 export default postCampaignFamilies;
