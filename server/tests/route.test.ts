@@ -668,10 +668,10 @@ describe('DELETE /api/admin/donor/:donorId', () => {
     expect(response.body.message).toBe('Unauthorized user');
   });
 });
-describe('PATCH /api/admin/donors/:id', () => {
+describe('PATCH /api/admin/donor/:id', () => {
   test('success update donor', async () => {
     const response = await request(app)
-      .patch('/api/admin/donors/3')
+      .patch('/api/admin/donor/3')
       .set('Cookie', [
         'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUyMTIxODI0LCJleHAiOjE2NTQ3MTM4MjR9.Ue8JhWn8jAgLNzUdoHiWZAXoRtF5vooY3itRjw1yjyM',
       ])
@@ -686,7 +686,7 @@ describe('PATCH /api/admin/donors/:id', () => {
   });
   test('failed updating donor', async () => {
     const response = await request(app)
-      .patch('/api/admin/donors/2')
+      .patch('/api/admin/donor/2')
       .set('Cookie', [
         'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUyMTIxODI0LCJleHAiOjE2NTQ3MTM4MjR9.Ue8JhWn8jAgLNzUdoHiWZAXoRtF5vooY3itRjw1yjyM',
       ])
@@ -695,7 +695,7 @@ describe('PATCH /api/admin/donors/:id', () => {
   });
   test('id must be a number', async () => {
     const response = await request(app)
-      .patch('/api/admin/donors/string')
+      .patch('/api/admin/donor/string')
       .set('Cookie', [
         'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUyMTIxODI0LCJleHAiOjE2NTQ3MTM4MjR9.Ue8JhWn8jAgLNzUdoHiWZAXoRtF5vooY3itRjw1yjyM',
       ])
@@ -704,7 +704,7 @@ describe('PATCH /api/admin/donors/:id', () => {
   });
   test('Unauthorized user', async () => {
     const response = await request(app)
-      .patch('/api/admin/donors/string')
+      .patch('/api/admin/donor/string')
       .expect(401);
     expect(response.body.message).toBe('Unauthorized user');
   });
