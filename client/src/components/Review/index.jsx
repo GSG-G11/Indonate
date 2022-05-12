@@ -29,14 +29,12 @@ const comments = [
   },
 ];
 
-function Review() {
-  return (
-    <div className="review-comment">
-      {comments.map((comment) => (
-        <Comment key={comment.id} comment={comment} />
-      ))}
-    </div>
-  );
-}
+const Review = () => (
+  <div className="review-comment">
+    {comments.map((comment) => (
+      <Comment key={comment.id} comment={comment} />
+    ))}
+  </div>
+);
 
 export default Review;
