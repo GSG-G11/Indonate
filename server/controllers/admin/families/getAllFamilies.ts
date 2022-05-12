@@ -6,10 +6,10 @@ import { CustomError, querySchema } from '../../../utils';
 
 const getAllFamilies = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { page = 1 }:any = await querySchema.validateAsync(req.query);
-    const families = await Family.findAll({
-      limit: 10,
-      offset: (+page - 1) * 10,
+    const { page = 1 }: any = await querySchema.validateAsync(req.query);
+    const { rows, count } = await Family.findAndCountAll({
+      limit: 15,
+      offset: (+page - 1) * 15,
       include: [{
         duplicating: false,
         model: Capon,
@@ -28,12 +28,12 @@ const getAllFamilies = async (req: Request, res: Response, next: NextFunction) =
       ],
 
     });
-    res.json({ message: 'Success', data: { families } });
-  } catch (e) {
-    if (e.name === 'ValidationError') {
-      next(new CustomError(e.message, 401));
+    res.json({ message: 'Success', data: { families: rows, count: count.length } });
+  } catch (error) {
+    if (error.name === 'ValidationError') {
+      next(new CustomError(error.message, 401));
     }
-    next(e);
+    next(error);
   }
 };
 

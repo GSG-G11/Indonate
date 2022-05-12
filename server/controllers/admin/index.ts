@@ -3,6 +3,7 @@ import deleteDonorById from './donors/deleteDonorById';
 import getAllFamilies from './families/getAllFamilies';
 import addFamily from './families/addFamily';
 import deleteFamilyById from './families/deleteFamilyById';
+import editFamily from './family/editFamily';
 
 export {
   deleteFamilyById,
@@ -10,4 +11,5 @@ export {
   addFamily,
   getDonorsByCampaignId,
   getAllFamilies,
+  editFamily,
 };
