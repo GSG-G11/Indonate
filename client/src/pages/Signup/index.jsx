@@ -20,7 +20,7 @@ const { Link } = Anchor;
 
 const { Title, Text } = Typography;
 
-function Signup() {
+const Signup = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [userInfo, setUserInfo] = useState({
@@ -116,6 +116,14 @@ function Signup() {
                   required: true,
                   message: 'Please input your E-mail!',
                 },
+                {
+                  max: 250,
+                  message: 'Value should be less than 250 character',
+                },
+                {
+                  min: 4,
+                  message: 'Value should be more than 4 character',
+                },
               ]}
             >
               <Input
@@ -188,6 +196,6 @@ function Signup() {
       </div>
     </div>
   );
-}
+};
 
 export default Signup;

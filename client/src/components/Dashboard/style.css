@@ -1,0 +1,15 @@
+.dashboard-layout {
+  min-height: 100vh; 
+}
+
+.dashboard {
+  display: block;
+}
+
+.site-layout-background {
+  padding: 0;
+}
+
+.dashboard-content {
+  margin: 0 16px;
+}

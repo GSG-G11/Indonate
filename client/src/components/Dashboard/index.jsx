@@ -11,6 +11,7 @@ import {
   TeamOutlined,
   UserOutlined,
 } from '@ant-design/icons';
+import './style.css';
 
 const {
   Header, Sider, Content,
@@ -25,11 +26,11 @@ function Dashboard() {
   };
   return user.isUserAuthorized && (user.userData?.isAdmin ? (
     <Layout
-      style={{ minHeight: '100vh' }}
+      className="dashboard-layout"
     >
       <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
         <div className="logo">InDonate</div>
-        <div style={{ display: 'block' }}>
+        <div className="dashboard">
           <Menu
             theme="light"
             defaultSelectedKeys={['1']}
@@ -66,9 +67,8 @@ function Dashboard() {
       <Layout className="site-layout">
         <Header
           className="site-layout-background"
-          style={{ padding: 0 }}
         />
-        <Content style={{ margin: '0 16px' }}>
+        <Content className="dashboard-content">
           <Outlet />
         </Content>
       </Layout>

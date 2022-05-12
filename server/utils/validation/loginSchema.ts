@@ -6,7 +6,7 @@ const loginSchema = Joi.object({
     .min(4)
     .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } })
     .required(),
-  password: Joi.string().max(50).min(3).required(),
+  password: Joi.string().max(50).min(6).required(),
 });
 
 export default loginSchema;
