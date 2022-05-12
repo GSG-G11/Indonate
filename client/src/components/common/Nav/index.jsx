@@ -11,7 +11,7 @@ import { logout } from '../../../redux/feature/user/userSlice';
 
 const { Header } = Layout;
 
-function Nav() {
+const Nav = () => {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const logoutFun = async () => {
@@ -55,7 +55,7 @@ function Nav() {
   const guestItem = [
     {
       label: (
-        <NavLink to="/logout">
+        <NavLink to="/">
           <Button onClick={logoutFun} className="btn" type="primary">
             Logout
           </Button>
@@ -90,6 +90,6 @@ function Nav() {
       </Layout>
     </div>
   );
-}
+};
 
 export default Nav;

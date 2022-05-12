@@ -43,7 +43,6 @@ const getCampaigns = async (
     });
     res.json({ message: 'Success', data: { campaigns, count: count.length } });
   } catch (error) {
-    console.log(error);
     if (error.name === 'ValidationError') {
       next(new CustomError(error.message, 401));
     }
