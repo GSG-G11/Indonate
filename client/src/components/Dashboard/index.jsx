@@ -12,6 +12,7 @@ import {
   UserOutlined,
 } from '@ant-design/icons';
 import './style.css';
+import Donors from '../Donors';
 
 const {
   Header, Sider, Content,
@@ -49,7 +50,7 @@ const Dashboard = () => {
             <Item>
               <UserOutlined />
               <span>Donors</span>
-              <Link to="/admin/donors" />
+              <Link to="/admin/donors" element={Donors} />
             </Item>
             <Item>
               <TeamOutlined />
