@@ -748,6 +748,49 @@ describe('DELETE /api/admin/donor/:donorId', () => {
     expect(response.body.message).toBe('Unauthorized user');
   });
 });
+describe('GET /api/families/campaigns/:id', () => {
+  test('unauthorized admin', async () => {
+    const response = await request(app)
+      .get('/api/admin/family/1/campaigns');
+    expect(400);
+    expect(response.body.message).toBe('Unauthorized user');
+  });
+  test('params id must be number', async () => {
+    const response = await request(app)
+      .get('/api/admin/family/string/campaigns')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
+      ]);
+    expect(400);
+    expect(response.body.message).toBe('"id" must be a number');
+  });
+  test('family doesnt exist', async () => {
+    const response = await request(app)
+      .get('/api/admin/family/500/campaigns')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
+      ]);
+    expect(400);
+    expect(response.body.data).toEqual([]);
+  });
+  test('get family campaigns', async () => {
+    const response = await request(app)
+      .get('/api/admin/family/4/campaigns')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
+      ]);
+    expect(response.body).toEqual({
+      message: 'Success',
+      data: [
+        {
+          id: 3,
+          title: 'summer clothes collection',
+        },
+      ],
+    });
+  });
+});
+
 describe('POST /api/admin/campaigns', () => {
   test('unauthorized admin', async () => {
     const response = await request(app).post('/api/admin/campaigns')
