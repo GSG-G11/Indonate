@@ -10,8 +10,7 @@ import './style.less';
 
 const { Title, Text } = Typography;
 const { Link } = Anchor;
-
-function latestCampaigns() {
+const latestCampaigns = () => {
   const [campaigns, setCampaigns] = useState([]);
   const navigate = useNavigate();
   useEffect(() => {
@@ -89,6 +88,6 @@ function latestCampaigns() {
       </div>
     </section>
   );
-}
+};
 
 export default latestCampaigns;

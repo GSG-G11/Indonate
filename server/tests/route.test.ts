@@ -64,7 +64,7 @@ describe('POST/login', () => {
       })
       .expect(400);
     expect(response.body.message).toBe(
-      '"password" length must be at least 3 characters long',
+      '"password" length must be at least 6 characters long',
     );
   });
 
@@ -536,6 +536,51 @@ describe('POST /api/admin/family', () => {
   });
 });
 
+describe('GET /admin/campaigns?page=<number>', () => {
+  test('Get all reports  <Unauthorized user>', async () => {
+    const response = await request(app).get('/api/admin/campaigns').expect(401);
+    expect(response.body.message).toEqual('Unauthorized user');
+  });
+  test('Get all reports  <Unauthorized admin>', async () => {
+    const response = await request(app)
+      .get('/api/admin/campaigns')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmFtZSI6IkFobWVkIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTY1MTk5OTY3OSwiZXhwIjoxNjU0NTkxNjc5fQ.Z0Tq0XxGNbQ72J4BRAp06Qo6xYq41jb59-5uRK1JfuA',
+      ])
+      .expect(401);
+    expect(response.body.message).toEqual('Unauthorized admin');
+  });
+  test('Get all reports  <Authorized admin> <page 1>', async () => {
+    const response = await request(app)
+      .get('/api/admin/campaigns?page=1')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
+      ])
+      .expect(200);
+    expect(response.body.data.campaigns.length).toEqual(5);
+    expect(response.body.data.count).toEqual(5);
+  });
+  test('Get all reports  <Authorized admin> <page 2>', async () => {
+    const response = await request(app)
+      .get('/api/admin/campaigns?page=2')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
+      ])
+      .expect(200);
+    expect(response.body.data.campaigns.length).toEqual(0);
+    expect(response.body.data.count).toEqual(5);
+  });
+  test('Get all reports  <Authorized admin> <not valid page>', async () => {
+    const response = await request(app)
+      .get('/api/admin/campaigns?page=a')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
+      ])
+      .expect(401);
+    expect(response.body.message).toBe('"page" must be a number');
+  });
+});
+
 describe('GET /admin/reports', () => {
   test('Get all reports  <Unauthorized user>', async () => {
     const response = await request(app).get('/api/admin/reports').expect(401);
@@ -671,13 +716,13 @@ describe('DELETE /api/admin/donor/:donorId', () => {
 describe('GET /api/families/campaigns/:id', () => {
   test('unauthorized admin', async () => {
     const response = await request(app)
-      .get('/api/admin/families/campaigns/1');
+      .get('/api/admin/family/1/campaigns');
     expect(400);
     expect(response.body.message).toBe('Unauthorized user');
   });
   test('params id must be number', async () => {
     const response = await request(app)
-      .get('/api/admin/families/campaigns/string')
+      .get('/api/admin/family/string/campaigns')
       .set('Cookie', [
         'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
       ]);
@@ -686,16 +731,16 @@ describe('GET /api/families/campaigns/:id', () => {
   });
   test('family doesnt exist', async () => {
     const response = await request(app)
-      .get('/api/admin/families/campaigns/500')
+      .get('/api/admin/family/500/campaigns')
       .set('Cookie', [
         'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
       ]);
     expect(400);
-    expect(response.body.message).toBe("Family doesn't exist");
+    expect(response.body.data).toEqual([]);
   });
   test('get family campaigns', async () => {
     const response = await request(app)
-      .get('/api/admin/families/campaigns/4')
+      .get('/api/admin/family/4/campaigns')
       .set('Cookie', [
         'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
       ]);
@@ -710,6 +755,63 @@ describe('GET /api/families/campaigns/:id', () => {
   });
 });
 
+describe('POST /api/admin/campaigns', () => {
+  test('unauthorized admin', async () => {
+    const response = await request(app).post('/api/admin/campaigns')
+      .expect(401);
+    expect(response.body.message).toBe('Unauthorized user');
+  });
+  test('missing column categoryId', async () => {
+    const response = await request(app).post('/api/admin/campaigns')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
+      ])
+      .send({
+        title: 'campaign title',
+        description: 'campaign description',
+        food_target: 500,
+        clothes_target: 500,
+        money_target: 500,
+        image_link: 'link to an img',
+      })
+      .expect(400);
+    expect(response.body.message).toBe('"categoryId" is required');
+  });
+  test('title as number', async () => {
+    const response = await request(app).post('/api/admin/campaigns')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
+      ])
+      .send({
+        title: 1,
+        description: 'campaign description',
+        food_target: 500,
+        clothes_target: 500,
+        money_target: 500,
+        image_link: 'link to an img',
+        categoryId: 1,
+      })
+      .expect(400);
+    expect(response.body.message).toBe('"title" must be a string');
+  });
+  test('add new campaign', async () => {
+    const response = await request(app).post('/api/admin/campaigns')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
+      ])
+      .send({
+        title: 'campaign title',
+        description: 'campaign description',
+        food_target: 500,
+        clothes_target: 500,
+        money_target: 500,
+        image_link: 'link to an img',
+        categoryId: 1,
+      })
+      .expect(201);
+    expect(response.body.message).toBe('Campaign added successfully');
+  });
+});
 afterAll(() => {
   connection.close();
 });

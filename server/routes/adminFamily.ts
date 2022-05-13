@@ -1,12 +1,12 @@
 import { Router } from 'express';
 import { addFamily, deleteFamilyById } from '../controllers';
-import getCampagins from '../controllers/admin/families/getCampaigns';
+import getCampaginsforFamily from '../controllers/admin/families/getCampaginsforFamily';
 import { authUser, authAdmin } from '../middlewares';
 
 const familyRouter = Router();
 
 familyRouter.post('/family', authUser, authAdmin, addFamily);
 familyRouter.delete('/family/:id', authUser, authAdmin, deleteFamilyById);
-familyRouter.get('/families/campaigns/:id', authUser, authAdmin, getCampagins);
+familyRouter.get('/family/:id/campaigns', authUser, authAdmin, getCampaginsforFamily);
 
 export default familyRouter;

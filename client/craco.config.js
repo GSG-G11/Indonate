@@ -16,6 +16,8 @@ module.exports = {
               '@radio-dot-color': '#EB743A',
               '@radio-button-hover-color': '#EB743A',
               '@radio-button-active-color': '#EB743A',
+              '@layout-trigger-background': '#469D62',
+              '@layout-trigger-color': '#fff;',
             },
             javascriptEnabled: true,
           },

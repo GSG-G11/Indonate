@@ -2,7 +2,7 @@ import { NextFunction, Response, Request } from 'express';
 import { Campaign, Family } from '../../../database/models';
 import { CustomError, paramsSchema } from '../../../utils';
 
-const getCampagins = async (req: Request, res: Response, next: NextFunction) => {
+const getCampaginsforFamily = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { id } = await paramsSchema.validateAsync(req.params);
     const response = await Campaign.findAll({
@@ -10,7 +10,7 @@ const getCampagins = async (req: Request, res: Response, next: NextFunction) => 
       include: { model: Family, attributes: [], where: { id } },
     });
     if (!response.length) {
-      throw new CustomError("Family doesn't exist", 400);
+      res.json({ message: 'Success', data: response });
     }
     res.json({ message: 'Success', data: response });
   } catch (e) {
@@ -21,4 +21,4 @@ const getCampagins = async (req: Request, res: Response, next: NextFunction) => 
   }
 };
 
-export default getCampagins;
+export default getCampaginsforFamily;
