@@ -320,7 +320,7 @@ describe('GET /statistics', () => {
     const {
       body: { data },
     } = await request(app).get('/api/statistics').expect(200);
-    expect(data).toStrictEqual({
+    expect(data).toEqual({
       FAMILIES: 5,
       MONEY: '1000',
       FOODS: '101',
@@ -425,6 +425,41 @@ describe('GET /campaigns', () => {
       .get('/api/campaigns?search=give people money&category=Education')
       .expect(200);
     expect(response.body.data.campaigns).toEqual([]);
+  });
+
+  describe('GET /api/admin/families', () => {
+    test('Unauthorized user admin', async () => {
+      const response = await request(app)
+        .get('/api/admin/families')
+        .expect(401);
+
+      expect(response.body.message).toEqual('Unauthorized user');
+    });
+    test('/?page validation error', async () => {
+      const response = await request(app)
+        .get('/api/admin/families/?page=string')
+        .set('Cookie', ['ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUyMjA5NTI0LCJleHAiOjE2NTQ4MDE1MjR9.LD0qUzAD_IdLqqkSrWPfs2JsBjruMIHgX06KUsIXEyY;'])
+        .expect(401);
+      expect(response.body.message).toEqual('"page" must be a number');
+    });
+
+    test('first page families', async () => {
+      const { body: { data: { families, count } } } = await request(app)
+        .get('/api/admin/families/?page=1')
+        .set('Cookie', ['ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUyMjA5NTI0LCJleHAiOjE2NTQ4MDE1MjR9.LD0qUzAD_IdLqqkSrWPfs2JsBjruMIHgX06KUsIXEyY;'])
+        .expect(200);
+      expect(families.length).toEqual(5);
+      expect(count).toEqual(5);
+      expect(families[0]).toEqual({
+        id: 5,
+        name: 'Ghazi',
+        phone: '0597086162',
+        address: 'Al Zahra',
+        clothes: null,
+        money: null,
+        food: null,
+      });
+    });
   });
 });
 
