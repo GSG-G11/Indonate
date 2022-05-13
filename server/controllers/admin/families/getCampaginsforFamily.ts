@@ -9,9 +9,6 @@ const getCampaginsforFamily = async (req: Request, res: Response, next: NextFunc
       attributes: ['title'],
       include: { model: Family, attributes: [], where: { id } },
     });
-    if (!response.length) {
-      res.json({ message: 'Success', data: response });
-    }
     res.json({ message: 'Success', data: response });
   } catch (e) {
     if (e.name === 'ValidationError') {
