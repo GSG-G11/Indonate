@@ -1,4 +1,4 @@
-import { Table/* , Typography */ } from 'antd';
+import { Table/* , Typography */, Tooltip } from 'antd';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { WhatsAppOutlined } from '@ant-design/icons';
@@ -7,15 +7,70 @@ import './style.css';
 const DonorsForCampaignTable = () => {
   const [donors, setDonors] = useState();
   const donorColumns = [
-    { title: 'Name', dataIndex: 'name', ellipsis: false },
-    { title: 'Decription', dataIndex: 'description', ellipsis: false },
-    { title: 'Food', dataIndex: 'food', ellipsis: false },
-    { title: 'Clothes', dataIndex: 'clothes', ellipsis: false },
-    { title: 'Money', dataIndex: 'money', ellipsis: false },
-    { title: 'Deliver time', dataIndex: 'deliverTime', ellipsis: false },
-    { title: 'Location', dataIndex: 'location', ellipsis: false },
     {
-      title: 'action', data: 'action', ellipsis: false, render: () => <WhatsAppOutlined className="whatAppIcon" />,
+      title: 'Name',
+      dataIndex: 'name',
+      ellipsis: false,
+    },
+    {
+      title: 'Decription',
+      dataIndex: 'description',
+      ellipsis: true,
+
+      render: (description) => (
+        <Tooltip
+          placement="topLeft"
+          title={description}
+          color="#fff"
+          overlayInnerStyle={{ color: '#000' }}
+        >
+          {description}
+        </Tooltip>
+      ),
+    },
+    {
+      title: 'Food',
+      dataIndex: 'food',
+      ellipsis: false,
+    },
+    {
+      title: 'Clothes',
+      dataIndex: 'clothes',
+      ellipsis: false,
+    },
+    {
+      title: 'Money',
+      dataIndex: 'money',
+      ellipsis: false,
+    },
+    {
+      title: 'Deliver time',
+      dataIndex: 'deliverTime',
+      ellipsis: false,
+      render: (time) => (
+        time.split('T')[0]
+      ),
+    },
+    {
+      title: 'Location',
+      dataIndex: 'location',
+      ellipsis: true,
+      render: (location) => (
+        <Tooltip
+          placement="topLeft"
+          title={location}
+          color="#fff"
+          overlayInnerStyle={{ color: '#000' }}
+        >
+          {location}
+        </Tooltip>
+      ),
+    },
+    {
+      title: 'action',
+      data: 'action',
+      ellipsis: false,
+      render: () => <WhatsAppOutlined className="whatAppIcon" />,
     },
   ];
 
@@ -25,7 +80,7 @@ const DonorsForCampaignTable = () => {
         const { data: { data: { donors: donorsFromDB } } } = await axios.get('/api/admin/campaign/1/donors');
         donorsFromDB.push({
           id: 9,
-          name: 'sara',
+          name: 'sara shaqoura',
           phone: '0599888611',
           food: 10,
           money: 100,
@@ -84,7 +139,7 @@ const DonorsForCampaignTable = () => {
           deliverTime: '2020-02-01T22:00:00.000Z',
           location: 'Gaza',
         }, {
-          id: 12,
+          id: 5,
           name: 'hani',
           phone: '0599888611',
           food: 10,
@@ -94,7 +149,7 @@ const DonorsForCampaignTable = () => {
           deliverTime: '2020-02-01T22:00:00.000Z',
           location: 'Gaza',
         }, {
-          id: 13,
+          id: 6,
           name: 'Monhammed',
           phone: '0599888611',
           food: 10,
@@ -110,9 +165,9 @@ const DonorsForCampaignTable = () => {
           food: 10,
           money: 100,
           clothes: 10,
-          description: 'Just Donation',
-          deliverTime: '2020-02-01T22:00:00.000Z',
-          location: 'Gaza',
+          description: 'Just Donation Just Donation Just Donation Just Donation Just Donation',
+          deliverTime: '2020-02-01',
+          location: 'GazaGazaGazaGazaGazaGazaGazaGazaGazaGaza',
         });
         setDonors(donorsFromDB);
       } catch (error) {
