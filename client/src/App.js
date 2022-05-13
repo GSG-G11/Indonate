@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { Nav } from './components';
+import { DonorsForCampaignTable, Nav } from './components';
 import {
   Landing, Campaign, Login, Signup, Campaigns,
 } from './pages';
@@ -22,6 +22,7 @@ function App() {
         <Route path="/campaign/:id" element={<Campaign />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/table" element={<DonorsForCampaignTable />} />
       </Routes>
     </>
   );
