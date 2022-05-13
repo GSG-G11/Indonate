@@ -179,7 +179,7 @@ const DonorsForCampaignTable = () => {
   console.log(donors);
   return (
 
-    <div className="nested-table-section">
+    <div>
       <Table
         className="nested-table"
         dataSource={donors}
