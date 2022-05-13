@@ -6,7 +6,7 @@ const getCampaginsforFamily = async (req: Request, res: Response, next: NextFunc
   try {
     const { id } = await paramsSchema.validateAsync(req.params);
     const response = await Campaign.findAll({
-      attributes: ['title'],
+      attributes: ['id', 'title'],
       include: { model: Family, attributes: [], where: { id } },
     });
     res.json({ message: 'Success', data: response });
