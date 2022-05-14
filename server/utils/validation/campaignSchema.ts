@@ -7,8 +7,6 @@ const campaignSchema = Joi.object({
   clothes_target: Joi.number().required(),
   money_target: Joi.number().required(),
   image_link: Joi.string().required(),
-  is_available: Joi.boolean().required(),
   categoryId: Joi.number().required(),
-
 });
 export default campaignSchema;

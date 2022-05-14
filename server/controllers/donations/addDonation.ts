@@ -57,7 +57,6 @@ const addDonation = async (req: any, res: Response, next: NextFunction) => {
     if (error.name === 'ValidationError') {
       next(new CustomError(error.details[0].message, 400));
     } else {
-      console.log(error);
       next(error);
     }
   }

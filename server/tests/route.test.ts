@@ -697,7 +697,6 @@ describe('PATCH/api/admin/campaign/id', () => {
         clothes_target: 800,
         money_target: 0,
         image_link: 'https://media.voltron.alhurra.com/Drupal/01live-116/styles/sourced/s3/2019-12/AFC8DF4B-8C6D-4968-87B2-CEAFD63DED97.jpg?itok=Y3YypJNm',
-        is_available: false,
       }).set('Cookie', [
         'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUyMTIxODI0LCJleHAiOjE2NTQ3MTM4MjR9.Ue8JhWn8jAgLNzUdoHiWZAXoRtF5vooY3itRjw1yjyM',
       ]);
@@ -710,7 +709,6 @@ describe('PATCH/api/admin/campaign/id', () => {
       clothes_target: 800,
       money_target: 0,
       image_link: 'https://media.voltron.alhurra.com/Drupal/01live-116/styles/sourced/s3/2019-12/AFC8DF4B-8C6D-4968-87B2-CEAFD63DED97.jpg?itok=Y3YypJNm',
-      is_available: false,
     });
   });
   test('edit campaign exist not exist', async () => {
@@ -723,7 +721,6 @@ describe('PATCH/api/admin/campaign/id', () => {
         clothes_target: 800,
         money_target: 0,
         image_link: 'https://media.voltron.alhurra.com/Drupal/01live-116/styles/sourced/s3/2019-12/AFC8DF4B-8C6D-4968-87B2-CEAFD63DED97.jpg?itok=Y3YypJNm',
-        is_available: false,
       }).set('Cookie', [
         'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUyMTIxODI0LCJleHAiOjE2NTQ3MTM4MjR9.Ue8JhWn8jAgLNzUdoHiWZAXoRtF5vooY3itRjw1yjyM',
       ]);

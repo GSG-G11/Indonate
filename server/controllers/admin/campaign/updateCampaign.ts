@@ -1,7 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { Campaign } from '../../../database/models';
-import { CustomError, paramsSchema } from '../../../utils';
-import { campaignSchema } from '../../../utils/validation';
+import { CustomError, paramsSchema, campaignSchema } from '../../../utils';
 
 const updateCampaign = async (req:Request, res:Response, next:NextFunction) => {
   try {
