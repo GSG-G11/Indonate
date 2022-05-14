@@ -19,7 +19,7 @@ const { Item } = Form;
 const { Link } = Anchor;
 const { Title, Text } = Typography;
 
-function Login() {
+const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -39,12 +39,19 @@ function Login() {
   const handleChange = ({ target: { name, value } }) => {
     setUserInfo({ ...userInfo, [name]: value });
   };
+  const admin = () => {
+    navigate('/admin');
+  };
+  const home = () => {
+    navigate('/');
+  };
 
   const login = async () => {
     try {
       const { data: { data } } = await axios.post('/api/login', userInfo);
       dispatch(sign(data));
-      navigate('/');
+      if (data.isAdmin) admin();
+      else home();
       message.success(`Welcome back ${data.name}`);
     } catch ({ response: { data: { message: errorMessage } } }) {
       message.error({
@@ -83,20 +90,29 @@ function Login() {
               name="email"
               rules={[
                 {
-                  type: 'email',
-                  message: 'The input is not valid E-mail!',
+                  required: true,
+                  message: 'Please input your email!',
                 },
                 {
-                  required: true,
-                  message: 'Please input your E-mail!',
+                  type: 'email',
+                  message: 'The input is not valid E-mail!',
+
+                },
+                {
+                  max: 250,
+                  message: 'Value should be less than 250 character',
+                },
+                {
+                  min: 4,
+                  message: 'Value should be more than 4 character',
                 },
               ]}
             >
               <Input
                 name="email"
-                placeholder="Email"
                 onChange={(e) => handleChange(e)}
               />
+
             </Item>
 
             <Item
@@ -135,6 +151,5 @@ function Login() {
       </div>
     </div>
   );
-}
-
+};
 export default Login;

@@ -12,6 +12,7 @@ import getStatistics from './statistics/getStatistics';
 
 import {
   addFamily,
+  getAllFamilies,
   deleteFamilyById,
   deleteDonorById,
   getDonorsByCampaignId,
@@ -34,6 +35,7 @@ export {
   getDonorsByCampaignId,
   getReports,
   getStatistics,
+  getAllFamilies,
   deleteFamilyById,
   deleteDonorById,
   addFamily,
