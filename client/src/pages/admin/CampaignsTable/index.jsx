@@ -13,6 +13,7 @@ import {
   CloseCircleOutlined,
   DeleteOutlined,
   FileSearchOutlined,
+  UserAddOutlined,
 } from '@ant-design/icons';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
@@ -108,6 +109,13 @@ function CampaignsTable() {
           <FileSearchOutlined style={{ fontSize: '2.5rem' }} />
         </Popover>
       ),
+    },
+    {
+      title: 'Donors',
+      dataIndex: '',
+      align: 'center',
+      key: '',
+      render: () => <>View All ▼</>,
     },
     {
       title: 'Target',
@@ -224,6 +232,7 @@ function CampaignsTable() {
           >
             <CloseCircleOutlined style={{ fontSize: '2.5rem' }} />
           </Popconfirm>
+          <UserAddOutlined style={{ fontSize: '2.5rem', color: 'green' }} />
         </Space>
       ),
     },
