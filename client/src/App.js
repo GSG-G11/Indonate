@@ -22,8 +22,6 @@ function App() {
         <Route path="/campaign/:id" element={<Campaign />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
-<<<<<<< Updated upstream
-=======
         <Route path="/admin" element={<Dashboard />}>
           <Route path="overview" element={<h1>overview</h1>} />
           <Route path="campaigns" element={<CampaignsTable />} />
@@ -31,7 +29,6 @@ function App() {
           <Route path="families" element={<h1>families</h1>} />
           <Route path="reports" element={<h1>reports</h1>} />
         </Route>
->>>>>>> Stashed changes
       </Routes>
     </>
   );
