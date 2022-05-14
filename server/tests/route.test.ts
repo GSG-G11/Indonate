@@ -320,7 +320,7 @@ describe('GET /statistics', () => {
     const {
       body: { data },
     } = await request(app).get('/api/statistics').expect(200);
-    expect(data).toStrictEqual({
+    expect(data).toEqual({
       FAMILIES: 5,
       MONEY: '1000',
       FOODS: '101',
@@ -425,6 +425,41 @@ describe('GET /campaigns', () => {
       .get('/api/campaigns?search=give people money&category=Education')
       .expect(200);
     expect(response.body.data.campaigns).toEqual([]);
+  });
+
+  describe('GET /api/admin/families', () => {
+    test('Unauthorized user admin', async () => {
+      const response = await request(app)
+        .get('/api/admin/families')
+        .expect(401);
+
+      expect(response.body.message).toEqual('Unauthorized user');
+    });
+    test('/?page validation error', async () => {
+      const response = await request(app)
+        .get('/api/admin/families/?page=string')
+        .set('Cookie', ['ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUyMjA5NTI0LCJleHAiOjE2NTQ4MDE1MjR9.LD0qUzAD_IdLqqkSrWPfs2JsBjruMIHgX06KUsIXEyY;'])
+        .expect(401);
+      expect(response.body.message).toEqual('"page" must be a number');
+    });
+
+    test('first page families', async () => {
+      const { body: { data: { families, count } } } = await request(app)
+        .get('/api/admin/families/?page=1')
+        .set('Cookie', ['ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUyMjA5NTI0LCJleHAiOjE2NTQ4MDE1MjR9.LD0qUzAD_IdLqqkSrWPfs2JsBjruMIHgX06KUsIXEyY;'])
+        .expect(200);
+      expect(families.length).toEqual(5);
+      expect(count).toEqual(5);
+      expect(families[0]).toEqual({
+        id: 5,
+        name: 'Ghazi',
+        phone: '0597086162',
+        address: 'Al Zahra',
+        clothes: null,
+        money: null,
+        food: null,
+      });
+    });
   });
 });
 
@@ -713,6 +748,48 @@ describe('DELETE /api/admin/donor/:donorId', () => {
     expect(response.body.message).toBe('Unauthorized user');
   });
 });
+describe('GET /api/families/campaigns/:id', () => {
+  test('unauthorized admin', async () => {
+    const response = await request(app)
+      .get('/api/admin/family/1/campaigns');
+    expect(400);
+    expect(response.body.message).toBe('Unauthorized user');
+  });
+  test('params id must be number', async () => {
+    const response = await request(app)
+      .get('/api/admin/family/string/campaigns')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
+      ]);
+    expect(400);
+    expect(response.body.message).toBe('"id" must be a number');
+  });
+  test('family doesnt exist', async () => {
+    const response = await request(app)
+      .get('/api/admin/family/500/campaigns')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
+      ]);
+    expect(400);
+    expect(response.body.data).toEqual([]);
+  });
+  test('get family campaigns', async () => {
+    const response = await request(app)
+      .get('/api/admin/family/4/campaigns')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
+      ]);
+    expect(response.body).toEqual({
+      message: 'Success',
+      data: [
+        {
+          id: 3,
+          title: 'summer clothes collection',
+        },
+      ],
+    });
+  });
+});
 
 describe('DELETE /api/admin/campaigns/:id', () => {
   test('unauthorized user', async () => {
@@ -746,6 +823,63 @@ describe('DELETE /api/admin/campaigns/:id', () => {
   });
 });
 
+describe('POST /api/admin/campaigns', () => {
+  test('unauthorized admin', async () => {
+    const response = await request(app).post('/api/admin/campaigns')
+      .expect(401);
+    expect(response.body.message).toBe('Unauthorized user');
+  });
+  test('missing column categoryId', async () => {
+    const response = await request(app).post('/api/admin/campaigns')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
+      ])
+      .send({
+        title: 'campaign title',
+        description: 'campaign description',
+        food_target: 500,
+        clothes_target: 500,
+        money_target: 500,
+        image_link: 'link to an img',
+      })
+      .expect(400);
+    expect(response.body.message).toBe('"categoryId" is required');
+  });
+  test('title as number', async () => {
+    const response = await request(app).post('/api/admin/campaigns')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
+      ])
+      .send({
+        title: 1,
+        description: 'campaign description',
+        food_target: 500,
+        clothes_target: 500,
+        money_target: 500,
+        image_link: 'link to an img',
+        categoryId: 1,
+      })
+      .expect(400);
+    expect(response.body.message).toBe('"title" must be a string');
+  });
+  test('add new campaign', async () => {
+    const response = await request(app).post('/api/admin/campaigns')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
+      ])
+      .send({
+        title: 'campaign title',
+        description: 'campaign description',
+        food_target: 500,
+        clothes_target: 500,
+        money_target: 500,
+        image_link: 'link to an img',
+        categoryId: 1,
+      })
+      .expect(201);
+    expect(response.body.message).toBe('Campaign added successfully');
+  });
+});
 afterAll(() => {
   connection.close();
 });
