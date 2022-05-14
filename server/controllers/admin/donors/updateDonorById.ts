@@ -1,7 +1,6 @@
 import { NextFunction, Response, Request } from 'express';
 import { Donor } from '../../../database/models';
-import { CustomError, paramsSchema } from '../../../utils';
-import { donorSchema } from '../../../utils/validation';
+import { CustomError, paramsSchema, donorSchema } from '../../../utils';
 
 const updateDonorById = async (req: Request, res: Response, next: NextFunction) => {
   try {
