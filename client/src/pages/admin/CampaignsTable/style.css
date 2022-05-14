@@ -1,0 +1,9 @@
+.campaign-table-campaign-title {
+  font-weight: 900;
+  font-size: 1.6rem;
+  text-transform: capitalize;
+}
+#campaign-table-campaign-image img{
+  border-radius: 5px;
+  object-fit: cover;
+}

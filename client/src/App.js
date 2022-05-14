@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { Nav } from './components';
 import {
-  Landing, Campaign, Login, Signup, Campaigns,
+  Landing, Campaign, Login, Signup, Campaigns, CampaignsTable,
 } from './pages';
 import store from './redux/app/store';
 import 'antd/dist/antd.less';
@@ -22,6 +22,16 @@ function App() {
         <Route path="/campaign/:id" element={<Campaign />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
+<<<<<<< Updated upstream
+=======
+        <Route path="/admin" element={<Dashboard />}>
+          <Route path="overview" element={<h1>overview</h1>} />
+          <Route path="campaigns" element={<CampaignsTable />} />
+          <Route path="donors" element={<h1>donors</h1>} />
+          <Route path="families" element={<h1>families</h1>} />
+          <Route path="reports" element={<h1>reports</h1>} />
+        </Route>
+>>>>>>> Stashed changes
       </Routes>
     </>
   );
