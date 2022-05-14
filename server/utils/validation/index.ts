@@ -6,6 +6,7 @@ import reportsSchema from './reportsSchema';
 import donationSchema from './donationSchema';
 import familySchema from './familySchema';
 import familiesForCampaignSchema from './familiesForCampaignSchema';
+import campaignSchema from './campaignSchema';
 
 export {
   loginSchema,
@@ -16,4 +17,5 @@ export {
   querySchema,
   familySchema,
   familiesForCampaignSchema,
+  campaignSchema,
 };
