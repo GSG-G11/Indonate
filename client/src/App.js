@@ -8,6 +8,7 @@ import store from './redux/app/store';
 import 'antd/dist/antd.less';
 import './App.css';
 import { getUserData } from './redux/feature/user/userSlice';
+import Dashboard from './components/Dashboard';
 
 function App() {
   useEffect(() => {
@@ -25,6 +26,7 @@ function App() {
         <Route path="/admin" element={<Dashboard />}>
           <Route path="overview" element={<h1>overview</h1>} />
           <Route path="campaigns" element={<CampaignsTable />} />
+          <Route path="campaigns" element={<h1>campaigns</h1>} />
           <Route path="donors" element={<h1>donors</h1>} />
           <Route path="families" element={<h1>families</h1>} />
           <Route path="reports" element={<h1>reports</h1>} />
