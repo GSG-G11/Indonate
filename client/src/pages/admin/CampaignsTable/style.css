@@ -7,3 +7,10 @@
   border-radius: 5px;
   object-fit: cover;
 }
+#campaign-table-campaign-image{
+  height: 1pc !important;
+}
+.ant-table-thead > tr > th {
+  font-weight: bold !important;
+  font-size: 15px !important;
+}
