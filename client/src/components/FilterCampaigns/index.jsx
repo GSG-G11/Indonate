@@ -9,12 +9,12 @@ import {
   Skeleton,
 
 } from 'antd';
-import { CloseOutlined, CheckOutlined } from '@ant-design/icons';
 import './style.less';
 
 const { Search } = Input;
 const { Group, Button } = Radio;
-function FilterCampaigns({ setCategory, setAvailable, setSearch }) {
+
+const FilterCampaigns = ({ setCategory, setAvailable, setSearch }) => {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -27,11 +27,11 @@ function FilterCampaigns({ setCategory, setAvailable, setSearch }) {
         const { data: { data: { categories: categoriesFromDB } } } = await axios('/api/categories', {
           cancelToken: token,
         });
-        const name = categoriesFromDB.map((item) => (item.name));
+        const name = categoriesFromDB?.map((item) => (item.name));
         setCategories(['List All', ...name]);
         setLoading(false);
       } catch ({ response: { data: { message: errorMessage } } }) {
-        message.info(errorMessage);
+        message.error(errorMessage);
       }
     };
     fetchData();
@@ -59,15 +59,17 @@ function FilterCampaigns({ setCategory, setAvailable, setSearch }) {
 
         <div>
 
-          <Group onChange={handleCategoryChange} defaultValue="List All" buttonStyle="solid">
+          <Group
+            onChange={handleCategoryChange}
+            defaultValue="List All"
+            buttonStyle="solid"
+          >
             {categories.map((item) => (
               loading
                 ? (
-                  <div key={item}>
-                    <Skeleton.Button loading Button>
-                      <Button key={item} value={item}>{item}</Button>
-                    </Skeleton.Button>
-                  </div>
+                  <Skeleton.Button loading Button key={item}>
+                    <Button key={item} value={item}>{item}</Button>
+                  </Skeleton.Button>
                 )
                 : <Button key={item} value={item}>{item}</Button>
 
@@ -77,17 +79,16 @@ function FilterCampaigns({ setCategory, setAvailable, setSearch }) {
         <div>
           Available campaigns:
           <Switch
-            checkedChildren={<CheckOutlined />}
-            unCheckedChildren={<CloseOutlined />}
             defaultChecked
             onChange={handleAvailableChange}
           />
         </div>
 
       </div>
+
     </div>
   );
-}
+};
 FilterCampaigns.propTypes = {
   setCategory: PropTypes.func.isRequired,
   setSearch: PropTypes.func.isRequired,
