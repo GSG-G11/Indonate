@@ -791,6 +791,38 @@ describe('GET /api/families/campaigns/:id', () => {
   });
 });
 
+describe('DELETE /api/admin/campaigns/:id', () => {
+  test('unauthorized user', async () => {
+    const response = await request(app).delete('/api/admin/campaigns/1');
+    expect(401);
+    expect(response.body.message).toBe('Unauthorized user');
+  });
+  test('campaign id not a number', async () => {
+    const response = await request(app).delete('/api/admin/campaigns/string')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
+      ]);
+    expect(400);
+    expect(response.body.message).toBe('"id" must be a number');
+  });
+  test('campaign doesnt exist', async () => {
+    const response = await request(app).delete('/api/admin/campaigns/100')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
+      ]);
+    expect(400);
+    expect(response.body.message).toBe("Campaign doesn't exist");
+  });
+  test('campaign delete success', async () => {
+    const response = await request(app).delete('/api/admin/campaigns/2')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
+      ]);
+    expect(201);
+    expect(response.body.message).toBe('Campaign deleted successfully');
+  });
+});
+
 describe('POST /api/admin/campaigns', () => {
   test('unauthorized admin', async () => {
     const response = await request(app).post('/api/admin/campaigns')
