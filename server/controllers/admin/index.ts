@@ -3,6 +3,7 @@ import deleteCampaign from './campaign/deleteCampaign';
 import createCampaign from './campaign/createCampaign';
 import getDonorsByCampaignId from './campaign/getDonorsByCampaignId';
 import deleteDonorById from './donors/deleteDonorById';
+import getCampaignsForDonor from './donors/getDonorsCampaigns';
 import getDonors from './donors/getDonors';
 import getAllFamilies from './families/getAllFamilies';
 import addFamily from './families/addFamily';
@@ -19,6 +20,7 @@ export {
   getAllFamilies,
   createCampaign,
   editFamily,
+  getCampaignsForDonor,
   getDonors,
   deleteReports,
   getCampaginsforFamily,
