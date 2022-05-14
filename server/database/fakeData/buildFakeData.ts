@@ -43,7 +43,7 @@ const buildFakeData = async () => {
     }),
 
   ]);
-  await Promise.all(campaigns.map((campaign: any) => Campaign.create(campaign)));
+  await Promise.all(campaigns.map(async (campaign: any) => { await Campaign.create(campaign); }));
   await Promise.all([
     capons.map(async (capon: any) => {
       await Capon.create(capon);

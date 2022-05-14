@@ -2,13 +2,11 @@ import { NextFunction, Request, Response } from 'express';
 import {
   Donation, Donor, sequelize,
 } from '../../../database/models';
-import { CustomError } from '../../../utils';
-import { donorsQuerySchema } from '../../../utils/validation';
+import { CustomError, donorsQuerySchema } from '../../../utils';
 
 const getDonors = async (req:Request, res:Response, next:NextFunction) => {
   try {
-    const { page = 1, limit = 6 } = req.query;
-    await donorsQuerySchema.validateAsync(req.query);
+    const { page = 1, limit = 6 } = await donorsQuerySchema.validateAsync(req.query);
     const { rows: donors, count } = await Donor.findAndCountAll({
       offset: (+page - 1) * +limit,
       limit: +limit,
