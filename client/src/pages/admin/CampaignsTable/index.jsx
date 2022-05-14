@@ -1,9 +1,16 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import {
-  Button, Collapse, Image, Skeleton, Table, Popconfirm,
+  Button,
+  Collapse,
+  Image,
+  Skeleton,
+  Table,
+  Popconfirm,
+  Popover,
+  Space,
 } from 'antd';
-import { DeleteOutlined } from '@ant-design/icons';
+import { CloseCircleOutlined, DeleteOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import './style.css';
@@ -42,7 +49,10 @@ function CampaignsTable() {
       source.cancel();
     };
   }, []);
-
+  const handleDeleteCampaign = async (id) => {
+    setCampaigns(campaigns.filter((campaign) => campaign.id !== id));
+    const deleteCampaign = await axios.delete(`/api/admin/campaigns/1${id}`);
+  };
   return !isError ? (
     <div className="campaigns-table-container">
       {!isLoading ? (
@@ -78,14 +88,14 @@ function CampaignsTable() {
             dataIndex="description"
             key="description"
             render={(description) => (
-              <Collapse style={{ width: 300 }}>
-                <Panel
-                  style={{ width: 300 }}
-                  header={`${description.split(' ').slice(0, 6).join(' ')} ...`}
-                >
-                  <p>{description}</p>
-                </Panel>
-              </Collapse>
+              <>
+                {description.split(' ').slice(0, 6).join(' ')}
+                {' '}
+                ...
+                <Popover content={description} trigger="click">
+                  <Button type="link">Expand</Button>
+                </Popover>
+              </>
             )}
           />
           <Column
@@ -108,18 +118,30 @@ function CampaignsTable() {
             dataIndex=""
             key="x"
             render={(_, record) => (
-              <>
+              <Space>
                 <Popconfirm
                   title="Are you sure？"
+                  onConfirm={() => {
+                    handleDeleteCampaign(record.id);
+                  }}
                   okText="Yes"
                   cancelText="No"
+                  okType="danger"
                 >
-                  <DeleteOutlined style={{ fontSize: '2rem' }} />
+                  <DeleteOutlined style={{ fontSize: '2rem', color: 'red' }} />
                 </Popconfirm>
-                <Popconfirm title="Are you sure？" okText="Yes" cancelText="No">
-                  <DeleteOutlined style={{ fontSize: '2rem' }} />
+                <Popconfirm
+                  title="Are you sure？"
+                  onConfirm={() => {
+                    handleDeleteCampaign(record.id);
+                  }}
+                  okText="Yes"
+                  cancelText="No"
+                  okType="danger"
+                >
+                  <CloseCircleOutlined style={{ fontSize: '2rem' }} />
                 </Popconfirm>
-              </>
+              </Space>
             )}
           />
           <Column title="id" dataIndex="id" key="id" />
