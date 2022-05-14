@@ -53,7 +53,10 @@ const getCampaigns = async (
         duplicating: false,
         attributes: [],
       },
-      order: [['updatedAt', 'DESC']],
+      order: [
+        ['updatedAt', 'DESC'],
+        ['is_available', 'DESC'],
+      ],
     });
     res.json({ message: 'Success', data: { campaigns, count: count.length } });
   } catch (error) {
