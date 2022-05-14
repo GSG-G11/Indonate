@@ -32,10 +32,6 @@ const buildFakeData = async () => {
     categories.map(async (category: any) => {
       await Category.create(category);
     }),
-    campaigns.map(async (campaign: any) => {
-      await Campaign.create(campaign);
-    }),
-
     messages.map(async (message: any) => {
       await Report.create(message);
     }),
@@ -45,11 +41,15 @@ const buildFakeData = async () => {
     donors.map(async (donor: any) => {
       await Donor.create(donor);
     }),
-    donations.map(async (donation: any) => {
-      await Donation.create(donation);
-    }),
+
+  ]);
+  await Promise.all(campaigns.map((campaign: any) => Campaign.create(campaign)));
+  await Promise.all([
     capons.map(async (capon: any) => {
       await Capon.create(capon);
+    }),
+    donations.map(async (donation: any) => {
+      await Donation.create(donation);
     }),
   ]);
 };
