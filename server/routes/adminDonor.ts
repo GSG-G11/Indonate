@@ -5,6 +5,6 @@ import { authUser, authAdmin } from '../middlewares';
 const adminDonorRouter = Router();
 
 adminDonorRouter.route('/donor/:id').delete(authUser, authAdmin, deleteDonorById);
-adminDonorRouter.get('/donors', getDonors);
+adminDonorRouter.get('/donors', authUser, authAdmin, getDonors);
 
 export default adminDonorRouter;

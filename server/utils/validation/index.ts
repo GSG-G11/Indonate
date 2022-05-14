@@ -4,12 +4,10 @@ import querySchema from './querySchema';
 import paramsSchema from './paramsSchema';
 import reportsSchema from './reportsSchema';
 import donationSchema from './donationSchema';
-import donorsQuerySchema from './donorsQuerySchema';
 import familySchema from './familySchema';
 import campaignSchema from './campaignSchema';
 
 export {
-  donorsQuerySchema,
   loginSchema,
   signupSchema,
   paramsSchema,

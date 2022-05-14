@@ -7,7 +7,6 @@ import {
   reportsSchema,
   querySchema,
   familySchema,
-  donorsQuerySchema,
 } from './validation';
 
 export {
@@ -20,5 +19,5 @@ export {
   querySchema,
   verifyToken,
   familySchema,
-  donorsQuerySchema,
+
 };

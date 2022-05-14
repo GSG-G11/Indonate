@@ -864,6 +864,24 @@ describe('/GET/api/admin/donors', () => {
         totalClothes: '40',
       }]);
   });
+  test('get donors with limit and page', async () => {
+    const response = await request(app)
+      .get('/api/admin/donors?limit=f&page=2')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
+      ])
+      .expect(400);
+    expect(response.body.message).toBe('"limit" must be a number');
+  });
+  test('get donors with limit and page', async () => {
+    const response = await request(app)
+      .get('/api/admin/donors?limit=1&page=2')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmFtZSI6IkFobWVkIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTY1MTk5OTY3OSwiZXhwIjoxNjU0NTkxNjc5fQ.Z0Tq0XxGNbQ72J4BRAp06Qo6xYq41jb59-5uRK1JfuA',
+      ])
+      .expect(401);
+    expect(response.body.message).toBe('Unauthorized admin');
+  });
 });
 describe('POST /api/admin/campaigns', () => {
   test('unauthorized admin', async () => {
@@ -952,6 +970,24 @@ describe('DELETE /api/admin/campaigns/:id', () => {
       ]);
     expect(201);
     expect(response.body.message).toBe('Campaign deleted successfully');
+  });
+});
+describe('DELETE/admin/reports/id', () => {
+  test('delete report that exist', async () => {
+    const response = await request(app).delete('/api/admin/report/3')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUyMTIxODI0LCJleHAiOjE2NTQ3MTM4MjR9.Ue8JhWn8jAgLNzUdoHiWZAXoRtF5vooY3itRjw1yjyM',
+      ]);
+    expect(200);
+    expect(response.body.message).toBe('Report deleted successfuly');
+  });
+  test('delete report that does not exist', async () => {
+    const response = await request(app).delete('/api/admin/report/9')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUyMTIxODI0LCJleHAiOjE2NTQ3MTM4MjR9.Ue8JhWn8jAgLNzUdoHiWZAXoRtF5vooY3itRjw1yjyM',
+      ]);
+    expect(400);
+    expect(response.body.message).toBe('The report does not exist');
   });
 });
 
