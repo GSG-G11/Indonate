@@ -1,8 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { Op } from 'sequelize';
 import { Campaign, Capon, Family } from '../../../database/models';
-import { CustomError, paramsSchema } from '../../../utils';
-import { familiesForCampaignSchema } from '../../../utils/validation';
+import { CustomError, paramsSchema, familiesForCampaignSchema } from '../../../utils';
 
 const postFamiliesForCampaign = async (req:Request, res:Response, next:NextFunction) => {
   try {
