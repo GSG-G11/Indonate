@@ -5,6 +5,7 @@ import paramsSchema from './paramsSchema';
 import reportsSchema from './reportsSchema';
 import donationSchema from './donationSchema';
 import familySchema from './familySchema';
+import campaignSchema from './campaignSchema';
 
 export {
   loginSchema,
@@ -14,4 +15,5 @@ export {
   donationSchema,
   querySchema,
   familySchema,
+  campaignSchema,
 };
