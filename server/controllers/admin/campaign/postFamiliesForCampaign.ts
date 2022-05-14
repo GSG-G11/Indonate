@@ -8,7 +8,7 @@ const postFamiliesForCampaign = async (req:Request, res:Response, next:NextFunct
     const { params: { id: campaignId } } = req;
     const {
       body: {
-        ids: familiesIds,
+        ids,
         food,
         clothes,
         money,
@@ -28,11 +28,17 @@ const postFamiliesForCampaign = async (req:Request, res:Response, next:NextFunct
     });
     if (!isCampaginsAvailable) throw new CustomError('Campaign has closed', 400);
 
-    const { ids } = await familiesForCampaignSchema.validateAsync({
-      ids: JSON.parse(familiesIds), food, clothes, money,
+    try {
+      JSON.parse(ids);
+    } catch (e) {
+      throw new CustomError('invalid ids ', 400);
+    }
+
+    const { ids: familiesId } = await familiesForCampaignSchema.validateAsync({
+      ids: JSON.parse(ids), food, clothes, money,
     }, { convert: true });
 
-    await Promise.all(ids.map(async (familyId:any) => {
+    await Promise.all(familiesId.map(async (familyId:any) => {
       const family = await Family.findByPk(familyId, {
         raw: true,
       });
@@ -44,7 +50,7 @@ const postFamiliesForCampaign = async (req:Request, res:Response, next:NextFunct
       { where: { id: campaignId } },
     );
 
-    await Promise.all(ids.map(async (familyId:any) => {
+    await Promise.all(familiesId.map(async (familyId:any) => {
       await Capon.create({
         campaignId, familyId, food, clothes, money,
       });
