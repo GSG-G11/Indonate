@@ -8,11 +8,11 @@ const getCampaigns = async (
   next: NextFunction,
 ) => {
   try {
-    const { page = 1 }: any = req.query;
+    const { page = 1, limit = 8 }: any = req.query;
     await querySchema.validateAsync(req.query);
     const { count, rows: campaigns } = await Campaign.findAndCountAll({
-      limit: 15,
-      offset: (page - 1) * 15,
+      limit,
+      offset: (page - 1) * limit,
       group: ['campaigns.id'],
       attributes: [
         'id',
@@ -25,14 +25,26 @@ const getCampaigns = async (
         'is_available',
         'categoryId',
 
-        [sequelize.fn('SUM', sequelize.col('donations.food')), 'current_food'],
         [
-          sequelize.fn('SUM', sequelize.col('donations.money')),
+          sequelize.fn('SUM', sequelize.literal('COALESCE(food, 0)')),
+          'current_food',
+        ],
+        [
+          sequelize.fn('SUM', sequelize.literal('COALESCE(clothes, 0)')),
+          'current_clothes',
+        ],
+        [
+          sequelize.fn('SUM', sequelize.literal('COALESCE(money, 0)')),
           'current_money',
         ],
         [
-          sequelize.fn('SUM', sequelize.col('donations.clothes')),
-          'current_clothes',
+          sequelize.fn(
+            'SUM',
+            sequelize.literal(
+              'COALESCE(food, 0) + COALESCE(clothes, 0) + COALESCE(money, 0)',
+            ),
+          ),
+          'current',
         ],
       ],
       include: {
