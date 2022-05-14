@@ -4,7 +4,7 @@ import { Campaign, Capon, Family } from '../../../database/models';
 import { CustomError, paramsSchema } from '../../../utils';
 import { familiesForCampaignSchema } from '../../../utils/validation';
 
-const postCampaignFamilies = async (req:Request, res:Response, next:NextFunction) => {
+const postFamiliesForCampaign = async (req:Request, res:Response, next:NextFunction) => {
   try {
     const { params: { id: campaignId } } = req;
     const {
@@ -59,4 +59,4 @@ const postCampaignFamilies = async (req:Request, res:Response, next:NextFunction
     next(error);
   }
 };
-export default postCampaignFamilies;
+export default postFamiliesForCampaign;

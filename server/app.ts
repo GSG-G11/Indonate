@@ -4,7 +4,6 @@ import compression from 'compression';
 import cors from 'cors';
 import morgan from 'morgan';
 import cookieParser from 'cookie-parser';
-import bodyParser from 'body-parser';
 import route from './routes/index';
 import { notFoundError, serverError } from './middlewares';
 
@@ -18,8 +17,6 @@ app.use(cors());
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
 app.use(compression());
 app.use(morgan('tiny'));
 app.use('/api', route);

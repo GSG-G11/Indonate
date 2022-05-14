@@ -15,7 +15,7 @@ import {
   deleteDonorById,
   getDonorsByCampaignId,
   editFamily,
-  postCampaignFamilies,
+  postFamiliesForCampaign,
 } from './admin';
 
 export {
@@ -35,5 +35,5 @@ export {
   deleteFamilyById,
   deleteDonorById,
   addFamily,
-  postCampaignFamilies,
+  postFamiliesForCampaign,
 };

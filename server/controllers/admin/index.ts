@@ -3,7 +3,7 @@ import deleteDonorById from './donors/deleteDonorById';
 import addFamily from './families/addFamily';
 import deleteFamilyById from './families/deleteFamilyById';
 import editFamily from './family/editFamily';
-import postCampaignFamilies from './campaign/postCampaignFamilies';
+import postFamiliesForCampaign from './campaign/postFamiliesForCampaign';
 
 export {
   deleteFamilyById,
@@ -11,5 +11,5 @@ export {
   addFamily,
   getDonorsByCampaignId,
   editFamily,
-  postCampaignFamilies,
+  postFamiliesForCampaign,
 };
