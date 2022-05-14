@@ -9,6 +9,7 @@ import getCampaignById from './campaigns/getCampaignById';
 import addDonation from './donations/addDonation';
 import getReports from './reports/getReports';
 import getStatistics from './statistics/getStatistics';
+
 import {
   addFamily,
   getAllFamilies,
@@ -16,6 +17,8 @@ import {
   deleteDonorById,
   getDonorsByCampaignId,
   editFamily,
+  getDonors,
+  deleteReports,
 } from './admin';
 
 export {
@@ -32,8 +35,10 @@ export {
   getDonorsByCampaignId,
   getReports,
   getStatistics,
+  getDonors,
   getAllFamilies,
   deleteFamilyById,
   deleteDonorById,
   addFamily,
+  deleteReports,
 };

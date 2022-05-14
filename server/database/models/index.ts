@@ -20,6 +20,9 @@ Donor.belongsToMany(Campaign, {
   constraints: true,
 });
 Campaign.hasMany(Donation);
+Donation.belongsTo(Campaign);
+Donor.hasMany(Donation);
+Donation.belongsTo(Donor);
 
 export {
   Donor,
