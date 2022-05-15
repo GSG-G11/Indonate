@@ -31,13 +31,12 @@ const postFamiliesForCampaign = async (req:Request, res:Response, next:NextFunct
     try {
       JSON.parse(ids);
     } catch (e) {
-      throw new CustomError('invalid ids ', 400);
+      throw new CustomError('ids must be array of number', 400);
     }
 
     const { ids: familiesId } = await familiesForCampaignSchema.validateAsync({
       ids: JSON.parse(ids), food, clothes, money,
     }, { convert: true });
-
     await Promise.all(familiesId.map(async (familyId:any) => {
       const family = await Family.findByPk(familyId, {
         raw: true,

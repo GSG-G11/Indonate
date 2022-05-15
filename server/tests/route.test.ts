@@ -1,3 +1,4 @@
+/* eslint-disable comma-spacing */
 /* eslint-disable no-use-before-define */
 /* eslint-disable import/extensions */
 /* eslint-disable no-prototype-builtins */
@@ -1026,6 +1027,96 @@ describe('DELETE/admin/reports/id', () => {
       ]);
     expect(400);
     expect(response.body.message).toBe('The report does not exist');
+  });
+});
+describe('POST api/admin/campagin/:id/families', () => {
+  test('case:Fail |campaign id not valid', async () => {
+    const response = await request(app)
+      .post('/api/admin/campaign/f/families')
+      .send({
+        ids: '[1, 2, 3, 4]',
+        food: 0,
+        money: 0,
+        clothes: 0,
+      }).expect(400);
+    expect(response.body.message).toBe('"id" must be a number');
+  });
+  test('case:Fail |campaign id does not exits ', async () => {
+    const response = await request(app)
+      .post('/api/admin/campaign/8/families')
+      .send({
+        ids: [1, 2, 3, 4],
+        food: 0,
+        money: 0,
+        clothes: 0,
+      }).expect(400);
+    expect(response.body.message).toBe('Campaign does not exits');
+  });
+  test('case:Fail |ids is not array', async () => {
+    const response = await request(app)
+      .post('/api/admin/campaign/4/families')
+      .send({
+        ids: 'farah',
+        food: 0,
+        money: 0,
+        clothes: 0,
+      }).expect(400);
+    expect(response.body.message).toBe('ids must be array of number');
+  });
+  test('case:Fail |money is not number', async () => {
+    const response = await request(app)
+      .post('/api/admin/campaign/5/families')
+      .send({
+        ids: '[2,3,4]',
+        food: 'f',
+        money: 0,
+        clothes: 0,
+      }).expect(400);
+    expect(response.body.message).toBe('"food" must be a number');
+  });
+  test('case:Fail |array item not number', async () => {
+    const response = await request(app)
+      .post('/api/admin/campaign/4/families')
+      .send({
+        ids: ['f', 2, 3, 4],
+        food: 1,
+        money: 0,
+        clothes: 0,
+      }).expect(400);
+    expect(response.body.message).toBe('ids must be array of number');
+  });
+  test('case:success ', async () => {
+    const response = await request(app)
+      .post('/api/admin/campaign/4/families')
+      .send({
+        ids: '[2,3]',
+        food: 1,
+        money: 1,
+        clothes: 1,
+      }).expect(200);
+    expect(response.body.message).toBe('Families added successfully');
+  });
+  test('case:fail ', async () => {
+    const response = await request(app)
+      .post('/api/admin/campaign/4/families')
+      .send({
+        ids: '[2,3]',
+        food: 1,
+        money: 1,
+        clothes: 1,
+      }).expect(400);
+    expect(response.body.message).toBe('Campaign has closed');
+  });
+  test('case:fail families does not exist ', async () => {
+    const response = await request(app)
+      .post('/api/admin/campaign/5/families')
+      .send({
+        ids: '[7,2,3]',
+        food: 1,
+        money: 1,
+        clothes: 1,
+      }).expect(400);
+    expect(response.body.message).toBe('Cannot add families');
   });
 });
 
