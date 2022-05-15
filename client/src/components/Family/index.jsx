@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import {
-  Table, Space, Typography, message, Button,
+  Table, Space, Typography, message, Button, Select,
 } from 'antd';
 import { EditOutlined, WhatsAppOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import FamilyButton from './FamilyButton';
 import FamilyForm from './FamilyForm';
+import './style.css';
 
 const { Title, Paragraph } = Typography;
+const { Option } = Select;
 
 const Family = () => {
   const [familyData, setFamilyData] = useState([]);
@@ -15,19 +17,29 @@ const Family = () => {
   const [page, setPage] = useState(1);
   const [editedData, setEditedData] = useState({});
   const [visible, setVisible] = useState(false);
+  const [campaigns, setCampaigns] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setIsLoading(true);
         const { data: { data } } = await axios.get(`/api/admin/families?page=${page}`);
+        setIsLoading(false);
         setFamilyData(data);
         setIsUpdated(false);
       } catch ({ response: { data: { message: errorMessage } } }) {
         message.error(errorMessage);
+        setIsLoading(false);
       }
     };
     fetchData();
   }, [isUpdated, page]);
+
+  const getCampaign = async (id) => {
+    const { data: { data } } = await axios.get(`/api/admin/family/${id}/campaigns`);
+    setCampaigns(data);
+  };
 
   const columns = [
     {
@@ -65,8 +77,17 @@ const Family = () => {
     },
     {
       title: 'Campaign',
-      dataIndex: 'campaign',
-      key: 'campaign',
+      dataIndex: 'title',
+      key: 'title',
+      render: (text, { id }) => (
+        <Select
+          className="select"
+          defaultValue="See More"
+          onClick={() => getCampaign(id)}
+        >
+          {campaigns.map(({ title }) => <Option>{title}</Option>)}
+        </Select>
+      ),
     },
     {
       title: 'Action',
@@ -78,7 +99,7 @@ const Family = () => {
           <Button
             type="link"
             key={id}
-            icon={<EditOutlined style={{ color: 'blue', cursor: 'pointer' }} />}
+            icon={<EditOutlined className="edit" />}
             onClick={() => {
               setVisible(true);
               setEditedData({
@@ -86,7 +107,17 @@ const Family = () => {
               });
             }}
           />
-          <a href={`http://wa.me/${phone}`} target="_blank" alt="" aria-label="start chat" rel="noreferrer"><Button type="link" icon={<WhatsAppOutlined style={{ color: 'green' }} />} /></a>
+          <a
+            href={`http://wa.me/${phone}`}
+            target="_blank"
+            aria-label="start chat"
+            rel="noreferrer"
+          >
+            <Button
+              type="link"
+              icon={<WhatsAppOutlined className="whatsApp" />}
+            />
+          </a>
         </Space>
       ),
     },
@@ -96,15 +127,13 @@ const Family = () => {
   };
   return (
     <>
-      <div style={{
-        display: 'flex', justifyContent: 'space-between', marginTop: '12px', marginRight: '15px',
-      }}
-      >
-        <Title level={2} style={{ color: '#469D62' }}>Family in needed</Title>
+      <div className="table-container">
+        <Title level={2} className="title">Family in needed</Title>
         <FamilyButton isUpdated={isUpdated} setIsUpdated={setIsUpdated} />
       </div>
       <Table
-        style={{ marginTop: '20px' }}
+        className="table"
+        loading={isLoading}
         columns={columns}
         dataSource={familyData?.families}
         pagination={{
