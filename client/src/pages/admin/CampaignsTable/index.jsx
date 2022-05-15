@@ -7,6 +7,7 @@ import {
   message,
   Result,
   Button,
+  Badge,
 } from 'antd';
 import {
   CloseCircleOutlined,
@@ -87,12 +88,15 @@ function CampaignsTable() {
       dataIndex: 'title',
       key: 'title',
       render: (title, record) => (
-        <Link
-          to={`/campaign/${record.id}`}
-          className="campaign-table-campaign-title"
-        >
-          {title.split(' ').slice(0, 5).join(' ')}
-        </Link>
+        <Popover content={title}>
+          <Link
+            to={`/campaign/${record.id}`}
+            className="campaign-table-campaign-title"
+          >
+            {title.split(' ').slice(0, 2).join(' ')}
+            ...
+          </Link>
+        </Popover>
       ),
     },
     {
@@ -242,7 +246,7 @@ function CampaignsTable() {
           {record.is_available ? (
             <EditOutlined style={{ fontSize: '2.5rem', color: '#469D62' }} />
           ) : (
-            <div />
+            <Badge count="Closed" />
           )}
         </Space>
       ),
