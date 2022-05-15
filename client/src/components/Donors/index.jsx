@@ -5,56 +5,126 @@ import 'antd/dist/antd.css';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
+const { Item } = Form;
 function Donors() {
   const [dataSource, setDataSource] = useState([]);
   const [editingRow, setEditingRow] = useState(null);
   const [form] = Form.useForm();
 
+  const nullToZero = (value) => {
+    if (value === null) {
+      return 0;
+    }
+    return value;
+  };
+
   useEffect(() => {
     const fetchDonors = async () => {
-      const response = await axios.get('/api/admin/doners');
-      console.log(response);
+      const { data: { data: { donors } } } = await axios.get('/api/admin/donors');
+      const allDonors = donors.map((obj) => {
+        const totalFood = nullToZero(obj.totalFood);
+        const totalMoney = nullToZero(obj.totalMoney);
+        const totalClothes = nullToZero(obj.totalClothes);
+        return {
+          ...obj, totalFood, totalMoney, totalClothes,
+        };
+      });
+      setDataSource(allDonors.slice(0, -1)); // remove admin
     };
     fetchDonors();
-    // setDataSource(response);
   }, []);
   const columns = [
     {
       title: 'Name',
       dataIndex: 'name',
+      width: '20%',
       render: (text, record) => {
         if (editingRow === record.key) {
           return (
-            <Form.Item
-              name="name"
-              rules={[
-                {
-                  required: true,
-                  message: 'Please enter your name',
-                },
-              ]}
-            >
-              <Input />
-            </Form.Item>
+            <Form>
+              <Item
+                name="name"
+                rules={[{
+                  required: true, message: 'Please enter name',
+                }]}
+              >
+                <Input />
+              </Item>
+            </Form>
           );
         }
         return <p>{text}</p>;
       },
     },
     {
-      title: 'Address',
-      dataIndex: 'address',
+      title: 'Phone',
+      dataIndex: 'phone',
+      width: '15%',
       render: (text, record) => {
         if (editingRow === record.key) {
           return (
-            <Form.Item name="address">
-              <Input />
-            </Form.Item>
+            <Form>
+              <Item
+                name="phone"
+                rules={[{
+                  required: true, message: 'Please enter phone',
+                }]}
+              >
+
+                <Input />
+              </Item>
+            </Form>
           );
         }
         return <p>{text}</p>;
       },
     },
+    {
+      title: 'Donation',
+      dataIndex: 'donation',
+      width: '15%',
+      children: [
+        {
+          title: 'Money',
+          dataIndex: 'totalMoney',
+          width: '10%',
+        },
+        {
+          title: 'Clothes',
+          dataIndex: 'totalClothes',
+          width: '10%',
+        },
+        {
+          title: 'Food',
+          dataIndex: 'totalFood',
+          width: '10%',
+        },
+      ],
+    },
+    {
+      title: 'address',
+      dataIndex: 'address',
+      width: '20%',
+      editable: true,
+      render: (text, record) => {
+        if (editingRow === record.key) {
+          return (
+            <Form>
+              <Item
+                name="address"
+                rules={[{
+                  required: true, message: 'Please enter address',
+                }]}
+              >
+                <Input />
+              </Item>
+            </Form>
+          );
+        }
+        return <p>{text}</p>;
+      },
+    },
+
     {
       title: 'Actions',
       render: (_, record) => (
@@ -65,6 +135,8 @@ function Donors() {
               setEditingRow(record.key);
               form.setFieldsValue({
                 name: record.name,
+                phone: record.phone,
+
                 address: record.address,
               });
             }}
