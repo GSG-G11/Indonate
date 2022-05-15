@@ -7,6 +7,7 @@ import {
   reportsSchema,
   querySchema,
   familySchema,
+  campaignSchema,
   donorSchema,
 } from './validation';
 
@@ -20,5 +21,6 @@ export {
   querySchema,
   verifyToken,
   familySchema,
+  campaignSchema,
   donorSchema,
 };
