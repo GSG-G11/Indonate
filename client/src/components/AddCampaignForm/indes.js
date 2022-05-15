@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
 import {
-  Button, Modal, Form, Input, Select,
+  Button,
+  Modal,
+  Form,
+  Input,
+  Select,
+  message,
 } from 'antd';
 import axios from 'axios';
 import PropTypes from 'prop-types';
@@ -87,7 +92,7 @@ const AddCanpaignForm = () => {
   const [visilbe, setVisible] = useState(false);
   const AddCampign = async ({ Title, Description }) => {
     try {
-      const { data } = await axios.post('/api/admin/campaigns', {
+      const { data: { message: successMessage } } = await axios.post('/api/admin/campaigns', {
         title: Title,
         description: Description,
         food_target: 10,
@@ -96,9 +101,10 @@ const AddCanpaignForm = () => {
         categoryId: 1,
         image_link: 'http://www.humanitygate.com/thumb/560x292/uploads//images/88e62e08915b10584950106f496140ca.jpg',
       });
-      console.log(data);
+      message.success(successMessage);
+      setVisible(false);
     } catch ({ response: { data: { message: errorMessage } } }) {
-      console.log(errorMessage);
+      message.error(errorMessage);
     }
   };
   return (
