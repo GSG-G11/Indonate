@@ -1,3 +1,4 @@
+/* eslint-disable no-use-before-define */
 /* eslint-disable import/extensions */
 /* eslint-disable no-prototype-builtins */
 /* eslint-disable no-undef */
@@ -320,7 +321,7 @@ describe('GET /statistics', () => {
     const {
       body: { data },
     } = await request(app).get('/api/statistics').expect(200);
-    expect(data).toStrictEqual({
+    expect(data).toEqual({
       FAMILIES: 5,
       MONEY: '1000',
       FOODS: '101',
@@ -425,6 +426,41 @@ describe('GET /campaigns', () => {
       .get('/api/campaigns?search=give people money&category=Education')
       .expect(200);
     expect(response.body.data.campaigns).toEqual([]);
+  });
+
+  describe('GET /api/admin/families', () => {
+    test('Unauthorized user admin', async () => {
+      const response = await request(app)
+        .get('/api/admin/families')
+        .expect(401);
+
+      expect(response.body.message).toEqual('Unauthorized user');
+    });
+    test('/?page validation error', async () => {
+      const response = await request(app)
+        .get('/api/admin/families/?page=string')
+        .set('Cookie', ['ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUyMjA5NTI0LCJleHAiOjE2NTQ4MDE1MjR9.LD0qUzAD_IdLqqkSrWPfs2JsBjruMIHgX06KUsIXEyY;'])
+        .expect(401);
+      expect(response.body.message).toEqual('"page" must be a number');
+    });
+
+    test('first page families', async () => {
+      const { body: { data: { families, count } } } = await request(app)
+        .get('/api/admin/families/?page=1')
+        .set('Cookie', ['ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUyMjA5NTI0LCJleHAiOjE2NTQ4MDE1MjR9.LD0qUzAD_IdLqqkSrWPfs2JsBjruMIHgX06KUsIXEyY;'])
+        .expect(200);
+      expect(families.length).toEqual(5);
+      expect(count).toEqual(5);
+      expect(families[0]).toEqual({
+        id: 5,
+        name: 'Ghazi',
+        phone: '0597086162',
+        address: 'Al Zahra',
+        clothes: null,
+        money: null,
+        food: null,
+      });
+    });
   });
 });
 
@@ -713,6 +749,214 @@ describe('DELETE /api/admin/donor/:donorId', () => {
     expect(response.body.message).toBe('Unauthorized user');
   });
 });
+describe('GET /api/families/campaigns/:id', () => {
+  test('unauthorized admin', async () => {
+    const response = await request(app)
+      .get('/api/admin/family/1/campaigns');
+    expect(400);
+    expect(response.body.message).toBe('Unauthorized user');
+  });
+  test('params id must be number', async () => {
+    const response = await request(app)
+      .get('/api/admin/family/string/campaigns')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
+      ]);
+    expect(400);
+    expect(response.body.message).toBe('"id" must be a number');
+  });
+  test('family doesnt exist', async () => {
+    const response = await request(app)
+      .get('/api/admin/family/500/campaigns')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
+      ]);
+    expect(400);
+    expect(response.body.data).toEqual([]);
+  });
+  test('get family campaigns', async () => {
+    const response = await request(app)
+      .get('/api/admin/family/4/campaigns')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
+      ]);
+    expect(response.body).toEqual({
+      message: 'Success',
+      data: [
+        {
+          id: 3,
+          title: 'summer clothes collection',
+        },
+      ],
+    });
+  });
+});
+describe('/GET/api/admin/donors', () => {
+  test('get donors', async () => {
+    const response = await request(app)
+      .get('/api/admin/donors')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
+      ])
+      .expect(200);
+    expect(response.body.data.donors).toEqual([
+
+      {
+        id: 5,
+        name: 'mohammed',
+        email: 'mohaammed@gmail.com',
+        address: 'Gaza',
+        phone: '0599522660',
+        totalFood: null,
+        totalMoney: null,
+        totalClothes: null,
+      },
+      {
+        id: 4,
+        name: 'sami',
+        email: 'sami@gmail.com',
+        address: 'Gaza',
+        phone: '0599848610',
+        totalFood: '40',
+        totalMoney: '400',
+        totalClothes: '40',
+      },
+      {
+        id: 3,
+        name: 'hosam',
+        email: 'hosam@gmail.com',
+        address: 'Gaza',
+        phone: '0597988610',
+        totalFood: '30',
+        totalMoney: '300',
+        totalClothes: '30',
+      },
+      {
+        id: 1,
+        name: 'admin',
+        email: 'admin@gmail.com',
+        address: 'Gaza',
+        phone: '0599888611',
+        totalFood: '31',
+        totalMoney: '300',
+        totalClothes: '30',
+      },
+    ]);
+  });
+  test('get donors with limit and page', async () => {
+    const response = await request(app)
+      .get('/api/admin/donors?limit=1&page=2')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
+      ])
+      .expect(200);
+    expect(response.body.data.donors)
+      .toEqual([{
+        id: 4,
+        name: 'sami',
+        email: 'sami@gmail.com',
+        address: 'Gaza',
+        phone: '0599848610',
+        totalFood: '40',
+        totalMoney: '400',
+        totalClothes: '40',
+      }]);
+  });
+  test('get donors with limit and page', async () => {
+    const response = await request(app)
+      .get('/api/admin/donors?limit=f&page=2')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
+      ])
+      .expect(400);
+    expect(response.body.message).toBe('"limit" must be a number');
+  });
+  test('get donors with limit and page', async () => {
+    const response = await request(app)
+      .get('/api/admin/donors?limit=1&page=2')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmFtZSI6IkFobWVkIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTY1MTk5OTY3OSwiZXhwIjoxNjU0NTkxNjc5fQ.Z0Tq0XxGNbQ72J4BRAp06Qo6xYq41jb59-5uRK1JfuA',
+      ])
+      .expect(401);
+    expect(response.body.message).toBe('Unauthorized admin');
+  });
+});
+describe('PATCH /api/admin/donor/:id', () => {
+  test('success update donor', async () => {
+    const response = await request(app)
+      .patch('/api/admin/donor/5')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUyMTIxODI0LCJleHAiOjE2NTQ3MTM4MjR9.Ue8JhWn8jAgLNzUdoHiWZAXoRtF5vooY3itRjw1yjyM',
+      ])
+      .send({
+        name: 'new name',
+        phone: '059999999',
+      })
+      .expect(200);
+    expect(response.body.message).toEqual('Donor updated successfully');
+  });
+  test('failed updating donor', async () => {
+    const response = await request(app)
+      .patch('/api/admin/donor/2')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUyMTIxODI0LCJleHAiOjE2NTQ3MTM4MjR9.Ue8JhWn8jAgLNzUdoHiWZAXoRtF5vooY3itRjw1yjyM',
+      ])
+      .expect(400);
+    expect(response.body.message).toEqual('Update donor failed');
+  });
+  test('id must be a number', async () => {
+    const response = await request(app)
+      .patch('/api/admin/donor/string')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUyMTIxODI0LCJleHAiOjE2NTQ3MTM4MjR9.Ue8JhWn8jAgLNzUdoHiWZAXoRtF5vooY3itRjw1yjyM',
+      ])
+      .expect(400);
+    expect(response.body.message).toEqual('"id" must be a number');
+  });
+  test('Unauthorized user', async () => {
+    const response = await request(app)
+      .patch('/api/admin/donor/string')
+      .expect(401);
+    expect(response.body.message).toBe('Unauthorized user');
+  });
+});
+describe('GET/admin/donor/campaigns/:id', () => {
+  test('get campaigns for donor that have id 1', async () => {
+    const response = await request(app).get('/api/admin/donor/1/campaigns')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
+      ]);
+    expect(200);
+    expect(response.body.data.campaigns).toEqual([
+      {
+        id: 1,
+        title: 'Helping poor families',
+      },
+      {
+        id: 2,
+        title: 'winter clothes collection',
+
+      },
+    ]);
+  });
+  test('get campaings for donor id not exist', async () => {
+    const response = await request(app).get('/api/admin/donor/20/campaigns')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
+      ]);
+    expect(400);
+    expect(response.body.message).toBe('There is no donor');
+  });
+
+  test('get campaings for Authorized user', async () => {
+    const response = await request(app).get('/api/admin/donor/1/campaigns')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IkFobWVkIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTY1MjExOTI4OSwiZXhwIjoxNjU0NzExMjg5fQ.WNuAaN7EcIrUx7RV2EMj_E46vbRP4FU5e8vsjMcwCpY',
+      ]);
+    expect(401);
+    expect(response.body.message).toBe('Unauthorized admin');
+  });
+});
 describe('POST /api/admin/campaigns', () => {
   test('unauthorized admin', async () => {
     const response = await request(app).post('/api/admin/campaigns')
@@ -770,6 +1014,57 @@ describe('POST /api/admin/campaigns', () => {
     expect(response.body.message).toBe('Campaign added successfully');
   });
 });
+
+describe('DELETE /api/admin/campaigns/:id', () => {
+  test('unauthorized user', async () => {
+    const response = await request(app).delete('/api/admin/campaigns/1');
+    expect(401);
+    expect(response.body.message).toBe('Unauthorized user');
+  });
+  test('campaign id not a number', async () => {
+    const response = await request(app).delete('/api/admin/campaigns/string')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
+      ]);
+    expect(400);
+    expect(response.body.message).toBe('"id" must be a number');
+  });
+  test('campaign doesnt exist', async () => {
+    const response = await request(app).delete('/api/admin/campaigns/100')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
+      ]);
+    expect(400);
+    expect(response.body.message).toBe("Campaign doesn't exist");
+  });
+  test('campaign delete success', async () => {
+    const response = await request(app).delete('/api/admin/campaigns/2')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
+      ]);
+    expect(201);
+    expect(response.body.message).toBe('Campaign deleted successfully');
+  });
+});
+describe('DELETE/admin/reports/id', () => {
+  test('delete report that exist', async () => {
+    const response = await request(app).delete('/api/admin/report/3')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUyMTIxODI0LCJleHAiOjE2NTQ3MTM4MjR9.Ue8JhWn8jAgLNzUdoHiWZAXoRtF5vooY3itRjw1yjyM',
+      ]);
+    expect(200);
+    expect(response.body.message).toBe('Report deleted successfuly');
+  });
+  test('delete report that does not exist', async () => {
+    const response = await request(app).delete('/api/admin/report/9')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUyMTIxODI0LCJleHAiOjE2NTQ3MTM4MjR9.Ue8JhWn8jAgLNzUdoHiWZAXoRtF5vooY3itRjw1yjyM',
+      ]);
+    expect(400);
+    expect(response.body.message).toBe('The report does not exist');
+  });
+});
+
 afterAll(() => {
   connection.close();
 });

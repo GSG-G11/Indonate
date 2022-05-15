@@ -10,6 +10,7 @@ import Capon from './capon';
 Campaign.belongsTo(Category);
 Campaign.belongsToMany(Family, { through: Capon });
 Family.belongsToMany(Campaign, { through: Capon });
+Family.hasMany(Capon);
 Campaign.belongsToMany(Donor, {
   through: { model: Donation, unique: false },
   constraints: true,
@@ -19,6 +20,9 @@ Donor.belongsToMany(Campaign, {
   constraints: true,
 });
 Campaign.hasMany(Donation);
+Donation.belongsTo(Campaign);
+Donor.hasMany(Donation);
+Donation.belongsTo(Donor);
 
 export {
   Donor,

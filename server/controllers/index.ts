@@ -11,10 +11,15 @@ import getReports from './reports/getReports';
 import getStatistics from './statistics/getStatistics';
 import {
   addFamily,
+  getAllFamilies,
   deleteFamilyById,
   deleteDonorById,
   getDonorsByCampaignId,
   editFamily,
+  getCampaignsForDonor,
+  getDonors,
+  deleteReports,
+  updateDonorById,
 } from './admin';
 
 export {
@@ -31,7 +36,12 @@ export {
   getDonorsByCampaignId,
   getReports,
   getStatistics,
+  getDonors,
+  getAllFamilies,
   deleteFamilyById,
   deleteDonorById,
   addFamily,
+  getCampaignsForDonor,
+  deleteReports,
+  updateDonorById,
 };

@@ -1,11 +1,12 @@
 import React from 'react';
 import axios from 'axios';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import {
-  Layout, Menu, Button, message,
+  Layout, Menu, Button, message, Image,
 } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
-import './style.css';
+import './style.less';
+import logo from '../../../assets/images/indonate-logo.svg';
 
 import { logout } from '../../../redux/feature/user/userSlice';
 
@@ -14,6 +15,7 @@ const { Header } = Layout;
 const Nav = () => {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  const { pathname } = useLocation();
   const logoutFun = async () => {
     try {
       await axios.post('/api/logout');
@@ -63,19 +65,21 @@ const Nav = () => {
       ),
     },
     {
-      label: (
-        <NavLink to="/campaign">
-          <Button type="primary">Donate Now</Button>
-        </NavLink>
-      ),
+      label: user?.userData?.isAdmin
+        ? (<NavLink to="/admin"><Button type="primary">Dashboard</Button></NavLink>)
+        : (<NavLink to="/campaigns"><Button type="primary">Donate Now</Button></NavLink>),
     },
   ];
-
-  return (
+  return !pathname.startsWith('/admin') && (
     <div className="nav-container">
       <Layout>
         <Header>
-          <div className="logo">InDonate</div>
+          <Image
+            width={120}
+            src={logo}
+            preview={false}
+          />
+
           <Menu
             theme="dark"
             mode="horizontal"
