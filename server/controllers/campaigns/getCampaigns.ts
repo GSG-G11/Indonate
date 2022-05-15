@@ -1,5 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
-import { Campaign, Donation, sequelize } from '../../database/models';
+import {
+  Campaign, Category, Donation, sequelize,
+} from '../../database/models';
 import { CustomError, querySchema } from '../../utils';
 
 const getCampaigns = async (
@@ -13,7 +15,7 @@ const getCampaigns = async (
     const { count, rows: campaigns } = await Campaign.findAndCountAll({
       limit,
       offset: (page - 1) * limit,
-      group: ['campaigns.id'],
+      group: ['campaigns.id', 'category.id'],
       attributes: [
         'id',
         'title',
@@ -23,8 +25,6 @@ const getCampaigns = async (
         'money_target',
         'image_link',
         'is_available',
-        'categoryId',
-
         [
           sequelize.fn('SUM', sequelize.literal('COALESCE(food, 0)')),
           'current_food',
@@ -37,25 +37,25 @@ const getCampaigns = async (
           sequelize.fn('SUM', sequelize.literal('COALESCE(money, 0)')),
           'current_money',
         ],
-        [
-          sequelize.fn(
-            'SUM',
-            sequelize.literal(
-              'COALESCE(food, 0) + COALESCE(clothes, 0) + COALESCE(money, 0)',
-            ),
-          ),
-          'current',
-        ],
       ],
-      include: {
-        model: Donation,
-        required: false,
-        duplicating: false,
-        attributes: [],
-      },
+      include: [
+        {
+          model: Donation,
+          required: false,
+          duplicating: false,
+          attributes: [],
+          as: 'donations',
+        },
+        {
+          model: Category,
+          required: false,
+          duplicating: false,
+          attributes: ['name'],
+        },
+      ],
       order: [
-        ['updatedAt', 'DESC'],
         ['is_available', 'DESC'],
+        ['updatedAt', 'DESC'],
       ],
     });
     res.json({ message: 'Success', data: { campaigns, count: count.length } });
