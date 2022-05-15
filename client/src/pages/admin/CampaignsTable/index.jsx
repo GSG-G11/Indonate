@@ -11,6 +11,7 @@ import {
 import {
   CloseCircleOutlined,
   DeleteOutlined,
+  EditOutlined,
   FileSearchOutlined,
   TeamOutlined,
 } from '@ant-design/icons';
@@ -24,7 +25,6 @@ function CampaignsTable() {
   const [page, setPage] = useState(1);
   const [campaignsCount, setCampaignsCount] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
-  const [isError, setIsError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
@@ -41,14 +41,13 @@ function CampaignsTable() {
         setCampaigns(campaignsData);
         setCampaignsCount(count);
         setIsLoading(false);
-        setIsError(false);
+        setErrorMessage('');
       } catch ({
         response: {
           data: { message: error },
         },
       }) {
         setErrorMessage(error);
-        setIsError(true);
       }
     };
     getCampaigns();
@@ -113,6 +112,13 @@ function CampaignsTable() {
       align: 'center',
       key: '',
       render: () => <>View All ▼</>,
+    },
+    {
+      title: 'Category',
+      dataIndex: 'category',
+      align: 'center',
+      key: 'category',
+      render: (category) => <div>{category.name}</div>,
     },
     {
       title: 'Target',
@@ -189,7 +195,6 @@ function CampaignsTable() {
           title: 'Clothes',
           dataIndex: 'current_clothes',
           align: 'center',
-
           key: 'current_clothes',
           render: (value) => (
             <>
@@ -218,29 +223,39 @@ function CampaignsTable() {
           >
             <DeleteOutlined style={{ fontSize: '2.5rem', color: 'red' }} />
           </Popconfirm>
-          <Popconfirm
-            title="Sure to close?"
-            onConfirm={() => {
-              handleCloseCampaign(record.id);
-            }}
-            okText="Yes"
-            cancelText="No"
-            okType="primary"
-          >
-            <CloseCircleOutlined style={{ fontSize: '2.5rem' }} />
-          </Popconfirm>
+          {record.is_available ? (
+            <Popconfirm
+              title="Sure to close?"
+              onConfirm={() => {
+                handleCloseCampaign(record.id);
+              }}
+              okText="Yes"
+              cancelText="No"
+              okType="primary"
+            >
+              <CloseCircleOutlined style={{ fontSize: '2.5rem' }} />
+            </Popconfirm>
+          ) : (
+            <div />
+          )}
           <TeamOutlined style={{ fontSize: '2.5rem', color: '#008EF2' }} />
+          {record.is_available ? (
+            <EditOutlined style={{ fontSize: '2.5rem', color: '#469D62' }} />
+          ) : (
+            <div />
+          )}
         </Space>
       ),
     },
   ];
 
-  return !isError ? (
+  return !errorMessage ? (
     <Table
       dataSource={campaigns}
+      columns={columns}
       bordered
       loading={isLoading}
-      columns={columns}
+      rowClassName={(record) => !record.is_available && 'disabled-row'}
       pagination={{ total: campaignsCount, defaultPageSize: 8 }}
       onChange={(e) => {
         setPage(e.current);

@@ -14,3 +14,7 @@
   font-weight: bold !important;
   font-size: 15px !important;
 }
+.disabled-row {
+  background-color: #d9d9d9;
+  opacity: 0.6;
+}
