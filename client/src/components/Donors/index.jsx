@@ -1,15 +1,21 @@
 import {
   Table, Form, message,
   Popconfirm,
+  Typography,
 } from 'antd';
 import 'antd/dist/antd.css';
 import React, { useEffect, useState } from 'react';
+import axios from 'axios'; import { DeleteOutlined, EditOutlined, WhatsAppOutlined } from '@ant-design/icons';
+import './style.less';
+import EditDonorModal from './EditDonorModal';
 
-import axios from 'axios'; import { DeleteOutlined } from '@ant-design/icons';
+const { Title } = Typography;
 
-function Donors() {
+const Donors = () => {
   const [dataSource, setDataSource] = useState([]);
   const [editingRow, setEditingRow] = useState(null);
+  const [visible, setVisible] = useState(false);
+
   const [form] = Form.useForm();
 
   const nullToZero = (value) => {
@@ -102,16 +108,28 @@ function Donors() {
     {
       title: 'Actions',
       render: (_, record) => (
-        <Popconfirm
-          title="Are you sure?"
-          okText="Yes"
-          cancelText="No"
-          onConfirm={() => {
-            deleteDonor(record.key);
-          }}
-        >
-          <DeleteOutlined />
-        </Popconfirm>
+
+        <>
+          <Popconfirm
+            title="Are you sure?"
+            okText="Yes"
+            cancelText="No"
+            onConfirm={() => {
+              deleteDonor(record.key);
+            }}
+          >
+            <DeleteOutlined className="delete_icon" />
+          </Popconfirm>
+          <EditOutlined
+            className="edit_icon"
+            onClick={
+              () => setVisible(true)
+            }
+          />
+          <WhatsAppOutlined
+            className="whatsapp_icon"
+          />
+        </>
 
       ),
     },
@@ -126,14 +144,15 @@ function Donors() {
     setEditingRow(null);
   };
   return (
-    <div className="App">
-      <header className="App-header">
-        <Form form={form} onFinish={onFinish}>
-          <Table columns={columns} dataSource={dataSource} />
-        </Form>
-      </header>
-    </div>
+    <section className="donors_table">
+      <Title>Donors</Title>
+      <Form form={form} onFinish={onFinish}>
+        <Table columns={columns} dataSource={dataSource} />
+      </Form>
+      <EditDonorModal visible={visible} />
+
+    </section>
   );
-}
+};
 
 export default Donors;
