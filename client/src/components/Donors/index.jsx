@@ -1,8 +1,10 @@
 import {
   Table, Form, message,
+  Popconfirm,
 } from 'antd';
 import 'antd/dist/antd.css';
 import React, { useEffect, useState } from 'react';
+
 import axios from 'axios'; import { DeleteOutlined } from '@ant-design/icons';
 
 function Donors() {
@@ -22,8 +24,12 @@ function Donors() {
       const { data: { message: successMessage } } = await axios.delete(`/api/admin/donor/${donorId}`);
       setDataSource(dataSource.filter((obj) => obj.id !== donorId));
       message.success(successMessage);
-    } catch (e) {
-      message.success(e.message);
+    } catch ({
+      response: {
+        data: { message: error },
+      },
+    }) {
+      message.error(error);
     }
   };
 
@@ -32,13 +38,14 @@ function Donors() {
     const fetchDonors = async () => {
       const { data: { data: { donors } } } = await axios.get('/api/admin/donors');
       const allDonors = donors.map((obj) => {
-        const totalFood = nullToZero(obj.totalFood);
+        const name = obj.name.charAt(0).toUpperCase() + obj.name.slice(1); // capitlize name
+        const totalFood = nullToZero(obj.totalFood); // convert incoming null values to 0
         const totalMoney = nullToZero(obj.totalMoney);
         const totalClothes = nullToZero(obj.totalClothes);
         return {
-          key: obj.id, ...obj, totalFood, totalMoney, totalClothes,
+          key: obj.id, ...obj, name, totalFood, totalMoney, totalClothes,
         };
-      }).filter((obj) => obj.name !== 'admin'); // remove admin
+      }).filter(({ email }) => email !== 'admin@gmail.com'); // remove admin
       setDataSource(allDonors);
     };
     fetchDonors();
@@ -49,13 +56,11 @@ function Donors() {
       title: 'Name',
       dataIndex: 'name',
       width: '20%',
-      render: (text) => <p>{text}</p>,
     },
     {
       title: 'Phone',
       dataIndex: 'phone',
       width: '15%',
-      render: (text) => <p>{text}</p>,
     },
     {
       title: 'Donation',
@@ -66,6 +71,14 @@ function Donors() {
           title: 'Money',
           dataIndex: 'totalMoney',
           width: '10%',
+          render: (text) => (
+            <>
+              $
+              {' '}
+              {text}
+            </>
+          ),
+
         },
         {
           title: 'Clothes',
@@ -76,6 +89,7 @@ function Donors() {
           title: 'Food',
           dataIndex: 'totalFood',
           width: '10%',
+
         },
       ],
     },
@@ -83,17 +97,22 @@ function Donors() {
       title: 'address',
       dataIndex: 'address',
       width: '20%',
-      editable: true,
-      render: (text) => <p>{text}</p>,
     },
 
     {
       title: 'Actions',
       render: (_, record) => (
-        <DeleteOutlined onClick={() => {
-          deleteDonor(record.key);
-        }}
-        />
+        <Popconfirm
+          title="Are you sure?"
+          okText="Yes"
+          cancelText="No"
+          onConfirm={() => {
+            deleteDonor(record.key);
+          }}
+        >
+          <DeleteOutlined />
+        </Popconfirm>
+
       ),
     },
   ];
