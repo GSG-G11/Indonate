@@ -1,19 +1,25 @@
 import {
   Table, Form, message,
   Popconfirm,
-  Typography,
+  Typography, Dropdown, Menu, Space,
 } from 'antd';
 import 'antd/dist/antd.css';
 import React, { useEffect, useState } from 'react';
-import axios from 'axios'; import { DeleteOutlined, EditOutlined, WhatsAppOutlined } from '@ant-design/icons';
+import { useNavigate } from 'react-router-dom';
+
+import axios from 'axios'; import {
+  DeleteOutlined, EditOutlined, WhatsAppOutlined, DownOutlined,
+} from '@ant-design/icons';
 import './style.less';
 import EditDonorModal from './EditDonorModal';
 
-const { Title } = Typography;
+const { Title, Text } = Typography;
 
 const Donors = () => {
+  const navigate = useNavigate();
   const [dataSource, setDataSource] = useState([]);
   const [rowsCount, setRowsCount] = useState([]);
+  const [donorCampaigns, setDonorCampaigns] = useState([]);
   const [editingRow, setEditingRow] = useState(null);
   const [visible, setVisible] = useState(false);
 
@@ -48,7 +54,6 @@ const Donors = () => {
 
   const onFinish = async (values) => {
     const updatedDataSource = [...dataSource];
-    updatedDataSource.splice(editingRow, 1, { key: editingRow, id: editingRow, ...values });
     const response = await axios.patch(`/api/admin/donor/${editingRow}`, values);
     console.log(response);
     setDataSource(updatedDataSource);
@@ -60,6 +65,33 @@ const Donors = () => {
       const { data: { message: successMessage } } = await axios.delete(`/api/admin/donor/${donorId}`);
       setDataSource(dataSource.filter((obj) => obj.id !== donorId));
       message.success(successMessage);
+    } catch ({
+      response: {
+        data: { message: error },
+      },
+    }) {
+      message.error(error);
+    }
+  };
+  const menu = (
+    <Menu
+      items={
+        donorCampaigns.map(({ id, title }) => (
+          {
+            label: <Text>{title}</Text>,
+            key: id,
+            onClick: () => {
+              navigate(`/campaign/${id}`);
+            },
+          }
+        ))
+      }
+    />
+  );
+  const getCampaigns = async (donorId) => {
+    try {
+      const { data: { data: { campaigns } } } = await axios.get(`/api/admin/donor/${donorId}/campaigns`);
+      setDonorCampaigns(campaigns);
     } catch ({
       response: {
         data: { message: error },
@@ -120,7 +152,14 @@ const Donors = () => {
       title: 'Campaigns',
       dataIndex: 'campaigns',
       width: '15%',
-
+      render: (_, { id }) => (
+        <Dropdown className="dropdown_campaigns" overlay={menu} trigger={['click']} onClick={() => getCampaigns(id)}>
+          <Space>
+            <Text>View all</Text>
+            <DownOutlined />
+          </Space>
+        </Dropdown>
+      ),
     },
 
     {
@@ -141,8 +180,8 @@ const Donors = () => {
           <EditOutlined
             className="edit_icon"
             onClick={
-              () => setVisible(true)
-            }
+            () => setVisible(true)
+          }
           />
           <WhatsAppOutlined
             className="whatsapp_icon"
@@ -163,7 +202,7 @@ const Donors = () => {
           pagination={{ total: rowsCount, defaultPageSize: 8 }}
         />
       </Form>
-      <EditDonorModal visible={visible} />
+      <EditDonorModal visible={visible} setVisible={setVisible} />
 
     </section>
   );
