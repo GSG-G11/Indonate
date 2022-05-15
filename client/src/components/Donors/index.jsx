@@ -1,5 +1,5 @@
 import {
-  Table, Form, message,
+  Table, message,
   Popconfirm,
   Typography, Dropdown, Menu, Space,
 } from 'antd';
@@ -20,10 +20,7 @@ const Donors = () => {
   const [dataSource, setDataSource] = useState([]);
   const [rowsCount, setRowsCount] = useState([]);
   const [donorCampaigns, setDonorCampaigns] = useState([]);
-  const [editingRow, setEditingRow] = useState(null);
   const [visible, setVisible] = useState(false);
-
-  const [form] = Form.useForm();
 
   const nullToZero = (value) => {
     if (value === null) {
@@ -52,13 +49,12 @@ const Donors = () => {
     return source.cancel();
   }, []);
 
-  const onFinish = async (values) => {
-    const updatedDataSource = [...dataSource];
-    const response = await axios.patch(`/api/admin/donor/${editingRow}`, values);
-    console.log(response);
-    setDataSource(updatedDataSource);
-    setEditingRow(null);
-  };
+  // const onFinish = async (values) => {
+  //   const updatedDataSource = [...dataSource];
+  //   const response = await axios.patch(`/api/admin/donor/${editingRow}`, values);
+  //   console.log(response);
+  //   setDataSource(updatedDataSource);
+  // };
 
   const deleteDonor = async (donorId) => {
     try {
@@ -180,8 +176,8 @@ const Donors = () => {
           <EditOutlined
             className="edit_icon"
             onClick={
-            () => setVisible(true)
-          }
+              () => setVisible(true)
+            }
           />
           <WhatsAppOutlined
             className="whatsapp_icon"
@@ -195,13 +191,11 @@ const Donors = () => {
   return (
     <section className="donors_table">
       <Title>Donors</Title>
-      <Form form={form} onFinish={onFinish}>
-        <Table
-          columns={columns}
-          dataSource={dataSource}
-          pagination={{ total: rowsCount, defaultPageSize: 8 }}
-        />
-      </Form>
+      <Table
+        columns={columns}
+        dataSource={dataSource}
+        pagination={{ total: rowsCount, defaultPageSize: 8 }}
+      />
       <EditDonorModal visible={visible} setVisible={setVisible} />
 
     </section>

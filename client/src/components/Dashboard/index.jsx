@@ -12,7 +12,6 @@ import {
   TeamOutlined,
   UserOutlined,
 } from '@ant-design/icons';
-import Donors from '../Donors';
 import normalLogo from '../../assets/images/indonate-logo.svg';
 import collapsedLogo from '../../assets/images/collapsed-logo.jpg';
 
@@ -65,7 +64,7 @@ const Dashboard = () => {
             <Item>
               <UserOutlined />
               <span>Donors</span>
-              <Link to="/admin/donors" element={Donors} />
+              <Link to="/admin/donors" />
             </Item>
             <Item>
               <TeamOutlined />
