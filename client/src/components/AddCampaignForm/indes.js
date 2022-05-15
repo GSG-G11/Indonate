@@ -33,8 +33,8 @@ const CollectionCreateForm = ({
             form.resetFields();
             onCreate(values);
           })
-          .catch((info) => {
-            console.log('Validate Failed:', info);
+          .catch(() => {
+            message.error('Validate Failed');
           });
       }}
     >
@@ -115,8 +115,7 @@ const AddCanpaignForm = () => {
   };
   const EditCampign = async ({ Title, Description }) => {
     try {
-      const { data: { message: successMessage } } = await axios.post('/api/admin/campaigns', {
-        id: 3,
+      const { data: { message: successMessage } } = await axios.patch('/api/admin/campaign/1', {
         title: Title,
         description: Description,
         food_target: 10,
