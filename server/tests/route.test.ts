@@ -749,7 +749,6 @@ describe('DELETE /api/admin/donor/:donorId', () => {
     expect(response.body.message).toBe('Unauthorized user');
   });
 });
-
 describe('GET /api/families/campaigns/:id', () => {
   test('unauthorized admin', async () => {
     const response = await request(app)
@@ -792,7 +791,6 @@ describe('GET /api/families/campaigns/:id', () => {
     });
   });
 });
-
 describe('/GET/api/admin/donors', () => {
   test('get donors', async () => {
     const response = await request(app)
@@ -883,7 +881,45 @@ describe('/GET/api/admin/donors', () => {
     expect(response.body.message).toBe('Unauthorized admin');
   });
 });
-
+describe('PATCH /api/admin/donor/:id', () => {
+  test('success update donor', async () => {
+    const response = await request(app)
+      .patch('/api/admin/donor/5')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUyMTIxODI0LCJleHAiOjE2NTQ3MTM4MjR9.Ue8JhWn8jAgLNzUdoHiWZAXoRtF5vooY3itRjw1yjyM',
+      ])
+      .send({
+        name: 'new name',
+        phone: '059999999',
+      })
+      .expect(200);
+    expect(response.body.message).toEqual('Donor updated successfully');
+  });
+  test('failed updating donor', async () => {
+    const response = await request(app)
+      .patch('/api/admin/donor/2')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUyMTIxODI0LCJleHAiOjE2NTQ3MTM4MjR9.Ue8JhWn8jAgLNzUdoHiWZAXoRtF5vooY3itRjw1yjyM',
+      ])
+      .expect(400);
+    expect(response.body.message).toEqual('Update donor failed');
+  });
+  test('id must be a number', async () => {
+    const response = await request(app)
+      .patch('/api/admin/donor/string')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUyMTIxODI0LCJleHAiOjE2NTQ3MTM4MjR9.Ue8JhWn8jAgLNzUdoHiWZAXoRtF5vooY3itRjw1yjyM',
+      ])
+      .expect(400);
+    expect(response.body.message).toEqual('"id" must be a number');
+  });
+  test('Unauthorized user', async () => {
+    const response = await request(app)
+      .patch('/api/admin/donor/string')
+      .expect(401);
+    expect(response.body.message).toBe('Unauthorized user');
+  });
+});
 describe('GET/admin/donor/campaigns/:id', () => {
   test('get campaigns for donor that have id 1', async () => {
     const response = await request(app).get('/api/admin/donor/1/campaigns')
