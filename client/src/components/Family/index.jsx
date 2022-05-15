@@ -62,13 +62,13 @@ const Family = () => {
       title: 'Clothes',
       dataIndex: 'clothes',
       key: 'clothes',
-      render: (text) => <Paragraph>{text || 0}</Paragraph>,
+      render: (text) => <Paragraph>{text ? `${text} Piece` : 0}</Paragraph>,
     },
     {
       title: 'Food',
       dataIndex: 'food',
       key: 'food',
-      render: (text) => <Paragraph>{text || 0}</Paragraph>,
+      render: (text) => <Paragraph>{text ? `${text} Meal` : 0}</Paragraph>,
     },
     {
       title: 'Address',
