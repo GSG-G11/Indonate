@@ -1,30 +1,31 @@
-/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import {
-  Collapse,
   Table,
   Popconfirm,
   Popover,
   Space,
   message,
-  Pagination,
+  Result,
+  Button,
 } from 'antd';
 import {
   CloseCircleOutlined,
   DeleteOutlined,
   FileSearchOutlined,
-  UserAddOutlined,
+  TeamOutlined,
 } from '@ant-design/icons';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './style.css';
 
 function CampaignsTable() {
+  const navigate = useNavigate();
   const [campaigns, setCampaigns] = useState([]);
   const [page, setPage] = useState(1);
   const [campaignsCount, setCampaignsCount] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     const source = axios.CancelToken.source();
@@ -43,10 +44,10 @@ function CampaignsTable() {
         setIsError(false);
       } catch ({
         response: {
-          data: { message: errorMessage },
+          data: { message: error },
         },
       }) {
-        message.error(errorMessage);
+        setErrorMessage(error);
         setIsError(true);
       }
     };
@@ -55,34 +56,30 @@ function CampaignsTable() {
       source.cancel();
     };
   }, [page]);
+
   const handleDeleteCampaign = async (id) => {
-    setCampaigns(campaigns.filter((campaign) => campaign.id !== id));
     try {
       const {
         data: { message: deleteMessage },
       } = await axios.delete(`/api/admin/campaigns/${id}`);
+      setCampaigns(campaigns.filter((campaign) => campaign.id !== id));
       message.success(deleteMessage);
     } catch ({
       response: {
-        data: { message: errorMessage },
+        data: { message: error },
       },
     }) {
-      message.error(errorMessage);
+      message.error(error);
     }
   };
+
   const handleCloseCampaign = async (id) => {
-    try {
-      const {
-        data: { message: deleteMessage },
-      } = await axios.patch(`/api/admin/campaign/${id}`);
-      message.success(deleteMessage);
-    } catch ({
-      response: {
-        data: { message: errorMessage },
-      },
-    }) {
-      message.error(errorMessage);
-    }
+    console.log(id);
+    // Handle close campaign code should goes here
+  };
+
+  const handleClick = () => {
+    navigate('/admin/campaigns');
   };
 
   const columns = [
@@ -232,7 +229,7 @@ function CampaignsTable() {
           >
             <CloseCircleOutlined style={{ fontSize: '2.5rem' }} />
           </Popconfirm>
-          <UserAddOutlined style={{ fontSize: '2.5rem', color: 'green' }} />
+          <TeamOutlined style={{ fontSize: '2.5rem', color: '#008EF2' }} />
         </Space>
       ),
     },
@@ -250,7 +247,15 @@ function CampaignsTable() {
       }}
     />
   ) : (
-    <div>{isError}</div>
+    <Result
+      status="404"
+      title={errorMessage}
+      extra={[
+        <Button type="primary" key="console" onClick={handleClick} size="large">
+          Go to Campaigns table
+        </Button>,
+      ]}
+    />
   );
 }
 
