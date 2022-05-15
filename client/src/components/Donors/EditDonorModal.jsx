@@ -8,10 +8,10 @@ import React from 'react';
 
 const { Item } = Form;
 
-const editDonorModal = ({ visible }) => (
+const editDonorModal = () => (
   <Modal
     title="Edit Donor info"
-    visible={visible}
+    visible={false}
     onOk
     onCancel
   >

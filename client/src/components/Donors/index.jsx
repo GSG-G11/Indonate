@@ -13,6 +13,7 @@ const { Title } = Typography;
 
 const Donors = () => {
   const [dataSource, setDataSource] = useState([]);
+  const [rowsCount, setRowsCount] = useState([]);
   const [editingRow, setEditingRow] = useState(null);
   const [visible, setVisible] = useState(false);
 
@@ -23,6 +24,35 @@ const Donors = () => {
       return 0;
     }
     return value;
+  };
+
+  useEffect(() => {
+    const source = axios.CancelToken.source();
+    const fetchDonors = async () => {
+      const { data: { data: { donors, count } } } = await axios.get('/api/admin/donors');
+      const allDonors = donors.map((obj) => {
+        const name = obj.name.charAt(0).toUpperCase() + obj.name.slice(1); // capitlize name
+        const totalFood = nullToZero(obj.totalFood); // convert incoming null values to 0
+        const totalMoney = nullToZero(obj.totalMoney);
+        const totalClothes = nullToZero(obj.totalClothes);
+        return {
+          key: obj.id, ...obj, name, totalFood, totalMoney, totalClothes,
+        };
+      }).filter(({ email }) => email !== 'admin@gmail.com'); // remove admin
+      setRowsCount(count);
+      setDataSource(allDonors);
+    };
+    fetchDonors();
+    return source.cancel();
+  }, []);
+
+  const onFinish = async (values) => {
+    const updatedDataSource = [...dataSource];
+    updatedDataSource.splice(editingRow, 1, { key: editingRow, id: editingRow, ...values });
+    const response = await axios.patch(`/api/admin/donor/${editingRow}`, values);
+    console.log(response);
+    setDataSource(updatedDataSource);
+    setEditingRow(null);
   };
 
   const deleteDonor = async (donorId) => {
@@ -39,29 +69,11 @@ const Donors = () => {
     }
   };
 
-  useEffect(() => {
-    const source = axios.CancelToken.source();
-    const fetchDonors = async () => {
-      const { data: { data: { donors } } } = await axios.get('/api/admin/donors');
-      const allDonors = donors.map((obj) => {
-        const name = obj.name.charAt(0).toUpperCase() + obj.name.slice(1); // capitlize name
-        const totalFood = nullToZero(obj.totalFood); // convert incoming null values to 0
-        const totalMoney = nullToZero(obj.totalMoney);
-        const totalClothes = nullToZero(obj.totalClothes);
-        return {
-          key: obj.id, ...obj, name, totalFood, totalMoney, totalClothes,
-        };
-      }).filter(({ email }) => email !== 'admin@gmail.com'); // remove admin
-      setDataSource(allDonors);
-    };
-    fetchDonors();
-    return source.cancel();
-  }, []);
   const columns = [
     {
       title: 'Name',
       dataIndex: 'name',
-      width: '20%',
+      width: '15%',
     },
     {
       title: 'Phone',
@@ -102,7 +114,13 @@ const Donors = () => {
     {
       title: 'address',
       dataIndex: 'address',
-      width: '20%',
+      width: '15%',
+    },
+    {
+      title: 'Campaigns',
+      dataIndex: 'campaigns',
+      width: '15%',
+
     },
 
     {
@@ -135,19 +153,15 @@ const Donors = () => {
     },
   ];
 
-  const onFinish = async (values) => {
-    const updatedDataSource = [...dataSource];
-    updatedDataSource.splice(editingRow, 1, { key: editingRow, id: editingRow, ...values });
-    const response = await axios.patch(`/api/admin/donor/${editingRow}`, values);
-    console.log(response);
-    setDataSource(updatedDataSource);
-    setEditingRow(null);
-  };
   return (
     <section className="donors_table">
       <Title>Donors</Title>
       <Form form={form} onFinish={onFinish}>
-        <Table columns={columns} dataSource={dataSource} />
+        <Table
+          columns={columns}
+          dataSource={dataSource}
+          pagination={{ total: rowsCount, defaultPageSize: 8 }}
+        />
       </Form>
       <EditDonorModal visible={visible} />
 
