@@ -1,9 +1,9 @@
 import {
-  Button, Table, Form, Input,
+  Table, Form, message,
 } from 'antd';
 import 'antd/dist/antd.css';
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import axios from 'axios'; import { DeleteOutlined } from '@ant-design/icons';
 
 function Donors() {
   const [dataSource, setDataSource] = useState([]);
@@ -17,7 +17,18 @@ function Donors() {
     return value;
   };
 
+  const deleteDonor = async (donorId) => {
+    try {
+      const { data: { message: successMessage } } = await axios.delete(`/api/admin/donor/${donorId}`);
+      setDataSource(dataSource.filter((obj) => obj.id !== donorId));
+      message.success(successMessage);
+    } catch (e) {
+      message.success(e.message);
+    }
+  };
+
   useEffect(() => {
+    const source = axios.CancelToken.source();
     const fetchDonors = async () => {
       const { data: { data: { donors } } } = await axios.get('/api/admin/donors');
       const allDonors = donors.map((obj) => {
@@ -27,57 +38,24 @@ function Donors() {
         return {
           key: obj.id, ...obj, totalFood, totalMoney, totalClothes,
         };
-      });
-      setDataSource(allDonors); // remove admin
+      }).filter((obj) => obj.name !== 'admin'); // remove admin
+      setDataSource(allDonors);
     };
     fetchDonors();
+    return source.cancel();
   }, []);
   const columns = [
     {
       title: 'Name',
       dataIndex: 'name',
       width: '20%',
-      render: (text, record) => {
-        if (editingRow === record.key) {
-          return (
-            <Form.Item
-              name="name"
-              rules={[
-                {
-                  required: true,
-                  message: 'Please enter your name',
-                },
-              ]}
-            >
-              <Input />
-            </Form.Item>
-          );
-        }
-        return <p>{text}</p>;
-      },
+      render: (text) => <p>{text}</p>,
     },
     {
       title: 'Phone',
       dataIndex: 'phone',
       width: '15%',
-      render: (text, record) => {
-        if (editingRow === record.key) {
-          return (
-            <Form.Item
-              name="phone"
-              rules={[
-                {
-                  required: true,
-                  message: 'Please enter your phone',
-                },
-              ]}
-            >
-              <Input />
-            </Form.Item>
-          );
-        }
-        return <p>{text}</p>;
-      },
+      render: (text) => <p>{text}</p>,
     },
     {
       title: 'Donation',
@@ -106,53 +84,25 @@ function Donors() {
       dataIndex: 'address',
       width: '20%',
       editable: true,
-      render: (text, record) => {
-        if (editingRow === record.key) {
-          return (
-            <Form.Item
-              name="address"
-              rules={[
-                {
-                  required: true,
-                  message: 'Please enter your address',
-                },
-              ]}
-            >
-              <Input />
-            </Form.Item>
-          );
-        }
-        return <p>{text}</p>;
-      },
+      render: (text) => <p>{text}</p>,
     },
 
     {
       title: 'Actions',
       render: (_, record) => (
-        <>
-          <Button
-            type="link"
-            onClick={() => {
-              setEditingRow(record.key);
-              form.setFieldsValue({
-                name: record.name,
-                phone: record.phone,
-                address: record.address,
-              });
-            }}
-          >
-            Edit
-          </Button>
-          <Button type="link" htmlType="submit">
-            Save
-          </Button>
-        </>
+        <DeleteOutlined onClick={() => {
+          deleteDonor(record.key);
+        }}
+        />
       ),
     },
   ];
-  const onFinish = (values) => {
+
+  const onFinish = async (values) => {
     const updatedDataSource = [...dataSource];
-    updatedDataSource.splice(editingRow, 1, { ...values, key: editingRow });
+    updatedDataSource.splice(editingRow, 1, { key: editingRow, id: editingRow, ...values });
+    const response = await axios.patch(`/api/admin/donor/${editingRow}`, values);
+    console.log(response);
     setDataSource(updatedDataSource);
     setEditingRow(null);
   };
