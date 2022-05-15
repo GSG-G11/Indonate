@@ -105,7 +105,7 @@ function CampaignsTable() {
       align: 'center',
       key: 'description',
       render: (description) => (
-        <Popover placement="bottom" content={description} trigger="click">
+        <Popover content={description} trigger="click">
           <FileSearchOutlined style={{ fontSize: '2.5rem' }} />
         </Popover>
       ),
@@ -225,7 +225,9 @@ function CampaignsTable() {
             cancelText="No"
             okType="danger"
           >
-            <DeleteOutlined style={{ fontSize: '2.5rem', color: 'red' }} />
+            <Popover content="Delete campaign">
+              <DeleteOutlined style={{ fontSize: '2.5rem', color: 'red' }} />
+            </Popover>
           </Popconfirm>
           {record.is_available ? (
             <Popconfirm
@@ -237,14 +239,24 @@ function CampaignsTable() {
               cancelText="No"
               okType="primary"
             >
-              <CloseCircleOutlined style={{ fontSize: '2.5rem' }} />
+              <Popover content="Close campaign">
+                <CloseCircleOutlined style={{ fontSize: '2.5rem' }} />
+              </Popover>
             </Popconfirm>
           ) : (
             <div />
           )}
-          <TeamOutlined style={{ fontSize: '2.5rem', color: '#008EF2' }} />
+          {!record.is_available ? (
+            <Popover content="List all families">
+              <TeamOutlined style={{ fontSize: '2.5rem', color: '#008EF2' }} />
+            </Popover>
+          ) : (
+            <div />
+          )}
           {record.is_available ? (
-            <EditOutlined style={{ fontSize: '2.5rem', color: '#469D62' }} />
+            <Popover content="Edit campaign">
+              <EditOutlined style={{ fontSize: '2.5rem', color: '#469D62' }} />
+            </Popover>
           ) : (
             <Badge count="Closed" />
           )}
