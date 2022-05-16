@@ -8,10 +8,15 @@ import React, {
   Typography, Comment,
 } from 'antd';
 import axios from 'axios';
+import './style.less';
 
 const { Title } = Typography;
 const ReportsTable = () => {
   const [reports, setReports] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  //   const [reports, setReports] = useState([]);
+
   //   const [reportsCount, setReportsCount] = useState([]);
 
   const source = axios.CancelToken.source();
@@ -20,6 +25,7 @@ const ReportsTable = () => {
       try {
         const { data: { data: { reports: dbReports, count } } } = await axios.get('/api/admin/reports/?page=1');
         setReports(dbReports);
+        setLoading(false);
         // setReportsCount(count);
         console.log(dbReports, count);
       } catch ({
@@ -40,10 +46,15 @@ const ReportsTable = () => {
   return (
     <section>
       <Title level={2} className="title">Reports</Title>
-      <div style={{ background: '#ECECEC', padding: '30px' }}>
-        <Row gutter={16}>
-          {reports.map(({ name, message }) => (
-            <Card bordered={false}>
+      <div className="comments_container">
+        <Row className="comments_row">
+          {reports.map(({ id, name, message }) => (
+            <Card
+              loading={loading}
+              key={id}
+              className="comment_card"
+              bordered={false}
+            >
               <Comment
                 author={<span>{name}</span>}
                 content={(
