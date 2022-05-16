@@ -17,11 +17,11 @@ import './style.css';
 const { Item } = Form;
 const { TextArea } = Input;
 const { Option } = Select;
-const AddCampaignForm = ({
-  onCancel,
+const CampaignForm = ({
   visible,
   action,
   setVisible,
+  data,
 }) => {
   const [form] = Form.useForm();
   const [categories, setCategories] = useState([]);
@@ -38,7 +38,7 @@ const AddCampaignForm = ({
     fetchData();
   }, []);
   useEffect(() => {
-    form.setFieldsValue({ title: 'hello' });
+    form.setFieldsValue(data);
   }, [visible]);
 
   const handleAddAndEdit = async (value) => {
@@ -53,13 +53,16 @@ const AddCampaignForm = ({
         message.success(successMessage);
         setVisible(false);
       } else {
-        const { data: { message: successMessage } } = await axios.patch('/api/admin/campaign/1', { ...value, image_link: secureUrl });
+        const { data: { message: successMessage } } = await axios.patch(`/api/admin/campaign/${data.id}`, { ...value, image_link: secureUrl });
         message.success(successMessage);
         setVisible(false);
       }
     } catch ({ response: { data: { message: errorMessage } } }) {
       message.error(errorMessage);
     }
+  };
+  const handleCancel = () => {
+    setVisible(false);
   };
   return (
     <div className="add-edit-Campaign">
@@ -68,7 +71,7 @@ const AddCampaignForm = ({
         title={action}
         okText={action}
         cancelText="Cancel"
-        onCancel={onCancel}
+        onCancel={() => handleCancel()}
         onOk={() => {
           form
             .validateFields()
@@ -190,12 +193,12 @@ const AddCampaignForm = ({
   );
 };
 
-AddCampaignForm.propTypes = {
-  onCancel: PropTypes.func.isRequired,
+CampaignForm.propTypes = {
   visible: PropTypes.bool.isRequired,
   action: PropTypes.string.isRequired,
   setVisible: PropTypes.func.isRequired,
+  data: PropTypes.objectOf.isRequired,
 
 };
 
-export default AddCampaignForm;
+export default CampaignForm;

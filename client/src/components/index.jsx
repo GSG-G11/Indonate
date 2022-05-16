@@ -13,6 +13,7 @@ import DisplayCampaigns from './DisplayCampaigns';
 import Header from './HeaderAllCampaigns';
 import AddCampaignButton from './AddCampaign/AddCampaignButton';
 import Family from './Family';
+import CampaignForm from './AddCampaign/AddCampaignForm';
 
 export {
   AddCampaignButton,
@@ -30,4 +31,5 @@ export {
   ReportsForm,
   Container,
   Family,
+  CampaignForm,
 };

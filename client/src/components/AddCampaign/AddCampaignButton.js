@@ -3,14 +3,13 @@ import {
   Button,
 } from 'antd';
 
-import AddCampaignForm from './AddCampaignForm';
+import CampaignForm from './AddCampaignForm';
 
 const AddCampaignButton = () => {
   const [visilbe, setVisible] = useState(false);
-  const [action, setAction] = useState('');
+
   const DisplayAddModle = async () => {
     setVisible(true);
-    setAction('Add');
   };
   return (
     <div>
@@ -21,11 +20,18 @@ const AddCampaignButton = () => {
         Add Campaign
       </Button>
 
-      <AddCampaignForm
-        onCancel={() => setVisible(false)}
+      <CampaignForm
         visible={visilbe}
-        action={action}
+        action="Add"
         setVisible={setVisible}
+        data={{
+          title: '',
+          describe: '',
+          categoryId: '',
+          food_target: '',
+          clothes_target: '',
+          money_target: '',
+        }}
       />
     </div>
   );

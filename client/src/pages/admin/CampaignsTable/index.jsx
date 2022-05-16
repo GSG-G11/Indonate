@@ -18,6 +18,7 @@ import {
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import './style.css';
+import { CampaignForm } from '../../../components';
 
 function CampaignsTable() {
   const navigate = useNavigate();
@@ -25,6 +26,8 @@ function CampaignsTable() {
   const [page, setPage] = useState(1);
   const [campaignsCount, setCampaignsCount] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
+  const [visiable, setVisiable] = useState(false);
+  const [data, setData] = useState({});
 
   useEffect(() => {
     const source = axios.CancelToken.source();
@@ -78,7 +81,11 @@ function CampaignsTable() {
     console.log(id);
     // Handle close campaign code should goes here
   };
-
+  const handleEditCampaign = (record) => {
+    console.log('recorddddddddddd', record);
+    setData(record);
+    setVisiable(true);
+  };
   const columns = [
     {
       title: 'Title',
@@ -261,7 +268,7 @@ function CampaignsTable() {
           )}
           {record.is_available ? (
             <Popover content="Edit campaign">
-              <EditOutlined className="icon update-icon" />
+              <EditOutlined className="icon update-icon" onClick={() => handleEditCampaign(record)} />
             </Popover>
           ) : (
             <Badge count="Closed" />
@@ -272,18 +279,28 @@ function CampaignsTable() {
   ];
 
   return (
-    <Table
-      size="small"
-      dataSource={campaigns}
-      columns={columns}
-      bordered
-      loading={isLoading}
-      rowClassName={(record) => !record.is_available && 'disabled-row'}
-      pagination={{ total: campaignsCount, defaultPageSize: 10 }}
-      onChange={(e) => {
-        setPage(e.current);
-      }}
-    />
+    <>
+      <Table
+        size="small"
+        dataSource={campaigns}
+        columns={columns}
+        bordered
+        loading={isLoading}
+        rowClassName={(record) => !record.is_available && 'disabled-row'}
+        pagination={{ total: campaignsCount, defaultPageSize: 10 }}
+        onChange={(e) => {
+          setPage(e.current);
+        }}
+      />
+      <CampaignForm
+        visible={visiable}
+        setVisible={setVisiable}
+        action="Edit"
+        data={data}
+      />
+
+    </>
+
   );
 }
 
