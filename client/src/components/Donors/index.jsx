@@ -140,7 +140,7 @@ const Donors = () => {
       ],
     },
     {
-      title: 'address',
+      title: 'Address',
       dataIndex: 'address',
       width: '15%',
     },
@@ -187,9 +187,14 @@ const Donors = () => {
               }
             }
           />
-          <WhatsAppOutlined
-            className="whatsapp_icon"
-          />
+          <a
+            href={`http://wa.me/${record.phone}`}
+            target="_blank"
+            aria-label="start chat"
+            rel="noreferrer"
+          >
+            <WhatsAppOutlined className="whatsapp_icon" />
+          </a>
         </div>
 
       ),
