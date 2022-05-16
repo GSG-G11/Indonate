@@ -46,48 +46,47 @@ const editDonorModal = ({
 
   return (
     <Modal
-      title="Edit Donor info"
       visible={visible}
+      title={id ? 'Update Family' : 'Add Family'}
+      okText={id ? 'Update' : 'Add'}
+      cancelText="Cancel"
       onCancel={() => setVisible(false)}
       onOk={handleSubmit}
       keyboard
     >
       <Form
         form={form}
-        name="basic"
-        labelCol={{ span: 8 }}
-        wrapperCol={{ span: 16 }}
-        initialValues={{ remember: true }}
-        autoComplete="off"
+        layout="vertical"
+        name="form_in_modal"
+        initialValues={{ modifier: 'public' }}
       >
         <Item
           name="name"
           label="Name"
           rules={[{ required: true, message: 'Please input your name!' }]}
         >
-          <Input />
+          <Input placeholder="Ex: John doe" />
         </Item>
         <Item
           name="email"
-          label="email"
+          label="Email"
           rules={[{ required: true, message: 'Please input your email!' }]}
         >
-          <Input />
-
+          <Input placeholder="Ex: example@example.com" />
         </Item>
         <Item
           name="phone"
-          label="phone"
+          label="Phone"
           rules={[{ required: true, message: 'Please input your phone!' }]}
         >
-          <Input />
+          <Input placeholder="Ex: +972501234567" />
         </Item>
         <Item
           name="address"
-          label="address"
+          label="Address"
           rules={[{ required: true, message: 'Please input your address!' }]}
         >
-          <Input />
+          <Input placeholder="Ex: Palestine gaza" />
         </Item>
       </Form>
     </Modal>

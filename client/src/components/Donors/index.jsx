@@ -25,23 +25,23 @@ const Donors = () => {
   const [visible, setVisible] = useState(false);
   const [selectedRow, setSelectedRow] = useState(false);
 
-  const nullToZero = (value) => {
-    if (value === null) {
-      return 0;
-    }
-    return value;
-  };
+  // const nullToZero = (value) => {
+  //   if (value === null) {
+  //     return 0;
+  //   }
+  //   return value;
+  // };
   useEffect(() => {
     const source = axios.CancelToken.source();
     const fetchDonors = async () => {
       const { data: { data: { donors, count } } } = await axios.get(`/api/admin/donors/?page=${+page}`);
       const allDonors = donors.map((obj) => {
         const name = obj.name.charAt(0).toUpperCase() + obj.name.slice(1); // capitlize name
-        const totalFood = nullToZero(obj.totalFood); // convert incoming null values to 0
-        const totalMoney = nullToZero(obj.totalMoney);
-        const totalClothes = nullToZero(obj.totalClothes);
+        // const totalFood = nullToZero(obj.totalFood); // convert incoming null values to 0
+        // const totalMoney = nullToZero(obj.totalMoney);
+        // const totalClothes = nullToZero(obj.totalClothes);
         return {
-          key: obj.id, ...obj, name, totalFood, totalMoney, totalClothes,
+          key: obj.id, ...obj, name,
         };
       });
       setRowsCount(count);
@@ -115,25 +115,19 @@ const Donors = () => {
           title: 'Money',
           dataIndex: 'totalMoney',
           width: '10%',
-          render: (text) => (
-            <>
-              $
-              {' '}
-              {text}
-            </>
-          ),
-
+          render: (text) => <span>{text ? `${text}$ ` : 0}</span>,
         },
         {
           title: 'Clothes',
           dataIndex: 'totalClothes',
           width: '10%',
+          render: (text) => <span>{text ? `${text} Pieces` : 0}</span>,
         },
         {
           title: 'Food',
           dataIndex: 'totalFood',
           width: '10%',
-
+          render: (text) => <span>{text ? `${text} Meals` : 0}</span>,
         },
       ],
     },
@@ -149,7 +143,7 @@ const Donors = () => {
       render: (_, { id }) => (
         <Select
           className="select"
-          defaultValue="view campaigns"
+          defaultValue="See more"
           onClick={() => getCampaigns(id)}
           onSelect={(campaignId) => navigate(`/campaign/${campaignId}`)}
         >
