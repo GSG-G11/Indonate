@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import {
   Button,
   Modal,
@@ -19,16 +20,47 @@ const { Option } = Select;
 const AddCampaignForm = ({
   onCancel,
   visible,
-  onCreate,
   action,
-  categories,
-  setImage,
+  setVisible,
 }) => {
   const [form] = Form.useForm();
+  const [categories, setCategories] = useState([]);
+  const [image, setImage] = useState();
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const { data: { data: { categories: categoriesFromDB } } } = await axios.get('/api/categories');
+        setCategories(categoriesFromDB);
+      } catch ({ response: { data: { message: errorMessage } } }) {
+        message.error(errorMessage);
+      }
+    };
+    fetchData();
+  }, []);
   useEffect(() => {
     form.setFieldsValue({ title: 'hello' });
   }, [visible]);
 
+  const handleAddAndEdit = async (value) => {
+    try {
+      const formData = new FormData();
+      formData.append('file', image);
+      formData.append('upload_preset', 's9kbkcoe');
+
+      const { data: { secure_url: secureUrl } } = await axios.post('https://api.cloudinary.com/v1_1/farahshcoding/image/upload', formData);
+      if (action === 'Add') {
+        const { data: { message: successMessage } } = await axios.post('/api/admin/campaigns', { ...value, image_link: secureUrl });
+        message.success(successMessage);
+        setVisible(false);
+      } else {
+        const { data: { message: successMessage } } = await axios.patch('/api/admin/campaign/1', { ...value, image_link: secureUrl });
+        message.success(successMessage);
+        setVisible(false);
+      }
+    } catch ({ response: { data: { message: errorMessage } } }) {
+      message.error(errorMessage);
+    }
+  };
   return (
     <div className="add-edit-Campaign">
       <Modal
@@ -42,7 +74,7 @@ const AddCampaignForm = ({
             .validateFields()
             .then((values) => {
               form.resetFields();
-              onCreate(values);
+              handleAddAndEdit(values);
             })
             .catch(() => {
               message.error('Validate Failed');
@@ -161,10 +193,8 @@ const AddCampaignForm = ({
 AddCampaignForm.propTypes = {
   onCancel: PropTypes.func.isRequired,
   visible: PropTypes.bool.isRequired,
-  onCreate: PropTypes.func.isRequired,
   action: PropTypes.string.isRequired,
-  categories: PropTypes.arrayOf.isRequired,
-  setImage: PropTypes.func.isRequired,
+  setVisible: PropTypes.func.isRequired,
 
 };
 
