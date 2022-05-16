@@ -19,6 +19,7 @@ import {
   getCampaignsForDonor,
   getDonors,
   deleteReports,
+  updateCampaign,
   updateDonorById,
 } from './admin';
 
@@ -43,5 +44,6 @@ export {
   addFamily,
   getCampaignsForDonor,
   deleteReports,
+  updateCampaign,
   updateDonorById,
 };
