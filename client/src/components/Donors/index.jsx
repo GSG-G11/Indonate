@@ -20,7 +20,9 @@ const Donors = () => {
   const [dataSource, setDataSource] = useState([]);
   const [rowsCount, setRowsCount] = useState([]);
   const [donorCampaigns, setDonorCampaigns] = useState([]);
+  const [page, setPage] = useState(1);
   const [visible, setVisible] = useState(false);
+  const [rowEdit, setRowEdit] = useState(false);
 
   const nullToZero = (value) => {
     if (value === null) {
@@ -28,11 +30,10 @@ const Donors = () => {
     }
     return value;
   };
-
   useEffect(() => {
     const source = axios.CancelToken.source();
     const fetchDonors = async () => {
-      const { data: { data: { donors, count } } } = await axios.get('/api/admin/donors');
+      const { data: { data: { donors, count } } } = await axios.get(`/api/admin/donors/?page=${+page}`);
       const allDonors = donors.map((obj) => {
         const name = obj.name.charAt(0).toUpperCase() + obj.name.slice(1); // capitlize name
         const totalFood = nullToZero(obj.totalFood); // convert incoming null values to 0
@@ -69,21 +70,6 @@ const Donors = () => {
       message.error(error);
     }
   };
-  const menu = (
-    <Menu
-      items={
-        donorCampaigns.map(({ id, title }) => (
-          {
-            label: <Text>{title}</Text>,
-            key: id,
-            onClick: () => {
-              navigate(`/campaign/${id}`);
-            },
-          }
-        ))
-      }
-    />
-  );
   const getCampaigns = async (donorId) => {
     try {
       const { data: { data: { campaigns } } } = await axios.get(`/api/admin/donor/${donorId}/campaigns`);
@@ -96,7 +82,21 @@ const Donors = () => {
       message.error(error);
     }
   };
-
+  const menu = (
+    <Menu
+      items={
+        donorCampaigns.map(({ id, title }) => (
+          {
+            key: id,
+            label: <Text>{title}</Text>,
+            onClick: () => {
+              navigate(`/campaign/${id}`);
+            },
+          }
+        ))
+      }
+    />
+  );
   const columns = [
     {
       title: 'Name',
@@ -149,7 +149,12 @@ const Donors = () => {
       dataIndex: 'campaigns',
       width: '15%',
       render: (_, { id }) => (
-        <Dropdown className="dropdown_campaigns" overlay={menu} trigger={['click']} onClick={() => getCampaigns(id)}>
+        <Dropdown
+          className="dropdown_campaigns"
+          overlay={menu}
+          trigger={['click']}
+          onClick={() => getCampaigns(id)}
+        >
           <Space>
             <Text>View all</Text>
             <DownOutlined />
@@ -162,7 +167,7 @@ const Donors = () => {
       title: 'Actions',
       render: (_, record) => (
 
-        <>
+        <div className="icons_container">
           <Popconfirm
             title="Are you sure?"
             okText="Yes"
@@ -176,13 +181,16 @@ const Donors = () => {
           <EditOutlined
             className="edit_icon"
             onClick={
-              () => setVisible(true)
+              () => {
+                setVisible(true);
+                setRowEdit(record);
+              }
             }
           />
           <WhatsAppOutlined
             className="whatsapp_icon"
           />
-        </>
+        </div>
 
       ),
     },
@@ -194,9 +202,13 @@ const Donors = () => {
       <Table
         columns={columns}
         dataSource={dataSource}
-        pagination={{ total: rowsCount, defaultPageSize: 8 }}
+        pagination={{
+          onChange: (current) => setPage(current),
+          total: rowsCount,
+          defaultPageSize: 8,
+        }}
       />
-      <EditDonorModal visible={visible} setVisible={setVisible} />
+      <EditDonorModal visible={visible} setVisible={setVisible} dataSource={rowEdit} />
 
     </section>
   );
