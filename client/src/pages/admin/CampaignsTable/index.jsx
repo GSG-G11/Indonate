@@ -5,8 +5,6 @@ import {
   Popover,
   Space,
   message,
-  Result,
-  Button,
   Badge,
   Tooltip,
 } from 'antd';
@@ -27,7 +25,6 @@ function CampaignsTable() {
   const [page, setPage] = useState(1);
   const [campaignsCount, setCampaignsCount] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
-  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     const source = axios.CancelToken.source();
@@ -43,13 +40,16 @@ function CampaignsTable() {
         setCampaigns(campaignsData);
         setCampaignsCount(count);
         setIsLoading(false);
-        setErrorMessage('');
       } catch ({
         response: {
-          data: { message: error },
+          status,
+          data: { message: errorMessage },
         },
       }) {
-        setErrorMessage(error);
+        if (status === 500) {
+          navigate('/'); // It will be edited to navigate into server error page
+        }
+        message.error(errorMessage);
       }
     };
     getCampaigns();
@@ -67,10 +67,10 @@ function CampaignsTable() {
       message.success(deleteMessage);
     } catch ({
       response: {
-        data: { message: error },
+        data: { message: errorMessage },
       },
     }) {
-      message.error(error);
+      message.error(errorMessage);
     }
   };
 
@@ -79,17 +79,17 @@ function CampaignsTable() {
     // Handle close campaign code should goes here
   };
 
-  const handleClick = () => {
-    navigate('/admin/campaigns');
-  };
-
   const columns = [
     {
       title: 'Title',
       dataIndex: 'title',
       key: 'title',
       render: (title, record) => (
-        <Tooltip title={title} color="#FFF" overlayInnerStyle={{ color: '#000' }}>
+        <Tooltip
+          title={title}
+          color="#FFF"
+          overlayInnerStyle={{ color: '#000' }}
+        >
           <Link
             to={`/campaign/${record.id}`}
             className="campaign-table-campaign-title"
@@ -106,7 +106,12 @@ function CampaignsTable() {
       align: 'center',
       key: 'description',
       render: (description) => (
-        <Tooltip title={description} trigger="click" color="#FFF" overlayInnerStyle={{ color: '#000' }}>
+        <Tooltip
+          title={description}
+          trigger="click"
+          color="#FFF"
+          overlayInnerStyle={{ color: '#000' }}
+        >
           <FileSearchOutlined className="icon description-icon" />
         </Tooltip>
       ),
@@ -266,7 +271,7 @@ function CampaignsTable() {
     },
   ];
 
-  return !errorMessage ? (
+  return (
     <Table
       size="small"
       dataSource={campaigns}
@@ -278,16 +283,6 @@ function CampaignsTable() {
       onChange={(e) => {
         setPage(e.current);
       }}
-    />
-  ) : (
-    <Result
-      status="404"
-      title={errorMessage}
-      extra={[
-        <Button type="primary" key="console" onClick={handleClick} size="large">
-          Go to Campaigns table
-        </Button>,
-      ]}
     />
   );
 }
