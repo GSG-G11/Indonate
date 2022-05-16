@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import {
   Table,
@@ -7,6 +8,8 @@ import {
   message,
   Badge,
   Tooltip,
+  Dropdown,
+  Menu,
 } from 'antd';
 import {
   CloseCircleOutlined,
@@ -14,6 +17,7 @@ import {
   EditOutlined,
   FileSearchOutlined,
   TeamOutlined,
+  UserOutlined,
 } from '@ant-design/icons';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
@@ -22,6 +26,8 @@ import './style.css';
 function CampaignsTable() {
   const navigate = useNavigate();
   const [campaigns, setCampaigns] = useState([]);
+  const [closeCampaignMode, setCloseCampaignMode] = useState(false);
+  const [families, setFamilies] = useState([]);
   const [page, setPage] = useState(1);
   const [campaignsCount, setCampaignsCount] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
@@ -75,10 +81,20 @@ function CampaignsTable() {
   };
 
   const handleCloseCampaign = async (id) => {
-    console.log(id);
+    setCloseCampaignMode(true);
     // Handle close campaign code should goes here
   };
 
+  const handleGetFamilies = async (id) => {
+    try {
+      const {
+        data: { data },
+      } = await axios.get(`/api/admin/campaign/${id}/families`);
+      setFamilies(data.families);
+    } catch (error) {
+      message.error(error);
+    }
+  };
   const columns = [
     {
       title: 'Title',
@@ -253,9 +269,26 @@ function CampaignsTable() {
             <div />
           )}
           {!record.is_available ? (
-            <Popover content="List all families">
-              <TeamOutlined className="icon families-icon" />
-            </Popover>
+            <Dropdown
+              overlay={(
+                <Menu
+                  items={families.map((family) => ({
+                    label: family.name,
+                    key: family.id,
+                    icon: <UserOutlined />,
+                  }))}
+                />
+              )}
+              trigger="click"
+              placement="bottom"
+            >
+              <TeamOutlined
+                className="icon families-icon"
+                onClick={() => {
+                  handleGetFamilies(record.id);
+                }}
+              />
+            </Dropdown>
           ) : (
             <div />
           )}
