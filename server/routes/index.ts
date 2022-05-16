@@ -9,6 +9,7 @@ import adminFamilyRouter from './adminFamilyRoutes';
 import adminDonors from './adminDonors';
 import adminDonorRouter from './adminDonor';
 import familyRouter from './adminFamily';
+import adminCampaignRouter from './adminCampaign';
 
 const router = Router();
 
@@ -17,9 +18,10 @@ router.use(authRouter);
 router.use(categoryRouter);
 router.use(campaignRouter);
 router.use(reportsRouter);
+
 router.use('/admin', adminFamilyRouter);
 router.use('/admin', adminDonors);
 router.use('/admin', adminDonorRouter);
 router.use('/admin', familyRouter);
-
+router.use('/admin', adminCampaignRouter);
 export default router;

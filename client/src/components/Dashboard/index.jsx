@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, Outlet, Navigate } from 'react-router-dom';
+
 import {
-  Layout, Menu,
+  Layout, Menu, Image,
 } from 'antd';
 import {
   DesktopOutlined,
@@ -11,7 +12,10 @@ import {
   TeamOutlined,
   UserOutlined,
 } from '@ant-design/icons';
-import './style.css';
+import normalLogo from '../../assets/images/indonate-logo.svg';
+import collapsedLogo from '../../assets/images/collapsed-logo.jpg';
+
+import './style.less';
 
 const {
   Header, Sider, Content,
@@ -21,15 +25,26 @@ const { Item } = Menu;
 const Dashboard = () => {
   const user = useSelector((state) => state.user);
   const [collapsed, setCollapsed] = useState(false);
+  const [logo, setLogo] = useState(normalLogo);
+
   const onCollapse = (collapse) => {
     setCollapsed(collapse);
+    if (logo === normalLogo) {
+      setLogo(collapsedLogo);
+    } else {
+      setLogo(normalLogo);
+    }
   };
   return user.isUserAuthorized && (user.userData?.isAdmin ? (
     <Layout
       className="dashboard-layout"
     >
       <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
-        <div className="logo">InDonate</div>
+        <Image
+          width={logo === normalLogo ? 115 : 26}
+          src={logo}
+          preview={false}
+        />
         <div className="dashboard">
           <Menu
             theme="light"

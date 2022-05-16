@@ -1,5 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
-import { Campaign, Donation, sequelize } from '../../database/models';
+import {
+  Campaign, Category, Donation, sequelize,
+} from '../../database/models';
 import { CustomError, querySchema } from '../../utils';
 
 const getCampaigns = async (
@@ -8,12 +10,12 @@ const getCampaigns = async (
   next: NextFunction,
 ) => {
   try {
-    const { page = 1 }: any = req.query;
+    const { page = 1, limit = 10 }: any = req.query;
     await querySchema.validateAsync(req.query);
     const { count, rows: campaigns } = await Campaign.findAndCountAll({
-      limit: 15,
-      offset: (page - 1) * 15,
-      group: ['campaigns.id'],
+      limit,
+      offset: (page - 1) * limit,
+      group: ['campaigns.id', 'category.id'],
       attributes: [
         'id',
         'title',
@@ -23,25 +25,38 @@ const getCampaigns = async (
         'money_target',
         'image_link',
         'is_available',
-        'categoryId',
-
-        [sequelize.fn('SUM', sequelize.col('donations.food')), 'current_food'],
         [
-          sequelize.fn('SUM', sequelize.col('donations.money')),
-          'current_money',
+          sequelize.fn('SUM', sequelize.literal('COALESCE(food, 0)')),
+          'current_food',
         ],
         [
-          sequelize.fn('SUM', sequelize.col('donations.clothes')),
+          sequelize.fn('SUM', sequelize.literal('COALESCE(clothes, 0)')),
           'current_clothes',
         ],
+        [
+          sequelize.fn('SUM', sequelize.literal('COALESCE(money, 0)')),
+          'current_money',
+        ],
       ],
-      include: {
-        model: Donation,
-        required: false,
-        duplicating: false,
-        attributes: [],
-      },
-      order: [['updatedAt', 'DESC']],
+      include: [
+        {
+          model: Donation,
+          required: false,
+          duplicating: false,
+          attributes: [],
+          as: 'donations',
+        },
+        {
+          model: Category,
+          required: false,
+          duplicating: false,
+          attributes: ['name'],
+        },
+      ],
+      order: [
+        ['is_available', 'DESC'],
+        ['updatedAt', 'DESC'],
+      ],
     });
     res.json({ message: 'Success', data: { campaigns, count: count.length } });
   } catch (error) {

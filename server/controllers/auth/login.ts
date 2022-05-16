@@ -38,7 +38,7 @@ const login = async (req: Request, res: Response, next: NextFunction) => {
 
     res
       .cookie('ACCESS_TOKEN', token, {
-        maxAge: 900000,
+        maxAge: 604800000,
         httpOnly: true,
       })
       .json({ message: 'Successfully logged in', data: payload });

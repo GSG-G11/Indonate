@@ -2,10 +2,11 @@ import React from 'react';
 import axios from 'axios';
 import { NavLink, useLocation } from 'react-router-dom';
 import {
-  Layout, Menu, Button, message,
+  Layout, Menu, Button, message, Image,
 } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
-import './style.css';
+import './style.less';
+import logo from '../../../assets/images/indonate-logo.svg';
 
 import { logout } from '../../../redux/feature/user/userSlice';
 
@@ -73,7 +74,12 @@ const Nav = () => {
     <div className="nav-container">
       <Layout>
         <Header>
-          <div className="logo">InDonate</div>
+          <Image
+            width={120}
+            src={logo}
+            preview={false}
+          />
+
           <Menu
             theme="dark"
             mode="horizontal"
