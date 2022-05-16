@@ -7,6 +7,7 @@ import {
   message,
   Badge,
   Tooltip,
+  Typography,
 } from 'antd';
 import {
   CloseCircleOutlined,
@@ -21,6 +22,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import './style.css';
 import { AddCampaignButton, CampaignForm } from '../../../components';
 
+const { Title } = Typography;
 function CampaignsTable() {
   const navigate = useNavigate();
   const [campaigns, setCampaigns] = useState([]);
@@ -289,7 +291,11 @@ function CampaignsTable() {
 
   return (
     <>
-      <AddCampaignButton setIsUpdateCampaign={setIsUpdateCampaign} data={data} />
+      <div className="header-campaign-table">
+        <Title level={4}>Campaigns</Title>
+        <AddCampaignButton setIsUpdateCampaign={setIsUpdateCampaign} data={data} />
+      </div>
+
       <Table
         size="small"
         dataSource={campaigns}

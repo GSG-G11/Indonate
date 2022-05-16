@@ -58,7 +58,9 @@ const CampaignForm = ({
       }
       setVisible(false);
       setIsUpdateCampaign(true);
-    } catch ({ response: { data: { message: errorMessage } } }) {
+    } catch (e) {
+      console.log(e);
+      const { response: { data: { message: errorMessage } } } = e;
       message.error(errorMessage);
     }
   };
@@ -68,6 +70,7 @@ const CampaignForm = ({
   return (
     <div className="add-edit-Campaign">
       <Modal
+        className="campaign-modal"
         visible={visible}
         title={action}
         okText={action}
@@ -79,6 +82,7 @@ const CampaignForm = ({
             .then((values) => {
               handleAddAndEdit(values);
               form.resetFields();
+              setImage('');
             })
             .catch(() => {
               message.error('Validate Failed');
