@@ -1,22 +1,21 @@
 import {
   Table, message,
   Popconfirm,
-  Typography, Select,
+  Typography, Dropdown, Space, Menu,
 } from 'antd';
 import 'antd/dist/antd.css';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import axios from 'axios'; import {
-  DeleteOutlined, EditOutlined, WhatsAppOutlined,
+  DeleteOutlined, EditOutlined, WhatsAppOutlined, DownOutlined,
 } from '@ant-design/icons';
 import './style.less';
 import EditDonorModal from './EditDonorModal';
 
-const { Title } = Typography;
-const { Option } = Select;
+const { Title, Text } = Typography;
 
-const Donors = () => {
+const DonorsTable = () => {
   const navigate = useNavigate();
   const [dataSource, setDataSource] = useState([]);
   const [rowsCount, setRowsCount] = useState([]);
@@ -24,32 +23,25 @@ const Donors = () => {
   const [page, setPage] = useState(1);
   const [visible, setVisible] = useState(false);
   const [selectedRow, setSelectedRow] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
-  // const nullToZero = (value) => {
-  //   if (value === null) {
-  //     return 0;
-  //   }
-  //   return value;
-  // };
   useEffect(() => {
     const source = axios.CancelToken.source();
     const fetchDonors = async () => {
       const { data: { data: { donors, count } } } = await axios.get(`/api/admin/donors/?page=${+page}`);
       const allDonors = donors.map((obj) => {
         const name = obj.name.charAt(0).toUpperCase() + obj.name.slice(1); // capitlize name
-        // const totalFood = nullToZero(obj.totalFood); // convert incoming null values to 0
-        // const totalMoney = nullToZero(obj.totalMoney);
-        // const totalClothes = nullToZero(obj.totalClothes);
         return {
           key: obj.id, ...obj, name,
         };
       });
       setRowsCount(count);
       setDataSource(allDonors);
+      setIsLoading(false);
     };
     fetchDonors();
     return () => source.cancel();
-  }, []);
+  }, [page]);
 
   const getCampaigns = async (donorId) => {
     try {
@@ -94,6 +86,21 @@ const Donors = () => {
     });
     setDataSource(data);
   };
+  const menu = (
+    <Menu
+      items={
+        donorCampaigns.map(({ id, title }) => (
+          {
+            label: <Text>{title}</Text>,
+            key: id,
+            onClick: () => {
+              navigate(`/campaign/${id}`);
+            },
+          }
+        ))
+      }
+    />
+  );
 
   const columns = [
     {
@@ -141,20 +148,12 @@ const Donors = () => {
       dataIndex: 'campaigns',
       width: '15%',
       render: (_, { id }) => (
-        <Select
-          className="select"
-          defaultValue="See more"
-          onClick={() => getCampaigns(id)}
-          onSelect={(campaignId) => navigate(`/campaign/${campaignId}`)}
-        >
-          {donorCampaigns.map(({ id: campaignId, title }) => (
-            <Option
-              key={campaignId}
-            >
-              {title}
-            </Option>
-          ))}
-        </Select>
+        <Dropdown placement="bottom" className="dropdown_campaigns" overlay={menu} trigger={['click']} onClick={() => getCampaigns(id)}>
+          <Space>
+            <Text>View all</Text>
+            <DownOutlined />
+          </Space>
+        </Dropdown>
       ),
     },
 
@@ -198,10 +197,11 @@ const Donors = () => {
 
   return (
     <section className="donors_table">
-      <Title>Donors</Title>
+      <Title level={2}>Donors</Title>
       <Table
         columns={columns}
         dataSource={dataSource}
+        bordered
         pagination={{
           onChange: (current) => setPage(current),
           total: rowsCount,
@@ -213,9 +213,10 @@ const Donors = () => {
         setVisible={setVisible}
         dataSource={selectedRow}
         getUpdatedDonor={getUpdatedDonor}
+        loading={isLoading}
       />
     </section>
   );
 };
 
-export default Donors;
+export default DonorsTable;

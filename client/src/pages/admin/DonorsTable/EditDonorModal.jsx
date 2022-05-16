@@ -47,8 +47,8 @@ const editDonorModal = ({
   return (
     <Modal
       visible={visible}
-      title={id ? 'Update Family' : 'Add Family'}
-      okText={id ? 'Update' : 'Add'}
+      title="Update Donor"
+      okText="Update"
       cancelText="Cancel"
       onCancel={() => setVisible(false)}
       onOk={handleSubmit}

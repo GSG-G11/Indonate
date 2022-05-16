@@ -11,7 +11,6 @@ import ReportsForm from './ReportsForm';
 import Container from './Container';
 import DisplayCampaigns from './DisplayCampaigns';
 import Header from './HeaderAllCampaigns';
-import Donors from './Donors';
 import Family from './Family';
 
 export {
@@ -27,7 +26,6 @@ export {
   HeaderLandingPage,
   DonationButton,
   ReportsForm,
-  Donors,
   Container,
   Family,
 };
