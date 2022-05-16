@@ -11,7 +11,7 @@ import ReportsForm from './ReportsForm';
 import Container from './Container';
 import DisplayCampaigns from './DisplayCampaigns';
 import Header from './HeaderAllCampaigns';
-import AddCanpaignForm from './AddCampaignForm/indes';
+import AddCanpaignForm from './AddCampaignForm';
 
 export {
   AddCanpaignForm,
