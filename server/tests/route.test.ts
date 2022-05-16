@@ -454,8 +454,8 @@ describe('GET /campaigns', () => {
       expect(families[0]).toEqual({
         id: 5,
         name: 'Ghazi',
-        phone: '0597086162',
-        address: 'Al Zahra',
+        phone: '0597801162',
+        address: 'Khan Youne al remal street"',
         clothes: null,
         money: null,
         food: null,

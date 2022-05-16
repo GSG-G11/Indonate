@@ -11,10 +11,11 @@ import ReportsForm from './ReportsForm';
 import Container from './Container';
 import DisplayCampaigns from './DisplayCampaigns';
 import Header from './HeaderAllCampaigns';
-import AddCanpaignForm from './AddCampaignForm';
+import AddCampaignButton from './AddCampaign/AddCampaignButton';
+import Family from './Family';
 
 export {
-  AddCanpaignForm,
+  AddCampaignButton,
   Header,
   Footer,
   Campaign,
@@ -28,4 +29,5 @@ export {
   DonationButton,
   ReportsForm,
   Container,
+  Family,
 };

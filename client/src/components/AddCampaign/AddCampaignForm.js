@@ -16,7 +16,7 @@ import './style.css';
 const { Item } = Form;
 const { TextArea } = Input;
 const { Option } = Select;
-const CollectionCreateForm = ({
+const AddCampaignForm = ({
   onCancel,
   visible,
   onCreate,
@@ -158,7 +158,7 @@ const CollectionCreateForm = ({
   );
 };
 
-CollectionCreateForm.propTypes = {
+AddCampaignForm.propTypes = {
   onCancel: PropTypes.func.isRequired,
   visible: PropTypes.bool.isRequired,
   onCreate: PropTypes.func.isRequired,
@@ -168,4 +168,4 @@ CollectionCreateForm.propTypes = {
 
 };
 
-export default CollectionCreateForm;
+export default AddCampaignForm;

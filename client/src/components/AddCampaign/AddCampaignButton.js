@@ -5,9 +5,9 @@ import {
 } from 'antd';
 
 import axios from 'axios';
-import CollectionCreateForm from './Colection';
+import AddCampaignForm from './AddCampaignForm';
 
-const AddCanpaignForm = () => {
+const AddCampaignButton = () => {
   const [visilbe, setVisible] = useState(false);
   const [action, setAction] = useState('');
   const [categories, setCategories] = useState([]);
@@ -53,16 +53,8 @@ const AddCanpaignForm = () => {
       >
         Add Campaign
       </Button>
-      <Button
-        type="primary"
-        onClick={() => {
-          setVisible(true);
-          setAction('Edit');
-        }}
-      >
-        edit Campaign
-      </Button>
-      <CollectionCreateForm
+
+      <AddCampaignForm
         onCancel={() => setVisible(false)}
         visible={visilbe}
         setImage={setImage}
@@ -76,4 +68,4 @@ const AddCanpaignForm = () => {
   );
 };
 
-export default AddCanpaignForm;
+export default AddCampaignButton;
