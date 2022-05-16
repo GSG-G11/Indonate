@@ -13,7 +13,7 @@ const getFamiliesForCampaign = async (
       res.json({ message: 'This campaign dose not exists' });
     } else {
       const families = await Family.findAll({
-        attributes: { exclude: ['updatedAt'] },
+        attributes: { exclude: ['updatedAt', 'createdAt'] },
         include: {
           model: Campaign,
           where: { id },
