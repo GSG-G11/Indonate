@@ -208,7 +208,7 @@ describe('Get/campaign/:id', () => {
     const id = 20;
     const response = await request(app).get(`/api/campaign/${id}`).expect(400);
     expect(response.body.data).toBe(undefined);
-    expect(response.body.message).toBe('There is no campaign');
+    expect(response.body.message).toBe('This campaign dose not exists');
   });
 
   test('campaign/:id => id is not a number', async () => {

@@ -70,7 +70,7 @@ const getCampaignById = async (
       }),
     ]);
 
-    if (!campaignInfo) throw new CustomError('There is no campaign', 400);
+    if (!campaignInfo) throw new CustomError('This campaign dose not exists', 400);
     res.json({
       message: 'Success',
       data: {
