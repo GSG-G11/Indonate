@@ -10,7 +10,7 @@ const getCampaigns = async (
   next: NextFunction,
 ) => {
   try {
-    const { page = 1, limit = 15 }: any = req.query;
+    const { page = 1, limit = 10 }: any = req.query;
     await querySchema.validateAsync(req.query);
     const { count, rows: campaigns } = await Campaign.findAndCountAll({
       limit,

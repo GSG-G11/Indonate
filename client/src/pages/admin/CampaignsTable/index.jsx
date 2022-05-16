@@ -8,6 +8,7 @@ import {
   Result,
   Button,
   Badge,
+  Tooltip,
 } from 'antd';
 import {
   CloseCircleOutlined,
@@ -88,7 +89,7 @@ function CampaignsTable() {
       dataIndex: 'title',
       key: 'title',
       render: (title, record) => (
-        <Popover content={title}>
+        <Tooltip title={title} color="#FFF" overlayInnerStyle={{ color: '#000' }}>
           <Link
             to={`/campaign/${record.id}`}
             className="campaign-table-campaign-title"
@@ -96,7 +97,7 @@ function CampaignsTable() {
             {title.split(' ').slice(0, 2).join(' ')}
             ...
           </Link>
-        </Popover>
+        </Tooltip>
       ),
     },
     {
@@ -105,9 +106,9 @@ function CampaignsTable() {
       align: 'center',
       key: 'description',
       render: (description) => (
-        <Popover content={description} trigger="click">
-          <FileSearchOutlined style={{ fontSize: '2.5rem' }} />
-        </Popover>
+        <Tooltip title={description} trigger="click" color="#FFF" overlayInnerStyle={{ color: '#000' }}>
+          <FileSearchOutlined className="icon description-icon" />
+        </Tooltip>
       ),
     },
     {
@@ -134,8 +135,8 @@ function CampaignsTable() {
           key: 'money_target',
           render: (value) => (
             <>
-              {value}
               $
+              {value}
             </>
           ),
         },
@@ -226,7 +227,7 @@ function CampaignsTable() {
             okType="danger"
           >
             <Popover content="Delete campaign">
-              <DeleteOutlined style={{ fontSize: '2.5rem', color: 'red' }} />
+              <DeleteOutlined className="icon delete-icon" />
             </Popover>
           </Popconfirm>
           {record.is_available ? (
@@ -240,7 +241,7 @@ function CampaignsTable() {
               okType="primary"
             >
               <Popover content="Close campaign">
-                <CloseCircleOutlined style={{ fontSize: '2.5rem' }} />
+                <CloseCircleOutlined className="icon close-icon" />
               </Popover>
             </Popconfirm>
           ) : (
@@ -248,14 +249,14 @@ function CampaignsTable() {
           )}
           {!record.is_available ? (
             <Popover content="List all families">
-              <TeamOutlined style={{ fontSize: '2.5rem', color: '#008EF2' }} />
+              <TeamOutlined className="icon families-icon" />
             </Popover>
           ) : (
             <div />
           )}
           {record.is_available ? (
             <Popover content="Edit campaign">
-              <EditOutlined style={{ fontSize: '2.5rem', color: '#469D62' }} />
+              <EditOutlined className="icon update-icon" />
             </Popover>
           ) : (
             <Badge count="Closed" />
