@@ -15,10 +15,11 @@ import {
   FileSearchOutlined,
   TeamOutlined,
 } from '@ant-design/icons';
+
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import './style.css';
-import { CampaignForm } from '../../../components';
+import { AddCampaignButton, CampaignForm } from '../../../components';
 
 function CampaignsTable() {
   const navigate = useNavigate();
@@ -27,7 +28,15 @@ function CampaignsTable() {
   const [campaignsCount, setCampaignsCount] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [visiable, setVisiable] = useState(false);
-  const [data, setData] = useState({});
+  const [isUdpateCampaign, setIsUpdateCampaign] = useState(false);
+  const [data, setData] = useState({
+    title: '',
+    describe: '',
+    categoryId: '',
+    food_target: '',
+    clothes_target: '',
+    money_target: '',
+  });
 
   useEffect(() => {
     const source = axios.CancelToken.source();
@@ -43,6 +52,7 @@ function CampaignsTable() {
         setCampaigns(campaignsData);
         setCampaignsCount(count);
         setIsLoading(false);
+        setIsUpdateCampaign(false);
       } catch ({
         response: {
           status,
@@ -59,7 +69,7 @@ function CampaignsTable() {
     return () => {
       source.cancel();
     };
-  }, [page]);
+  }, [page, isUdpateCampaign]);
 
   const handleDeleteCampaign = async (id) => {
     try {
@@ -82,7 +92,6 @@ function CampaignsTable() {
     // Handle close campaign code should goes here
   };
   const handleEditCampaign = (record) => {
-    console.log('recorddddddddddd', record);
     setData(record);
     setVisiable(true);
   };
@@ -280,6 +289,7 @@ function CampaignsTable() {
 
   return (
     <>
+      <AddCampaignButton setIsUpdateCampaign={setIsUpdateCampaign} data={data} />
       <Table
         size="small"
         dataSource={campaigns}
@@ -297,6 +307,7 @@ function CampaignsTable() {
         setVisible={setVisiable}
         action="Edit"
         data={data}
+        setIsUpdateCampaign={setIsUpdateCampaign}
       />
 
     </>

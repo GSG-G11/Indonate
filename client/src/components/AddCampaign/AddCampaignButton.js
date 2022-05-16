@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import {
   Button,
 } from 'antd';
-
+import PropTypes from 'prop-types';
 import CampaignForm from './AddCampaignForm';
 
-const AddCampaignButton = () => {
+const AddCampaignButton = ({ setIsUpdateCampaign, data }) => {
   const [visilbe, setVisible] = useState(false);
 
   const DisplayAddModle = async () => {
@@ -24,17 +24,15 @@ const AddCampaignButton = () => {
         visible={visilbe}
         action="Add"
         setVisible={setVisible}
-        data={{
-          title: '',
-          describe: '',
-          categoryId: '',
-          food_target: '',
-          clothes_target: '',
-          money_target: '',
-        }}
+        data={data}
+        setIsUpdateCampaign={setIsUpdateCampaign}
       />
     </div>
   );
 };
 
+AddCampaignButton.propTypes = {
+  setIsUpdateCampaign: PropTypes.func.isRequired,
+  data: PropTypes.objectOf.isRequired,
+};
 export default AddCampaignButton;

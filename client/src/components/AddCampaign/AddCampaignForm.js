@@ -22,6 +22,7 @@ const CampaignForm = ({
   action,
   setVisible,
   data,
+  setIsUpdateCampaign,
 }) => {
   const [form] = Form.useForm();
   const [categories, setCategories] = useState([]);
@@ -51,12 +52,12 @@ const CampaignForm = ({
       if (action === 'Add') {
         const { data: { message: successMessage } } = await axios.post('/api/admin/campaigns', { ...value, image_link: secureUrl });
         message.success(successMessage);
-        setVisible(false);
       } else {
         const { data: { message: successMessage } } = await axios.patch(`/api/admin/campaign/${data.id}`, { ...value, image_link: secureUrl });
         message.success(successMessage);
-        setVisible(false);
       }
+      setVisible(false);
+      setIsUpdateCampaign(true);
     } catch ({ response: { data: { message: errorMessage } } }) {
       message.error(errorMessage);
     }
@@ -76,8 +77,8 @@ const CampaignForm = ({
           form
             .validateFields()
             .then((values) => {
-              form.resetFields();
               handleAddAndEdit(values);
+              form.resetFields();
             })
             .catch(() => {
               message.error('Validate Failed');
@@ -198,7 +199,7 @@ CampaignForm.propTypes = {
   action: PropTypes.string.isRequired,
   setVisible: PropTypes.func.isRequired,
   data: PropTypes.objectOf.isRequired,
-
+  setIsUpdateCampaign: PropTypes.func.isRequired,
 };
 
 export default CampaignForm;

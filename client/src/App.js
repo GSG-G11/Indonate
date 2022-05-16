@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { Nav, AddCampaignButton, Family } from './components';
+import { Nav, Family } from './components';
 import {
   Landing, Campaign, Login, Signup, Campaigns, CampaignsTable,
 } from './pages';
@@ -28,10 +28,7 @@ function App() {
           <Route
             path="campaigns"
             element={(
-              <>
-                <AddCampaignButton />
-                <CampaignsTable />
-              </>
+              <CampaignsTable />
 )}
           />
           <Route path="campaigns" element={<h1>campaigns</h1>} />
