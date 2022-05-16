@@ -267,12 +267,13 @@ function CampaignsTable() {
 
   return !errorMessage ? (
     <Table
+      size="small"
       dataSource={campaigns}
       columns={columns}
       bordered
       loading={isLoading}
       rowClassName={(record) => !record.is_available && 'disabled-row'}
-      pagination={{ total: campaignsCount, defaultPageSize: 8 }}
+      pagination={{ total: campaignsCount, defaultPageSize: 10 }}
       onChange={(e) => {
         setPage(e.current);
       }}
