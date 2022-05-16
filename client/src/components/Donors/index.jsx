@@ -1,19 +1,20 @@
 import {
   Table, message,
   Popconfirm,
-  Typography, Dropdown, Menu, Space,
+  Typography, Select,
 } from 'antd';
 import 'antd/dist/antd.css';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import axios from 'axios'; import {
-  DeleteOutlined, EditOutlined, WhatsAppOutlined, DownOutlined,
+  DeleteOutlined, EditOutlined, WhatsAppOutlined,
 } from '@ant-design/icons';
 import './style.less';
 import EditDonorModal from './EditDonorModal';
 
-const { Title, Text } = Typography;
+const { Title } = Typography;
+const { Option } = Select;
 
 const Donors = () => {
   const navigate = useNavigate();
@@ -75,21 +76,7 @@ const Donors = () => {
       message.error(error);
     }
   };
-  const menu = (
-    <Menu
-      items={
-        donorCampaigns.map(({ id, title }) => (
-          {
-            key: id,
-            label: <Text>{title}</Text>,
-            onClick: () => {
-              navigate(`/campaign/${id}`);
-            },
-          }
-        ))
-      }
-    />
-  );
+
   const columns = [
     {
       title: 'Name',
@@ -141,18 +128,21 @@ const Donors = () => {
       title: 'Campaigns',
       dataIndex: 'campaigns',
       width: '15%',
-      render: (_, { id }) => (
-        <Dropdown
-          className="dropdown_campaigns"
-          overlay={menu}
-          trigger={['click']}
+      render: (text, { id }) => (
+        <Select
+          className="select"
+          defaultValue="View campaigns"
           onClick={() => getCampaigns(id)}
+          onSelect={(campaignId) => navigate(`/campaign/${campaignId}`)}
         >
-          <Space>
-            <Text>View all</Text>
-            <DownOutlined />
-          </Space>
-        </Dropdown>
+          {donorCampaigns.map(({ id: campaignId, title }) => (
+            <Option
+              key={campaignId}
+            >
+              {title}
+            </Option>
+          ))}
+        </Select>
       ),
     },
 

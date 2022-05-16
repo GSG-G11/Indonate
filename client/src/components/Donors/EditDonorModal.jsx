@@ -50,6 +50,7 @@ const editDonorModal = ({
       visible={visible}
       onCancel={() => setVisible(false)}
       onOk={handleSubmit}
+      keyboard
     >
       <Form
         form={form}
