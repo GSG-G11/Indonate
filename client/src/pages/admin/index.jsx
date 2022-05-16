@@ -1,3 +1,4 @@
 import CampaignsTable from './CampaignsTable';
+import ReportsTable from './ReportsTable';
 
-export default CampaignsTable;
+export { CampaignsTable, ReportsTable };
