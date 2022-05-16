@@ -213,7 +213,11 @@ const Donors = () => {
           defaultPageSize: 8,
         }}
       />
-      <EditDonorModal visible={visible} setVisible={setVisible} dataSource={rowEdit} />
+      <EditDonorModal
+        visible={visible}
+        setVisible={setVisible}
+        dataSource={rowEdit}
+      />
 
     </section>
   );
