@@ -23,7 +23,6 @@ const ReportsTable = () => {
   const [reports, setReports] = useState([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
-
   const [reportsCount, setReportsCount] = useState([]);
 
   const source = axios.CancelToken.source();
@@ -60,7 +59,10 @@ const ReportsTable = () => {
 
   const deleteReport = async (reportId) => {
     try {
-      const { data: { message: successMsg } } = await axios.delete(`/api/admin/report/${reportId}`);
+      const {
+        data: { message: successMsg },
+      } = await axios.delete(`/api/admin/report/${reportId}`);
+
       const filteredReports = reports.filter(({ id }) => id !== reportId);
       setReports(filteredReports);
       message.success(successMsg);
@@ -77,7 +79,11 @@ const ReportsTable = () => {
       <Title level={2} className="title">Reports</Title>
       <div className="comments_container">
         <Row className="comments_row">
-          {reports.map(({ id, name, message: campaignsMsg }) => (
+          {reports.map(({
+            id,
+            name,
+            message: campaignsMsg,
+          }) => (
             <Card
               loading={loading}
               key={id}
