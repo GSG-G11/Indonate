@@ -8,9 +8,20 @@ import Campaign from './campaign';
 import Capon from './capon';
 
 Campaign.belongsTo(Category);
-Campaign.belongsToMany(Family, { through: Capon });
-Family.belongsToMany(Campaign, { through: Capon });
+
+Campaign.belongsToMany(Family, {
+  through: { model: Capon, unique: false },
+  constraints: true,
+});
+Family.belongsToMany(Campaign, {
+  through: { model: Capon, unique: false },
+  constraints: true,
+});
+Campaign.hasMany(Capon);
+Capon.belongsTo(Campaign);
 Family.hasMany(Capon);
+Capon.belongsTo(Family);
+
 Campaign.belongsToMany(Donor, {
   through: { model: Donation, unique: false },
   constraints: true,
