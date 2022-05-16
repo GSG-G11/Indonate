@@ -36,9 +36,7 @@ const ReportsTable = () => {
         } = await axios.get(`/api/admin/reports/?page=${page}`);
         const allReports = dbReports.map((obj) => {
           const name = obj.name.charAt(0).toUpperCase() + obj.name.slice(1); // capitlize name
-          return {
-            key: obj.id, ...obj, name,
-          };
+          return { ...obj, name };
         });
         setReports(allReports);
         setReportsCount(count);
@@ -85,8 +83,8 @@ const ReportsTable = () => {
             message: campaignsMsg,
           }) => (
             <Card
-              loading={loading}
               key={id}
+              loading={loading}
               className="comment_card"
               bordered={false}
             >
