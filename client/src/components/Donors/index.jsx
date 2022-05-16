@@ -22,7 +22,7 @@ const Donors = () => {
   const [donorCampaigns, setDonorCampaigns] = useState([]);
   const [page, setPage] = useState(1);
   const [visible, setVisible] = useState(false);
-  const [rowEdit, setRowEdit] = useState(false);
+  const [selectedRow, setSelectedRow] = useState(false);
 
   const nullToZero = (value) => {
     if (value === null) {
@@ -49,13 +49,6 @@ const Donors = () => {
     fetchDonors();
     return source.cancel();
   }, []);
-
-  // const onFinish = async (values) => {
-  //   const updatedDataSource = [...dataSource];
-  //   const response = await axios.patch(`/api/admin/donor/${editingRow}`, values);
-  //   console.log(response);
-  //   setDataSource(updatedDataSource);
-  // };
 
   const deleteDonor = async (donorId) => {
     try {
@@ -183,7 +176,7 @@ const Donors = () => {
             onClick={
               () => {
                 setVisible(true);
-                setRowEdit(record);
+                setSelectedRow(record);
               }
             }
           />
@@ -201,6 +194,24 @@ const Donors = () => {
     },
   ];
 
+  const getUpdatedDonor = ({
+    id: updateId, name, email, phone, address,
+  }) => {
+    const data = dataSource.map((ele) => {
+      if (ele.id === updateId) {
+        return {
+          ...ele,
+          name,
+          email,
+          phone,
+          address,
+        };
+      }
+      return ele;
+    });
+    setDataSource(data);
+  };
+
   return (
     <section className="donors_table">
       <Title>Donors</Title>
@@ -216,7 +227,8 @@ const Donors = () => {
       <EditDonorModal
         visible={visible}
         setVisible={setVisible}
-        dataSource={rowEdit}
+        dataSource={selectedRow}
+        getUpdatedDonor={getUpdatedDonor}
       />
 
     </section>

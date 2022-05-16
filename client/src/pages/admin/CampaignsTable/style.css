@@ -1,0 +1,37 @@
+.campaign-table-campaign-title {
+  font-weight: 900;
+  font-size: 1.6rem;
+  text-transform: capitalize;
+}
+#campaign-table-campaign-image img {
+  border-radius: 5px;
+  object-fit: cover;
+}
+#campaign-table-campaign-image {
+  height: 1pc !important;
+}
+.ant-table-thead > tr > th {
+  font-weight: bold !important;
+  font-size: 15px !important;
+}
+.disabled-row {
+  background-color: #e9e9e9;
+}
+.icon {
+  font-size: 2.2rem !important;
+}
+.delete-icon {
+  color: red !important;
+}
+
+.families-icon{
+  color: #008EF2 !important;
+}
+
+.update-icon {
+  color: #469D62 !important;
+}
+
+.delete-icon {
+  color: red !important;
+}

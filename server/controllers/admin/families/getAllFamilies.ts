@@ -8,8 +8,8 @@ const getAllFamilies = async (req: Request, res: Response, next: NextFunction) =
   try {
     const { page = 1 }: any = await querySchema.validateAsync(req.query);
     const { rows, count } = await Family.findAndCountAll({
-      limit: 15,
-      offset: (+page - 1) * 15,
+      limit: 5,
+      offset: (+page - 1) * 5,
       include: [{
         duplicating: false,
         model: Capon,
