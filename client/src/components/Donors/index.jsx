@@ -43,14 +43,26 @@ const Donors = () => {
         return {
           key: obj.id, ...obj, name, totalFood, totalMoney, totalClothes,
         };
-      }).filter(({ email }) => email !== 'admin@gmail.com'); // remove admin
+      });
       setRowsCount(count);
       setDataSource(allDonors);
     };
     fetchDonors();
-    return source.cancel();
+    return () => source.cancel();
   }, []);
 
+  const getCampaigns = async (donorId) => {
+    try {
+      const { data: { data: { campaigns } } } = await axios.get(`/api/admin/donor/${donorId}/campaigns`);
+      setDonorCampaigns(campaigns);
+    } catch ({
+      response: {
+        data: { message: error },
+      },
+    }) {
+      message.error(error);
+    }
+  };
   const deleteDonor = async (donorId) => {
     try {
       const { data: { message: successMessage } } = await axios.delete(`/api/admin/donor/${donorId}`);
@@ -64,17 +76,23 @@ const Donors = () => {
       message.error(error);
     }
   };
-  const getCampaigns = async (donorId) => {
-    try {
-      const { data: { data: { campaigns } } } = await axios.get(`/api/admin/donor/${donorId}/campaigns`);
-      setDonorCampaigns(campaigns);
-    } catch ({
-      response: {
-        data: { message: error },
-      },
-    }) {
-      message.error(error);
-    }
+
+  const getUpdatedDonor = ({
+    id: updateId, name, email, phone, address,
+  }) => {
+    const data = dataSource.map((ele) => {
+      if (ele.id === updateId) {
+        return {
+          ...ele,
+          name,
+          email,
+          phone,
+          address,
+        };
+      }
+      return ele;
+    });
+    setDataSource(data);
   };
 
   const columns = [
@@ -128,10 +146,10 @@ const Donors = () => {
       title: 'Campaigns',
       dataIndex: 'campaigns',
       width: '15%',
-      render: (text, { id }) => (
+      render: (_, { id }) => (
         <Select
           className="select"
-          defaultValue="View campaigns"
+          defaultValue="view campaigns"
           onClick={() => getCampaigns(id)}
           onSelect={(campaignId) => navigate(`/campaign/${campaignId}`)}
         >
@@ -184,24 +202,6 @@ const Donors = () => {
     },
   ];
 
-  const getUpdatedDonor = ({
-    id: updateId, name, email, phone, address,
-  }) => {
-    const data = dataSource.map((ele) => {
-      if (ele.id === updateId) {
-        return {
-          ...ele,
-          name,
-          email,
-          phone,
-          address,
-        };
-      }
-      return ele;
-    });
-    setDataSource(data);
-  };
-
   return (
     <section className="donors_table">
       <Title>Donors</Title>
@@ -220,7 +220,6 @@ const Donors = () => {
         dataSource={selectedRow}
         getUpdatedDonor={getUpdatedDonor}
       />
-
     </section>
   );
 };
