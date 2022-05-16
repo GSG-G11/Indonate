@@ -299,18 +299,11 @@ function CampaignsTable() {
       }}
     // eslint-disable-next-line react/no-unstable-nested-components
       expandable={{
-        expandedRowRender: (record) => (
-
-          <p style={{ margin: 0 }}>
-            { console.log(record)}
-            {record.description}
-
-          </p>
-
-        ),
-
-        rowExpandable: (record) => { if (record.id === key) { return true; } return false; },
-
+        expandedRowKeys: [key],
+        rowExpandable: (record) => {
+          if (record.id === key) { return true; } return false;
+        },
+        expandIcon: () => null,
       }}
     />
   );
