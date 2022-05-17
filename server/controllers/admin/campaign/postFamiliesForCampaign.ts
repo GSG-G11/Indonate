@@ -1,53 +1,105 @@
 import { NextFunction, Request, Response } from 'express';
-import { Campaign, Capon, Family } from '../../../database/models';
-import { CustomError, paramsSchema, familiesForCampaignSchema } from '../../../utils';
+import {
+  Campaign,
+  Capon,
+  Donation,
+  Family,
+  sequelize,
+} from '../../../database/models';
+import {
+  CustomError,
+  paramsSchema,
+  familiesForCampaignSchema,
+} from '../../../utils';
 
-const postFamiliesForCampaign = async (req:Request, res:Response, next:NextFunction) => {
+const postFamiliesForCampaign = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   try {
-    const { params: { id: campaignId } } = req;
     const {
-      body: {
-        ids,
-        food,
-        clothes,
-        money,
-      },
+      params: { id: campaignId },
     } = req;
-    await paramsSchema.validateAsync(req.params);
+    const {
+      body: { ids },
+    } = req;
 
-    const isCampaginExist:any = await Campaign.findByPk(campaignId, {
+    await paramsSchema.validateAsync(req.params);
+    const isCampaignExist: any = await Campaign.findByPk(campaignId, {
       raw: true,
     });
-    if (!isCampaginExist) throw new CustomError('Campaign does not exits', 400);
-    else if (!(isCampaginExist.is_available)) throw new CustomError('Campaign has closed', 400);
+    if (!isCampaignExist) throw new CustomError('Campaign does not exits', 400);
+    else if (!isCampaignExist.is_available) {
+      throw new CustomError('Campaign was closed', 400);
+    }
+    const [currentDonations] = await Donation.findAll({
+      where: {
+        campaignId,
+      },
+      raw: true,
+      attributes: [
+        [
+          sequelize.fn('SUM', sequelize.literal('COALESCE(food, 0)')),
+          'current_food',
+        ],
+        [
+          sequelize.fn('SUM', sequelize.literal('COALESCE(clothes, 0)')),
+          'current_clothes',
+        ],
+        [
+          sequelize.fn('SUM', sequelize.literal('COALESCE(money, 0)')),
+          'current_money',
+        ],
+      ],
+    });
+    const {
+      current_food: food,
+      current_money: money,
+      current_clothes: clothes,
+    }: any = currentDonations;
+    if (!(food || money || clothes)) {
+      throw new CustomError('This campaign does not have donations', 400);
+    }
 
     try {
       JSON.parse(ids);
     } catch (e) {
-      throw new CustomError('ids must be array of number', 400);
+      throw new CustomError('ids must be array of numbers', 400);
     }
 
-    const { ids: familiesId } = await familiesForCampaignSchema.validateAsync({
-      ids: JSON.parse(ids), food, clothes, money,
-    }, { convert: true });
-    await Promise.all(familiesId.map(async (familyId:any) => {
-      const family = await Family.findByPk(familyId, {
-        raw: true,
-      });
-      if (!family) throw new CustomError('Cannot add families', 400);
-    }));
+    const { ids: familiesId } = await familiesForCampaignSchema.validateAsync(
+      {
+        ids: JSON.parse(ids),
+      },
+      { convert: true },
+    );
+
+    await Promise.all(
+      familiesId.map(async (familyId: any) => {
+        const family = await Family.findByPk(familyId, {
+          raw: true,
+        });
+        if (!family) throw new CustomError('Cannot add families', 400);
+      }),
+    );
+
+    await Promise.all(
+      familiesId.map(async (familyId: any) => {
+        await Capon.create({
+          campaignId,
+          familyId,
+          food: (food / ids.length).toFixed(),
+          clothes: (clothes / ids.length).toFixed(),
+          money: (money / ids.length).toFixed(),
+        });
+      }),
+    );
 
     await Campaign.update(
       { is_available: false },
       { where: { id: campaignId } },
     );
-
-    await Promise.all(familiesId.map(async (familyId:any) => {
-      await Capon.create({
-        campaignId, familyId, food, clothes, money,
-      });
-    }));
-
     res.json({ message: 'Families added successfully' });
   } catch (error) {
     if (error.name === 'ValidationError') {
