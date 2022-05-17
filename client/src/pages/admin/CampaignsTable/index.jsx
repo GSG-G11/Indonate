@@ -8,6 +8,7 @@ import {
   Badge,
   Tooltip,
   Typography,
+  Button,
 } from 'antd';
 import {
   CloseCircleOutlined,
@@ -20,7 +21,7 @@ import {
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import './style.css';
-import { AddCampaignButton, CampaignForm } from '../../../components';
+import { CampaignForm } from '../../../components';
 
 const { Title } = Typography;
 function CampaignsTable() {
@@ -31,6 +32,7 @@ function CampaignsTable() {
   const [isLoading, setIsLoading] = useState(true);
   const [visiable, setVisiable] = useState(false);
   const [isUdpateCampaign, setIsUpdateCampaign] = useState(false);
+  const [action, setAction] = useState('');
   const [data, setData] = useState({
     title: '',
     description: '',
@@ -96,6 +98,19 @@ function CampaignsTable() {
   const handleEditCampaign = (record) => {
     setData(record);
     setVisiable(true);
+    setAction('Edit');
+  };
+  const handleAddCampaign = async () => {
+    setVisiable(true);
+    setData({
+      title: '',
+      description: '',
+      categoryId: '',
+      food_target: '',
+      clothes_target: '',
+      money_target: '',
+    });
+    setAction('Add');
   };
   const columns = [
     {
@@ -293,11 +308,12 @@ function CampaignsTable() {
     <>
       <div className="header-campaign-table">
         <Title level={4}>Campaigns</Title>
-        <AddCampaignButton
-          setIsUpdateCampaign={setIsUpdateCampaign}
-          data={data}
-          setData={setData}
-        />
+        <Button
+          type="primary"
+          onClick={() => { handleAddCampaign(); }}
+        >
+          Add Campaign
+        </Button>
       </div>
 
       <Table
@@ -315,7 +331,7 @@ function CampaignsTable() {
       <CampaignForm
         visible={visiable}
         setVisible={setVisiable}
-        action="Edit"
+        action={action}
         data={data}
         setIsUpdateCampaign={setIsUpdateCampaign}
       />

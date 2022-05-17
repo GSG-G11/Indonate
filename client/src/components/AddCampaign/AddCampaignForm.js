@@ -27,6 +27,7 @@ const CampaignForm = ({
   const [form] = Form.useForm();
   const [categories, setCategories] = useState([]);
   const [imageUrl, setImageUrl] = useState();
+
   const handleUploadImage = async (image) => {
     try {
       const formData = new FormData();
@@ -36,6 +37,7 @@ const CampaignForm = ({
       const { data: { secure_url: secureUrl } } = await axios.post('https://api.cloudinary.com/v1_1/farahshcoding/image/upload', formData);
       setImageUrl(secureUrl);
     } catch (e) {
+      console.log(e);
       message.error(e);
     }
   };
