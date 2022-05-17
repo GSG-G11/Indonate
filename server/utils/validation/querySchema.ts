@@ -6,5 +6,6 @@ const querySchema = Joi.object({
   available: Joi.boolean(),
   category: Joi.string().allow(''),
   search: Joi.string().allow(''),
+  order: Joi.string().allow(''),
 });
 export default querySchema;
