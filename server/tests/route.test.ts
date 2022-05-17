@@ -750,7 +750,6 @@ describe('DELETE /api/admin/donor/:donorId', () => {
     expect(response.body.message).toBe('Unauthorized user');
   });
 });
-
 describe('GET /api/families/campaigns/:id', () => {
   test('unauthorized admin', async () => {
     const response = await request(app)
@@ -793,7 +792,6 @@ describe('GET /api/families/campaigns/:id', () => {
     });
   });
 });
-
 describe('/GET/api/admin/donors', () => {
   test('get donors', async () => {
     const response = await request(app)
@@ -884,7 +882,45 @@ describe('/GET/api/admin/donors', () => {
     expect(response.body.message).toBe('Unauthorized admin');
   });
 });
-
+describe('PATCH /api/admin/donor/:id', () => {
+  test('success update donor', async () => {
+    const response = await request(app)
+      .patch('/api/admin/donor/5')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUyMTIxODI0LCJleHAiOjE2NTQ3MTM4MjR9.Ue8JhWn8jAgLNzUdoHiWZAXoRtF5vooY3itRjw1yjyM',
+      ])
+      .send({
+        name: 'new name',
+        phone: '059999999',
+      })
+      .expect(200);
+    expect(response.body.message).toEqual('Donor updated successfully');
+  });
+  test('failed updating donor', async () => {
+    const response = await request(app)
+      .patch('/api/admin/donor/2')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUyMTIxODI0LCJleHAiOjE2NTQ3MTM4MjR9.Ue8JhWn8jAgLNzUdoHiWZAXoRtF5vooY3itRjw1yjyM',
+      ])
+      .expect(400);
+    expect(response.body.message).toEqual('Update donor failed');
+  });
+  test('id must be a number', async () => {
+    const response = await request(app)
+      .patch('/api/admin/donor/string')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUyMTIxODI0LCJleHAiOjE2NTQ3MTM4MjR9.Ue8JhWn8jAgLNzUdoHiWZAXoRtF5vooY3itRjw1yjyM',
+      ])
+      .expect(400);
+    expect(response.body.message).toEqual('"id" must be a number');
+  });
+  test('Unauthorized user', async () => {
+    const response = await request(app)
+      .patch('/api/admin/donor/string')
+      .expect(401);
+    expect(response.body.message).toBe('Unauthorized user');
+  });
+});
 describe('GET/admin/donor/campaigns/:id', () => {
   test('get campaigns for donor that have id 1', async () => {
     const response = await request(app).get('/api/admin/donor/1/campaigns')
@@ -1029,6 +1065,49 @@ describe('DELETE/admin/reports/id', () => {
     expect(response.body.message).toBe('The report does not exist');
   });
 });
+describe('PATCH/api/admin/campaign/id', () => {
+  test('edit campaign exist', async () => {
+    const response = await request(app).patch('/api/admin/campaign/3')
+      .send({
+        title: 'summer clothes collection',
+        description: 'This campaign aims to help poor families to heat their homes in the winter by collecting clothes from donors or buying new clothes from financial donations',
+        categoryId: 2,
+        food_target: 1,
+        clothes_target: 800,
+        money_target: 1,
+        image_link: 'https://media.voltron.alhurra.com/Drupal/01live-116/styles/sourced/s3/2019-12/AFC8DF4B-8C6D-4968-87B2-CEAFD63DED97.jpg?itok=Y3YypJNm',
+      }).set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUyMTIxODI0LCJleHAiOjE2NTQ3MTM4MjR9.Ue8JhWn8jAgLNzUdoHiWZAXoRtF5vooY3itRjw1yjyM',
+      ]);
+    expect(200);
+    expect(response.body.data.campaign).toEqual({
+      title: 'summer clothes collection',
+      description: 'This campaign aims to help poor families to heat their homes in the winter by collecting clothes from donors or buying new clothes from financial donations',
+      categoryId: 2,
+      food_target: 1,
+      clothes_target: 800,
+      money_target: 1,
+      image_link: 'https://media.voltron.alhurra.com/Drupal/01live-116/styles/sourced/s3/2019-12/AFC8DF4B-8C6D-4968-87B2-CEAFD63DED97.jpg?itok=Y3YypJNm',
+    });
+  });
+  test('edit campaign exist not exist', async () => {
+    const response = await request(app).patch('/api/admin/campaign/10')
+      .send({
+        title: 'summer clothes collection',
+        description: 'This campaign aims to help poor families to heat their homes in the winter by collecting clothes from donors or buying new clothes from financial donations',
+        categoryId: 2,
+        food_target: 1,
+        clothes_target: 800,
+        money_target: 1,
+        image_link: 'https://media.voltron.alhurra.com/Drupal/01live-116/styles/sourced/s3/2019-12/AFC8DF4B-8C6D-4968-87B2-CEAFD63DED97.jpg?itok=Y3YypJNm',
+      }).set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUyMTIxODI0LCJleHAiOjE2NTQ3MTM4MjR9.Ue8JhWn8jAgLNzUdoHiWZAXoRtF5vooY3itRjw1yjyM',
+      ]);
+
+    expect(200);
+    expect(response.body.message).toBe('Fail to update');
+  });
+});
 describe('POST api/admin/campagin/:id/families', () => {
   test('case:Fail |campaign id not valid', async () => {
     const response = await request(app)
@@ -1151,7 +1230,6 @@ describe('POST api/admin/campagin/:id/families', () => {
     expect(response.body.message).toBe('Cannot add families');
   });
 });
-
 afterAll(() => {
   connection.close();
 });

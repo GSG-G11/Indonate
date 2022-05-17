@@ -8,6 +8,8 @@ import {
   querySchema,
   familySchema,
   familiesForCampaignSchema,
+  campaignSchema,
+  donorSchema,
 } from './validation';
 
 export {
@@ -21,4 +23,6 @@ export {
   verifyToken,
   familySchema,
   familiesForCampaignSchema,
+  campaignSchema,
+  donorSchema,
 };

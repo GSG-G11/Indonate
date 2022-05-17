@@ -6,6 +6,7 @@ import reportsSchema from './reportsSchema';
 import donationSchema from './donationSchema';
 import familySchema from './familySchema';
 import familiesForCampaignSchema from './familiesForCampaignSchema';
+import donorSchema from './donorSchema';
 import campaignSchema from './campaignSchema';
 
 export {
@@ -17,5 +18,6 @@ export {
   querySchema,
   familySchema,
   familiesForCampaignSchema,
+  donorSchema,
   campaignSchema,
 };
