@@ -5,11 +5,19 @@ import {
 import PropTypes from 'prop-types';
 import CampaignForm from './AddCampaignForm';
 
-const AddCampaignButton = ({ setIsUpdateCampaign, data }) => {
+const AddCampaignButton = ({ setIsUpdateCampaign, data, setData }) => {
   const [visilbe, setVisible] = useState(false);
 
   const DisplayAddModle = async () => {
     setVisible(true);
+    setData({
+      title: '',
+      description: '',
+      categoryId: '',
+      food_target: '',
+      clothes_target: '',
+      money_target: '',
+    });
   };
   return (
     <div>
@@ -34,5 +42,6 @@ const AddCampaignButton = ({ setIsUpdateCampaign, data }) => {
 AddCampaignButton.propTypes = {
   setIsUpdateCampaign: PropTypes.func.isRequired,
   data: PropTypes.objectOf.isRequired,
+  setData: PropTypes.func.isRequired,
 };
 export default AddCampaignButton;

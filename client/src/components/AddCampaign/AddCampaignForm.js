@@ -51,6 +51,7 @@ const CampaignForm = ({
     fetchData();
   }, []);
   useEffect(() => {
+    console.log('data', data);
     form.setFieldsValue(data);
     setImageUrl(data.image_link);
   }, [visible]);
@@ -66,8 +67,7 @@ const CampaignForm = ({
       }
       setVisible(false);
       setIsUpdateCampaign(true);
-    } catch (e) {
-      const { response: { data: { message: errorMessage } } } = e;
+    } catch ({ response: { data: { message: errorMessage } } }) {
       message.error(errorMessage);
     }
   };

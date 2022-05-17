@@ -33,7 +33,7 @@ function CampaignsTable() {
   const [isUdpateCampaign, setIsUpdateCampaign] = useState(false);
   const [data, setData] = useState({
     title: '',
-    describe: '',
+    description: '',
     categoryId: '',
     food_target: '',
     clothes_target: '',
@@ -293,7 +293,11 @@ function CampaignsTable() {
     <>
       <div className="header-campaign-table">
         <Title level={4}>Campaigns</Title>
-        <AddCampaignButton setIsUpdateCampaign={setIsUpdateCampaign} data={data} />
+        <AddCampaignButton
+          setIsUpdateCampaign={setIsUpdateCampaign}
+          data={data}
+          setData={setData}
+        />
       </div>
 
       <Table
