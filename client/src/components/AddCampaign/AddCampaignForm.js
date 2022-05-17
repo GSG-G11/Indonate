@@ -37,7 +37,6 @@ const CampaignForm = ({
       const { data: { secure_url: secureUrl } } = await axios.post('https://api.cloudinary.com/v1_1/farahshcoding/image/upload', formData);
       setImageUrl(secureUrl);
     } catch (e) {
-      console.log(e);
       message.error(e);
     }
   };
@@ -53,7 +52,6 @@ const CampaignForm = ({
     fetchData();
   }, []);
   useEffect(() => {
-    console.log('data', data);
     form.setFieldsValue(data);
     setImageUrl(data.image_link);
   }, [visible]);
