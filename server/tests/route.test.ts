@@ -609,7 +609,7 @@ describe('GET /admin/campaigns?page=<number>', () => {
       ])
       .expect(200);
     expect(response.body.data.campaigns.length).toEqual(5);
-    expect(response.body.data.count).toEqual(7);
+    expect(response.body.data.count).toEqual(5);
   });
   test('Get all campaigns  <Authorized admin> <page 2>', async () => {
     const response = await request(app)
@@ -619,7 +619,7 @@ describe('GET /admin/campaigns?page=<number>', () => {
       ])
       .expect(200);
     expect(response.body.data.campaigns.length).toEqual(0);
-    expect(response.body.data.count).toEqual(7);
+    expect(response.body.data.count).toEqual(5);
   });
   test('Get all campaigns  <Authorized admin> <not valid page>', async () => {
     const response = await request(app)
