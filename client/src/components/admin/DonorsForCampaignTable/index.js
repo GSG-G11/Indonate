@@ -9,6 +9,7 @@ const DonorsForCampaignTable = ({ id }) => {
   const [page, setPage] = useState(1);
   const [donors, setDonors] = useState();
   const [donorsCount, setDonorsCount] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
   const donorColumns = [
     {
       title: 'Name',
@@ -97,6 +98,7 @@ const DonorsForCampaignTable = ({ id }) => {
         });
         setDonors(donorsFromDB);
         setDonorsCount(count);
+        setIsLoading(false);
       } catch ({ response: { data: { message: errorMessage } } }) {
         message.error(errorMessage);
       }
@@ -112,6 +114,7 @@ const DonorsForCampaignTable = ({ id }) => {
         dataSource={donors}
         columns={donorColumns}
         bordered
+        loading={isLoading}
         pagination={{ total: donorsCount, defaultPageSize: 6 }}
         onChange={(e) => {
           setPage(e.current);
