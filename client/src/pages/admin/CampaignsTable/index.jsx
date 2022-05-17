@@ -129,7 +129,6 @@ function CampaignsTable() {
     setIds(e);
   };
   const handleOkModal = async (id) => {
-    console.log(ids.map((strId) => Number(strId)));
     try {
       const {
         data: { message: successMessage },
