@@ -1,3 +1,4 @@
 import CampaignsTable from './CampaignsTable';
+import Overview from './Overview';
 
-export default CampaignsTable;
+export default { CampaignsTable, Overview };
