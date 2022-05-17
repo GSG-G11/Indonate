@@ -26,7 +26,19 @@ const CampaignForm = ({
 }) => {
   const [form] = Form.useForm();
   const [categories, setCategories] = useState([]);
-  const [image, setImage] = useState();
+  const [imageUrl, setImageUrl] = useState();
+  const handleUploadImage = async (image) => {
+    try {
+      const formData = new FormData();
+      formData.append('file', image);
+      formData.append('upload_preset', 's9kbkcoe');
+
+      const { data: { secure_url: secureUrl } } = await axios.post('https://api.cloudinary.com/v1_1/farahshcoding/image/upload', formData);
+      setImageUrl(secureUrl);
+    } catch (e) {
+      message.error(e);
+    }
+  };
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -40,26 +52,21 @@ const CampaignForm = ({
   }, []);
   useEffect(() => {
     form.setFieldsValue(data);
+    setImageUrl(data.image_link);
   }, [visible]);
 
   const handleAddAndEdit = async (value) => {
     try {
-      const formData = new FormData();
-      formData.append('file', image);
-      formData.append('upload_preset', 's9kbkcoe');
-
-      const { data: { secure_url: secureUrl } } = await axios.post('https://api.cloudinary.com/v1_1/farahshcoding/image/upload', formData);
       if (action === 'Add') {
-        const { data: { message: successMessage } } = await axios.post('/api/admin/campaigns', { ...value, image_link: secureUrl });
+        const { data: { message: successMessage } } = await axios.post('/api/admin/campaigns', { ...value, image_link: imageUrl });
         message.success(successMessage);
       } else {
-        const { data: { message: successMessage } } = await axios.patch(`/api/admin/campaign/${data.id}`, { ...value, image_link: secureUrl });
+        const { data: { message: successMessage } } = await axios.patch(`/api/admin/campaign/${data.id}`, { ...value, image_link: imageUrl });
         message.success(successMessage);
       }
       setVisible(false);
       setIsUpdateCampaign(true);
     } catch (e) {
-      console.log(e);
       const { response: { data: { message: errorMessage } } } = e;
       message.error(errorMessage);
     }
@@ -82,7 +89,6 @@ const CampaignForm = ({
             .then((values) => {
               handleAddAndEdit(values);
               form.resetFields();
-              setImage('');
             })
             .catch(() => {
               message.error('Validate Failed');
@@ -140,7 +146,7 @@ const CampaignForm = ({
             </Select>
           </Item>
           <Upload
-            onChange={(info) => setImage(info.file)}
+            onChange={(info) => handleUploadImage(info.file)}
             accept=".png,.jpeg"
             beforeUpload={() => false}
             defaultFileList={[]}
