@@ -73,20 +73,28 @@ const DonorsForCampaignTable = ({ id }) => {
       title: 'action',
       data: 'action',
       ellipsis: false,
-      render: () => (
-        <WhatsAppOutlined style={{
-          fontSize: '16px',
-          color: '#469D62',
-        }}
-        />
+      render: (record) => (
+        <a
+          href={`http://wa.me/${record.phone}`}
+          target="_blank"
+          aria-label="start chat"
+          rel="noreferrer"
+        >
+          <WhatsAppOutlined className="whatsapp_icon" />
+        </a>
+
       ),
     },
   ];
 
   useEffect(() => {
+    const source = axios.CancelToken.source();
+    const { token } = source;
     const fetchData = async () => {
       try {
-        const { data: { data: { donors: donorsFromDB, count } } } = await axios.get(`/api/admin/campaign/${id}/donors?page=${page}`);
+        const { data: { data: { donors: donorsFromDB, count } } } = await axios.get(`/api/admin/campaign/${id}/donors?page=${page}`, {
+          cancelToken: token,
+        });
         setDonors(donorsFromDB);
         setDonorsCount(count);
       } catch ({ response: { data: { message: errorMessage } } }) {
@@ -94,6 +102,7 @@ const DonorsForCampaignTable = ({ id }) => {
       }
     };
     fetchData();
+    return () => source.cancel();
   }, [page]);
   return (
 

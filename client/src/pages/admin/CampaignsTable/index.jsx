@@ -84,9 +84,6 @@ function CampaignsTable() {
     console.log(id);
     // Handle close campaign code should goes here
   };
-  const handleDisplayDonorTable = async (id) => {
-    setKey(id);
-  };
 
   const columns = [
     {
@@ -132,7 +129,7 @@ function CampaignsTable() {
       key: '',
       render: (_, { id }) => (
         <Text
-          onClick={() => { id === key ? setKey(0) : handleDisplayDonorTable(id); }}
+          onClick={() => { id === key ? setKey(0) : setKey(id); }}
         >
           {id === key ? 'View All ▲' : 'View All ▼'}
 
@@ -287,7 +284,6 @@ function CampaignsTable() {
       ),
     },
   ];
-  console.log('keyyyyyyy', key);
 
   return (
     <Table
