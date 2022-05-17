@@ -1,5 +1,4 @@
 import { NextFunction, Request, Response } from 'express';
-import { Op } from 'sequelize';
 import { Campaign, Capon, Family } from '../../../database/models';
 import { CustomError, paramsSchema, familiesForCampaignSchema } from '../../../utils';
 
@@ -16,17 +15,11 @@ const postFamiliesForCampaign = async (req:Request, res:Response, next:NextFunct
     } = req;
     await paramsSchema.validateAsync(req.params);
 
-    const isCampaginExist = await Campaign.count({
-      where: { id: campaignId },
+    const isCampaginExist:any = await Campaign.findByPk(campaignId, {
+      raw: true,
     });
     if (!isCampaginExist) throw new CustomError('Campaign does not exits', 400);
-
-    const isCampaginsAvailable = await Campaign.count({
-      where: {
-        [Op.and]: [{ id: campaignId }, { is_available: true }],
-      },
-    });
-    if (!isCampaginsAvailable) throw new CustomError('Campaign has closed', 400);
+    else if (!(isCampaginExist.is_available)) throw new CustomError('Campaign has closed', 400);
 
     try {
       JSON.parse(ids);
