@@ -1,10 +1,14 @@
-import { Table/* , Typography */, Tooltip } from 'antd';
-import React from 'react';
-import { WhatsAppOutlined } from '@ant-design/icons';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import PropTypes from 'prop-types';
+import { Table, Tooltip, message } from 'antd';
+import { WhatsAppOutlined } from '@ant-design/icons';
 import './style.css';
-// const { Text } = Typography;
-const DonorsForCampaignTable = ({ donors }) => {
+
+const DonorsForCampaignTable = ({ id }) => {
+  const [page, setPage] = useState(1);
+  const [donors, setDonors] = useState();
+  const [donorsCount, setDonorsCount] = useState(0);
   const donorColumns = [
     {
       title: 'Name',
@@ -78,6 +82,19 @@ const DonorsForCampaignTable = ({ donors }) => {
       ),
     },
   ];
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const { data: { data: { donors: donorsFromDB, count } } } = await axios.get(`/api/admin/campaign/${id}/donors?page=${page}`);
+        setDonors(donorsFromDB);
+        setDonorsCount(count);
+      } catch ({ response: { data: { message: errorMessage } } }) {
+        message.error(errorMessage);
+      }
+    };
+    fetchData();
+  }, [page]);
   return (
 
     <div>
@@ -85,13 +102,16 @@ const DonorsForCampaignTable = ({ donors }) => {
         className="nested-table"
         dataSource={donors}
         columns={donorColumns}
-        pagination={{ pageSize: 8 }}
         bordered
+        pagination={{ total: donorsCount, defaultPageSize: 6 }}
+        onChange={(e) => {
+          setPage(e.current);
+        }}
       />
     </div>
   );
 };
 DonorsForCampaignTable.propTypes = {
-  donors: PropTypes.arrayOf.isRequired,
+  id: PropTypes.number.isRequired,
 };
 export default DonorsForCampaignTable;

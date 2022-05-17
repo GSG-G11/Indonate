@@ -21,7 +21,6 @@ import {
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import { DonorsForCampaignTable } from '../../../components';
-// import { DonorsForCampaignTable } from '../../../components';
 import './style.css';
 
 const { Text } = Typography;
@@ -31,7 +30,6 @@ function CampaignsTable() {
   const [page, setPage] = useState(1);
   const [campaignsCount, setCampaignsCount] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
-  const [donors, setDonors] = useState();
   const [key, setKey] = useState(0);
 
   useEffect(() => {
@@ -87,14 +85,7 @@ function CampaignsTable() {
     // Handle close campaign code should goes here
   };
   const handleDisplayDonorTable = async (id) => {
-    console.log('iddddddddd', id);
-    try {
-      setKey(id);
-      const { data: { data: { donors: donorsFromDB } } } = await axios.get(`/api/admin/campaign/${id}/donors`);
-      setDonors(donorsFromDB);
-    } catch ({ response: { data: { message: errorMessage } } }) {
-      message.error(errorMessage);
-    }
+    setKey(id);
   };
 
   const columns = [
@@ -296,6 +287,7 @@ function CampaignsTable() {
       ),
     },
   ];
+  console.log('keyyyyyyy', key);
 
   return (
     <Table
@@ -312,7 +304,7 @@ function CampaignsTable() {
       rowKey="id"
       expandable={{
         expandedRowKeys: [key],
-        expandedRowRender: () => <DonorsForCampaignTable donors={donors} />,
+        expandedRowRender: () => <DonorsForCampaignTable id={+key} />,
         rowExpandable: (record) => (record.id === key),
         expandIcon: () => null,
       }}
