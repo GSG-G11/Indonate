@@ -11,12 +11,10 @@ import ReportsForm from './ReportsForm';
 import Container from './Container';
 import DisplayCampaigns from './DisplayCampaigns';
 import Header from './HeaderAllCampaigns';
-import AddCampaignButton from './AddCampaign/AddCampaignButton';
 import Family from './Family';
 import CampaignForm from './AddCampaign/AddCampaignForm';
 
 export {
-  AddCampaignButton,
   Header,
   Footer,
   Campaign,
