@@ -69,7 +69,13 @@ const DonorsForCampaignTable = ({ donors }) => {
       title: 'action',
       data: 'action',
       ellipsis: false,
-      render: () => <WhatsAppOutlined className="whatAppIcon" />,
+      render: () => (
+        <WhatsAppOutlined style={{
+          fontSize: '16px',
+          color: '#469D62',
+        }}
+        />
+      ),
     },
   ];
   return (
@@ -80,6 +86,7 @@ const DonorsForCampaignTable = ({ donors }) => {
         dataSource={donors}
         columns={donorColumns}
         pagination={{ pageSize: 8 }}
+        bordered
       />
     </div>
   );

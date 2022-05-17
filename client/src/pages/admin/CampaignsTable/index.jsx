@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 /* eslint-disable react/no-unstable-nested-components */
 import React, { useEffect, useState } from 'react';
 import {
@@ -8,6 +9,7 @@ import {
   message,
   Badge,
   Tooltip,
+  Typography,
 } from 'antd';
 import {
   CloseCircleOutlined,
@@ -18,16 +20,18 @@ import {
 } from '@ant-design/icons';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
+import { DonorsForCampaignTable } from '../../../components';
 // import { DonorsForCampaignTable } from '../../../components';
 import './style.css';
 
+const { Text } = Typography;
 function CampaignsTable() {
   const navigate = useNavigate();
   const [campaigns, setCampaigns] = useState([]);
   const [page, setPage] = useState(1);
   const [campaignsCount, setCampaignsCount] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
-  // const [donors, setDonors] = useState();
+  const [donors, setDonors] = useState();
   const [key, setKey] = useState(0);
 
   useEffect(() => {
@@ -82,6 +86,16 @@ function CampaignsTable() {
     console.log(id);
     // Handle close campaign code should goes here
   };
+  const handleDisplayDonorTable = async (id) => {
+    console.log('iddddddddd', id);
+    try {
+      setKey(id);
+      const { data: { data: { donors: donorsFromDB } } } = await axios.get(`/api/admin/campaign/${id}/donors`);
+      setDonors(donorsFromDB);
+    } catch ({ response: { data: { message: errorMessage } } }) {
+      message.error(errorMessage);
+    }
+  };
 
   const columns = [
     {
@@ -125,7 +139,15 @@ function CampaignsTable() {
       dataIndex: '',
       align: 'center',
       key: '',
-      render: (_, record) => <button type="submit" onClick={() => setKey(record.id)}>View All ▼</button>,
+      render: (_, { id }) => (
+        <Text
+          onClick={() => { id === key ? setKey(0) : handleDisplayDonorTable(id); }}
+        >
+          {id === key ? 'View All ▲' : 'View All ▼'}
+
+        </Text>
+      ),
+
     },
     {
       title: 'Category',
@@ -275,18 +297,8 @@ function CampaignsTable() {
     },
   ];
 
-  /* const fetchDataD = async ({ id }) => {
-    try {
-      const { data: { data: { donors: donorsFromDB } } }
-       = await axios.get('/api/admin/campaign/1/donors');
-      setDonors(donorsFromDB);
-    } catch ({ response: { data: { message: errorMessage } } }) {
-      message.error(errorMessage);
-    }
-  }; */
   return (
     <Table
-      rowkey="1"
       size="small"
       dataSource={campaigns}
       columns={columns}
@@ -297,12 +309,11 @@ function CampaignsTable() {
       onChange={(e) => {
         setPage(e.current);
       }}
-    // eslint-disable-next-line react/no-unstable-nested-components
+      rowKey="id"
       expandable={{
         expandedRowKeys: [key],
-        rowExpandable: (record) => {
-          if (record.id === key) { return true; } return false;
-        },
+        expandedRowRender: () => <DonorsForCampaignTable donors={donors} />,
+        rowExpandable: (record) => (record.id === key),
         expandIcon: () => null,
       }}
     />

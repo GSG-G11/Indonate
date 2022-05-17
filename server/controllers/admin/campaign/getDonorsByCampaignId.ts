@@ -33,7 +33,6 @@ const getDonorsByCampaignId = async (req: Request, res: Response, next: NextFunc
   } catch (error) {
     if (error.name === 'ValidationError') next(new CustomError(error.details[0].message, 400));
     next(error);
-    console.log(error);
   }
 };
 
