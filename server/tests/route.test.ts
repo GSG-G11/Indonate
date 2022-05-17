@@ -1199,7 +1199,7 @@ describe('POST api/admin/campagin/:id/families', () => {
       .expect(200);
     expect(response.body.message).toBe('Families added successfully');
   });
-  test('case:fail with closed campaign ', async () => {
+  test('case:fail with close git campaign ', async () => {
     const response = await request(app)
       .post('/api/admin/campaign/4/families')
       .set('Cookie', [
