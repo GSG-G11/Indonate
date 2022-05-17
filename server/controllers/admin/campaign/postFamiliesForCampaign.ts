@@ -24,7 +24,7 @@ const postFamiliesForCampaign = async (
     const {
       body: { ids },
     } = req;
-
+    console.log(typeof ids);
     await paramsSchema.validateAsync(req.params);
     const isCampaignExist: any = await Campaign.findByPk(campaignId, {
       raw: true,

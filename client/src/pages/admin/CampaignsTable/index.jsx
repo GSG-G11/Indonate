@@ -10,6 +10,10 @@ import {
   Tooltip,
   Dropdown,
   Menu,
+  Select,
+  Button,
+  Modal,
+  Col,
 } from 'antd';
 import {
   CloseCircleOutlined,
@@ -23,6 +27,8 @@ import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import './style.css';
 
+const { Option } = Select;
+
 function CampaignsTable() {
   const navigate = useNavigate();
   const [campaigns, setCampaigns] = useState([]);
@@ -30,7 +36,9 @@ function CampaignsTable() {
   const [families, setFamilies] = useState([]);
   const [page, setPage] = useState(1);
   const [campaignsCount, setCampaignsCount] = useState(0);
+  const [campaignId, setCampaignId] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
+  const [ids, setIds] = useState([]);
 
   useEffect(() => {
     const source = axios.CancelToken.source();
@@ -82,6 +90,22 @@ function CampaignsTable() {
 
   const handleCloseCampaign = async (id) => {
     setCloseCampaignMode(true);
+    setCampaignId(id);
+    try {
+      const {
+        data: {
+          data: { families: allFamilies },
+        },
+      } = await axios.get('/api/admin/families');
+      setFamilies(allFamilies);
+    } catch ({
+      response: {
+        status,
+        data: { message: errorMessage },
+      },
+    }) {
+      message.error(errorMessage);
+    }
     // Handle close campaign code should goes here
   };
 
@@ -91,9 +115,45 @@ function CampaignsTable() {
         data: { data },
       } = await axios.get(`/api/admin/campaign/${id}/families`);
       setFamilies(data.families);
-    } catch (error) {
-      message.error(error);
+    } catch ({
+      response: {
+        status,
+        data: { message: errorMessage },
+      },
+    }) {
+      message.error(errorMessage);
     }
+  };
+
+  const handleOnSelectChange = (e) => {
+    setIds(e);
+  };
+  const handleOkModal = async (id) => {
+    console.log(ids.map((strId) => Number(strId)));
+    try {
+      const {
+        data: { message: successMessage },
+      } = await axios.post(
+        `/api/admin/campaign/${id}/families`,
+        {
+          ids: JSON.stringify(ids.map((strId) => +strId)),
+        },
+      );
+      setCloseCampaignMode(false);
+      setIds([]);
+      message.success(successMessage);
+    } catch ({
+      response: {
+        status,
+        data: { message: errorMessage },
+      },
+    }) {
+      message.error(errorMessage);
+    }
+  };
+  const handleCancelModal = () => {
+    setCloseCampaignMode(false);
+    setIds([]);
   };
   const columns = [
     {
@@ -305,18 +365,43 @@ function CampaignsTable() {
   ];
 
   return (
-    <Table
-      size="small"
-      dataSource={campaigns}
-      columns={columns}
-      bordered
-      loading={isLoading}
-      rowClassName={(record) => !record.is_available && 'disabled-row'}
-      pagination={{ total: campaignsCount, defaultPageSize: 10 }}
-      onChange={(e) => {
-        setPage(e.current);
-      }}
-    />
+    <>
+      <Table
+        size="small"
+        dataSource={campaigns}
+        columns={columns}
+        bordered
+        loading={isLoading}
+        rowClassName={(record) => !record.is_available && 'disabled-row'}
+        pagination={{ total: campaignsCount, defaultPageSize: 10 }}
+        onChange={(e) => {
+          setPage(e.current);
+        }}
+      />
+      <Modal
+        visible={closeCampaignMode}
+        onCancel={handleCancelModal}
+        onOk={() => { handleOkModal(campaignId); }}
+      >
+        <Select
+          mode="multiple"
+          style={{ width: '100%' }}
+          value={ids}
+          placeholder="Select the families you want to donate to
+          "
+          onChange={handleOnSelectChange}
+          filterOption={
+            (input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+}
+        >
+          {families.map((family) => (
+            <Option key={family.id} id={family.id}>
+              {family.name}
+            </Option>
+          ))}
+        </Select>
+      </Modal>
+    </>
   );
 }
 

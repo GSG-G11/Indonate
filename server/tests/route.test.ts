@@ -1223,7 +1223,7 @@ describe('POST api/admin/campagin/:id/families', () => {
       .expect(400);
     expect(response.body.message).toBe('Campaign does not exits');
   });
-  test('case:Fail | Campaign doesn\'t have donations', async () => {
+  test("case:Fail | Campaign doesn't have donations", async () => {
     const response = await request(app)
       .post('/api/admin/campaign/4/families')
       .set('Cookie', [
