@@ -1,0 +1,22 @@
+.overview-container {
+  display: flex;
+  margin-top: 1%;
+}
+.card-content {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  max-width: 1078px;
+}
+
+.card {
+  background: white;
+  margin-right: 1%;
+  margin-bottom: 1%;
+  width: 205px;
+  height: 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+}

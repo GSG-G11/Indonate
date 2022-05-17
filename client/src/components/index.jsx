@@ -12,6 +12,7 @@ import Container from './Container';
 import DisplayCampaigns from './DisplayCampaigns';
 import Header from './HeaderAllCampaigns';
 import Family from './Family';
+import Statistic from './Overview/Statistics';
 
 export {
   Header,
@@ -28,4 +29,5 @@ export {
   ReportsForm,
   Container,
   Family,
+  Statistic,
 };
