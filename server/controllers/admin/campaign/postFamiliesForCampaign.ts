@@ -67,7 +67,7 @@ const postFamiliesForCampaign = async (
         throw new CustomError('You must add at least one family', 400);
       }
     } catch (error) {
-      if (error.message === 'Unexpected token s in JSON at position 6') {
+      if (error.name === 'SyntaxError') {
         throw new CustomError('ids must be array of numbers', 400);
       }
       throw new CustomError(error.message, 400);
@@ -107,6 +107,7 @@ const postFamiliesForCampaign = async (
     );
     res.json({ message: 'Families added successfully' });
   } catch (error) {
+    console.log(error);
     if (error.name === 'ValidationError') {
       next(new CustomError(error.message, 400));
     }
