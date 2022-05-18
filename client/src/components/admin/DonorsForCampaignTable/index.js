@@ -3,7 +3,7 @@ import axios from 'axios';
 import PropTypes from 'prop-types';
 import { Table, Tooltip, message } from 'antd';
 import { WhatsAppOutlined } from '@ant-design/icons';
-import './style.css';
+import './style.less';
 
 const DonorsForCampaignTable = ({ id }) => {
   const [page, setPage] = useState(1);
@@ -108,7 +108,7 @@ const DonorsForCampaignTable = ({ id }) => {
   }, [page]);
   return (
 
-    <div>
+    <div className="nested-table-section ">
       <Table
         className="nested-table"
         dataSource={donors}
