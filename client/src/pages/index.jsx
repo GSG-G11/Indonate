@@ -3,7 +3,7 @@ import Signup from './Signup';
 import Landing from './Landing';
 import Campaign from './Campaign';
 import Campaigns from './Campaigns';
-import { CampaignsTable, ReportsTable } from './admin';
+import { CampaignsTable, ReportsTable, DonorsTable } from './admin';
 
 export {
   Login,
@@ -13,4 +13,5 @@ export {
   Campaign,
   CampaignsTable,
   ReportsTable,
+  DonorsTable,
 };

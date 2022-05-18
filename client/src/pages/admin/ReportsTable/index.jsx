@@ -2,7 +2,6 @@ import React, {
   useState,
   useEffect,
 } from 'react'; import {
-  Card,
   Row,
   Typography,
   Comment,
@@ -57,10 +56,7 @@ const ReportsTable = () => {
 
   const deleteReport = async (reportId) => {
     try {
-      const {
-        data: { message: successMsg },
-      } = await axios.delete(`/api/admin/report/${reportId}`);
-
+      const { data: { message: successMsg } } = await axios.delete(`/api/admin/report/${reportId}`);
       const filteredReports = reports.filter(({ id }) => id !== reportId);
       setReports(filteredReports);
       message.success(successMsg);
@@ -80,35 +76,40 @@ const ReportsTable = () => {
           {reports.map(({
             id,
             name,
+            email,
             message: campaignsMsg,
           }) => (
-            <Card
-              key={id}
+            <Comment
               loading={loading}
-              className="comment_card"
-              bordered={false}
-            >
-              <Comment
-                author={<span>{name}</span>}
-                content={(<p>{campaignsMsg}</p>)}
-              />
-              <Popconfirm
-                title="Are you sure？"
-                okText="Yes"
-                cancelText="No"
-                onConfirm={() => deleteReport(id)}
-              >
-                <DeleteOutlined className="delete_icon" />
-              </Popconfirm>
-            </Card>
+              author={(
+                <>
+                  <span>{name}</span>
+                  <span className="author_email">{email}</span>
+                </>
+              )}
+              content={(
+                <>
+                  <p>{campaignsMsg}</p>
+                  <Popconfirm
+                    title="Are you sure？"
+                    okText="Yes"
+                    cancelText="No"
+                    onConfirm={() => deleteReport(id)}
+                  >
+                    <DeleteOutlined className="delete_icon" />
+                  </Popconfirm>
+                </>
+              )}
+            />
           ))}
-          <Pagination
-            defaultCurrent={1}
-            total={reportsCount}
-            onChange={(value) => setPage(value)}
-          />
+
         </Row>
       </div>
+      <Pagination
+        defaultCurrent={1}
+        total={reportsCount}
+        onChange={(value) => setPage(value)}
+      />
     </section>
 
   );
