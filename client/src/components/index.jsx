@@ -14,6 +14,8 @@ import Header from './HeaderAllCampaigns';
 import DonorsForCampaignTable from './admin';
 import Family from './Family';
 import Statistic from './Overview/Statistics';
+import TopCampaignsTable from './TopCampaignsTable';
+import TopDonorsTable from './TopDonorsTable';
 import CampaignForm from './AddCampaign/AddCampaignForm';
 
 export {
@@ -33,5 +35,7 @@ export {
   DonorsForCampaignTable,
   Family,
   Statistic,
+  TopCampaignsTable,
+  TopDonorsTable,
   CampaignForm,
 };

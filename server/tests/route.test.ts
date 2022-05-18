@@ -595,11 +595,11 @@ describe('POST /api/admin/family', () => {
 });
 
 describe('GET /admin/campaigns?page=<number>', () => {
-  test('Get all reports  <Unauthorized user>', async () => {
+  test('Get all campaigns  <Unauthorized user>', async () => {
     const response = await request(app).get('/api/admin/campaigns').expect(401);
     expect(response.body.message).toEqual('Unauthorized user');
   });
-  test('Get all reports  <Unauthorized admin>', async () => {
+  test('Get all campaigns  <Unauthorized admin>', async () => {
     const response = await request(app)
       .get('/api/admin/campaigns')
       .set('Cookie', [
@@ -608,7 +608,7 @@ describe('GET /admin/campaigns?page=<number>', () => {
       .expect(401);
     expect(response.body.message).toEqual('Unauthorized admin');
   });
-  test('Get all reports  <Authorized admin> <page 1>', async () => {
+  test('Get all campaigns  <Authorized admin> <page 1>', async () => {
     const response = await request(app)
       .get('/api/admin/campaigns?page=1')
       .set('Cookie', [
@@ -618,7 +618,7 @@ describe('GET /admin/campaigns?page=<number>', () => {
     expect(response.body.data.campaigns.length).toEqual(5);
     expect(response.body.data.count).toEqual(5);
   });
-  test('Get all reports  <Authorized admin> <page 2>', async () => {
+  test('Get all campaigns  <Authorized admin> <page 2>', async () => {
     const response = await request(app)
       .get('/api/admin/campaigns?page=2')
       .set('Cookie', [
@@ -628,7 +628,7 @@ describe('GET /admin/campaigns?page=<number>', () => {
     expect(response.body.data.campaigns.length).toEqual(0);
     expect(response.body.data.count).toEqual(5);
   });
-  test('Get all reports  <Authorized admin> <not valid page>', async () => {
+  test('Get all campaigns  <Authorized admin> <not valid page>', async () => {
     const response = await request(app)
       .get('/api/admin/campaigns?page=a')
       .set('Cookie', [

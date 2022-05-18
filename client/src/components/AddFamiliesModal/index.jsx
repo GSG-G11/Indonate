@@ -3,12 +3,14 @@ import React, { useEffect, useState } from 'react';
 import PropType from 'prop-types';
 import './style.css';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const { Option } = Select;
 
-function AddFamiliesModal({
+const AddFamiliesModal = ({
   campaignId, visible, setVisible,
-}) {
+}) => {
+  const navigate = useNavigate();
   const [ids, setIds] = useState([]);
   const [families, setFamilies] = useState([]);
 
@@ -21,16 +23,20 @@ function AddFamiliesModal({
             data: { families: allFamilies },
           },
         } = await axios.get('/api/admin/families', {
-          cancelToken: source,
+          cancelToken: source.token,
         });
         setFamilies(allFamilies);
       } catch ({
         response: {
-          status,
           data: { message: errorMessage },
         },
+        response: { status },
       }) {
-        message.error(errorMessage);
+        if (status === 500) {
+          navigate('/servererror');
+        } else {
+          message.error(errorMessage);
+        }
       }
     };
     getAllFamilies();
@@ -58,11 +64,15 @@ function AddFamiliesModal({
       message.success(successMessage);
     } catch ({
       response: {
-        status,
         data: { message: errorMessage },
       },
+      response: { status },
     }) {
-      message.error(errorMessage);
+      if (status === 500) {
+        navigate('/servererror');
+      } else {
+        message.error(errorMessage);
+      }
     }
   };
   return (
@@ -93,7 +103,7 @@ function AddFamiliesModal({
       </Select>
     </Modal>
   );
-}
+};
 
 AddFamiliesModal.propTypes = {
   campaignId: PropType.number.isRequired,

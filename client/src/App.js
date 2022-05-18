@@ -2,7 +2,16 @@ import React, { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { Nav, Family, Statistic } from './components';
 import {
-  Landing, Campaign, Login, Signup, Campaigns, CampaignsTable, ReportsTable, DonorsTable,
+  Landing,
+  Campaign,
+  Login,
+  Signup,
+  Campaigns,
+  CampaignsTable,
+  ReportsTable,
+  DonorsTable,
+  ServerError,
+  NotFoundError,
 } from './pages';
 import store from './redux/app/store';
 import 'antd/dist/antd.less';
@@ -29,7 +38,10 @@ function App() {
           <Route path="donors" element={<DonorsTable />} />
           <Route path="families" element={<Family />} />
           <Route path="reports" element={<ReportsTable />} />
+          <Route path="*" element={<NotFoundError />} />
         </Route>
+        <Route path="/servererror" element={<ServerError />} />
+        <Route path="*" element={<NotFoundError />} />
       </Routes>
     </>
   );
