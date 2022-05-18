@@ -63,8 +63,14 @@ const postFamiliesForCampaign = async (
 
     try {
       JSON.parse(ids);
-    } catch (e) {
-      throw new CustomError('ids must be array of numbers', 400);
+      if (JSON.parse(ids).length === 0) {
+        throw new CustomError('You must add at least one family', 400);
+      }
+    } catch (error) {
+      if (error.message === 'Unexpected token s in JSON at position 6') {
+        throw new CustomError('ids must be array of numbers', 400);
+      }
+      throw new CustomError(error.message, 400);
     }
 
     const { ids: familiesId } = await familiesForCampaignSchema.validateAsync(
