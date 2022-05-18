@@ -1169,7 +1169,7 @@ describe('GET /admin/campaign/:id/families', () => {
       ])
       .expect(200);
     expect(response.body.message).toBe(
-      'There is no families for this campaign',
+      'Success',
     );
   });
   test('Get all campaigns for specific family <Authorized admin>', async () => {
@@ -1194,7 +1194,7 @@ describe('GET /admin/campaign/:id/families', () => {
       .set('Cookie', [
         'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
       ])
-      .expect(200);
+      .expect(400);
     expect(response.body.message).toBe('This campaign dose not exists');
   });
 });
@@ -1207,9 +1207,6 @@ describe('POST api/admin/campagin/:id/families', () => {
       ])
       .send({
         ids: '[1, 2, 3, 4]',
-        food: 0,
-        money: 0,
-        clothes: 0,
       })
       .expect(400);
     expect(response.body.message).toBe('"id" must be a number');
@@ -1222,14 +1219,11 @@ describe('POST api/admin/campagin/:id/families', () => {
       ])
       .send({
         ids: [1, 2, 3, 4],
-        food: 0,
-        money: 0,
-        clothes: 0,
       })
       .expect(400);
     expect(response.body.message).toBe('Campaign does not exits');
   });
-  test('case:Fail |ids is not array', async () => {
+  test("case:Fail | Campaign doesn't have donations", async () => {
     const response = await request(app)
       .post('/api/admin/campaign/4/families')
       .set('Cookie', [
@@ -1237,84 +1231,66 @@ describe('POST api/admin/campagin/:id/families', () => {
       ])
       .send({
         ids: 'farah',
-        food: 0,
-        money: 0,
-        clothes: 0,
       })
       .expect(400);
-    expect(response.body.message).toBe('ids must be array of number');
+    expect(response.body.message).toBe('This campaign does not have donations');
   });
-  test('case:Fail |money is not number', async () => {
+  test('case:Fail | ids array is not an array of numbers', async () => {
     const response = await request(app)
-      .post('/api/admin/campaign/5/families')
+      .post('/api/admin/campaign/1/families')
       .set('Cookie', [
         'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
       ])
       .send({
-        ids: '[2,3,4]',
-        food: 'f',
-        money: 0,
-        clothes: 0,
+        ids: 'farah',
       })
       .expect(400);
-    expect(response.body.message).toBe('"food" must be a number');
+    expect(response.body.message).toBe('ids must be array of numbers');
   });
   test('case:Fail |array item not number', async () => {
     const response = await request(app)
-      .post('/api/admin/campaign/4/families')
+      .post('/api/admin/campaign/1/families')
       .set('Cookie', [
         'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
       ])
       .send({
         ids: ['f', 2, 3, 4],
-        food: 1,
-        money: 0,
-        clothes: 0,
       })
       .expect(400);
-    expect(response.body.message).toBe('ids must be array of number');
+    expect(response.body.message).toBe('ids must be array of numbers');
   });
   test('case:success ', async () => {
     const response = await request(app)
-      .post('/api/admin/campaign/4/families')
+      .post('/api/admin/campaign/1/families')
       .set('Cookie', [
         'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
       ])
       .send({
         ids: '[2,3]',
-        food: 1,
-        money: 1,
-        clothes: 1,
       })
       .expect(200);
     expect(response.body.message).toBe('Families added successfully');
   });
   test('case:fail with close git campaign ', async () => {
     const response = await request(app)
-      .post('/api/admin/campaign/4/families')
+      .post('/api/admin/campaign/1/families')
       .set('Cookie', [
         'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
       ])
       .send({
         ids: '[2,3]',
-        food: 1,
-        money: 1,
-        clothes: 1,
       })
       .expect(400);
-    expect(response.body.message).toBe('Campaign has closed');
+    expect(response.body.message).toBe('Campaign was closed');
   });
   test('case:fail families does not exist ', async () => {
     const response = await request(app)
-      .post('/api/admin/campaign/5/families')
+      .post('/api/admin/campaign/3/families')
       .set('Cookie', [
         'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
       ])
       .send({
         ids: '[7,2,3]',
-        food: 1,
-        money: 1,
-        clothes: 1,
       })
       .expect(400);
     expect(response.body.message).toBe('Cannot add families');

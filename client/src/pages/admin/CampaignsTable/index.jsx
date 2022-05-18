@@ -22,15 +22,17 @@ import {
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import './style.css';
+import AddFamiliesModal from '../../../components/AddFamiliesModal';
 
 function CampaignsTable() {
   const navigate = useNavigate();
   const [campaigns, setCampaigns] = useState([]);
-  const [closeCampaignMode, setCloseCampaignMode] = useState(false);
-  const [families, setFamilies] = useState([]);
   const [page, setPage] = useState(1);
   const [campaignsCount, setCampaignsCount] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
+  const [campaignId, setCampaignId] = useState(0);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [familiesForCampaign, setFamiliesForCampaign] = useState([]);
 
   useEffect(() => {
     const source = axios.CancelToken.source();
@@ -62,8 +64,7 @@ function CampaignsTable() {
     return () => {
       source.cancel();
     };
-  }, [page]);
-
+  }, [page, modalVisible]);
   const handleDeleteCampaign = async (id) => {
     try {
       const {
@@ -81,7 +82,8 @@ function CampaignsTable() {
   };
 
   const handleCloseCampaign = async (id) => {
-    setCloseCampaignMode(true);
+    setModalVisible(true);
+    setCampaignId(id);
     // Handle close campaign code should goes here
   };
 
@@ -90,11 +92,17 @@ function CampaignsTable() {
       const {
         data: { data },
       } = await axios.get(`/api/admin/campaign/${id}/families`);
-      setFamilies(data.families);
-    } catch (error) {
-      message.error(error);
+      setFamiliesForCampaign(data.families);
+    } catch ({
+      response: {
+        status,
+        data: { message: errorMessage },
+      },
+    }) {
+      message.error(errorMessage);
     }
   };
+
   const columns = [
     {
       title: 'Title',
@@ -272,7 +280,7 @@ function CampaignsTable() {
             <Dropdown
               overlay={(
                 <Menu
-                  items={families.map((family) => ({
+                  items={familiesForCampaign.map((family) => ({
                     label: family.name,
                     key: family.id,
                     icon: <UserOutlined />,
@@ -305,18 +313,25 @@ function CampaignsTable() {
   ];
 
   return (
-    <Table
-      size="small"
-      dataSource={campaigns}
-      columns={columns}
-      bordered
-      loading={isLoading}
-      rowClassName={(record) => !record.is_available && 'disabled-row'}
-      pagination={{ total: campaignsCount, defaultPageSize: 10 }}
-      onChange={(e) => {
-        setPage(e.current);
-      }}
-    />
+    <>
+      <Table
+        size="small"
+        dataSource={campaigns}
+        columns={columns}
+        bordered
+        loading={isLoading}
+        rowClassName={(record) => !record.is_available && 'disabled-row'}
+        pagination={{ total: campaignsCount, defaultPageSize: 10 }}
+        onChange={(e) => {
+          setPage(e.current);
+        }}
+      />
+      <AddFamiliesModal
+        visible={modalVisible}
+        setVisible={setModalVisible}
+        campaignId={campaignId}
+      />
+    </>
   );
 }
 
