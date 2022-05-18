@@ -11,6 +11,7 @@ import {
   Badge,
   Tooltip,
   Typography,
+  Button,
   Dropdown,
   Menu,
 } from 'antd';
@@ -22,23 +23,35 @@ import {
   TeamOutlined,
   UserOutlined,
 } from '@ant-design/icons';
+
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
-import { DonorsForCampaignTable } from '../../../components';
+import { DonorsForCampaignTable, CampaignForm } from '../../../components';
 import './style.css';
 import AddFamiliesModal from '../../../components/AddFamiliesModal';
 
 const CampaignsTable = () => {
-  const { Text } = Typography;
+  const { Text, Title } = Typography;
   const navigate = useNavigate();
   const [campaigns, setCampaigns] = useState([]);
   const [page, setPage] = useState(1);
   const [campaignsCount, setCampaignsCount] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
+  const [visible, setVisible] = useState(false);
+  const [isUpdateCampaign, setIsUpdateCampaign] = useState(false);
+  const [action, setAction] = useState('');
   const [key, setKey] = useState(0);
   const [campaignId, setCampaignId] = useState(0);
   const [modalVisible, setModalVisible] = useState(false);
   const [familiesForCampaign, setFamiliesForCampaign] = useState([]);
+  const [campaignData, setCampaignData] = useState({
+    title: '',
+    description: '',
+    categoryId: '',
+    food_target: '',
+    clothes_target: '',
+    money_target: '',
+  });
 
   useEffect(() => {
     const source = axios.CancelToken.source();
@@ -54,6 +67,7 @@ const CampaignsTable = () => {
         setCampaigns(campaignsData);
         setCampaignsCount(count);
         setIsLoading(false);
+        setIsUpdateCampaign(false);
       } catch ({
         response: {
           status,
@@ -70,7 +84,8 @@ const CampaignsTable = () => {
     return () => {
       source.cancel();
     };
-  }, [page, modalVisible]);
+  }, [page, isUpdateCampaign, modalVisible]);
+
   const handleDeleteCampaign = async (id) => {
     try {
       const {
@@ -91,6 +106,23 @@ const CampaignsTable = () => {
     setModalVisible(true);
     setCampaignId(id);
     // Handle close campaign code should goes here
+  };
+  const handleEditCampaign = (record) => {
+    setCampaignData(record);
+    setVisible(true);
+    setAction('Edit');
+  };
+  const handleAddCampaign = async () => {
+    setVisible(true);
+    setCampaignData({
+      title: '',
+      description: '',
+      categoryId: '',
+      food_target: '',
+      clothes_target: '',
+      money_target: '',
+    });
+    setAction('Add');
   };
 
   const handleGetFamilies = async (id) => {
@@ -315,7 +347,7 @@ const CampaignsTable = () => {
           )}
           {record.is_available ? (
             <Popover content="Edit campaign">
-              <EditOutlined className="icon update-icon" />
+              <EditOutlined className="icon update-icon" onClick={() => handleEditCampaign(record)} />
             </Popover>
           ) : (
             <Badge count="Closed" />
@@ -328,6 +360,16 @@ const CampaignsTable = () => {
   return (
 
     <>
+      <div className="header-campaign-table">
+        <Title level={4}>Campaigns</Title>
+        <Button
+          type="primary"
+          onClick={() => { handleAddCampaign(); }}
+        >
+          Add Campaign
+        </Button>
+      </div>
+
       <Table
         size="small"
         dataSource={campaigns}
@@ -347,6 +389,14 @@ const CampaignsTable = () => {
           expandIcon: () => null,
         }}
       />
+      <CampaignForm
+        visible={visible}
+        setVisible={setVisible}
+        action={action}
+        data={campaignData}
+        setIsUpdateCampaign={setIsUpdateCampaign}
+      />
+
       <AddFamiliesModal
         visible={modalVisible}
         setVisible={setModalVisible}

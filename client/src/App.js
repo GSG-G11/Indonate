@@ -35,7 +35,12 @@ function App() {
         <Route path="/admin" element={<Dashboard />}>
 
           <Route path="overview" element={<h1>overview</h1>} />
-          <Route path="campaigns" element={<CampaignsTable />} />
+          <Route
+            path="campaigns"
+            element={(
+              <CampaignsTable />
+)}
+          />
           <Route path="campaigns" element={<h1>campaigns</h1>} />
           <Route path="donors" element={<DonorsTable />} />
           <Route path="families" element={<Family />} />
