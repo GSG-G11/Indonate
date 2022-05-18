@@ -31,6 +31,7 @@ const CampaignForm = ({
   const [imageUrl, setImageUrl] = useState();
   const [file, setFile] = useState([]);
   const [isValidationError, setIsValidationError] = useState(false);
+  const [cloudError, setCloudError] = useState(false);
 
   const handleUploadImage = async (image) => {
     try {
@@ -43,6 +44,7 @@ const CampaignForm = ({
       const { data: { secure_url: secureUrl } } = await axios.post('https://api.cloudinary.com/v1_1/farahshcoding/image/upload', formData);
       setImageUrl(secureUrl);
     } catch (e) {
+      setCloudError(true);
       message.error('Upload fail');
     }
   };
@@ -69,12 +71,15 @@ const CampaignForm = ({
     setImageUrl(data.image_link);
     setFile([]);
     setIsValidationError(false);
+    setCloudError(false);
   }, [visible]);
 
   const handleOnOk = async () => {
     try {
       const value = await form.validateFields();
-      if (!file.length && action === 'Add') {
+      if (cloudError) {
+        message.error('Can not Add Campaign');
+      } else if (!file.length && action === 'Add') {
         setIsValidationError(true);
       } else if (action === 'Add') {
         const { data: { message: successMessage } } = await axios.post('/api/admin/campaigns', { ...value, image_link: imageUrl });
