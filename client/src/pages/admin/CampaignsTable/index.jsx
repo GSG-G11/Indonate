@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-expressions */
 /* eslint-disable react/no-unstable-nested-components */
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import {
   Table,
@@ -10,6 +11,8 @@ import {
   Badge,
   Tooltip,
   Typography,
+  Dropdown,
+  Menu,
 } from 'antd';
 import {
   CloseCircleOutlined,
@@ -17,11 +20,13 @@ import {
   EditOutlined,
   FileSearchOutlined,
   TeamOutlined,
+  UserOutlined,
 } from '@ant-design/icons';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import { DonorsForCampaignTable } from '../../../components';
 import './style.css';
+import AddFamiliesModal from '../../../components/AddFamiliesModal';
 
 const { Text } = Typography;
 function CampaignsTable() {
@@ -31,6 +36,9 @@ function CampaignsTable() {
   const [campaignsCount, setCampaignsCount] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [key, setKey] = useState(0);
+  const [campaignId, setCampaignId] = useState(0);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [familiesForCampaign, setFamiliesForCampaign] = useState([]);
 
   useEffect(() => {
     const source = axios.CancelToken.source();
@@ -62,8 +70,7 @@ function CampaignsTable() {
     return () => {
       source.cancel();
     };
-  }, [page]);
-
+  }, [page, modalVisible]);
   const handleDeleteCampaign = async (id) => {
     try {
       const {
@@ -81,8 +88,25 @@ function CampaignsTable() {
   };
 
   const handleCloseCampaign = async (id) => {
-    console.log(id);
+    setModalVisible(true);
+    setCampaignId(id);
     // Handle close campaign code should goes here
+  };
+
+  const handleGetFamilies = async (id) => {
+    try {
+      const {
+        data: { data },
+      } = await axios.get(`/api/admin/campaign/${id}/families`);
+      setFamiliesForCampaign(data.families);
+    } catch ({
+      response: {
+        status,
+        data: { message: errorMessage },
+      },
+    }) {
+      message.error(errorMessage);
+    }
   };
 
   const columns = [
@@ -135,7 +159,6 @@ function CampaignsTable() {
 
         </Text>
       ),
-
     },
     {
       title: 'Category',
@@ -267,9 +290,26 @@ function CampaignsTable() {
             <div />
           )}
           {!record.is_available ? (
-            <Popover content="List all families">
-              <TeamOutlined className="icon families-icon" />
-            </Popover>
+            <Dropdown
+              overlay={(
+                <Menu
+                  items={familiesForCampaign.map((family) => ({
+                    label: family.name,
+                    key: family.id,
+                    icon: <UserOutlined />,
+                  }))}
+                />
+              )}
+              trigger="click"
+              placement="bottom"
+            >
+              <TeamOutlined
+                className="icon families-icon"
+                onClick={() => {
+                  handleGetFamilies(record.id);
+                }}
+              />
+            </Dropdown>
           ) : (
             <div />
           )}
@@ -286,25 +326,33 @@ function CampaignsTable() {
   ];
 
   return (
-    <Table
-      size="small"
-      dataSource={campaigns}
-      columns={columns}
-      bordered
-      loading={isLoading}
-      rowClassName={(record) => !record.is_available && 'disabled-row'}
-      pagination={{ total: campaignsCount, defaultPageSize: 10 }}
-      onChange={(e) => {
-        setPage(e.current);
-      }}
-      rowKey="id"
-      expandable={{
-        expandedRowKeys: [key],
-        expandedRowRender: () => <DonorsForCampaignTable id={+key} />,
-        rowExpandable: (record) => (record.id === key),
-        expandIcon: () => null,
-      }}
-    />
+
+    <>
+      <Table
+        size="small"
+        dataSource={campaigns}
+        columns={columns}
+        bordered
+        loading={isLoading}
+        rowClassName={(record) => !record.is_available && 'disabled-row'}
+        pagination={{ total: campaignsCount, defaultPageSize: 10 }}
+        onChange={(e) => {
+          setPage(e.current);
+        }}
+        rowKey="id"
+        expandable={{
+          expandedRowKeys: [key],
+          expandedRowRender: () => <DonorsForCampaignTable id={+key} />,
+          rowExpandable: (record) => (record.id === key),
+          expandIcon: () => null,
+        }}
+      />
+      <AddFamiliesModal
+        visible={modalVisible}
+        setVisible={setModalVisible}
+        campaignId={campaignId}
+      />
+    </>
   );
 }
 

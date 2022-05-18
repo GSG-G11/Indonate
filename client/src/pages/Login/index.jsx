@@ -110,6 +110,7 @@ const Login = () => {
             >
               <Input
                 name="email"
+                placeholder="Email"
                 onChange={(e) => handleChange(e)}
               />
 
@@ -126,8 +127,8 @@ const Login = () => {
               ]}
             >
               <Password
-                placeholder="Password"
                 name="password"
+                placeholder="Password"
                 onChange={(e) => handleChange(e)}
               />
             </Item>
