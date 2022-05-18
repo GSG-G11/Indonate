@@ -10,10 +10,6 @@ import {
   Tooltip,
   Dropdown,
   Menu,
-  Select,
-  Button,
-  Modal,
-  Col,
 } from 'antd';
 import {
   CloseCircleOutlined,
@@ -26,8 +22,7 @@ import {
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import './style.css';
-
-const { Option } = Select;
+import AddFamiliesModal from '../../../components/AddFamiliesModal';
 
 function CampaignsTable() {
   const navigate = useNavigate();
@@ -70,8 +65,7 @@ function CampaignsTable() {
     return () => {
       source.cancel();
     };
-  }, [page]);
-
+  }, [page, ids]);
   const handleDeleteCampaign = async (id) => {
     try {
       const {
@@ -132,12 +126,9 @@ function CampaignsTable() {
     try {
       const {
         data: { message: successMessage },
-      } = await axios.post(
-        `/api/admin/campaign/${id}/families`,
-        {
-          ids: JSON.stringify(ids.map((strId) => +strId)),
-        },
-      );
+      } = await axios.post(`/api/admin/campaign/${id}/families`, {
+        ids: JSON.stringify(ids.map((strId) => +strId)),
+      });
       setCloseCampaignMode(false);
       setIds([]);
       message.success(successMessage);
@@ -377,29 +368,15 @@ function CampaignsTable() {
           setPage(e.current);
         }}
       />
-      <Modal
-        visible={closeCampaignMode}
-        onCancel={handleCancelModal}
-        onOk={() => { handleOkModal(campaignId); }}
-      >
-        <Select
-          mode="multiple"
-          style={{ width: '100%' }}
-          value={ids}
-          placeholder="Select the families you want to donate to
-          "
-          onChange={handleOnSelectChange}
-          filterOption={
-            (input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-}
-        >
-          {families.map((family) => (
-            <Option key={family.id} id={family.id}>
-              {family.name}
-            </Option>
-          ))}
-        </Select>
-      </Modal>
+      <AddFamiliesModal
+        handleCancelModal={handleCancelModal}
+        ids={ids}
+        campaignId={campaignId}
+        families={families}
+        closeCampaignMode={closeCampaignMode}
+        handleOkModal={handleOkModal}
+        handleOnSelectChange={handleOnSelectChange}
+      />
     </>
   );
 }

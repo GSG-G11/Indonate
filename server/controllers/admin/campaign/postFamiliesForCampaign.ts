@@ -107,7 +107,6 @@ const postFamiliesForCampaign = async (
     );
     res.json({ message: 'Families added successfully' });
   } catch (error) {
-    console.log(error);
     if (error.name === 'ValidationError') {
       next(new CustomError(error.message, 400));
     }
