@@ -3,7 +3,6 @@ import {
   Popconfirm,
   Typography, Dropdown, Space, Menu,
 } from 'antd';
-import 'antd/dist/antd.css';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
