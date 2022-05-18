@@ -35,11 +35,7 @@ const ReportsTable = () => {
         } = await axios.get(`/api/admin/reports/?page=${page}`, {
           cancelToken: source.token,
         });
-        const allReports = dbReports.map((obj) => {
-          const name = obj.name.charAt(0).toUpperCase() + obj.name.slice(1); // capitlize name
-          return { ...obj, name };
-        });
-        setReports(allReports);
+        setReports(dbReports);
         setReportsCount(count);
         setLoading(false);
       } catch ({
@@ -83,7 +79,7 @@ const ReportsTable = () => {
               loading={loading}
               author={(
                 <>
-                  <span>{name}</span>
+                  <span className="author_name">{name}</span>
                   <span className="author_email">{email}</span>
                 </>
               )}
