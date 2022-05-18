@@ -1,44 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { message, Image } from 'antd';
-import QuickChart from 'quickchart-js';
+import { message } from 'antd';
+import { Column } from '@ant-design/plots';
 
 const CampaginsDonorsChart = () => {
-  const [image, setImage] = useState('');
+  const [data, setData] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
       try {
         const { data: { data: { campaigns: campaignsData } } } = await axios.get('/api/campaigns');
-        const Names = [];
-        const DonorsNumber = [];
+        const chartData = [];
         campaignsData.map((item) => {
-          Names.push(item.title);
-          DonorsNumber.push(item.donors.length);
+          chartData.push({ campaign: item.title, donors: item.donors.length });
           return false;
         });
-        const myChart = new QuickChart();
-        myChart
-          .setConfig({
-            type: 'bar',
-            data: {
-              labels: Names,
-              datasets: [
-                {
-                  label: 'Campaigns-Donors',
-                  backgroundColor: '#94e3ad',
-                  borderColor: '#469D62',
-                  borderWidth: 1,
-                  setWidth: '10px',
-                  data: DonorsNumber,
-                },
-              ],
-            },
-
-          })
-          .setWidth(800)
-          .setHeight(400)
-          .setBackgroundColor('#fff');
-        setImage(myChart.getUrl());
+        setData(chartData);
       } catch ({ response: { data: { message: errorMessage } } }) {
         message.error(errorMessage);
       }
@@ -46,13 +22,17 @@ const CampaginsDonorsChart = () => {
 
     fetchData();
   }, []);
-  return (
-    <Image
-      src={image}
-      preview={false}
-      style={{ width: '600px' }}
-    />
 
+  return (
+    <div style={{ width: '700px', backgroundColor: '#fff', height: '300px' }}>
+      <Column
+        data={data}
+        xField="campaign"
+        yField="donors"
+        columnStyle={{ radius: [0] }}
+        color="#469D62"
+      />
+    </div>
   );
 };
 

@@ -31,6 +31,7 @@
   },
   "homepage": "https://github.com/GSG-G11/Indonate#readme",
   "dependencies": {
+    "@ant-design/plots": "^1.0.9",
     "bcryptjs": "^2.4.3",
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.6",
