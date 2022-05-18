@@ -12,6 +12,8 @@ import addFamily from './families/addFamily';
 import deleteFamilyById from './families/deleteFamilyById';
 import getCampaginsforFamily from './families/getCampaginsforFamily';
 import editFamily from './family/editFamily';
+import getFamiliesForCampaign from './families/getFamiliesForCampaign';
+import postFamiliesForCampaign from './campaign/postFamiliesForCampaign';
 
 export {
   deleteFamilyById,
@@ -23,9 +25,11 @@ export {
   getAllFamilies,
   createCampaign,
   editFamily,
+  postFamiliesForCampaign,
   getCampaignsForDonor,
   getDonors,
   deleteReports,
   updateCampaign,
   getCampaginsforFamily,
+  getFamiliesForCampaign,
 };

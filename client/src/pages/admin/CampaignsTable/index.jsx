@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import {
   Table,
@@ -9,6 +10,8 @@ import {
   Tooltip,
   Typography,
   Button,
+  Dropdown,
+  Menu,
 } from 'antd';
 import {
   CloseCircleOutlined,
@@ -16,11 +19,13 @@ import {
   EditOutlined,
   FileSearchOutlined,
   TeamOutlined,
+  UserOutlined,
 } from '@ant-design/icons';
 
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import './style.css';
+import AddFamiliesModal from '../../../components/AddFamiliesModal';
 import { CampaignForm } from '../../../components';
 
 const { Title } = Typography;
@@ -33,7 +38,10 @@ function CampaignsTable() {
   const [visiable, setVisiable] = useState(false);
   const [isUdpateCampaign, setIsUpdateCampaign] = useState(false);
   const [action, setAction] = useState('');
-  const [data, setData] = useState({
+  const [campaignId, setCampaignId] = useState(0);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [familiesForCampaign, setFamiliesForCampaign] = useState([]);
+  const [CampaingData, setCampaingData] = useState({
     title: '',
     description: '',
     categoryId: '',
@@ -73,7 +81,7 @@ function CampaignsTable() {
     return () => {
       source.cancel();
     };
-  }, [page, isUdpateCampaign]);
+  }, [page, isUdpateCampaign, modalVisible]);
 
   const handleDeleteCampaign = async (id) => {
     try {
@@ -92,17 +100,18 @@ function CampaignsTable() {
   };
 
   const handleCloseCampaign = async (id) => {
-    console.log(id);
+    setModalVisible(true);
+    setCampaignId(id);
     // Handle close campaign code should goes here
   };
   const handleEditCampaign = (record) => {
-    setData(record);
+    setCampaingData(record);
     setVisiable(true);
     setAction('Edit');
   };
   const handleAddCampaign = async () => {
     setVisiable(true);
-    setData({
+    setCampaingData({
       title: '',
       description: '',
       categoryId: '',
@@ -112,6 +121,23 @@ function CampaignsTable() {
     });
     setAction('Add');
   };
+
+  const handleGetFamilies = async (id) => {
+    try {
+      const {
+        data: { data },
+      } = await axios.get(`/api/admin/campaign/${id}/families`);
+      setFamiliesForCampaign(data.families);
+    } catch ({
+      response: {
+        status,
+        data: { message: errorMessage },
+      },
+    }) {
+      message.error(errorMessage);
+    }
+  };
+
   const columns = [
     {
       title: 'Title',
@@ -286,9 +312,26 @@ function CampaignsTable() {
             <div />
           )}
           {!record.is_available ? (
-            <Popover content="List all families">
-              <TeamOutlined className="icon families-icon" />
-            </Popover>
+            <Dropdown
+              overlay={(
+                <Menu
+                  items={familiesForCampaign.map((family) => ({
+                    label: family.name,
+                    key: family.id,
+                    icon: <UserOutlined />,
+                  }))}
+                />
+              )}
+              trigger="click"
+              placement="bottom"
+            >
+              <TeamOutlined
+                className="icon families-icon"
+                onClick={() => {
+                  handleGetFamilies(record.id);
+                }}
+              />
+            </Dropdown>
           ) : (
             <div />
           )}
@@ -332,12 +375,16 @@ function CampaignsTable() {
         visible={visiable}
         setVisible={setVisiable}
         action={action}
-        data={data}
+        data={CampaingData}
         setIsUpdateCampaign={setIsUpdateCampaign}
       />
 
+      <AddFamiliesModal
+        visible={modalVisible}
+        setVisible={setModalVisible}
+        campaignId={campaignId}
+      />
     </>
-
   );
 }
 

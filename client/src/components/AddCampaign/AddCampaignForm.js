@@ -41,15 +41,21 @@ const CampaignForm = ({
     }
   };
   useEffect(() => {
+    const source = axios.CancelToken.source();
     const fetchData = async () => {
       try {
-        const { data: { data: { categories: categoriesFromDB } } } = await axios.get('/api/categories');
+        const { data: { data: { categories: categoriesFromDB } } } = await axios.get('/api/categories', {
+          cancelToken: source.token,
+        });
         setCategories(categoriesFromDB);
       } catch ({ response: { data: { message: errorMessage } } }) {
         message.error(errorMessage);
       }
     };
     fetchData();
+    return () => {
+      source.cancel();
+    };
   }, []);
   useEffect(() => {
     form.setFieldsValue(data);
