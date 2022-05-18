@@ -6,7 +6,7 @@ import { CustomError, querySchema } from '../../../utils';
 
 const getDonors = async (req:Request, res:Response, next:NextFunction) => {
   try {
-    const { page = 1, limit = 6 } = await querySchema.validateAsync(req.query);
+    const { page = 1, limit = 6, order = 'id' } = await querySchema.validateAsync(req.query);
     const { rows: donors, count } = await Donor.findAndCountAll({
       offset: (+page - 1) * +limit,
       limit: +limit,
@@ -27,7 +27,22 @@ const getDonors = async (req:Request, res:Response, next:NextFunction) => {
         [sequelize.fn('SUM', sequelize.col('donations.money')), 'totalMoney'],
         [sequelize.fn('SUM', sequelize.col('donations.clothes')), 'totalClothes']],
       group: ['donors.id'],
-      order: [['id', 'DESC']],
+      order:
+      order.toLowerCase() === 'id'
+        ? [['id', 'DESC']]
+        : order.toLowerCase() === 'top'
+          ? [
+            [
+              sequelize.fn(
+                'SUM',
+                sequelize.literal(
+                  'COALESCE(food, 0) + COALESCE(clothes, 0) + COALESCE(money, 0)',
+                ),
+              ),
+              'DESC',
+            ],
+          ]
+          : [],
     });
 
     res.json({ message: 'Success', data: { donors, count: count.length } });

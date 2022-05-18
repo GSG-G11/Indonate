@@ -1,0 +1,25 @@
+
+.add-edit-Campaign .ant-row ant-form-item{
+        margin-bottom: 8px;
+    }
+.add-edit-Campaign .ant-modal-body{
+        padding: 15px;
+    }
+.upload{
+    margin-bottom: 10px;
+}
+.target-section-item{
+    display: flex;
+}
+.target-section{
+    margin-top: 15px;
+}
+.target-item{
+    margin-right: 20px !important;
+}
+.campaign-modal{
+    top:25px !important
+}
+
+
+

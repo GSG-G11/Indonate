@@ -24,14 +24,28 @@
   color: red !important;
 }
 
-.families-icon{
-  color: #008EF2 !important;
+.families-icon {
+  color: #008ef2 !important;
 }
 
 .update-icon {
-  color: #469D62 !important;
+  color: #469d62 !important;
+  cursor: pointer !important;
 }
 
 .delete-icon {
   color: red !important;
+}
+
+.header-campaign-table{
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+.families-icon {
+  cursor: pointer;
+}
+.ant-dropdown-menu {
+  max-height: 250px;
+  overflow: auto;
 }
