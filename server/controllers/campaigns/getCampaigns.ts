@@ -17,6 +17,7 @@ const getCampaigns = async (
       offset: (page - 1) * limit,
       group: ['campaigns.id', 'category.id'],
       attributes: [
+        'categoryId',
         'id',
         'title',
         'description',
