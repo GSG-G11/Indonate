@@ -5,14 +5,21 @@
   "main": "index.js",
   "scripts": {
     "dev": "NODE_ENV=dev nodemon ./server/index.ts",
-    "start": "NODE_ENV=production npx tsc && node ./dist",
+    "start": "NODE_ENV=production node ./dist",
     "test": "NODE_ENV=test jest server/tests",
+    "postinstall": "tsc",
+    "watch-node": "nodemon dist",
+    "watch-ts": "tsc -w",
+    "deploy": "git add . && git commit -m Heroku && git push heroku master",
     "heroku-postbuild": "cd client && npm i && npm run build",
     "lint": "eslint --ext .ts server/",
     "lint-fix": "eslint --ext .ts server/ --fix && cd client && npm run lint-fix",
     "lint:client": "cd client && npm run lint",
     "build:db": "NODE_ENV=dev ts-node server/database/config/build.ts",
     "db:fake": "NODE_ENV=dev ts-node server/database/fakeData/buildFakeData.ts"
+  },
+  "engines": {
+    "node": "16.15.0"
   },
   "pre-commit": [
     "lint",
