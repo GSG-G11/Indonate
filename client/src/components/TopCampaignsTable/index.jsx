@@ -1,8 +1,7 @@
-/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import {
-  Badge, Card, Divider, List, message, Table, Tooltip,
+  Badge, Card, List, message,
 } from 'antd';
 import { Link } from 'react-router-dom';
 import './style.css';

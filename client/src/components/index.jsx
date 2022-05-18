@@ -13,6 +13,7 @@ import DisplayCampaigns from './DisplayCampaigns';
 import Header from './HeaderAllCampaigns';
 import Family from './Family';
 import TopCampaignsTable from './TopCampaignsTable';
+import TopDonorsTable from './TopDonorsTable';
 
 export {
   Header,
@@ -30,4 +31,5 @@ export {
   Container,
   Family,
   TopCampaignsTable,
+  TopDonorsTable,
 };
