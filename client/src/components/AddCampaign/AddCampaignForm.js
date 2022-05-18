@@ -27,9 +27,11 @@ const CampaignForm = ({
   const [form] = Form.useForm();
   const [categories, setCategories] = useState([]);
   const [imageUrl, setImageUrl] = useState();
+  const [file, setFile] = useState([]);
 
   const handleUploadImage = async (image) => {
     try {
+      setFile([image]);
       const formData = new FormData();
       formData.append('file', image);
       formData.append('upload_preset', 's9kbkcoe');
@@ -48,7 +50,8 @@ const CampaignForm = ({
           cancelToken: source.token,
         });
         setCategories(categoriesFromDB);
-      } catch ({ response: { data: { message: errorMessage } } }) {
+      } catch (e) {
+        const { response: { data: { message: errorMessage } } } = e;
         message.error(errorMessage);
       }
     };
@@ -60,9 +63,11 @@ const CampaignForm = ({
   useEffect(() => {
     form.setFieldsValue(data);
     setImageUrl(data.image_link);
+    setFile();
   }, [visible]);
 
   const handleOnOk = async () => {
+    console.log(file, 'filefilefilefilefile');
     const value = await form.validateFields();
     try {
       if (action === 'Add') {
@@ -147,6 +152,7 @@ const CampaignForm = ({
             accept=".png,.jpeg"
             beforeUpload={() => false}
             defaultFileList={[]}
+            fileList={file}
           >
             <Button icon={<UploadOutlined />}>Click to upload</Button>
 
