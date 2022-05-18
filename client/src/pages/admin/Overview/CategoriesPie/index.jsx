@@ -8,9 +8,12 @@ const CategoriesPie = () => {
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
+    const source = axios.CancelToken.source();
     const fetchCategories = async () => {
       try {
-        const { data: { data: { campaigns: dbCampaigns } } } = await axios.get('/api/admin/campaigns');
+        const { data: { data: { campaigns: dbCampaigns } } } = await axios.get('/api/admin/campaigns', {
+          cancelToken: source.token,
+        });
         const allCategories = dbCampaigns.map((campaign) => campaign.category);
         setCategories(allCategories);
       } catch ({
@@ -22,6 +25,7 @@ const CategoriesPie = () => {
       }
     };
     fetchCategories();
+    return () => { source.cancel(); };
   }, []);
 
   const countCategory = (cats, name) => {
@@ -33,12 +37,12 @@ const CategoriesPie = () => {
     return { type: name, value: count };
   };
 
+  const removeDuplicateObjects = (array) => [...new Set(array.map((s) => JSON.stringify(s)))]
+    .map((s) => JSON.parse(s));
+
   const values = categories.map(
     (item) => countCategory(categories, item.name),
   );
-
-  const removeDuplicateObjects = (array) => [...new Set(array.map((s) => JSON.stringify(s)))]
-    .map((s) => JSON.parse(s));
 
   const data = removeDuplicateObjects(values);
 
