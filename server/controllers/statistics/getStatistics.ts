@@ -12,9 +12,9 @@ const getStatistics = async (req: Request, res: Response, next:NextFunction) => 
     const
       [families,
         [{
-          money: Money,
-          food: Foods,
-          clothes: Clothes,
+          money,
+          food: foods,
+          clothes,
         }],
       ] :any = await Promise.all([
         Family.count(),
@@ -24,7 +24,7 @@ const getStatistics = async (req: Request, res: Response, next:NextFunction) => 
             [sequelize.fn('SUM', sequelize.col('clothes')), 'clothes']],
         }),
       ]);
-    const [Donors, Campaigns] = await Promise.all([
+    const [donors, campaigns] = await Promise.all([
       Donor.count(),
       Campaign.count({
         group: ['is_available'],
@@ -33,12 +33,12 @@ const getStatistics = async (req: Request, res: Response, next:NextFunction) => 
     res.json({
       message: 'Success',
       data: {
-        Families: families,
-        Foods,
-        Money,
-        Clothes,
-        Campaigns,
-        Donors,
+        families,
+        foods,
+        money,
+        clothes,
+        campaigns,
+        donors,
       },
     });
   } catch (error) {
