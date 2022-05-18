@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { message, Table } from 'antd';
+import { useNavigate } from 'react-router-dom';
 
 function TopDonorsTable() {
+  const navigate = useNavigate();
+
   const [topDonors, setTopDonors] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
+    const source = axios.CancelToken.source();
     const getTopDonors = async () => {
       try {
         const {
@@ -19,20 +22,27 @@ function TopDonorsTable() {
             limit: 3,
             order: 'top',
           },
+          cancelToken: source.token,
         });
         setTopDonors(donors);
         setIsLoading(false);
-        setErrorMessage('');
       } catch ({
         response: {
-          data: { message: error },
+          data: { message: errorMessage },
         },
+        response: { status },
       }) {
-        setErrorMessage(error);
+        if (status && status === 500) {
+          navigate('/servererror');
+        } else {
+          message.error(errorMessage);
+        }
       }
     };
     getTopDonors();
-    return () => {};
+    return () => {
+      source.cancel();
+    };
   }, []);
   const columns = [
     {
@@ -93,7 +103,7 @@ function TopDonorsTable() {
       ],
     },
   ];
-  return !errorMessage ? (
+  return (
     <Table
       dataSource={topDonors}
       columns={columns}
@@ -102,8 +112,6 @@ function TopDonorsTable() {
       size="small"
       pagination={false}
     />
-  ) : (
-    message.error(errorMessage)
   );
 }
 

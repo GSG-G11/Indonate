@@ -3,7 +3,7 @@ import axios from 'axios';
 import {
   Badge, Card, List, message,
 } from 'antd';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './style.css';
 
 const {
@@ -11,11 +11,13 @@ const {
   Item: { Meta },
 } = List;
 function TopCampaignsTable() {
+  const navigate = useNavigate();
+
   const [topCampaigns, setTopCampaigns] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
+    const source = axios.CancelToken.source();
     const getTopCampaigns = async () => {
       try {
         const {
@@ -27,23 +29,30 @@ function TopCampaignsTable() {
             limit: 3,
             order: 'top',
           },
+          cancelToken: source.token,
         });
         setTopCampaigns(campaigns);
         setIsLoading(false);
-        setErrorMessage('');
       } catch ({
         response: {
-          data: { message: error },
+          data: { message: errorMessage },
         },
+        response: { status },
       }) {
-        setErrorMessage(error);
+        if (status === 500) {
+          navigate('/servererror');
+        } else {
+          message.error(errorMessage);
+        }
       }
     };
     getTopCampaigns();
-    return () => {};
+    return () => {
+      source.cancel();
+    };
   }, []);
 
-  return !errorMessage ? (
+  return (
     <Card
       loading={isLoading}
       title={<center>Top Campaigns</center>}
@@ -105,8 +114,6 @@ function TopCampaignsTable() {
         )}
       />
     </Card>
-  ) : (
-    message.error(errorMessage)
   );
 }
 
