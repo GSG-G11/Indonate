@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-expressions */
+/* eslint-disable react/no-unstable-nested-components */
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import {
@@ -24,11 +26,11 @@ import {
 
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
+import { DonorsForCampaignTable, CampaignForm } from '../../../components';
 import './style.css';
 import AddFamiliesModal from '../../../components/AddFamiliesModal';
-import { CampaignForm } from '../../../components';
 
-const { Title } = Typography;
+const { Title, Text } = Typography;
 function CampaignsTable() {
   const navigate = useNavigate();
   const [campaigns, setCampaigns] = useState([]);
@@ -38,6 +40,7 @@ function CampaignsTable() {
   const [visiable, setVisiable] = useState(false);
   const [isUdpateCampaign, setIsUpdateCampaign] = useState(false);
   const [action, setAction] = useState('');
+  const [key, setKey] = useState(0);
   const [campaignId, setCampaignId] = useState(0);
   const [modalVisible, setModalVisible] = useState(false);
   const [familiesForCampaign, setFamiliesForCampaign] = useState([]);
@@ -180,7 +183,14 @@ function CampaignsTable() {
       dataIndex: '',
       align: 'center',
       key: '',
-      render: () => <>View All ▼</>,
+      render: (_, { id }) => (
+        <Text
+          onClick={() => { id === key ? setKey(0) : setKey(id); }}
+        >
+          {id === key ? 'View All ▲' : 'View All ▼'}
+
+        </Text>
+      ),
     },
     {
       title: 'Category',
@@ -348,6 +358,7 @@ function CampaignsTable() {
   ];
 
   return (
+
     <>
       <div className="header-campaign-table">
         <Title level={4}>Campaigns</Title>
@@ -369,6 +380,13 @@ function CampaignsTable() {
         pagination={{ total: campaignsCount, defaultPageSize: 10 }}
         onChange={(e) => {
           setPage(e.current);
+        }}
+        rowKey="id"
+        expandable={{
+          expandedRowKeys: [key],
+          expandedRowRender: () => <DonorsForCampaignTable id={+key} />,
+          rowExpandable: (record) => (record.id === key),
+          expandIcon: () => null,
         }}
       />
       <CampaignForm

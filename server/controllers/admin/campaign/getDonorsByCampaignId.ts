@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { Campaign, Donor } from '../../../database/models';
+import { Campaign, Donor, sequelize } from '../../../database/models';
 import { CustomError, paramsSchema } from '../../../utils';
 
 const getDonorsByCampaignId = async (req: Request, res: Response, next: NextFunction) => {
@@ -11,11 +11,23 @@ const getDonorsByCampaignId = async (req: Request, res: Response, next: NextFunc
       limit: 6,
       include: {
         model: Campaign,
+        duplicating: false,
         where: { id },
+        attributes: [],
+        through: {
+          attributes: [],
+        },
       },
-      attributes: {
-        exclude: ['password', 'createdAt', 'updatedAt'],
-      },
+      attributes: ['id',
+        'name',
+        'phone',
+        [sequelize.col('campaigns.donations.food'), 'food'],
+        [sequelize.col('campaigns.donations.money'), 'money'],
+        [sequelize.col('campaigns.donations.clothes'), 'clothes'],
+        [sequelize.col('campaigns.donations.description'), 'description'],
+        [sequelize.col('campaigns.donations.deliver_time'), 'deliverTime'],
+        [sequelize.col('campaigns.donations.location'), 'location']]
+      ,
     });
     res.json({ message: 'Success', data: { count, donors } });
   } catch (error) {
