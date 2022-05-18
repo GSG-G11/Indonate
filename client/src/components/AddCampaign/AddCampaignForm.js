@@ -37,7 +37,7 @@ const CampaignForm = ({
       const { data: { secure_url: secureUrl } } = await axios.post('https://api.cloudinary.com/v1_1/farahshcoding/image/upload', formData);
       setImageUrl(secureUrl);
     } catch (e) {
-      message.error(e);
+      message.error('Upload fail');
     }
   };
   useEffect(() => {
@@ -62,7 +62,8 @@ const CampaignForm = ({
     setImageUrl(data.image_link);
   }, [visible]);
 
-  const handleAddAndEdit = async (value) => {
+  const handleOnOk = async () => {
+    const value = await form.validateFields();
     try {
       if (action === 'Add') {
         const { data: { message: successMessage } } = await axios.post('/api/admin/campaigns', { ...value, image_link: imageUrl });
@@ -89,17 +90,7 @@ const CampaignForm = ({
         okText={action}
         cancelText="Cancel"
         onCancel={() => handleCancel()}
-        onOk={() => {
-          form
-            .validateFields()
-            .then((values) => {
-              handleAddAndEdit(values);
-              form.resetFields();
-            })
-            .catch(() => {
-              message.error('Validate Failed');
-            });
-        }}
+        onOk={handleOnOk}
       >
         <Form
           form={form}
