@@ -27,13 +27,12 @@ import AddFamiliesModal from '../../../components/AddFamiliesModal';
 function CampaignsTable() {
   const navigate = useNavigate();
   const [campaigns, setCampaigns] = useState([]);
-  const [closeCampaignMode, setCloseCampaignMode] = useState(false);
-  const [families, setFamilies] = useState([]);
   const [page, setPage] = useState(1);
   const [campaignsCount, setCampaignsCount] = useState(0);
-  const [campaignId, setCampaignId] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
-  const [ids, setIds] = useState([]);
+  const [campaignId, setCampaignId] = useState(0);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [familiesForCampaign, setFamiliesForCampaign] = useState([]);
 
   useEffect(() => {
     const source = axios.CancelToken.source();
@@ -65,7 +64,7 @@ function CampaignsTable() {
     return () => {
       source.cancel();
     };
-  }, [page, ids]);
+  }, [page, modalVisible]);
   const handleDeleteCampaign = async (id) => {
     try {
       const {
@@ -83,23 +82,8 @@ function CampaignsTable() {
   };
 
   const handleCloseCampaign = async (id) => {
-    setCloseCampaignMode(true);
+    setModalVisible(true);
     setCampaignId(id);
-    try {
-      const {
-        data: {
-          data: { families: allFamilies },
-        },
-      } = await axios.get('/api/admin/families');
-      setFamilies(allFamilies);
-    } catch ({
-      response: {
-        status,
-        data: { message: errorMessage },
-      },
-    }) {
-      message.error(errorMessage);
-    }
     // Handle close campaign code should goes here
   };
 
@@ -108,7 +92,7 @@ function CampaignsTable() {
       const {
         data: { data },
       } = await axios.get(`/api/admin/campaign/${id}/families`);
-      setFamilies(data.families);
+      setFamiliesForCampaign(data.families);
     } catch ({
       response: {
         status,
@@ -119,32 +103,6 @@ function CampaignsTable() {
     }
   };
 
-  const handleOnSelectChange = (e) => {
-    setIds(e);
-  };
-  const handleOkModal = async (id) => {
-    try {
-      const {
-        data: { message: successMessage },
-      } = await axios.post(`/api/admin/campaign/${id}/families`, {
-        ids: JSON.stringify(ids.map((strId) => +strId)),
-      });
-      setCloseCampaignMode(false);
-      setIds([]);
-      message.success(successMessage);
-    } catch ({
-      response: {
-        status,
-        data: { message: errorMessage },
-      },
-    }) {
-      message.error(errorMessage);
-    }
-  };
-  const handleCancelModal = () => {
-    setCloseCampaignMode(false);
-    setIds([]);
-  };
   const columns = [
     {
       title: 'Title',
@@ -322,7 +280,7 @@ function CampaignsTable() {
             <Dropdown
               overlay={(
                 <Menu
-                  items={families.map((family) => ({
+                  items={familiesForCampaign.map((family) => ({
                     label: family.name,
                     key: family.id,
                     icon: <UserOutlined />,
@@ -369,13 +327,9 @@ function CampaignsTable() {
         }}
       />
       <AddFamiliesModal
-        handleCancelModal={handleCancelModal}
-        ids={ids}
+        visible={modalVisible}
+        setVisible={setModalVisible}
         campaignId={campaignId}
-        families={families}
-        closeCampaignMode={closeCampaignMode}
-        handleOkModal={handleOkModal}
-        handleOnSelectChange={handleOnSelectChange}
       />
     </>
   );
