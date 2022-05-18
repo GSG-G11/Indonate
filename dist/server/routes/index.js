@@ -1,0 +1,28 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const auth_1 = __importDefault(require("./auth"));
+const category_1 = __importDefault(require("./category"));
+const campaign_1 = __importDefault(require("./campaign"));
+const reports_1 = __importDefault(require("./reports"));
+const donation_1 = __importDefault(require("./donation"));
+const adminFamilyRoutes_1 = __importDefault(require("./adminFamilyRoutes"));
+const adminDonors_1 = __importDefault(require("./adminDonors"));
+const adminDonor_1 = __importDefault(require("./adminDonor"));
+const adminFamily_1 = __importDefault(require("./adminFamily"));
+const adminCampaign_1 = __importDefault(require("./adminCampaign"));
+const router = (0, express_1.Router)();
+router.use(donation_1.default);
+router.use(auth_1.default);
+router.use(category_1.default);
+router.use(campaign_1.default);
+router.use(reports_1.default);
+router.use('/admin', adminFamilyRoutes_1.default);
+router.use('/admin', adminDonors_1.default);
+router.use('/admin', adminDonor_1.default);
+router.use('/admin', adminFamily_1.default);
+router.use('/admin', adminCampaign_1.default);
+exports.default = router;

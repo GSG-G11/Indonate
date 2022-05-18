@@ -10,10 +10,9 @@ const CategoriesPie = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const {
-          data: { data: { categories: dbCategories } },
-        } = await axios.get('/api/categories');
-        setCategories(dbCategories);
+        const { data: { data: { campaigns: dbCampaigns } } } = await axios.get('/api/admin/campaigns');
+        const allCategories = dbCampaigns.map((campaign) => campaign.category);
+        setCategories(allCategories);
       } catch ({
         response: {
           data: { message: errorMessage },
@@ -34,7 +33,14 @@ const CategoriesPie = () => {
     return { type: name, value: count };
   };
 
-  const data = categories.map((ele) => countCategory(categories, ele.name));
+  const values = categories.map(
+    (item) => countCategory(categories, item.name),
+  );
+
+  const removeDuplicateObjects = (array) => [...new Set(array.map((s) => JSON.stringify(s)))]
+    .map((s) => JSON.parse(s));
+
+  const data = removeDuplicateObjects(values);
 
   const config = {
     appendPadding: 10,
@@ -67,9 +73,8 @@ const CategoriesPie = () => {
           whiteSpace: 'pre-wrap',
           overflow: 'hidden',
           textOverflow: 'ellipsis',
-          // fontSize: 14,
         },
-        content: `total ${categories.length}`,
+        content: `total ${data.length}`,
       },
     },
   };

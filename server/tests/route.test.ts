@@ -209,7 +209,7 @@ describe('Get/campaign/:id', () => {
     const id = 20;
     const response = await request(app).get(`/api/campaign/${id}`).expect(400);
     expect(response.body.data).toBe(undefined);
-    expect(response.body.message).toBe('There is no campaign');
+    expect(response.body.message).toBe('This campaign dose not exists');
   });
 
   test('campaign/:id => id is not a number', async () => {
@@ -440,15 +440,23 @@ describe('GET /campaigns', () => {
     test('/?page validation error', async () => {
       const response = await request(app)
         .get('/api/admin/families/?page=string')
-        .set('Cookie', ['ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUyMjA5NTI0LCJleHAiOjE2NTQ4MDE1MjR9.LD0qUzAD_IdLqqkSrWPfs2JsBjruMIHgX06KUsIXEyY;'])
+        .set('Cookie', [
+          'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUyMjA5NTI0LCJleHAiOjE2NTQ4MDE1MjR9.LD0qUzAD_IdLqqkSrWPfs2JsBjruMIHgX06KUsIXEyY;',
+        ])
         .expect(401);
       expect(response.body.message).toEqual('"page" must be a number');
     });
 
     test('first page families', async () => {
-      const { body: { data: { families, count } } } = await request(app)
+      const {
+        body: {
+          data: { families, count },
+        },
+      } = await request(app)
         .get('/api/admin/families/?page=1')
-        .set('Cookie', ['ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUyMjA5NTI0LCJleHAiOjE2NTQ4MDE1MjR9.LD0qUzAD_IdLqqkSrWPfs2JsBjruMIHgX06KUsIXEyY;'])
+        .set('Cookie', [
+          'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUyMjA5NTI0LCJleHAiOjE2NTQ4MDE1MjR9.LD0qUzAD_IdLqqkSrWPfs2JsBjruMIHgX06KUsIXEyY;',
+        ])
         .expect(200);
       expect(families.length).toEqual(5);
       expect(count).toEqual(5);
@@ -474,7 +482,8 @@ describe('PATCH /api/admin/family', () => {
         name: 'mohammed',
         phone: '0599522660',
         address: 'Gaza',
-      }).set('Cookie', [
+      })
+      .set('Cookie', [
         'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
       ])
       .expect(200);
@@ -488,7 +497,8 @@ describe('PATCH /api/admin/family', () => {
         name: 'mohammed',
         phone: '0597086162',
         address: 'Gaza',
-      }).set('Cookie', [
+      })
+      .set('Cookie', [
         'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
       ])
       .expect(400);
@@ -502,7 +512,8 @@ describe('PATCH /api/admin/family', () => {
         name: 'Marwani',
         phone: '0599888620',
         address: 'Gaza al remal street',
-      }).set('Cookie', [
+      })
+      .set('Cookie', [
         'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
       ])
       .expect(400);
@@ -516,7 +527,8 @@ describe('PATCH /api/admin/family', () => {
         name: 'Marwani',
         phone: '0599888620',
         address: 'Gaza al remal street',
-      }).expect(401);
+      })
+      .expect(401);
     expect(response.body.message).toBe('Unauthorized user');
   });
 });
@@ -529,7 +541,8 @@ describe('POST /api/admin/family', () => {
         name: 'mohammed',
         phone: '0599522669',
         address: 'Gaza',
-      }).set('Cookie', [
+      })
+      .set('Cookie', [
         'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
       ])
       .expect(201);
@@ -542,7 +555,8 @@ describe('POST /api/admin/family', () => {
         name: 'mohammed',
         phone: '0597801162',
         address: 'Gaza',
-      }).set('Cookie', [
+      })
+      .set('Cookie', [
         'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
       ])
       .expect(400);
@@ -554,7 +568,8 @@ describe('POST /api/admin/family', () => {
       .send({
         name: 'mohammed',
         phone: '0599888622',
-      }).set('Cookie', [
+      })
+      .set('Cookie', [
         'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
       ])
       .expect(400);
@@ -730,7 +745,9 @@ describe('DELETE /api/admin/donor/:donorId', () => {
         'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
       ])
       .expect(400);
-    expect(response.body.message).toBe('The donor you are trying to delete does not exist');
+    expect(response.body.message).toBe(
+      'The donor you are trying to delete does not exist',
+    );
   });
   test('case: Failed | id is not a number', async () => {
     const donorId = 'w';
@@ -752,8 +769,7 @@ describe('DELETE /api/admin/donor/:donorId', () => {
 });
 describe('GET /api/families/campaigns/:id', () => {
   test('unauthorized admin', async () => {
-    const response = await request(app)
-      .get('/api/admin/family/1/campaigns');
+    const response = await request(app).get('/api/admin/family/1/campaigns');
     expect(400);
     expect(response.body.message).toBe('Unauthorized user');
   });
@@ -801,7 +817,6 @@ describe('/GET/api/admin/donors', () => {
       ])
       .expect(200);
     expect(response.body.data.donors).toEqual([
-
       {
         id: 5,
         name: 'mohammed',
@@ -851,8 +866,8 @@ describe('/GET/api/admin/donors', () => {
         'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
       ])
       .expect(200);
-    expect(response.body.data.donors)
-      .toEqual([{
+    expect(response.body.data.donors).toEqual([
+      {
         id: 4,
         name: 'sami',
         email: 'sami@gmail.com',
@@ -861,7 +876,8 @@ describe('/GET/api/admin/donors', () => {
         totalFood: '40',
         totalMoney: '400',
         totalClothes: '40',
-      }]);
+      },
+    ]);
   });
   test('get donors with limit and page', async () => {
     const response = await request(app)
@@ -923,7 +939,8 @@ describe('PATCH /api/admin/donor/:id', () => {
 });
 describe('GET/admin/donor/campaigns/:id', () => {
   test('get campaigns for donor that have id 1', async () => {
-    const response = await request(app).get('/api/admin/donor/1/campaigns')
+    const response = await request(app)
+      .get('/api/admin/donor/1/campaigns')
       .set('Cookie', [
         'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
       ]);
@@ -936,12 +953,12 @@ describe('GET/admin/donor/campaigns/:id', () => {
       {
         id: 2,
         title: 'winter clothes collection',
-
       },
     ]);
   });
   test('get campaings for donor id not exist', async () => {
-    const response = await request(app).get('/api/admin/donor/20/campaigns')
+    const response = await request(app)
+      .get('/api/admin/donor/20/campaigns')
       .set('Cookie', [
         'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
       ]);
@@ -950,7 +967,8 @@ describe('GET/admin/donor/campaigns/:id', () => {
   });
 
   test('get campaings for Authorized user', async () => {
-    const response = await request(app).get('/api/admin/donor/1/campaigns')
+    const response = await request(app)
+      .get('/api/admin/donor/1/campaigns')
       .set('Cookie', [
         'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IkFobWVkIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTY1MjExOTI4OSwiZXhwIjoxNjU0NzExMjg5fQ.WNuAaN7EcIrUx7RV2EMj_E46vbRP4FU5e8vsjMcwCpY',
       ]);
@@ -960,12 +978,14 @@ describe('GET/admin/donor/campaigns/:id', () => {
 });
 describe('POST /api/admin/campaigns', () => {
   test('unauthorized admin', async () => {
-    const response = await request(app).post('/api/admin/campaigns')
+    const response = await request(app)
+      .post('/api/admin/campaigns')
       .expect(401);
     expect(response.body.message).toBe('Unauthorized user');
   });
   test('missing column categoryId', async () => {
-    const response = await request(app).post('/api/admin/campaigns')
+    const response = await request(app)
+      .post('/api/admin/campaigns')
       .set('Cookie', [
         'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
       ])
@@ -981,7 +1001,8 @@ describe('POST /api/admin/campaigns', () => {
     expect(response.body.message).toBe('"categoryId" is required');
   });
   test('title as number', async () => {
-    const response = await request(app).post('/api/admin/campaigns')
+    const response = await request(app)
+      .post('/api/admin/campaigns')
       .set('Cookie', [
         'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
       ])
@@ -998,7 +1019,8 @@ describe('POST /api/admin/campaigns', () => {
     expect(response.body.message).toBe('"title" must be a string');
   });
   test('add new campaign', async () => {
-    const response = await request(app).post('/api/admin/campaigns')
+    const response = await request(app)
+      .post('/api/admin/campaigns')
       .set('Cookie', [
         'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
       ])
@@ -1023,7 +1045,8 @@ describe('DELETE /api/admin/campaigns/:id', () => {
     expect(response.body.message).toBe('Unauthorized user');
   });
   test('campaign id not a number', async () => {
-    const response = await request(app).delete('/api/admin/campaigns/string')
+    const response = await request(app)
+      .delete('/api/admin/campaigns/string')
       .set('Cookie', [
         'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
       ]);
@@ -1031,7 +1054,8 @@ describe('DELETE /api/admin/campaigns/:id', () => {
     expect(response.body.message).toBe('"id" must be a number');
   });
   test('campaign doesnt exist', async () => {
-    const response = await request(app).delete('/api/admin/campaigns/100')
+    const response = await request(app)
+      .delete('/api/admin/campaigns/100')
       .set('Cookie', [
         'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
       ]);
@@ -1039,7 +1063,8 @@ describe('DELETE /api/admin/campaigns/:id', () => {
     expect(response.body.message).toBe("Campaign doesn't exist");
   });
   test('campaign delete success', async () => {
-    const response = await request(app).delete('/api/admin/campaigns/2')
+    const response = await request(app)
+      .delete('/api/admin/campaigns/2')
       .set('Cookie', [
         'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
       ]);
@@ -1049,7 +1074,8 @@ describe('DELETE /api/admin/campaigns/:id', () => {
 });
 describe('DELETE/admin/reports/id', () => {
   test('delete report that exist', async () => {
-    const response = await request(app).delete('/api/admin/report/3')
+    const response = await request(app)
+      .delete('/api/admin/report/3')
       .set('Cookie', [
         'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUyMTIxODI0LCJleHAiOjE2NTQ3MTM4MjR9.Ue8JhWn8jAgLNzUdoHiWZAXoRtF5vooY3itRjw1yjyM',
       ]);
@@ -1057,7 +1083,8 @@ describe('DELETE/admin/reports/id', () => {
     expect(response.body.message).toBe('Report deleted successfuly');
   });
   test('delete report that does not exist', async () => {
-    const response = await request(app).delete('/api/admin/report/9')
+    const response = await request(app)
+      .delete('/api/admin/report/9')
       .set('Cookie', [
         'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUyMTIxODI0LCJleHAiOjE2NTQ3MTM4MjR9.Ue8JhWn8jAgLNzUdoHiWZAXoRtF5vooY3itRjw1yjyM',
       ]);
@@ -1067,45 +1094,108 @@ describe('DELETE/admin/reports/id', () => {
 });
 describe('PATCH/api/admin/campaign/id', () => {
   test('edit campaign exist', async () => {
-    const response = await request(app).patch('/api/admin/campaign/3')
+    const response = await request(app)
+      .patch('/api/admin/campaign/3')
       .send({
         title: 'summer clothes collection',
-        description: 'This campaign aims to help poor families to heat their homes in the winter by collecting clothes from donors or buying new clothes from financial donations',
+        description:
+          'This campaign aims to help poor families to heat their homes in the winter by collecting clothes from donors or buying new clothes from financial donations',
         categoryId: 2,
         food_target: 1,
         clothes_target: 800,
         money_target: 1,
-        image_link: 'https://media.voltron.alhurra.com/Drupal/01live-116/styles/sourced/s3/2019-12/AFC8DF4B-8C6D-4968-87B2-CEAFD63DED97.jpg?itok=Y3YypJNm',
-      }).set('Cookie', [
+        image_link:
+          'https://media.voltron.alhurra.com/Drupal/01live-116/styles/sourced/s3/2019-12/AFC8DF4B-8C6D-4968-87B2-CEAFD63DED97.jpg?itok=Y3YypJNm',
+      })
+      .set('Cookie', [
         'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUyMTIxODI0LCJleHAiOjE2NTQ3MTM4MjR9.Ue8JhWn8jAgLNzUdoHiWZAXoRtF5vooY3itRjw1yjyM',
       ]);
     expect(200);
     expect(response.body.data.campaign).toEqual({
       title: 'summer clothes collection',
-      description: 'This campaign aims to help poor families to heat their homes in the winter by collecting clothes from donors or buying new clothes from financial donations',
+      description:
+        'This campaign aims to help poor families to heat their homes in the winter by collecting clothes from donors or buying new clothes from financial donations',
       categoryId: 2,
       food_target: 1,
       clothes_target: 800,
       money_target: 1,
-      image_link: 'https://media.voltron.alhurra.com/Drupal/01live-116/styles/sourced/s3/2019-12/AFC8DF4B-8C6D-4968-87B2-CEAFD63DED97.jpg?itok=Y3YypJNm',
+      image_link:
+        'https://media.voltron.alhurra.com/Drupal/01live-116/styles/sourced/s3/2019-12/AFC8DF4B-8C6D-4968-87B2-CEAFD63DED97.jpg?itok=Y3YypJNm',
     });
   });
   test('edit campaign exist not exist', async () => {
-    const response = await request(app).patch('/api/admin/campaign/10')
+    const response = await request(app)
+      .patch('/api/admin/campaign/10')
       .send({
         title: 'summer clothes collection',
-        description: 'This campaign aims to help poor families to heat their homes in the winter by collecting clothes from donors or buying new clothes from financial donations',
+        description:
+          'This campaign aims to help poor families to heat their homes in the winter by collecting clothes from donors or buying new clothes from financial donations',
         categoryId: 2,
         food_target: 1,
         clothes_target: 800,
         money_target: 1,
-        image_link: 'https://media.voltron.alhurra.com/Drupal/01live-116/styles/sourced/s3/2019-12/AFC8DF4B-8C6D-4968-87B2-CEAFD63DED97.jpg?itok=Y3YypJNm',
-      }).set('Cookie', [
+        image_link:
+          'https://media.voltron.alhurra.com/Drupal/01live-116/styles/sourced/s3/2019-12/AFC8DF4B-8C6D-4968-87B2-CEAFD63DED97.jpg?itok=Y3YypJNm',
+      })
+      .set('Cookie', [
         'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUyMTIxODI0LCJleHAiOjE2NTQ3MTM4MjR9.Ue8JhWn8jAgLNzUdoHiWZAXoRtF5vooY3itRjw1yjyM',
       ]);
 
     expect(200);
     expect(response.body.message).toBe('Fail to update');
+  });
+});
+describe('GET /admin/campaign/:id/families', () => {
+  test('Get all campaigns for specific family  <Unauthorized user>', async () => {
+    const response = await request(app)
+      .get('/api/admin/campaign/1/families')
+      .expect(401);
+    expect(response.body.message).toEqual('Unauthorized user');
+  });
+  test('Get all campaigns for specific family  <Unauthorized admin>', async () => {
+    const response = await request(app)
+      .get('/api/admin/campaign/1/families')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmFtZSI6IkFobWVkIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTY1MTk5OTY3OSwiZXhwIjoxNjU0NTkxNjc5fQ.Z0Tq0XxGNbQ72J4BRAp06Qo6xYq41jb59-5uRK1JfuA',
+      ])
+      .expect(401);
+    expect(response.body.message).toEqual('Unauthorized admin');
+  });
+  test('Get all campaigns for specific family <Authorized admin> <No families>', async () => {
+    const response = await request(app)
+      .get('/api/admin/campaign/1/families')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
+      ])
+      .expect(200);
+    expect(response.body.message).toBe(
+      'Success',
+    );
+  });
+  test('Get all campaigns for specific family <Authorized admin>', async () => {
+    const response = await request(app)
+      .get('/api/admin/campaign/3/families')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
+      ])
+      .expect(200);
+    expect(response.body.data.families).toEqual([
+      {
+        id: 4,
+        name: 'Sorami',
+        phone: '0597802262',
+        address: 'Jabalia al remal street',
+      },
+    ]);
+  });
+  test('Get all campaigns for specific family <Authorized admin> <No Campaign>', async () => {
+    const response = await request(app)
+      .get('/api/admin/campaign/30/families')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
+      ])
+      .expect(400);
+    expect(response.body.message).toBe('This campaign dose not exists');
   });
 });
 describe('POST api/admin/campagin/:id/families', () => {
@@ -1117,9 +1207,6 @@ describe('POST api/admin/campagin/:id/families', () => {
       ])
       .send({
         ids: '[1, 2, 3, 4]',
-        food: 0,
-        money: 0,
-        clothes: 0,
       })
       .expect(400);
     expect(response.body.message).toBe('"id" must be a number');
@@ -1132,14 +1219,11 @@ describe('POST api/admin/campagin/:id/families', () => {
       ])
       .send({
         ids: [1, 2, 3, 4],
-        food: 0,
-        money: 0,
-        clothes: 0,
       })
       .expect(400);
     expect(response.body.message).toBe('Campaign does not exits');
   });
-  test('case:Fail |ids is not array', async () => {
+  test("case:Fail | Campaign doesn't have donations", async () => {
     const response = await request(app)
       .post('/api/admin/campaign/4/families')
       .set('Cookie', [
@@ -1147,84 +1231,66 @@ describe('POST api/admin/campagin/:id/families', () => {
       ])
       .send({
         ids: 'farah',
-        food: 0,
-        money: 0,
-        clothes: 0,
       })
       .expect(400);
-    expect(response.body.message).toBe('ids must be array of number');
+    expect(response.body.message).toBe('This campaign does not have donations');
   });
-  test('case:Fail |money is not number', async () => {
+  test('case:Fail | ids array is not an array of numbers', async () => {
     const response = await request(app)
-      .post('/api/admin/campaign/5/families')
+      .post('/api/admin/campaign/1/families')
       .set('Cookie', [
         'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
       ])
       .send({
-        ids: '[2,3,4]',
-        food: 'f',
-        money: 0,
-        clothes: 0,
+        ids: 'farah',
       })
       .expect(400);
-    expect(response.body.message).toBe('"food" must be a number');
+    expect(response.body.message).toBe('ids must be array of numbers');
   });
   test('case:Fail |array item not number', async () => {
     const response = await request(app)
-      .post('/api/admin/campaign/4/families')
+      .post('/api/admin/campaign/1/families')
       .set('Cookie', [
         'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
       ])
       .send({
         ids: ['f', 2, 3, 4],
-        food: 1,
-        money: 0,
-        clothes: 0,
       })
       .expect(400);
-    expect(response.body.message).toBe('ids must be array of number');
+    expect(response.body.message).toBe('ids must be array of numbers');
   });
   test('case:success ', async () => {
     const response = await request(app)
-      .post('/api/admin/campaign/4/families')
+      .post('/api/admin/campaign/1/families')
       .set('Cookie', [
         'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
       ])
       .send({
         ids: '[2,3]',
-        food: 1,
-        money: 1,
-        clothes: 1,
       })
       .expect(200);
     expect(response.body.message).toBe('Families added successfully');
   });
   test('case:fail with close git campaign ', async () => {
     const response = await request(app)
-      .post('/api/admin/campaign/4/families')
+      .post('/api/admin/campaign/1/families')
       .set('Cookie', [
         'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
       ])
       .send({
         ids: '[2,3]',
-        food: 1,
-        money: 1,
-        clothes: 1,
       })
       .expect(400);
-    expect(response.body.message).toBe('Campaign has closed');
+    expect(response.body.message).toBe('Campaign was closed');
   });
   test('case:fail families does not exist ', async () => {
     const response = await request(app)
-      .post('/api/admin/campaign/5/families')
+      .post('/api/admin/campaign/3/families')
       .set('Cookie', [
         'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
       ])
       .send({
         ids: '[7,2,3]',
-        food: 1,
-        money: 1,
-        clothes: 1,
       })
       .expect(400);
     expect(response.body.message).toBe('Cannot add families');
