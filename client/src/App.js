@@ -26,7 +26,6 @@ function App() {
         <Route path="/admin" element={<Dashboard />}>
           <Route index element={<Statistic />} />
           <Route path="campaigns" element={<CampaignsTable />} />
-          <Route path="campaigns" element={<h1>campaigns</h1>} />
           <Route path="donors" element={<DonorsTable />} />
           <Route path="families" element={<Family />} />
           <Route path="reports" element={<ReportsTable />} />
