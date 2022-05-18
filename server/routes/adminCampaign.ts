@@ -6,6 +6,6 @@ import {
 } from '../middlewares';
 
 const adminCampaignRouter = Router();
-adminCampaignRouter.post('/campaign/:id/families', postFamiliesForCampaign);
+adminCampaignRouter.post('/campaign/:id/families', authUser, authAdmin, postFamiliesForCampaign);
 adminCampaignRouter.patch('/campaign/:id', authUser, authAdmin, updateCampaign);
 export default adminCampaignRouter;
