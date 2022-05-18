@@ -37,6 +37,11 @@
   color: red !important;
 }
 
+.header-campaign-table{
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+}
 .families-icon {
   cursor: pointer;
 }
