@@ -1169,7 +1169,7 @@ describe('GET /admin/campaign/:id/families', () => {
       ])
       .expect(200);
     expect(response.body.message).toBe(
-      'There is no families for this campaign',
+      'Success',
     );
   });
   test('Get all campaigns for specific family <Authorized admin>', async () => {
@@ -1194,7 +1194,7 @@ describe('GET /admin/campaign/:id/families', () => {
       .set('Cookie', [
         'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
       ])
-      .expect(200);
+      .expect(400);
     expect(response.body.message).toBe('This campaign dose not exists');
   });
 });
