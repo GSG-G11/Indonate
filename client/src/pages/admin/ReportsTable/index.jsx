@@ -24,15 +24,17 @@ const ReportsTable = () => {
   const [page, setPage] = useState(1);
   const [reportsCount, setReportsCount] = useState([]);
 
-  const source = axios.CancelToken.source();
   useEffect(() => {
+    const source = axios.CancelToken.source();
     const fetchReports = async () => {
       try {
         const {
           data: {
             data: { reports: dbReports, count },
           },
-        } = await axios.get(`/api/admin/reports/?page=${page}`);
+        } = await axios.get(`/api/admin/reports/?page=${page}`, {
+          cancelToken: source.token,
+        });
         const allReports = dbReports.map((obj) => {
           const name = obj.name.charAt(0).toUpperCase() + obj.name.slice(1); // capitlize name
           return { ...obj, name };
@@ -49,9 +51,7 @@ const ReportsTable = () => {
       }
     };
     fetchReports();
-    return () => {
-      source.cancel();
-    };
+    return () => { source.cancel(); };
   }, [page]);
 
   const deleteReport = async (reportId) => {
