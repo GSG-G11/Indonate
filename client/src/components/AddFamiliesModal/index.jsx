@@ -21,7 +21,7 @@ function AddFamiliesModal({
             data: { families: allFamilies },
           },
         } = await axios.get('/api/admin/families', {
-          cancelToken: source,
+          cancelToken: source.token,
         });
         setFamilies(allFamilies);
       } catch ({
