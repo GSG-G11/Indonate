@@ -24,7 +24,7 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route path="/admin" element={<Dashboard />}>
-          <Route path="overview" element={<Statistic />} />
+          <Route index element={<Statistic />} />
           <Route path="campaigns" element={<CampaignsTable />} />
           <Route path="campaigns" element={<h1>campaigns</h1>} />
           <Route path="donors" element={<h1>donors</h1>} />

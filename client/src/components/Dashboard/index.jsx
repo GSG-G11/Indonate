@@ -54,7 +54,7 @@ const Dashboard = () => {
             <Item>
               <PieChartOutlined />
               <span>Overview</span>
-              <Link to="/admin/overview" />
+              <Link to="/admin" />
             </Item>
             <Item>
               <DesktopOutlined />

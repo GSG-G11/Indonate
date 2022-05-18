@@ -11,8 +11,18 @@ const Statistic = () => {
     const source = axios.CancelToken.source();
     const { token } = source;
     const fetchData = async () => {
-      const { data: { data, dataToAdmin } } = await axios.get('/api/statistics', { cancelToken: token });
-      setStatistics({ ...dataToAdmin, ...data });
+      const { data: { data } } = await axios.get('/api/statistics', { cancelToken: token });
+      const { Campaigns, ...rest } = data;
+      rest['Available Campaigns'] = 0;
+      rest['Not Available Campaigns'] = 0;
+      Campaigns.forEach(({ is_available: isAvailable, count }) => {
+        if (isAvailable) {
+          rest['Available Campaigns'] = count;
+        } else {
+          rest['Not Available Campaigns'] = count;
+        }
+      });
+      setStatistics(rest);
     };
     fetchData();
 
