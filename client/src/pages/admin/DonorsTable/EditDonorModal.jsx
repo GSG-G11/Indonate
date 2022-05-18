@@ -9,7 +9,7 @@ import React, { useEffect } from 'react';
 
 const { Item } = Form;
 
-const editDonorModal = ({
+const EditDonorModal = ({
   dataSource: {
     id,
     name,
@@ -92,4 +92,4 @@ const editDonorModal = ({
     </Modal>
   );
 };
-export default editDonorModal;
+export default EditDonorModal;
