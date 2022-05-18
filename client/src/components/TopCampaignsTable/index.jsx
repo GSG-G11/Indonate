@@ -10,7 +10,7 @@ const {
   Item,
   Item: { Meta },
 } = List;
-function TopCampaignsTable() {
+const TopCampaignsTable = () => {
   const navigate = useNavigate();
 
   const [topCampaigns, setTopCampaigns] = useState([]);
@@ -115,6 +115,6 @@ function TopCampaignsTable() {
       />
     </Card>
   );
-}
+};
 
 export default TopCampaignsTable;

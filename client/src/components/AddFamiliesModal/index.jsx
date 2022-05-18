@@ -7,9 +7,9 @@ import { useNavigate } from 'react-router-dom';
 
 const { Option } = Select;
 
-function AddFamiliesModal({
+const AddFamiliesModal = ({
   campaignId, visible, setVisible,
-}) {
+}) => {
   const navigate = useNavigate();
   const [ids, setIds] = useState([]);
   const [families, setFamilies] = useState([]);
@@ -103,7 +103,7 @@ function AddFamiliesModal({
       </Select>
     </Modal>
   );
-}
+};
 
 AddFamiliesModal.propTypes = {
   campaignId: PropType.number.isRequired,

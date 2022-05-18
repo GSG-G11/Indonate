@@ -3,7 +3,7 @@ import axios from 'axios';
 import { message, Table } from 'antd';
 import { useNavigate } from 'react-router-dom';
 
-function TopDonorsTable() {
+const TopDonorsTable = () => {
   const navigate = useNavigate();
 
   const [topDonors, setTopDonors] = useState([]);
@@ -113,6 +113,6 @@ function TopDonorsTable() {
       pagination={false}
     />
   );
-}
+};
 
 export default TopDonorsTable;

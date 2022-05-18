@@ -24,7 +24,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import './style.css';
 import AddFamiliesModal from '../../../components/AddFamiliesModal';
 
-function CampaignsTable() {
+const CampaignsTable = () => {
   const navigate = useNavigate();
   const [campaigns, setCampaigns] = useState([]);
   const [page, setPage] = useState(1);
@@ -333,6 +333,6 @@ function CampaignsTable() {
       />
     </>
   );
-}
+};
 
 export default CampaignsTable;
