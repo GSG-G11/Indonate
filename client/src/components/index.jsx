@@ -11,6 +11,7 @@ import ReportsForm from './ReportsForm';
 import Container from './Container';
 import DisplayCampaigns from './DisplayCampaigns';
 import Header from './HeaderAllCampaigns';
+import DonorsForCampaignTable from './admin';
 import Family from './Family';
 import TopCampaignsTable from './TopCampaignsTable';
 import TopDonorsTable from './TopDonorsTable';
@@ -29,6 +30,7 @@ export {
   DonationButton,
   ReportsForm,
   Container,
+  DonorsForCampaignTable,
   Family,
   TopCampaignsTable,
   TopDonorsTable,

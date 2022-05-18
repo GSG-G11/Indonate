@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-expressions */
+/* eslint-disable react/no-unstable-nested-components */
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import {
@@ -8,6 +10,7 @@ import {
   message,
   Badge,
   Tooltip,
+  Typography,
   Dropdown,
   Menu,
 } from 'antd';
@@ -21,15 +24,18 @@ import {
 } from '@ant-design/icons';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
+import { DonorsForCampaignTable } from '../../../components';
 import './style.css';
 import AddFamiliesModal from '../../../components/AddFamiliesModal';
 
 const CampaignsTable = () => {
+  const { Text } = Typography;
   const navigate = useNavigate();
   const [campaigns, setCampaigns] = useState([]);
   const [page, setPage] = useState(1);
   const [campaignsCount, setCampaignsCount] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
+  const [key, setKey] = useState(0);
   const [campaignId, setCampaignId] = useState(0);
   const [modalVisible, setModalVisible] = useState(false);
   const [familiesForCampaign, setFamiliesForCampaign] = useState([]);
@@ -145,7 +151,14 @@ const CampaignsTable = () => {
       dataIndex: '',
       align: 'center',
       key: '',
-      render: () => <>View All ▼</>,
+      render: (_, { id }) => (
+        <Text
+          onClick={() => { id === key ? setKey(0) : setKey(id); }}
+        >
+          {id === key ? 'View All ▲' : 'View All ▼'}
+
+        </Text>
+      ),
     },
     {
       title: 'Category',
@@ -313,6 +326,7 @@ const CampaignsTable = () => {
   ];
 
   return (
+
     <>
       <Table
         size="small"
@@ -324,6 +338,13 @@ const CampaignsTable = () => {
         pagination={{ total: campaignsCount, defaultPageSize: 10 }}
         onChange={(e) => {
           setPage(e.current);
+        }}
+        rowKey="id"
+        expandable={{
+          expandedRowKeys: [key],
+          expandedRowRender: () => <DonorsForCampaignTable id={+key} />,
+          rowExpandable: (record) => (record.id === key),
+          expandIcon: () => null,
         }}
       />
       <AddFamiliesModal
