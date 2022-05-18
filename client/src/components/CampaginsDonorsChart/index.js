@@ -24,7 +24,10 @@ const CampaginsDonorsChart = () => {
   }, []);
 
   return (
-    <div style={{ width: '700px', backgroundColor: '#fff', height: '300px' }}>
+    <div style={{
+      width: '700px', backgroundColor: '#fff', height: '300px', margin: '10px',
+    }}
+    >
       <Column
         data={data}
         xField="campaign"
