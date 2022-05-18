@@ -9,6 +9,7 @@ import {
   message,
   InputNumber,
   Upload,
+  Typography,
 } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import PropTypes from 'prop-types';
@@ -17,6 +18,7 @@ import './style.css';
 const { Item } = Form;
 const { TextArea } = Input;
 const { Option } = Select;
+const { Text } = Typography;
 const CampaignForm = ({
   visible,
   action,
@@ -28,9 +30,11 @@ const CampaignForm = ({
   const [categories, setCategories] = useState([]);
   const [imageUrl, setImageUrl] = useState();
   const [file, setFile] = useState([]);
+  const [isValidationError, setIsValidationError] = useState(false);
 
   const handleUploadImage = async (image) => {
     try {
+      setIsValidationError(false);
       setFile([image]);
       const formData = new FormData();
       formData.append('file', image);
@@ -63,22 +67,26 @@ const CampaignForm = ({
   useEffect(() => {
     form.setFieldsValue(data);
     setImageUrl(data.image_link);
-    setFile();
+    setFile([]);
+    setIsValidationError(false);
   }, [visible]);
 
   const handleOnOk = async () => {
-    console.log(file, 'filefilefilefilefile');
-    const value = await form.validateFields();
     try {
-      if (action === 'Add') {
+      const value = await form.validateFields();
+      if (!file.length && action === 'Add') {
+        setIsValidationError(true);
+      } else if (action === 'Add') {
         const { data: { message: successMessage } } = await axios.post('/api/admin/campaigns', { ...value, image_link: imageUrl });
         message.success(successMessage);
+        setVisible(false);
+        setIsUpdateCampaign(true);
       } else {
         const { data: { message: successMessage } } = await axios.patch(`/api/admin/campaign/${data.id}`, { ...value, image_link: imageUrl });
         message.success(successMessage);
+        setVisible(false);
+        setIsUpdateCampaign(true);
       }
-      setVisible(false);
-      setIsUpdateCampaign(true);
     } catch ({ response: { data: { message: errorMessage } } }) {
       message.error(errorMessage);
     }
@@ -157,6 +165,7 @@ const CampaignForm = ({
             <Button icon={<UploadOutlined />}>Click to upload</Button>
 
           </Upload>
+          {isValidationError ? <Text type="danger">Please Select Image! </Text> : null}
           <div className="target-section">
             Target:
             <div className="target-section-item">
