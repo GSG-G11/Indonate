@@ -5,17 +5,20 @@ import { message } from 'antd';
 import axios from 'axios';
 
 const CategoriesPie = () => {
-  const [categories, setCategories] = useState([]);
+  const [data, setData] = useState([]);
 
   useEffect(() => {
     const source = axios.CancelToken.source();
+
     const fetchCategories = async () => {
       try {
-        const { data: { data: { campaigns: dbCampaigns } } } = await axios.get('/api/admin/campaigns', {
+        const { data: { data: { categories } } } = await axios.get('/api/categories', {
           cancelToken: source.token,
         });
-        const allCategories = dbCampaigns.map((campaign) => campaign.category);
-        setCategories(allCategories);
+        const countCategories = categories.map(
+          ({ name, campaigns }) => ({ type: name, value: campaigns.length }),
+        );
+        setData(countCategories);
       } catch ({
         response: {
           data: { message: errorMessage },
@@ -27,24 +30,6 @@ const CategoriesPie = () => {
     fetchCategories();
     return () => { source.cancel(); };
   }, []);
-
-  const countCategory = (cats, name) => {
-    let count = 0;
-    cats.forEach((ele) => {
-      if (ele.name === name) count += 1;
-      return '';
-    });
-    return { type: name, value: count };
-  };
-
-  const removeDuplicateObjects = (array) => [...new Set(array.map((s) => JSON.stringify(s)))]
-    .map((s) => JSON.parse(s));
-
-  const values = categories.map(
-    (item) => countCategory(categories, item.name),
-  );
-
-  const data = removeDuplicateObjects(values);
 
   const config = {
     appendPadding: 10,
