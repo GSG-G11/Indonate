@@ -41,7 +41,7 @@ const ReportsForm = () => {
           <Title className="contact-us">CONTACT US</Title>
           <Paragraph className="description">
             Got a question? We&apos;d love to hear from you. Send us a message
-            and well respond as soon as possible.
+            and we will respond as soon as possible.
           </Paragraph>
         </div>
         <Form

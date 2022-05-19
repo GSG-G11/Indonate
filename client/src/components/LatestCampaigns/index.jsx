@@ -2,14 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import {
-  Typography, Button, message, Anchor,
+  Typography, Button, message,
 } from 'antd';
 import { ArrowRightOutlined } from '@ant-design/icons';
 import Campaign from '../common/CampaignCard';
 import './style.less';
 
 const { Title, Text } = Typography;
-const { Link } = Anchor;
 const latestCampaigns = () => {
   const [campaigns, setCampaigns] = useState([]);
   const navigate = useNavigate();
@@ -76,16 +75,10 @@ const latestCampaigns = () => {
         type="primary"
         onClick={() => navigate('/campaigns/')}
       />
-      <div className="more-campaigns-btn">
-        <Anchor affix={false}>
-          <Link
-            onClick={() => navigate('/campaigns')}
-            href="/campaigns"
-            title="See More Campaigns"
-          />
-        </Anchor>
+      <Button className="see-more" onClick={() => navigate('/campaigns')}>
+        See more campaigns
         <ArrowRightOutlined />
-      </div>
+      </Button>
     </section>
   );
 };
