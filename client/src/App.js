@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { Nav, Family, CampaginsDonorsChart } from './components';
+import {
+  Nav, Family, CampaginsDonorsChart, Statistic,
+} from './components';
 import {
   Landing,
   Campaign,
@@ -33,7 +35,8 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route path="/admin" element={<Dashboard />}>
-          <Route path="overview" element={<CampaginsDonorsChart />} />
+          <Route index element={<CampaginsDonorsChart />} />
+          <Route index element={<Statistic />} />
           <Route path="campaigns" element={<CampaignsTable />} />
           <Route path="donors" element={<DonorsTable />} />
           <Route path="families" element={<Family />} />
