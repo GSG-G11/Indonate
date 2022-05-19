@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { Family } from '../../../database/models';
+import { Capon, Family } from '../../../database/models';
 import { CustomError, paramsSchema } from '../../../utils';
 
 const deleteFamilyById = async (
@@ -10,6 +10,17 @@ const deleteFamilyById = async (
   try {
     const { id } = req.params;
     await paramsSchema.validateAsync(req.params);
+
+    const caponsForFamily = await Capon.findAll({
+      where: {
+        familyId: id,
+      },
+      raw: true,
+    });
+    if (caponsForFamily.length) {
+      throw new CustomError('You cannot delete this family', 400);
+    }
+
     const deletedFamily = await Family.destroy({
       where: {
         id,
