@@ -6,28 +6,19 @@ import {
   CampaginsDonorsChart,
   CategoriesPie,
 } from '../../../components';
+import './style.css';
 
 const Overview = () => (
   <div>
-    <div style={{
-      display: 'flex', height: '45vh', paddingTop: '10px', gap: '2vw',
-    }}
-    >
+    <div className="conatiner1-overview">
       <CampaginsDonorsChart />
       <Statistic />
     </div>
-    <div style={{ marginRight: '2vw' }}>
-      <div style={{
-        display: 'flex',
-        height: '40vh',
+    <div className="conatiner2-overview">
+      <CategoriesPie />
+      <TopCampaignsTable />
+      <TopDonorsTable />
 
-      }}
-      >
-        <CategoriesPie />
-        <TopCampaignsTable />
-        <TopDonorsTable />
-
-      </div>
     </div>
   </div>
 );

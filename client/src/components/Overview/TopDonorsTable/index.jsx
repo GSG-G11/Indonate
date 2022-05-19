@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { message, Table } from 'antd';
 import { useNavigate } from 'react-router-dom';
-import './style.css';
 
 const TopDonorsTable = () => {
   const navigate = useNavigate();
@@ -55,6 +54,7 @@ const TopDonorsTable = () => {
           dataIndex: 'name',
           key: 'name',
           width: '10vw',
+
         },
         {
           title: 'Donations',
@@ -101,7 +101,7 @@ const TopDonorsTable = () => {
     },
   ];
   return (
-    <div style={{ width: '35vw', height: '190px' }}>
+    <div className="top-donors-conatiner">
       <Table
         dataSource={topDonors}
         columns={columns}

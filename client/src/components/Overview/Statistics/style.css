@@ -1,7 +1,8 @@
 .overview-container {
   display: flex;
   margin-top: 1%;
-  max-width: 40vw;
+  max-width: 38%;
+  max-height: 40vh;
 }
 .card-content {
   display: flex;

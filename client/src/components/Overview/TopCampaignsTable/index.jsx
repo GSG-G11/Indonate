@@ -26,7 +26,7 @@ const TopCampaignsTable = () => {
           },
         } = await axios.get('/api/admin/campaigns', {
           params: {
-            limit: 3,
+            limit: 4,
             order: 'top',
           },
           cancelToken: source.token,
@@ -53,17 +53,14 @@ const TopCampaignsTable = () => {
   }, []);
 
   return (
-    <div style={{
-      width: '32vw',
-      height: '50vh',
-    }}
-    >
+    <div className="top-campaign-container">
       <Card
         loading={isLoading}
         title={<center>Top Campaigns</center>}
         id="scrollableDiv"
         style={{
-          width: '24vw',
+          width: '25vw',
+          height: '45vh',
         }}
       >
         <List

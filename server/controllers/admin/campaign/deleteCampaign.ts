@@ -25,7 +25,6 @@ const deleteCampaign = async (req: Request, res: Response, next: NextFunction) =
       next(new CustomError(e.message, 400));
     }
     next(e);
-    console.log(e);
   }
 };
 
