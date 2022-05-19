@@ -26,9 +26,9 @@ const HeaderLandingPage = () => {
     <div className="Header-section">
       <div className="description-Header-div">
         <Text className="Header-description">
-          Short description for our work, and how we can
-          <br />
-          affect to People lives
+          The Prophet (pbuh) said,
+          O people, promote the greetings, feed
+          and perform Salat when others are asleep so that you will enter Jannah safely.
         </Text>
       </div>
       <div className="statistic-section">

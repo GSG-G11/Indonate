@@ -6,7 +6,6 @@ import {
   Typography,
   message,
   Space,
-  Anchor,
   Form,
   Button,
   Input,
@@ -16,7 +15,6 @@ import '../Signup/style.less';
 
 const { Password } = Input;
 const { Item } = Form;
-const { Link } = Anchor;
 const { Title, Text } = Typography;
 
 const Login = () => {
@@ -138,12 +136,9 @@ const Login = () => {
           </Form>
           <div className="register_option">
             <Text>Don`t have an account ?</Text>
-            <Anchor affix={false}>
-              <Link
-                href="/signup"
-                title="Sign Up"
-              />
-            </Anchor>
+            <Button className="sign-up-text" onClick={() => navigate('/signup')}>
+              Signup
+            </Button>
           </div>
           <button type="button" className="login-with-google-btn">
             Sign in with Google
