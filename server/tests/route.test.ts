@@ -712,7 +712,7 @@ describe('DELETE /api/admin/family/:id', () => {
         'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUyMTIxODI0LCJleHAiOjE2NTQ3MTM4MjR9.Ue8JhWn8jAgLNzUdoHiWZAXoRtF5vooY3itRjw1yjyM',
       ])
       .expect(400);
-    expect(response.body.message).toEqual('You can not delete this family');
+    expect(response.body.message).toEqual('You cannot delete this family');
   });
   test('Delete family <Authorized admin> <Family exists with no capons>', async () => {
     const response = await request(app)

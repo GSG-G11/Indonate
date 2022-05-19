@@ -18,7 +18,7 @@ const deleteFamilyById = async (
       raw: true,
     });
     if (caponsForFamily.length) {
-      throw new CustomError('You can not delete this family', 400);
+      throw new CustomError('You cannot delete this family', 400);
     }
 
     const deletedFamily = await Family.destroy({
