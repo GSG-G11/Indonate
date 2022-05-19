@@ -24,13 +24,15 @@ const addDonation = async (req: any, res: Response, next: NextFunction) => {
 
     await paramsSchema.validateAsync({ id: campaignId });
 
-    const campaign = await Campaign.findByPk(campaignId, {
+    const campaign: any = await Campaign.findByPk(campaignId, {
       raw: true,
     });
     if (!campaign) {
       throw new CustomError('Cannot add donation, campaign not exists', 400);
     }
-
+    if (!campaign.is_available) {
+      throw new CustomError('Cannot add donation, campaign was closed', 400);
+    }
     await donationSchema.validateAsync(req.body);
 
     if (!food && !clothes && !money) {
