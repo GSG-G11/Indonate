@@ -56,9 +56,7 @@ const FilterCampaigns = ({ setCategory, setAvailable, setSearch }) => {
         <Search placeholder="input search text" size="large" onChange={handleSearchChange} className="search-input" />
       </div>
       <div className="filter-section">
-
-        <div>
-
+        <div className="filter-radio-container">
           <Group
             onChange={handleCategoryChange}
             defaultValue="List All"
@@ -77,15 +75,13 @@ const FilterCampaigns = ({ setCategory, setAvailable, setSearch }) => {
           </Group>
         </div>
         <div>
-          Available campaigns:
+          <b>Available campaigns: </b>
           <Switch
             defaultChecked
             onChange={handleAvailableChange}
           />
         </div>
-
       </div>
-
     </div>
   );
 };

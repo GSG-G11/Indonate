@@ -8,11 +8,26 @@
 }
 .filter-section {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
+  padding: 0 20px;
+  align-items: center;
 }
 .search-input {
   width: 550px !important;
 }
-.icon{
+.icon {
   font-size: 10px !important;
+}
+.filter-radio-container .ant-radio-group {
+  display: flex;
+
+  justify-content: center;
+}
+
+@media (max-width: 600px) {
+  .filter-radio-container .ant-radio-group {
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+  }
 }

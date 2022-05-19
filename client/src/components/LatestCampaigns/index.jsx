@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import {
-  Typography, Button, message,
-} from 'antd';
+import { Typography, Button, message } from 'antd';
 import { ArrowRightOutlined } from '@ant-design/icons';
 import Campaign from '../common/CampaignCard';
 import './style.less';
@@ -16,22 +14,15 @@ const latestCampaigns = () => {
     const getData = async () => {
       try {
         const {
-          data:
-           {
-             data:
-             {
-               campaigns:
-               dbCampaigns,
-             },
-           },
+          data: {
+            data: { campaigns: dbCampaigns },
+          },
         } = await axios.get('/api/campaigns/?limit=3');
         setCampaigns(dbCampaigns);
       } catch ({
-        response:
-         {
-           data:
-           { message: errorMessage },
-         },
+        response: {
+          data: { message: errorMessage },
+        },
       }) {
         message.error({
           content: errorMessage,
@@ -44,31 +35,30 @@ const latestCampaigns = () => {
     <section className="layout">
       <Title className="custom_header_title" level={1}>
         Latest
-        <Text className="campaigns_text">
-          Campaigns
-        </Text>
+        <Text className="campaigns_text">Campaigns</Text>
       </Title>
-      <div className="cards">
-        {
-          campaigns.map((({
+      <div className="all-campaigns-cards">
+        {campaigns.map(
+          ({
             id,
             title,
             description,
             image_link: imgSrc,
             category: { icon_url: iconUrl },
           }) => (
-            <Campaign
-              key={id}
-              id={id}
-              title={title}
-              description={description}
-              imgSrc={imgSrc}
-              categoryIcon={iconUrl}
-              isAvailable
-            />
-          )
-          ))
-        }
+            <div key={id} className="all-campaigns-card">
+              <Campaign
+                key={id}
+                id={id}
+                title={title}
+                description={description}
+                imgSrc={imgSrc}
+                categoryIcon={iconUrl}
+                isAvailable
+              />
+            </div>
+          ),
+        )}
       </div>
       <Button
         className="more_btn ant-btn-primary ant-btn"

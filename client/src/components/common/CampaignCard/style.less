@@ -1,6 +1,7 @@
 .card {
   border: 1px solid #e3e3e3bc;
   border-radius: 5px;
+  width: 100%;
 }
 .customCard {
   max-width: 290px;
@@ -13,7 +14,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 275px;
+    width: 100%;
   }
 
   .ant-card-meta-title {
@@ -56,8 +57,10 @@
 
   .ant-card-meta-avatar {
     position: absolute;
-    top: -17px;
-    right: 103px;
+    top: 0%;
+    right: 50%;
+    transform: translate(50%, -50%);
+    padding: 0;
   }
 
   .ant-skeleton {
