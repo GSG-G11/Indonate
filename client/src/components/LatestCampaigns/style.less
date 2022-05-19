@@ -31,7 +31,6 @@
         font-size: 120%;
         color: #6AAC6E;
         text-shadow: 1px #fff;
-
     }
 
     .ant-anchor-link-title:only-child {
@@ -54,9 +53,9 @@
 
     }
 
-    .more-btn {
-        overflow: hidden;
-    }
+    // .more-btn {
+    //     overflow: hidden;
+    // }
 
     .ant-anchor-wrapper {
         overflow: hidden;
@@ -85,11 +84,6 @@
     margin: 17% 0 15% 0;
 }
 
-.anchor {
-    display: flex;
-    justify-content: center;
-    margin: 20px;
-}
 
 .more_btn {
     display: flex;
@@ -104,20 +98,35 @@
 
 @media (max-width: 768px) {
     .layout {
+       .ant-card{
+           margin-bottom: 100px;
+       }
         .cards {
-           flex-direction: column;
-
+            flex-direction: column;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            // gap: 300px;
+            margin: 160px;
+        
         }
-        .ant-card {
-            margin-bottom: 50px;
-        }
+      
     }
 }
 
 @media (max-width: 992px) {
     .layout {
-        .ant-card {
-            // margin-bottom: 50px;
+        .ant-card{}
+
+        .cards {
+            flex-direction: column;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            margin: 160px;
+        
         }
     }
-}
+    }
