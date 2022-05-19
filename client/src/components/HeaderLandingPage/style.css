@@ -1,11 +1,12 @@
-.Header-section {
+.header-section {
   /* width: 98.9vw; */
   display: flex;
   flex-direction: column;
   align-items: center;
   flex-wrap: nowrap;
+  height: 100vh;
 }
-.Header-description {
+.header-description {
   font-family: 'Inter';
   font-style: normal;
   font-weight: 400;
@@ -14,23 +15,24 @@
   color: #ffff !important;
   text-align: center;
   width: 77%;
-  margin-bottom: 100px;
+  margin-bottom: 20rem;
 }
-.description-Header-div {
+.description-header-div {
   padding-top: 25vh;
   display: flex;
   align-items: center;
   justify-content: center;
   background-image: url('../../assets/images/header-background.jpg');
-  /* width: 98.9vw; */
+  width: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
   height: 90vh;
 }
 .statistic-section {
   transform: translate(0, -50%);
   background-color: #469D62;
-  width: 80vw;
-  height: 40vh;
-  padding: 0 6.5rem;
+  width: 80%;
+  padding: 3rem 3rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -38,8 +40,9 @@
 }
 
 .statistic-card {
+  text-align: center;
   width: 23%;
-  height: 30vh;
+  height: 25vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -48,6 +51,7 @@
   flex-direction: column;
   justify-content: center;
   border-radius: 2px;
+  padding: 1rem;
 }
 .statistic-data {
   font-family: 'Roboto';
@@ -66,9 +70,15 @@
   color: rgba(0, 0, 0, 0.85);
   margin-bottom: 5px;
   text-transform: uppercase;
+  text-align: center;
 }
 .description-title {
   margin-top: 1rem;
   font-size: 1.5rem;
   font-weight: 800;
+}
+@media (max-width: 800px) {
+  .statistic-section {
+    display: none;
+  }
 }

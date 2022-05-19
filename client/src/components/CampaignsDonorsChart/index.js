@@ -3,7 +3,7 @@ import axios from 'axios';
 import { message } from 'antd';
 import { Column } from '@ant-design/plots';
 
-const CampaginsDonorsChart = () => {
+const CampaignsDonorsChart = () => {
   const [data, setData] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
@@ -39,4 +39,4 @@ const CampaginsDonorsChart = () => {
   );
 };
 
-export default CampaginsDonorsChart;
+export default CampaignsDonorsChart;

@@ -7,8 +7,8 @@ const getReports = async (req: Request, res: Response, next: NextFunction) => {
     const { page = 1 }: any = req.query;
     await querySchema.validateAsync(req.query);
     const { count, rows: reports } = await Report.findAndCountAll({
-      limit: 10,
-      offset: (page - 1) * 10,
+      limit: 4,
+      offset: (page - 1) * 4,
       attributes: {
         exclude: ['createdAt', 'updatedAt'],
       },

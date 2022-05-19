@@ -25,6 +25,7 @@ const Campaign = () => {
   const navigate = useNavigate();
   const [campaign, setCampaign] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+  const [isUpdated, setIsUpdated] = useState(false);
   const [error, setError] = useState('');
   useEffect(() => {
     const source = axios.CancelToken.source();
@@ -49,12 +50,12 @@ const Campaign = () => {
     return () => {
       source.cancel();
     };
-  }, []);
+  }, [isUpdated]);
 
   const handleClick = () => {
     navigate('/campaigns');
   };
-
+  console.log(isUpdated);
   return (
     <>
       {!error ? (
@@ -86,6 +87,7 @@ const Campaign = () => {
                     <> </>
                   )}
                   <DonationButton
+                    setIsUpdated={setIsUpdated}
                     isAvailable={campaign.campaignInfo.is_available}
                     campaignId={+id}
                     key={+id}

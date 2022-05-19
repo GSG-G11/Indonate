@@ -27,7 +27,7 @@ import {
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import { DonorsForCampaignTable, CampaignForm } from '../../../components';
-import './style.css';
+import '../style.css';
 import AddFamiliesModal from '../../../components/AddFamiliesModal';
 
 const CampaignsTable = () => {
@@ -185,10 +185,11 @@ const CampaignsTable = () => {
       key: '',
       render: (_, { id }) => (
         <Text
-          onClick={() => { id === key ? setKey(0) : setKey(id); }}
+          onClick={() => {
+            id === key ? setKey(0) : setKey(id);
+          }}
         >
           {id === key ? 'View All ▲' : 'View All ▼'}
-
         </Text>
       ),
     },
@@ -250,38 +251,21 @@ const CampaignsTable = () => {
           dataIndex: 'current_money',
           align: 'center',
           key: 'current_money',
-          render: (value) => (
-            <>
-              {value}
-              $
-            </>
-          ),
+          render: (value) => (+value ? `${value}$` : value),
         },
         {
           title: 'Food',
           align: 'center',
           dataIndex: 'current_food',
           key: 'current_food',
-          render: (value) => (
-            <>
-              {value}
-              {' '}
-              Meal
-            </>
-          ),
+          render: (value) => (+value ? `${value} Meal` : value),
         },
         {
           title: 'Clothes',
           dataIndex: 'current_clothes',
           align: 'center',
           key: 'current_clothes',
-          render: (value) => (
-            <>
-              {value}
-              {' '}
-              Piece
-            </>
-          ),
+          render: (value) => (+value ? `${value} Piece` : value),
         },
       ],
     },
@@ -347,7 +331,10 @@ const CampaignsTable = () => {
           )}
           {record.is_available ? (
             <Popover content="Edit campaign">
-              <EditOutlined className="icon update-icon" onClick={() => handleEditCampaign(record)} />
+              <EditOutlined
+                className="icon update-icon"
+                onClick={() => handleEditCampaign(record)}
+              />
             </Popover>
           ) : (
             <Badge count="Closed" />
@@ -358,14 +345,12 @@ const CampaignsTable = () => {
   ];
 
   return (
-
     <>
-      <div className="header-campaign-table">
-        <Title level={4}>Campaigns</Title>
-        <Button
-          type="primary"
-          onClick={() => { handleAddCampaign(); }}
-        >
+      <div className="header-table">
+        <Title className="header-table-title" level={2}>
+          Campaigns
+        </Title>
+        <Button type="primary" onClick={handleAddCampaign}>
           Add Campaign
         </Button>
       </div>
@@ -377,7 +362,9 @@ const CampaignsTable = () => {
         bordered
         loading={isLoading}
         rowClassName={(record) => !record.is_available && 'disabled-row'}
-        pagination={{ total: campaignsCount, defaultPageSize: 10 }}
+        pagination={
+          campaignsCount > 10 && { total: campaignsCount, defaultPageSize: 10 }
+        }
         onChange={(e) => {
           setPage(e.current);
         }}
@@ -385,7 +372,7 @@ const CampaignsTable = () => {
         expandable={{
           expandedRowKeys: [key],
           expandedRowRender: () => <DonorsForCampaignTable id={+key} />,
-          rowExpandable: (record) => (record.id === key),
+          rowExpandable: (record) => record.id === key,
           expandIcon: () => null,
         }}
       />

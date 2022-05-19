@@ -21,7 +21,11 @@ const { Group, Button } = Radio;
 const { Item } = Form;
 
 const DonationForm = ({
-  visible, onCancel, campaignId, setVisible,
+  visible,
+  onCancel,
+  campaignId,
+  setVisible,
+  setIsUpdated,
 }) => {
   const [form] = Form.useForm();
   const [radioValue, setRadioValue] = useState();
@@ -30,14 +34,19 @@ const DonationForm = ({
   const onCreate = async (values) => {
     try {
       const donateInfo = {
-        ...values, deliver_time: selectedDate,
+        ...values,
+        deliver_time: selectedDate,
       };
-      const { data } = await axios.post(`/api/donation/${campaignId}`, donateInfo);
+      const { data: { message: successMessage } } = await axios.post(
+        `/api/donation/${campaignId}`,
+        donateInfo,
+      );
       setMsgError('');
       setVisible(false);
-      message.success(data.message);
-    } catch ({ response: { data } }) {
-      setMsgError(data.message);
+      setIsUpdated(true);
+      message.success(successMessage);
+    } catch ({ response: { data: { message: errorMessage } } }) {
+      setMsgError(errorMessage);
     }
   };
 
@@ -120,6 +129,7 @@ const DonationForm = ({
 
 DonationForm.propTypes = {
   visible: Proptypes.bool.isRequired,
+  setIsUpdated: Proptypes.func,
   onCancel: Proptypes.func.isRequired,
   setVisible: Proptypes.func.isRequired,
   campaignId: Proptypes.number.isRequired,

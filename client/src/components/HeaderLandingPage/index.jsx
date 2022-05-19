@@ -23,9 +23,9 @@ const HeaderLandingPage = () => {
 
   return (
 
-    <div className="Header-section">
-      <div className="description-Header-div">
-        <Text className="Header-description">
+    <div className="header-section">
+      <div className="description-header-div">
+        <Text className="header-description">
           The Prophet (pbuh) said,
           O people, promote the greetings, feed
           and perform Salat when others are asleep so that you will enter Jannah safely.

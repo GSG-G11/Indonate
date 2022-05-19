@@ -65,8 +65,13 @@ const ReportsTable = () => {
     }
   };
   return (
-    <section>
-      <Title level={2} className="title">Reports</Title>
+    <>
+      <div className="header-table">
+        <Title className="header-table-title" level={2}>
+          Reports
+        </Title>
+      </div>
+      {' '}
       <div className="comments_container">
         <Row className="comments_row">
           {reports.map(({
@@ -101,12 +106,15 @@ const ReportsTable = () => {
 
         </Row>
       </div>
+      {reportsCount > 4 && (
       <Pagination
-        defaultCurrent={1}
-        total={reportsCount}
+        defaultCurrent={page}
+        defaultPageSize={1}
+        total={Math.ceil(reportsCount / 4)}
         onChange={(value) => setPage(value)}
       />
-    </section>
+      )}
+    </>
 
   );
 };

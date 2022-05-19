@@ -6,10 +6,10 @@ import { CustomError, querySchema } from '../../../utils';
 
 const getAllFamilies = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { page = 1 }: any = await querySchema.validateAsync(req.query);
+    const { page = 1, limit = 5 }: any = await querySchema.validateAsync(req.query);
     const { rows, count } = await Family.findAndCountAll({
-      limit: 5,
-      offset: (+page - 1) * 5,
+      limit,
+      offset: (+page - 1) * limit,
       include: [{
         duplicating: false,
         model: Capon,

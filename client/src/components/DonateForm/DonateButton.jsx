@@ -6,13 +6,15 @@ import { Button, Modal } from 'antd';
 import DonationForm from './DonationForm';
 
 const { confirm } = Modal;
-const DonationButton = ({ campaignId, isAvailable }) => {
+const DonationButton = ({ campaignId, isAvailable, setIsUpdated }) => {
   const [visible, setVisible] = useState(false);
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
+
   const visibleToggle = () => {
     setVisible((prev) => !prev);
   };
+
   function login() {
     navigate('/login');
   }
@@ -38,6 +40,7 @@ const DonationButton = ({ campaignId, isAvailable }) => {
         visible={visible}
         onCancel={visibleToggle}
         campaignId={campaignId}
+        setIsUpdated={setIsUpdated}
         setVisible={setVisible}
       />
     </>
@@ -46,5 +49,6 @@ const DonationButton = ({ campaignId, isAvailable }) => {
 DonationButton.propTypes = {
   campaignId: Proptypes.number.isRequired,
   isAvailable: Proptypes.bool.isRequired,
+  setIsUpdated: Proptypes.func,
 };
 export default DonationButton;

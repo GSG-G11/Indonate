@@ -1,15 +1,23 @@
 import {
-  Table, message,
+  Table,
+  message,
   Popconfirm,
-  Typography, Dropdown, Space, Menu,
+  Typography,
+  Dropdown,
+  Space,
+  Menu,
 } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import axios from 'axios'; import {
-  DeleteOutlined, EditOutlined, WhatsAppOutlined, DownOutlined,
+import axios from 'axios';
+import {
+  DeleteOutlined,
+  EditOutlined,
+  WhatsAppOutlined,
+  DownOutlined,
 } from '@ant-design/icons';
-import './style.less';
+import '../style.css';
 import EditDonorModal from './EditDonorModal';
 
 const { Title, Text } = Typography;
@@ -27,11 +35,17 @@ const DonorsTable = () => {
   useEffect(() => {
     const source = axios.CancelToken.source();
     const fetchDonors = async () => {
-      const { data: { data: { donors, count } } } = await axios.get(`/api/admin/donors/?page=${+page}`);
+      const {
+        data: {
+          data: { donors, count },
+        },
+      } = await axios.get(`/api/admin/donors/?page=${+page}&limit=${10}`);
       const allDonors = donors.map((obj) => {
         const name = obj.name.charAt(0).toUpperCase() + obj.name.slice(1); // capitlize name
         return {
-          key: obj.id, ...obj, name,
+          key: obj.id,
+          ...obj,
+          name,
         };
       });
       setRowsCount(count);
@@ -44,7 +58,11 @@ const DonorsTable = () => {
 
   const getCampaigns = async (donorId) => {
     try {
-      const { data: { data: { campaigns } } } = await axios.get(`/api/admin/donor/${donorId}/campaigns`);
+      const {
+        data: {
+          data: { campaigns },
+        },
+      } = await axios.get(`/api/admin/donor/${donorId}/campaigns`);
       setDonorCampaigns(campaigns);
     } catch ({
       response: {
@@ -56,7 +74,9 @@ const DonorsTable = () => {
   };
   const deleteDonor = async (donorId) => {
     try {
-      const { data: { message: successMessage } } = await axios.delete(`/api/admin/donor/${donorId}`);
+      const {
+        data: { message: successMessage },
+      } = await axios.delete(`/api/admin/donor/${donorId}`);
       setDataSource(dataSource.filter((obj) => obj.id !== donorId));
       message.success(successMessage);
     } catch ({
@@ -87,67 +107,77 @@ const DonorsTable = () => {
   };
   const menu = (
     <Menu
-      items={
-        donorCampaigns.map(({ id, title }) => (
-          {
-            label: <Text>{title}</Text>,
-            key: id,
-            onClick: () => {
-              navigate(`/campaign/${id}`);
-            },
-          }
-        ))
-      }
+      items={donorCampaigns.map(({ id, title }) => ({
+        label: <Text>{title}</Text>,
+        key: id,
+        onClick: () => {
+          navigate(`/campaign/${id}`);
+        },
+      }))}
     />
   );
 
   const columns = [
     {
       title: 'Name',
+      align: 'center',
       dataIndex: 'name',
       width: '15%',
     },
     {
       title: 'Phone',
+      align: 'center',
       dataIndex: 'phone',
       width: '15%',
     },
     {
       title: 'Donation',
+      align: 'center',
       dataIndex: 'donation',
       width: '15%',
       children: [
         {
           title: 'Money',
           dataIndex: 'totalMoney',
+          align: 'center',
           width: '10%',
           render: (text) => <span>{text ? `${text}$ ` : 0}</span>,
         },
         {
+          title: 'Food',
+          dataIndex: 'totalFood',
+          align: 'center',
+          width: '10%',
+          render: (text) => <span>{text ? `${text} Meals` : 0}</span>,
+        },
+        {
           title: 'Clothes',
+          align: 'center',
           dataIndex: 'totalClothes',
           width: '10%',
           render: (text) => <span>{text ? `${text} Pieces` : 0}</span>,
-        },
-        {
-          title: 'Food',
-          dataIndex: 'totalFood',
-          width: '10%',
-          render: (text) => <span>{text ? `${text} Meals` : 0}</span>,
         },
       ],
     },
     {
       title: 'Address',
+      align: 'center',
       dataIndex: 'address',
       width: '15%',
     },
     {
       title: 'Campaigns',
+      align: 'center',
       dataIndex: 'campaigns',
       width: '15%',
       render: (_, { id }) => (
-        <Dropdown placement="bottom" className="dropdown_campaigns" overlay={menu} trigger={['click']} onClick={() => getCampaigns(id)}>
+        <Dropdown
+          placement="bottom"
+          className="dropdown_campaigns"
+          overlay={menu}
+          trigger={['click']}
+          onClick={() => getCampaigns(id)}
+        >
           <Space>
             <Text>View all</Text>
             <DownOutlined />
@@ -157,10 +187,10 @@ const DonorsTable = () => {
     },
 
     {
+      align: 'center',
       title: 'Actions',
       render: (_, record) => (
-
-        <div className="icons_container">
+        <Space>
           <Popconfirm
             title="Are you sure?"
             okText="Yes"
@@ -169,16 +199,14 @@ const DonorsTable = () => {
               deleteDonor(record.key);
             }}
           >
-            <DeleteOutlined className="delete_icon" />
+            <DeleteOutlined className="icon delete-icon" />
           </Popconfirm>
           <EditOutlined
-            className="edit_icon"
-            onClick={
-              () => {
-                setVisible(true);
-                setSelectedRow(record);
-              }
-            }
+            className="icon update-icon"
+            onClick={() => {
+              setVisible(true);
+              setSelectedRow(record);
+            }}
           />
           <a
             href={`http://wa.me/${record.phone}`}
@@ -186,35 +214,40 @@ const DonorsTable = () => {
             aria-label="start chat"
             rel="noreferrer"
           >
-            <WhatsAppOutlined className="whatsapp_icon" />
+            <WhatsAppOutlined className="icon whatsapp_icon" />
           </a>
-        </div>
-
+        </Space>
       ),
     },
   ];
 
   return (
-    <section className="donors_table">
-      <Title level={2}>Donors</Title>
+    <>
+      <div className="header-table">
+        <Title className="header-table-title" level={2}>
+          Donors
+        </Title>
+      </div>
       <Table
         columns={columns}
         dataSource={dataSource}
         bordered
-        pagination={{
-          onChange: (current) => setPage(current),
-          total: rowsCount,
-          defaultPageSize: 8,
+        pagination={
+          rowsCount > 10 && { total: rowsCount, defaultPageSize: 10 }
+        }
+        onChange={(e) => {
+          setPage(e.current);
         }}
+        size="small"
+        loading={isLoading}
       />
       <EditDonorModal
         visible={visible}
         setVisible={setVisible}
         dataSource={selectedRow}
         getUpdatedDonor={getUpdatedDonor}
-        loading={isLoading}
       />
-    </section>
+    </>
   );
 };
 

@@ -29,7 +29,7 @@
 }
 
 .update-icon {
-  color: #469d62 !important;
+  color: #008ef2 !important;
   cursor: pointer !important;
 }
 
@@ -37,10 +37,15 @@
   color: red !important;
 }
 
-.header-campaign-table{
+.header-table{
   padding: 20px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
+}
+.header-table-title{
+  color: #469d62 !important;
+  margin: 0 !important;
 }
 .families-icon {
   cursor: pointer;

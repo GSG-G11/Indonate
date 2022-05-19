@@ -47,7 +47,6 @@ const DisplayCampaigns = () => {
       <Cards campaigns={campaigns} loading={loading} />
 
       { totalCount > 6 ? (
-
         <Pagination
           className="pagination"
           defaultCurrent={page}

@@ -51,9 +51,7 @@ const DonorsForCampaignTable = ({ id }) => {
       title: 'Deliver time',
       dataIndex: 'deliverTime',
       ellipsis: false,
-      render: (time) => (
-        time.split('T')[0]
-      ),
+      render: (time) => time.split('T')[0],
     },
     {
       title: 'Location',
@@ -83,7 +81,6 @@ const DonorsForCampaignTable = ({ id }) => {
         >
           <WhatsAppOutlined className="whatsapp_icon" />
         </a>
-
       ),
     },
   ];
@@ -93,13 +90,21 @@ const DonorsForCampaignTable = ({ id }) => {
     const { token } = source;
     const fetchData = async () => {
       try {
-        const { data: { data: { donors: donorsFromDB, count } } } = await axios.get(`/api/admin/campaign/${id}/donors?page=${page}`, {
+        const {
+          data: {
+            data: { donors: donorsFromDB, count },
+          },
+        } = await axios.get(`/api/admin/campaign/${id}/donors?page=${page}`, {
           cancelToken: token,
         });
         setDonors(donorsFromDB);
         setDonorsCount(count);
         setIsLoading(false);
-      } catch ({ response: { data: { message: errorMessage } } }) {
+      } catch ({
+        response: {
+          data: { message: errorMessage },
+        },
+      }) {
         message.error(errorMessage);
       }
     };
@@ -107,15 +112,16 @@ const DonorsForCampaignTable = ({ id }) => {
     return () => source.cancel();
   }, [page]);
   return (
-
-    <div className="nested-table-section ">
+    <div className="nested-table-section">
       <Table
         className="nested-table"
         dataSource={donors}
         columns={donorColumns}
         bordered
         loading={isLoading}
-        pagination={{ total: donorsCount, defaultPageSize: 6 }}
+        pagination={
+          donorsCount > 6 && { total: donorsCount, defaultPageSize: 6 }
+        }
         onChange={(e) => {
           setPage(e.current);
         }}

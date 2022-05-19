@@ -6,6 +6,7 @@ import Campaigns from './Campaigns';
 import { CampaignsTable, ReportsTable, DonorsTable } from './admin';
 import ServerError from './Error/ServerError';
 import NotFoundError from './Error/NotFoundError';
+import FamilyTable from './admin/FamilyTable';
 
 export {
   Login,
@@ -18,4 +19,5 @@ export {
   DonorsTable,
   ServerError,
   NotFoundError,
+  FamilyTable,
 };
