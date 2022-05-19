@@ -770,6 +770,18 @@ describe('DELETE /api/admin/donor/:donorId', () => {
       .expect(400);
     expect(response.body.message).toBe('"id" must be a number');
   });
+  test('case: Failed | Donor has donations', async () => {
+    const donorId = 4;
+    const response = await request(app)
+      .delete(`/api/admin/donor/${donorId}`)
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
+      ])
+      .expect(400);
+    expect(response.body.message).toBe(
+      'You cannot delete this donor',
+    );
+  });
   test('case: Failed | Unauthorized user', async () => {
     const donorId = 2;
     const response = await request(app)
