@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { message, Table } from 'antd';
 import { useNavigate } from 'react-router-dom';
+import './style.css';
 
 const TopDonorsTable = () => {
   const navigate = useNavigate();
@@ -53,6 +54,7 @@ const TopDonorsTable = () => {
           title: 'Name',
           dataIndex: 'name',
           key: 'name',
+          width: '10vw',
         },
         {
           title: 'Address',
@@ -104,14 +106,16 @@ const TopDonorsTable = () => {
     },
   ];
   return (
-    <Table
-      dataSource={topDonors}
-      columns={columns}
-      loading={isLoading}
-      bordered
-      size="small"
-      pagination={false}
-    />
+    <div style={{ width: '40vw', height: '190px', marginLeft: '150px' }}>
+      <Table
+        dataSource={topDonors}
+        columns={columns}
+        loading={isLoading}
+        bordered
+        size="small"
+        pagination={false}
+      />
+    </div>
   );
 };
 

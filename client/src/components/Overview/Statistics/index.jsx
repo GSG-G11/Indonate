@@ -12,7 +12,7 @@ const Statistic = () => {
     const { token } = source;
     const fetchData = async () => {
       const { data: { data } } = await axios.get('/api/statistics', { cancelToken: token });
-      const { campaigns, ...rest } = data;
+      /* const { campaigns, ...rest } = data;
       rest['Available Campaigns'] = 0;
       rest['Not Available Campaigns'] = 0;
       campaigns.forEach(({ is_available: isAvailable, count }) => {
@@ -21,8 +21,8 @@ const Statistic = () => {
         } else {
           rest['Not Available Campaigns'] = count;
         }
-      });
-      setStatistics(rest);
+      }); */
+      setStatistics(data);
     };
     fetchData();
 
@@ -30,16 +30,7 @@ const Statistic = () => {
   }, []);
   return (
     <div className="overview-container">
-      <div>
-        <Card statistics={statistics} />
-      </div>
-      {/* we will remove this div */}
-      <div style={{
-        background: 'white', width: '312px', height: '314px', marginLeft: '1%', marginRight: '1%',
-      }}
-      >
-        table
-      </div>
+      <Card statistics={statistics} />
     </div>
   );
 };
