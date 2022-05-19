@@ -323,10 +323,16 @@ describe('GET /statistics', () => {
       body: { data },
     } = await request(app).get('/api/statistics').expect(200);
     expect(data).toEqual({
-      FAMILIES: 5,
-      MONEY: '1000',
-      FOODS: '101',
-      CLOTHES: '100',
+      campaigns: [{
+        count: 5,
+        is_available: true,
+      },
+      ],
+      clothes: '100',
+      donors: 5,
+      families: 5,
+      foods: '101',
+      money: '1000',
     });
   });
 });
@@ -414,6 +420,11 @@ describe('GET /campaigns', () => {
           'http://www.humanitygate.com/thumb/560x292/uploads//images/88e62e08915b10584950106f496140ca.jpg',
         is_available: true,
         categoryId: 2,
+        donors: [
+          {
+            id: 4,
+          },
+        ],
         category: {
           name: 'Education',
           icon_url:
@@ -589,11 +600,11 @@ describe('POST /api/admin/family', () => {
 });
 
 describe('GET /admin/campaigns?page=<number>', () => {
-  test('Get all reports  <Unauthorized user>', async () => {
+  test('Get all campaigns  <Unauthorized user>', async () => {
     const response = await request(app).get('/api/admin/campaigns').expect(401);
     expect(response.body.message).toEqual('Unauthorized user');
   });
-  test('Get all reports  <Unauthorized admin>', async () => {
+  test('Get all campaigns  <Unauthorized admin>', async () => {
     const response = await request(app)
       .get('/api/admin/campaigns')
       .set('Cookie', [
@@ -602,7 +613,7 @@ describe('GET /admin/campaigns?page=<number>', () => {
       .expect(401);
     expect(response.body.message).toEqual('Unauthorized admin');
   });
-  test('Get all reports  <Authorized admin> <page 1>', async () => {
+  test('Get all campaigns  <Authorized admin> <page 1>', async () => {
     const response = await request(app)
       .get('/api/admin/campaigns?page=1')
       .set('Cookie', [
@@ -612,7 +623,7 @@ describe('GET /admin/campaigns?page=<number>', () => {
     expect(response.body.data.campaigns.length).toEqual(5);
     expect(response.body.data.count).toEqual(5);
   });
-  test('Get all reports  <Authorized admin> <page 2>', async () => {
+  test('Get all campaigns  <Authorized admin> <page 2>', async () => {
     const response = await request(app)
       .get('/api/admin/campaigns?page=2')
       .set('Cookie', [
@@ -622,7 +633,7 @@ describe('GET /admin/campaigns?page=<number>', () => {
     expect(response.body.data.campaigns.length).toEqual(0);
     expect(response.body.data.count).toEqual(5);
   });
-  test('Get all reports  <Authorized admin> <not valid page>', async () => {
+  test('Get all campaigns  <Authorized admin> <not valid page>', async () => {
     const response = await request(app)
       .get('/api/admin/campaigns?page=a')
       .set('Cookie', [

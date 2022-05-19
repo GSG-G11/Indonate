@@ -68,7 +68,6 @@ const CategoriesPie = () => {
     },
   };
   return (
-    // eslint-disable-next-line react/jsx-props-no-spreading
     <Pie {...config} />
   );
 };

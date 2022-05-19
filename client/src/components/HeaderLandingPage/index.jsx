@@ -33,7 +33,7 @@ const HeaderLandingPage = () => {
       </div>
       <div className="statistic-section">
 
-        {Object.keys(data).map((item, index) => (
+        {Object.keys(data).filter((item, index) => index < 4).map((item, index) => (
           <div className="statistic-card" key={item}>
             <Text className="statistic-data">{data[item]}</Text>
             <Text className="statistic-title">{item}</Text>

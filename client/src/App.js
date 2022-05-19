@@ -1,8 +1,19 @@
 import React, { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { Nav, Family } from './components';
 import {
-  Landing, Campaign, Login, Signup, Campaigns, CampaignsTable, ReportsTable, DonorsTable,
+  Nav, Family, CampaginsDonorsChart, Statistic,
+} from './components';
+import {
+  Landing,
+  Campaign,
+  Login,
+  Signup,
+  Campaigns,
+  CampaignsTable,
+  ReportsTable,
+  DonorsTable,
+  ServerError,
+  NotFoundError,
 } from './pages';
 import store from './redux/app/store';
 import 'antd/dist/antd.less';
@@ -26,18 +37,16 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/admin" element={<Dashboard />}>
           <Route path="overview" element={<Overview />} />
-
-          <Route
-            path="campaigns"
-            element={(
-              <CampaignsTable />
-)}
-          />
-          <Route path="campaigns" element={<h1>campaigns</h1>} />
+          <Route index element={<CampaginsDonorsChart />} />
+          <Route index element={<Statistic />} />
+          <Route path="campaigns" element={<CampaignsTable />} />
           <Route path="donors" element={<DonorsTable />} />
           <Route path="families" element={<Family />} />
           <Route path="reports" element={<ReportsTable />} />
+          <Route path="*" element={<NotFoundError />} />
         </Route>
+        <Route path="/servererror" element={<ServerError />} />
+        <Route path="*" element={<NotFoundError />} />
       </Routes>
     </>
   );

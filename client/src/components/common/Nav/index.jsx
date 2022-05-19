@@ -81,7 +81,6 @@ const Nav = () => {
           />
 
           <Menu
-            theme="dark"
             mode="horizontal"
             defaultSelectedKeys={1}
             items={

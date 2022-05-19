@@ -30,21 +30,21 @@ import { DonorsForCampaignTable, CampaignForm } from '../../../components';
 import './style.css';
 import AddFamiliesModal from '../../../components/AddFamiliesModal';
 
-const { Title, Text } = Typography;
-function CampaignsTable() {
+const CampaignsTable = () => {
+  const { Text, Title } = Typography;
   const navigate = useNavigate();
   const [campaigns, setCampaigns] = useState([]);
   const [page, setPage] = useState(1);
   const [campaignsCount, setCampaignsCount] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
-  const [visiable, setVisiable] = useState(false);
-  const [isUdpateCampaign, setIsUpdateCampaign] = useState(false);
+  const [visible, setVisible] = useState(false);
+  const [isUpdateCampaign, setIsUpdateCampaign] = useState(false);
   const [action, setAction] = useState('');
   const [key, setKey] = useState(0);
   const [campaignId, setCampaignId] = useState(0);
   const [modalVisible, setModalVisible] = useState(false);
   const [familiesForCampaign, setFamiliesForCampaign] = useState([]);
-  const [CampaingData, setCampaingData] = useState({
+  const [campaignData, setCampaignData] = useState({
     title: '',
     description: '',
     categoryId: '',
@@ -84,7 +84,7 @@ function CampaignsTable() {
     return () => {
       source.cancel();
     };
-  }, [page, isUdpateCampaign, modalVisible]);
+  }, [page, isUpdateCampaign, modalVisible]);
 
   const handleDeleteCampaign = async (id) => {
     try {
@@ -108,13 +108,13 @@ function CampaignsTable() {
     // Handle close campaign code should goes here
   };
   const handleEditCampaign = (record) => {
-    setCampaingData(record);
-    setVisiable(true);
+    setCampaignData(record);
+    setVisible(true);
     setAction('Edit');
   };
   const handleAddCampaign = async () => {
-    setVisiable(true);
-    setCampaingData({
+    setVisible(true);
+    setCampaignData({
       title: '',
       description: '',
       categoryId: '',
@@ -390,10 +390,10 @@ function CampaignsTable() {
         }}
       />
       <CampaignForm
-        visible={visiable}
-        setVisible={setVisiable}
+        visible={visible}
+        setVisible={setVisible}
         action={action}
-        data={CampaingData}
+        data={campaignData}
         setIsUpdateCampaign={setIsUpdateCampaign}
       />
 
@@ -404,6 +404,6 @@ function CampaignsTable() {
       />
     </>
   );
-}
+};
 
 export default CampaignsTable;
