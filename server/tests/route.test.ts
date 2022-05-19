@@ -420,6 +420,11 @@ describe('GET /campaigns', () => {
           'http://www.humanitygate.com/thumb/560x292/uploads//images/88e62e08915b10584950106f496140ca.jpg',
         is_available: true,
         categoryId: 2,
+        donors: [
+          {
+            id: 4,
+          },
+        ],
         category: {
           name: 'Education',
           icon_url:

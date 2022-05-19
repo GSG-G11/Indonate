@@ -8,6 +8,7 @@ import Campaign from './campaign';
 import Capon from './capon';
 
 Campaign.belongsTo(Category);
+Category.hasMany(Campaign);
 
 Campaign.belongsToMany(Family, {
   through: { model: Capon, unique: false },

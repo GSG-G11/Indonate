@@ -6,6 +6,7 @@
     },
     "categoryId": 1,
     "description": "This campaign aims to feed needy families by donating meals to feed families or donating money to buy the right amount",
+    "donors": [],
     "id": 5,
     "image_link": "https://bedounraqaba.net/wp-content/uploads/2224871143260802120-450x300.jpg",
     "is_available": true,
@@ -18,6 +19,7 @@
     },
     "categoryId": 1,
     "description": "This campaign aims to help poor families to warm them in the winter by collecting clothes from donors",
+    "donors": [],
     "id": 4,
     "image_link": "http://www.humanitygate.com/thumb/560x292/uploads//images/88e62e08915b10584950106f496140ca.jpg",
     "is_available": true,
@@ -30,6 +32,11 @@
     },
     "categoryId": 2,
     "description": "This campaign aims to help poor families secure summer clothes by collecting clothes from donors or buying new clothes with financial donations",
+    "donors": [
+      {
+      "id": 4
+      }
+      ],
     "id": 3,
     "image_link": "http://www.humanitygate.com/thumb/560x292/uploads//images/88e62e08915b10584950106f496140ca.jpg",
     "is_available": true,
@@ -43,6 +50,14 @@
     "categoryId": 2,
     "description": "This campaign aims to help poor families to heat their homes in the winter by collecting clothes from donors or buying new clothes from financial donations",
     "id": 2,
+    "donors": [
+      {
+      "id": 1
+      },
+      {
+      "id": 3
+      }
+      ],
     "image_link": "http://www.humanitygate.com/thumb/560x292/uploads//images/88e62e08915b10584950106f496140ca.jpg",
     "is_available": true,
     "title": "winter clothes collection"
@@ -55,6 +70,12 @@
     "categoryId": 1,
     "description": "This campaign helps save an amount of money that guarantees 50 families for two months",
     "id": 1,
+    "donors": [
+      {
+      "id": 1
+      }
+      ],
+      
     "image_link": "https://media.voltron.alhurra.com/Drupal/01live-116/styles/sourced/s3/2019-12/AFC8DF4B-8C6D-4968-87B2-CEAFD63DED97.jpg?itok=Y3YypJNm",
     "is_available": true,
     "title": "Helping poor families"
