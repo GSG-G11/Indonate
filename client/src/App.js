@@ -20,6 +20,7 @@ import 'antd/dist/antd.less';
 import './App.css';
 import { getUserData } from './redux/feature/user/userSlice';
 import Dashboard from './components/Dashboard';
+import Overview from './pages/admin/Overview';
 
 function App() {
   useEffect(() => {
@@ -35,6 +36,7 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route path="/admin" element={<Dashboard />}>
+          <Route path="overview" element={<Overview />} />
           <Route index element={<CampaginsDonorsChart />} />
           <Route index element={<Statistic />} />
           <Route path="campaigns" element={<CampaignsTable />} />
