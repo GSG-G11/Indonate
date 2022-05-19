@@ -705,9 +705,18 @@ describe('DELETE /api/admin/family/:id', () => {
       .expect(401);
     expect(response.body.message).toEqual('Unauthorized admin');
   });
-  test('Delete family <Authorized admin> <Family exists>', async () => {
+  test('Delete family <Authorized admin> <Family exists with capons>', async () => {
     const response = await request(app)
       .delete('/api/admin/family/1')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUyMTIxODI0LCJleHAiOjE2NTQ3MTM4MjR9.Ue8JhWn8jAgLNzUdoHiWZAXoRtF5vooY3itRjw1yjyM',
+      ])
+      .expect(400);
+    expect(response.body.message).toEqual('You cannot delete this family');
+  });
+  test('Delete family <Authorized admin> <Family exists with no capons>', async () => {
+    const response = await request(app)
+      .delete('/api/admin/family/3')
       .set('Cookie', [
         'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUyMTIxODI0LCJleHAiOjE2NTQ3MTM4MjR9.Ue8JhWn8jAgLNzUdoHiWZAXoRtF5vooY3itRjw1yjyM',
       ])
@@ -769,6 +778,18 @@ describe('DELETE /api/admin/donor/:donorId', () => {
       ])
       .expect(400);
     expect(response.body.message).toBe('"id" must be a number');
+  });
+  test('case: Failed | Donor has donations', async () => {
+    const donorId = 4;
+    const response = await request(app)
+      .delete(`/api/admin/donor/${donorId}`)
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
+      ])
+      .expect(400);
+    expect(response.body.message).toBe(
+      'You cannot delete this donor',
+    );
   });
   test('case: Failed | Unauthorized user', async () => {
     const donorId = 2;
@@ -1277,7 +1298,7 @@ describe('POST api/admin/campagin/:id/families', () => {
         'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
       ])
       .send({
-        ids: '[2,3]',
+        ids: '[2,4]',
       })
       .expect(200);
     expect(response.body.message).toBe('Families added successfully');
