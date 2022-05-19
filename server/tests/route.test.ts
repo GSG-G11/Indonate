@@ -323,12 +323,8 @@ describe('GET /statistics', () => {
       body: { data },
     } = await request(app).get('/api/statistics').expect(200);
     expect(data).toEqual({
-      campaigns: [{
-        count: 5,
-        is_available: true,
-      },
-      ],
       clothes: '100',
+      campagins: 5,
       donors: 5,
       families: 5,
       food: '101',

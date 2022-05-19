@@ -19,7 +19,7 @@ const TopDonorsTable = () => {
           },
         } = await axios.get('/api/admin/donors', {
           params: {
-            limit: 3,
+            limit: 4,
             order: 'top',
           },
           cancelToken: source.token,
@@ -53,11 +53,8 @@ const TopDonorsTable = () => {
           title: 'Name',
           dataIndex: 'name',
           key: 'name',
-        },
-        {
-          title: 'Address',
-          dataIndex: 'address',
-          key: 'address',
+          width: '10vw',
+
         },
         {
           title: 'Donations',
@@ -104,14 +101,16 @@ const TopDonorsTable = () => {
     },
   ];
   return (
-    <Table
-      dataSource={topDonors}
-      columns={columns}
-      loading={isLoading}
-      bordered
-      size="small"
-      pagination={false}
-    />
+    <div className="top-donors-conatiner">
+      <Table
+        dataSource={topDonors}
+        columns={columns}
+        loading={isLoading}
+        bordered
+        size="small"
+        pagination={false}
+      />
+    </div>
   );
 };
 

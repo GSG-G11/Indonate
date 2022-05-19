@@ -55,7 +55,6 @@ const Campaign = () => {
   const handleClick = () => {
     navigate('/campaigns');
   };
-  console.log(isUpdated);
   return (
     <>
       {!error ? (

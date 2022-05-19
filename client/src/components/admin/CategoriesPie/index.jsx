@@ -3,6 +3,7 @@ import React, { useState, useEffect }
 import { Pie } from '@ant-design/plots';
 import { message } from 'antd';
 import axios from 'axios';
+import './style.css';
 
 const CategoriesPie = () => {
   const [data, setData] = useState([]);
@@ -59,6 +60,7 @@ const CategoriesPie = () => {
       title: false,
       content: {
         style: {
+          fontSize: '14px',
           whiteSpace: 'pre-wrap',
           overflow: 'hidden',
           textOverflow: 'ellipsis',
@@ -68,7 +70,9 @@ const CategoriesPie = () => {
     },
   };
   return (
-    <Pie {...config} />
+    <div className="pie-chart-container">
+      <Pie {...config} />
+    </div>
   );
 };
 

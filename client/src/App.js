@@ -15,13 +15,13 @@ import {
   ServerError,
   NotFoundError,
   FamilyTable,
+  Overview,
 } from './pages';
 import store from './redux/app/store';
 import 'antd/dist/antd.less';
 import './App.css';
 import { getUserData } from './redux/feature/user/userSlice';
 import Dashboard from './components/Dashboard';
-import Overview from './pages/admin/Overview';
 
 function App() {
   useEffect(() => {

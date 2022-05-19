@@ -11,14 +11,15 @@ import ReportsForm from './ReportsForm';
 import Container from './Container';
 import DisplayCampaigns from './DisplayCampaigns';
 import Header from './HeaderAllCampaigns';
-import DonorsForCampaignTable from './admin';
-import CampaignsDonorsChart from './CampaignsDonorsChart';
-import Statistic from './Overview/Statistics';
-import TopCampaignsTable from './TopCampaignsTable';
-import TopDonorsTable from './TopDonorsTable';
 import CampaignForm from './AddCampaign/AddCampaignForm';
 import FamilyButton from './Family/FamilyButton';
 import FamilyForm from './Family/FamilyForm';
+import DonorsForCampaignTable from './admin/DonorsForCampaignTable';
+import Statistic from './admin/Statistics';
+import TopCampaignsTable from './admin/TopCampaignsTable';
+import TopDonorsTable from './admin/TopDonorsTable';
+import CategoriesPie from './admin/CategoriesPie';
+import CampaignsDonorsChart from './admin/CampaignsDonorsChart';
 
 export {
   Header,
@@ -35,11 +36,12 @@ export {
   ReportsForm,
   Container,
   DonorsForCampaignTable,
-  CampaignsDonorsChart,
   Statistic,
   TopCampaignsTable,
   TopDonorsTable,
   CampaignForm,
   FamilyButton,
   FamilyForm,
+  CampaignsDonorsChart,
+  CategoriesPie,
 };
