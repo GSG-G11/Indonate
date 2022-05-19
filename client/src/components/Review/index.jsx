@@ -7,7 +7,7 @@ const comments = [
     id: 1,
     title: 'Maria',
     comment:
-      'I searched for many sites to donate from my own money safely, this site provided me with that.',
+      'I searched for many sites to donate with my own money safely, this site provided me with that.',
     imgSrc:
       'https://www.kindpng.com/picc/m/163-1636340_user-avatar-icon-avatar-transparent-user-icon-png.png',
   },
@@ -23,7 +23,7 @@ const comments = [
     id: 3,
     title: 'Fatima',
     comment:
-      "I can start my own campaign and follow its stats, that's very nice.",
+      "I can start my own campaign and follow its stats, that's very nice. i love it",
     imgSrc:
       'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZldEPvFgz5ysckNAa5ztdf4Exw00bb1a9qA&usqp=CAU',
   },

@@ -75,8 +75,8 @@
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    gap: 5%;
-    padding: 20px;
+    gap: 8%;
+    margin: 17% 0 15% 0;
 }
 
 .anchor {
@@ -96,6 +96,10 @@
 
 @media (max-width: 768px) {
     .layout {
+        .cards {
+           flex-direction: column;
+           
+        }
         .ant-card {
             margin-bottom: 50px;
         }
@@ -105,7 +109,7 @@
 @media (max-width: 992px) {
     .layout {
         .ant-card {
-            margin-bottom: 50px;
+            // margin-bottom: 50px;
         }
     }
 }

@@ -331,7 +331,7 @@ describe('GET /statistics', () => {
       clothes: '100',
       donors: 5,
       families: 5,
-      foods: '101',
+      food: '101',
       money: '1000',
     });
   });

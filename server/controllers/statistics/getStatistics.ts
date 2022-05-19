@@ -13,7 +13,7 @@ const getStatistics = async (req: Request, res: Response, next:NextFunction) => 
       [families,
         [{
           money,
-          food: foods,
+          food,
           clothes,
         }],
       ] :any = await Promise.all([
@@ -34,7 +34,7 @@ const getStatistics = async (req: Request, res: Response, next:NextFunction) => 
       message: 'Success',
       data: {
         families,
-        foods,
+        food,
         money,
         clothes,
         campaigns,
