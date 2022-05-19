@@ -2,7 +2,9 @@ import React, { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Result, Typography } from 'antd';
-import { Nav, Family, CampaginsDonorsChart, Statistic } from './components';
+import {
+  Nav, Family, CampaginsDonorsChart, Statistic,
+} from './components';
 import {
   Landing,
   Campaign,
