@@ -8,7 +8,6 @@ const deleteCampaign = async (req: Request, res: Response, next: NextFunction) =
     const idCampaginExist = await Campaign.findByPk(id, {
       raw: true,
     });
-
     if (!idCampaginExist) throw new CustomError("Campaign doesn't exist", 400);
     const ifCampaignHaveDonation = await Donation.findAll({
       where: {
