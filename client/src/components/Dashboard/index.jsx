@@ -6,8 +6,6 @@ import {
   Layout,
   Menu,
   Image,
-  Typography,
-  Avatar,
 } from 'antd';
 import {
   DesktopOutlined,
@@ -27,7 +25,6 @@ const {
   Content,
 } = Layout;
 const { Item } = Menu;
-const { Title } = Typography;
 
 const Dashboard = () => {
   const user = useSelector((state) => state.user);
@@ -88,18 +85,7 @@ const Dashboard = () => {
       </Sider>
       <Layout className="site-layout">
 
-        <Header className="site-layout-background">
-          <Title className="admin-title" level={5}>
-            {user.userData.name.charAt(0).toUpperCase() + user.userData.name.slice(1)}
-
-          </Title>
-          <Avatar
-            style={{
-              backgroundColor: '#87d068',
-            }}
-            icon={<UserOutlined />}
-          />
-        </Header>
+        <Header className="site-layout-background" />
         <Content className="dashboard-content">
           <Outlet />
         </Content>
