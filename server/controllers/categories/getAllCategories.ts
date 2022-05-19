@@ -1,5 +1,5 @@
 import { NextFunction, Response, Request } from 'express';
-import { Category } from '../../database/models';
+import { Campaign, Category } from '../../database/models';
 
 const getAllCategories = async (
   req: Request,
@@ -9,7 +9,7 @@ const getAllCategories = async (
   try {
     const categories: any = await Category.findAll({
       attributes: ['id', 'name', 'icon_url'],
-      raw: true,
+      include: [Campaign],
     });
     res.json({ message: 'Success', data: { categories } });
   } catch (error) {
