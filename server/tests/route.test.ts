@@ -1096,7 +1096,7 @@ describe('DELETE /api/admin/campaigns/:id', () => {
   });
   test('campaign delete success', async () => {
     const response = await request(app)
-      .delete('/api/admin/campaigns/2')
+      .delete('/api/admin/campaigns/5')
       .set('Cookie', [
         'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
       ]);
