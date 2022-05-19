@@ -1,6 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
 import { Op } from 'sequelize';
-import { Campaign, Category, sequelize } from '../../database/models';
+import {
+  Campaign, Category, Donor, sequelize,
+} from '../../database/models';
 import { CustomError, querySchema } from '../../utils';
 
 const getFilteredCampaign = async (req:Request, res:Response, next:NextFunction) => {
@@ -10,12 +12,12 @@ const getFilteredCampaign = async (req:Request, res:Response, next:NextFunction)
       available,
       category,
       page = 1,
-      limit = 6,
+      limit,
     }:any = req.query;
 
     await querySchema.validateAsync(req.query);
     const { count, rows: campaignesData } = await Campaign.findAndCountAll({
-      offset: (page - 1) * limit,
+      offset: (page - 1) * (limit || 6),
       limit,
       attributes:
        ['id', 'title', 'description', 'image_link', 'is_available', 'categoryId'],
@@ -31,12 +33,22 @@ const getFilteredCampaign = async (req:Request, res:Response, next:NextFunction)
         ['id', 'DESC'],
       ],
 
-      include: {
+      include: [{
         model: Category,
         attributes: ['name', 'icon_url'],
         where: category && { name: sequelize.where(sequelize.fn('LOWER', sequelize.col('name')), { [Op.like]: `%${category.toLowerCase()}%` }) },
 
       },
+      {
+        model: Donor,
+        through: {
+          attributes: [],
+        },
+        attributes: ['id'],
+      },
+
+      ],
+
     });
     res.json({ message: 'Success', data: { campaigns: campaignesData, count } });
   } catch (e) {
