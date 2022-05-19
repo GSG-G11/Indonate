@@ -25,7 +25,8 @@ const CampaginsDonorsChart = () => {
 
   return (
     <div style={{
-      width: '50vw', backgroundColor: '#fff', height: '220px',
+      width: '50vw', backgroundColor: '#fff', height: '40vh',
+
     }}
     >
       <Column

@@ -68,7 +68,14 @@ const CategoriesPie = () => {
     },
   };
   return (
-    <div style={{ width: '30vw', height: '200px', marginTop: '20px' }}>
+    <div style={{
+      width: '27vw',
+      height: '270px',
+      backgroundColor: '#fff',
+      marginRight: '2.5vw',
+
+    }}
+    >
       <Pie {...config} />
     </div>
   );

@@ -1,20 +1,20 @@
 .overview-container {
   display: flex;
   margin-top: 1%;
-  max-width: 50vw;
+  max-width: 40vw;
 }
 .card-content {
   display: flex;
   flex-direction: row;
-  max-width: 50vw;
+  max-width :42vw;
+  flex-wrap: wrap;
 }
 
 .card {
   background: white;
   margin-right:2%;
-  margin-bottom: 1%;
-  width: 10vw;
-  height: 15vh;
+  width: 9vw;
+  height: 16.5vh;
   display: flex;
   justify-content: center;
   align-items: center;

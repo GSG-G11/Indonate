@@ -3,28 +3,31 @@ import {
   TopCampaignsTable,
   TopDonorsTable,
   Statistic,
-  CategoriesPie,
   CampaginsDonorsChart,
+  CategoriesPie,
 } from '../../../components';
 
 const Overview = () => (
   <div>
     <div style={{
-      display: 'flex ', width: '100%', height: '52vh',
+      display: 'flex', height: '45vh', paddingTop: '10px', gap: '2vw',
     }}
     >
-      <div style={{ width: '52vw' }}>
-        <Statistic />
-        <CampaginsDonorsChart />
-      </div>
-      <div>
-        <TopCampaignsTable />
-      </div>
+      <CampaginsDonorsChart />
+      <Statistic />
     </div>
-    <div style={{ display: 'flex' }}>
-      <CategoriesPie />
-      <TopDonorsTable />
+    <div style={{ marginRight: '2vw' }}>
+      <div style={{
+        display: 'flex',
+        height: '40vh',
 
+      }}
+      >
+        <CategoriesPie />
+        <TopCampaignsTable />
+        <TopDonorsTable />
+
+      </div>
     </div>
   </div>
 );

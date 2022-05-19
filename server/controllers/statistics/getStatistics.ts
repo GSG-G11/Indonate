@@ -4,6 +4,7 @@ import {
   Family,
   sequelize,
   Donor,
+  Campaign,
 } from '../../database/models';
 
 const getStatistics = async (req: Request, res: Response, next:NextFunction) => {
@@ -23,8 +24,11 @@ const getStatistics = async (req: Request, res: Response, next:NextFunction) => 
             [sequelize.fn('SUM', sequelize.col('clothes')), 'clothes']],
         }),
       ]);
-    const [donors] = await Promise.all([
+
+    const [donors, campagins] = await Promise.all([
       Donor.count(),
+      Campaign.count(),
+
     ]);
     res.json({
       message: 'Success',
@@ -34,6 +38,7 @@ const getStatistics = async (req: Request, res: Response, next:NextFunction) => 
         money,
         clothes,
         donors,
+        campagins,
       },
     });
   } catch (error) {
