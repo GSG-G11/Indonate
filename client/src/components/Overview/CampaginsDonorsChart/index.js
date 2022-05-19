@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { message } from 'antd';
 import { Column } from '@ant-design/plots';
+import './style.css';
 
 const CampaginsDonorsChart = () => {
   const [data, setData] = useState([]);
@@ -24,16 +25,14 @@ const CampaginsDonorsChart = () => {
   }, []);
 
   return (
-    <div style={{
-      width: '700px', backgroundColor: '#fff', height: '300px', margin: '10px',
-    }}
-    >
+    <div className="bar-chart-conatiner">
       <Column
         data={data}
         xField="campaign"
         yField="donors"
-        columnStyle={{ radius: [0] }}
+        columnStyle={{ radius: [0], width: '5px' }}
         color="#469D62"
+        width="20px"
       />
     </div>
   );

@@ -24,11 +24,11 @@ const getStatistics = async (req: Request, res: Response, next:NextFunction) => 
             [sequelize.fn('SUM', sequelize.col('clothes')), 'clothes']],
         }),
       ]);
-    const [donors, campaigns] = await Promise.all([
+
+    const [donors, campagins] = await Promise.all([
       Donor.count(),
-      Campaign.count({
-        group: ['is_available'],
-      }),
+      Campaign.count(),
+
     ]);
     res.json({
       message: 'Success',
@@ -37,8 +37,8 @@ const getStatistics = async (req: Request, res: Response, next:NextFunction) => 
         foods,
         money,
         clothes,
-        campaigns,
         donors,
+        campagins,
       },
     });
   } catch (error) {
