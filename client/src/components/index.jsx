@@ -19,8 +19,10 @@ import TopCampaignsTable from './Overview/TopCampaignsTable';
 import TopDonorsTable from './Overview/TopDonorsTable';
 import CampaignForm from './AddCampaign/AddCampaignForm';
 import CategoriesPie from './Overview/CategoriesPie';
+import Dashboard from './Dashboard';
 
 export {
+  Dashboard,
   Header,
   Footer,
   Campaign,

@@ -7,9 +7,11 @@ import ServerError from './Error/ServerError';
 import NotFoundError from './Error/NotFoundError';
 import Overview from './admin/Overview';
 import {
-  CampaignsTable, 
+  CampaignsTable,
   ReportsTable,
-  DonorsTable } from './admin';
+  DonorsTable,
+} from './admin';
+
 export {
   Login,
   Signup,
@@ -21,5 +23,5 @@ export {
   DonorsTable,
   ServerError,
   NotFoundError,
-  Overview
+  Overview,
 };

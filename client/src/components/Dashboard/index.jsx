@@ -3,7 +3,11 @@ import { useSelector } from 'react-redux';
 import { Link, Outlet, Navigate } from 'react-router-dom';
 
 import {
-  Layout, Menu, Image,
+  Layout,
+  Menu,
+  Image,
+  Typography,
+  Avatar,
 } from 'antd';
 import {
   DesktopOutlined,
@@ -18,9 +22,12 @@ import collapsedLogo from '../../assets/images/collapsed-logo.jpg';
 import './style.less';
 
 const {
-  Header, Sider, Content,
+  Header,
+  Sider,
+  Content,
 } = Layout;
 const { Item } = Menu;
+const { Title } = Typography;
 
 const Dashboard = () => {
   const user = useSelector((state) => state.user);
@@ -80,9 +87,19 @@ const Dashboard = () => {
         </div>
       </Sider>
       <Layout className="site-layout">
-        <Header
-          className="site-layout-background"
-        />
+
+        <Header className="site-layout-background">
+          <Title className="admin-title" level={5}>
+            {user.userData.name.charAt(0).toUpperCase() + user.userData.name.slice(1)}
+
+          </Title>
+          <Avatar
+            style={{
+              backgroundColor: '#87d068',
+            }}
+            icon={<UserOutlined />}
+          />
+        </Header>
         <Content className="dashboard-content">
           <Outlet />
         </Content>
