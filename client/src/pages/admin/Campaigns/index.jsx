@@ -92,7 +92,7 @@ const CampaignsTable = () => {
     try {
       const {
         data: { message: deleteMessage },
-      } = await axios.delete(`/api/admin/campaigns/${id}`);
+      } = await axios.delete(`/api/admin/campaign/${id}`);
       setCampaigns(campaigns.filter((campaign) => campaign.id !== id));
       message.success(deleteMessage);
     } catch ({
@@ -365,7 +365,7 @@ const CampaignsTable = () => {
         loading={isLoading}
         rowClassName={(record) => !record.is_available && 'disabled-row'}
         pagination={
-          campaignsCount > 10 && { total: campaignsCount, defaultPageSize: 10 }
+          campaignsCount > 7 && { total: campaignsCount, defaultPageSize: 7 }
         }
         onChange={(e) => {
           setPage(e.current);

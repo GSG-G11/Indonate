@@ -4,6 +4,7 @@
   color: #469D62;
 }
 .top-campaign-container{
-  width: 25vw;
-  height:45vh;
+  width: 35%;
+  height:fit-content;
+  margin-bottom: 1%;
 }

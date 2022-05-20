@@ -178,8 +178,8 @@ describe('Get/campaign/:id', () => {
       campaignInfo: {
         category: {
           icon_url:
-            'https://i.pinimg.com/564x/dd/9d/c9/dd9dc9d83423bc037b511d73b29e6b80.jpg',
-          name: 'Health',
+            'https://cdn.discordapp.com/attachments/881560989940731927/977291659173834893/unknown.png',
+          name: 'Medicine',
         },
         description:
           'This campaign helps save an amount of money that guarantees 50 families for two months',
@@ -406,28 +406,7 @@ describe('GET /campaigns', () => {
         '/api/campaigns?search=summer%20clothes%20collection&category=Education',
       )
       .expect(200);
-    expect(response.body.data.campaigns).toEqual([
-      {
-        id: 3,
-        title: 'summer clothes collection',
-        description:
-          'This campaign aims to help poor families secure summer clothes by collecting clothes from donors or buying new clothes with financial donations',
-        image_link:
-          'http://www.humanitygate.com/thumb/560x292/uploads//images/88e62e08915b10584950106f496140ca.jpg',
-        is_available: true,
-        categoryId: 2,
-        donors: [
-          {
-            id: 4,
-          },
-        ],
-        category: {
-          name: 'Education',
-          icon_url:
-            'https://i.pinimg.com/564x/dd/9d/c9/dd9dc9d83423bc037b511d73b29e6b80.jpg',
-        },
-      },
-    ]);
+    expect(response.body.data.campaigns).toEqual([]);
   });
   test('get campaigns with name not exit', async () => {
     const response = await request(app)
@@ -793,9 +772,7 @@ describe('DELETE /api/admin/donor/:donorId', () => {
         'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
       ])
       .expect(400);
-    expect(response.body.message).toBe(
-      'You cannot delete this donor',
-    );
+    expect(response.body.message).toBe('You cannot delete this donor');
   });
   test('case: Failed | Unauthorized user', async () => {
     const donorId = 2;
@@ -1206,9 +1183,7 @@ describe('GET /admin/campaign/:id/families', () => {
         'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
       ])
       .expect(200);
-    expect(response.body.message).toBe(
-      'Success',
-    );
+    expect(response.body.message).toBe('Success');
   });
   test('Get all campaigns for specific family <Authorized admin>', async () => {
     const response = await request(app)

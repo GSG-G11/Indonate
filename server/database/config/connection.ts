@@ -13,7 +13,7 @@ if (NODE_ENV === 'test') {
 } else if (NODE_ENV === 'production') {
   dbUrl = DATABASE_URL;
 } else if (NODE_ENV === 'dev') {
-  dbUrl = DB_URL;
+  dbUrl = DATABASE_URL;
 } else {
   throw new Error('No environment found');
 }
@@ -22,6 +22,7 @@ if (!dbUrl) throw new Error('Invalid db url');
 const sequelize = new Sequelize(
   dbUrl,
   {
+    dialect: 'postgres',
     logging: false,
     ssl: true,
     dialectOptions: {
