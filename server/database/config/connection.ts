@@ -22,14 +22,14 @@ if (!dbUrl) throw new Error('Invalid db url');
 const sequelize = new Sequelize(
   dbUrl,
   {
-    dialect: 'postgres',
-    protocol: 'postgres',
     logging: false,
-    // dialectOptions: {
-    //   ssl: {
-    //     rejectUnauthorized: false,
-    //   },
-    // },
+    ssl: true,
+    dialectOptions: {
+      ssl: {
+        require: true,
+        rejectUnauthorized: false,
+      },
+    },
   },
 );
 
