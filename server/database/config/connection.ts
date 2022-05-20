@@ -19,10 +19,14 @@ if (NODE_ENV === 'test') {
 }
 if (!dbUrl) throw new Error('Invalid db url');
 
-const sequelize = new Sequelize(dbUrl, {
-  dialect: 'postgres',
-  logging: false,
-  // dialectOptions: { sslConnection },
-});
+const sequelize = new Sequelize(
+  dbUrl,
+  {
+    ssl: true,
+    dialectOptions: {
+      ssl: true,
+    },
+  },
+);
 
 export default sequelize;
