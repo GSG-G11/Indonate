@@ -19,11 +19,13 @@ html {
 .nav-container {
   .ant-image-img{
     margin-top: 8px;
+    cursor: pointer;
   }
 }
 .nav-container .ant-layout-header {
   display: flex;
   justify-content: space-between;
 }
-
-
+.ant-menu-item-selected::after {
+  border-bottom: 4px solid #469D62 !important;
+}

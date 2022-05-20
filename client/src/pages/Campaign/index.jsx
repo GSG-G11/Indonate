@@ -16,7 +16,7 @@ import {
 } from 'antd';
 import './style.css';
 import { TeamOutlined } from '@ant-design/icons';
-import { DonationButton, Footer } from '../../components';
+import { Footer, DonateButton } from '../../components';
 
 const { Title, Paragraph } = Typography;
 
@@ -25,6 +25,7 @@ const Campaign = () => {
   const navigate = useNavigate();
   const [campaign, setCampaign] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+  const [isUpdated, setIsUpdated] = useState(false);
   const [error, setError] = useState('');
   useEffect(() => {
     const source = axios.CancelToken.source();
@@ -49,12 +50,11 @@ const Campaign = () => {
     return () => {
       source.cancel();
     };
-  }, []);
+  }, [isUpdated]);
 
   const handleClick = () => {
     navigate('/campaigns');
   };
-
   return (
     <>
       {!error ? (
@@ -85,7 +85,8 @@ const Campaign = () => {
                   ) : (
                     <> </>
                   )}
-                  <DonationButton
+                  <DonateButton
+                    setIsUpdated={setIsUpdated}
                     isAvailable={campaign.campaignInfo.is_available}
                     campaignId={+id}
                     key={+id}

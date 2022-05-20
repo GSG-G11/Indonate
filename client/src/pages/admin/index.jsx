@@ -1,7 +1,7 @@
-import CampaignsTable from './CampaignsTable';
+import CampaignsTable from './Campaigns';
 import Overview from './Overview';
-import ReportsTable from './ReportsTable';
-import DonorsTable from './DonorsTable';
+import ReportsTable from './Reports';
+import DonorsTable from './Donors';
 
 export default { CampaignsTable, Overview };
 

@@ -3,15 +3,16 @@ import {
   TopCampaignsTable,
   TopDonorsTable,
   Statistic,
-  CampaginsDonorsChart,
   CategoriesPie,
+  CampaignsDonorsChart,
 } from '../../../components';
+
 import './style.css';
 
 const Overview = () => (
   <div>
     <div className="conatiner1-overview">
-      <CampaginsDonorsChart />
+      <CampaignsDonorsChart />
       <Statistic />
     </div>
     <div className="conatiner2-overview">

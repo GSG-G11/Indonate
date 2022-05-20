@@ -3,13 +3,12 @@ import Signup from './Signup';
 import Landing from './Landing';
 import Campaign from './Campaign';
 import Campaigns from './Campaigns';
-import ServerError from './Error/ServerError';
+import ServerError from '../components/common/ServerError';
 import NotFoundError from './Error/NotFoundError';
+import FamilyTable from './admin/Families';
 import Overview from './admin/Overview';
-import {
-  CampaignsTable, 
-  ReportsTable,
-  DonorsTable } from './admin';
+import { CampaignsTable, ReportsTable, DonorsTable } from './admin';
+
 export {
   Login,
   Signup,
@@ -21,5 +20,6 @@ export {
   DonorsTable,
   ServerError,
   NotFoundError,
-  Overview
+  FamilyTable,
+  Overview,
 };

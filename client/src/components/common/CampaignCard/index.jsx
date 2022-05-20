@@ -10,7 +10,7 @@ import {
   Image,
   Avatar,
 } from 'antd';
-import DonationButton from '../../DonateForm/DonateButton';
+import DonationButton from '../DonateButton';
 
 import styles from './style.less';
 

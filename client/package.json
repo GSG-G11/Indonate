@@ -20,6 +20,7 @@
     "react-dom": "^18.0.0",
     "react-redux": "^7.2.8",
     "react-router-dom": "^6.3.0",
+    "react-router-hash-link": "^2.4.3",
     "react-scripts": "5.0.1"
   },
   "scripts": {

@@ -1,0 +1,24 @@
+.overview-container {
+  display: flex;
+  margin-top: 1%;
+  max-width: 38%;
+  max-height: 40vh;
+}
+.card-content {
+  display: flex;
+  flex-direction: row;
+  max-width :42vw;
+  flex-wrap: wrap;
+}
+
+.overview-container .card {
+  background: white;
+  margin-right:2%;
+  width: 9vw;
+  height: 16.5vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  text-transform: uppercase;
+}

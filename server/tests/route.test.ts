@@ -324,10 +324,10 @@ describe('GET /statistics', () => {
     } = await request(app).get('/api/statistics').expect(200);
     expect(data).toEqual({
       clothes: '100',
-      campagins: 5,
+      campaigns: 5,
       donors: 5,
       families: 5,
-      foods: '101',
+      food: '101',
       money: '1000',
     });
   });
@@ -481,7 +481,7 @@ describe('GET /campaigns', () => {
 });
 
 describe('PATCH /api/admin/family', () => {
-  test('case: succeeded | updated successfully', async () => {
+  test('case: succeeded | Family updated successfully', async () => {
     const id = 1;
     const response = await request(app)
       .patch(`/api/admin/family/${id}`)
@@ -494,9 +494,9 @@ describe('PATCH /api/admin/family', () => {
         'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
       ])
       .expect(200);
-    expect(response.body.message).toBe('updated successfully');
+    expect(response.body.message).toBe('Family updated successfully');
   });
-  test('case: Failed | updated successfully', async () => {
+  test('case: Failed | Family updated successfully', async () => {
     const id = 1;
     const response = await request(app)
       .patch(`/api/admin/family/${id}`)
@@ -661,12 +661,22 @@ describe('GET /admin/reports', () => {
         'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
       ])
       .expect(200);
-    expect(response.body.data.reports.length).toEqual(5);
+    expect(response.body.data.reports.length).toEqual(4);
     expect(response.body.data.count).toEqual(5);
   });
   test('Get all reports  <Authorized admin> <page 2>', async () => {
     const response = await request(app)
       .get('/api/admin/reports?page=2')
+      .set('Cookie', [
+        'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
+      ])
+      .expect(200);
+    expect(response.body.data.reports.length).toEqual(1);
+    expect(response.body.data.count).toEqual(5);
+  });
+  test('Get all reports  <Authorized admin> <page3>', async () => {
+    const response = await request(app)
+      .get('/api/admin/reports?page=3')
       .set('Cookie', [
         'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
       ])
@@ -1013,7 +1023,7 @@ describe('POST /api/admin/campaigns', () => {
   });
   test('missing column categoryId', async () => {
     const response = await request(app)
-      .post('/api/admin/campaigns')
+      .post('/api/admin/campaign')
       .set('Cookie', [
         'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
       ])
@@ -1030,7 +1040,7 @@ describe('POST /api/admin/campaigns', () => {
   });
   test('title as number', async () => {
     const response = await request(app)
-      .post('/api/admin/campaigns')
+      .post('/api/admin/campaign')
       .set('Cookie', [
         'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
       ])
@@ -1048,7 +1058,7 @@ describe('POST /api/admin/campaigns', () => {
   });
   test('add new campaign', async () => {
     const response = await request(app)
-      .post('/api/admin/campaigns')
+      .post('/api/admin/campaign')
       .set('Cookie', [
         'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
       ])
@@ -1074,7 +1084,7 @@ describe('DELETE /api/admin/campaigns/:id', () => {
   });
   test('campaign id not a number', async () => {
     const response = await request(app)
-      .delete('/api/admin/campaigns/string')
+      .delete('/api/admin/campaign/string')
       .set('Cookie', [
         'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
       ]);
@@ -1083,7 +1093,7 @@ describe('DELETE /api/admin/campaigns/:id', () => {
   });
   test('campaign doesnt exist', async () => {
     const response = await request(app)
-      .delete('/api/admin/campaigns/100')
+      .delete('/api/admin/campaign/100')
       .set('Cookie', [
         'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
       ]);
@@ -1092,7 +1102,7 @@ describe('DELETE /api/admin/campaigns/:id', () => {
   });
   test('campaign delete success', async () => {
     const response = await request(app)
-      .delete('/api/admin/campaigns/5')
+      .delete('/api/admin/campaign/5')
       .set('Cookie', [
         'ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxOTk4NDgzLCJleHAiOjE2NTQ1OTA0ODN9.LBvMMkPbcTeBMbKBeOQ7sYe1s-Wy5zHjhbjjTtcByFw',
       ]);
