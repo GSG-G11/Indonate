@@ -21,7 +21,6 @@ const getFilteredCampaign = async (req:Request, res:Response, next:NextFunction)
       limit,
       attributes:
        ['id', 'title', 'description', 'image_link', 'is_available', 'categoryId'],
-
       where: {
         [Op.and]: [available && { is_available: available }, search && {
           title: sequelize.where(sequelize.fn('LOWER', sequelize.col('title')), { [Op.like]: `%${search.toLowerCase()}%` }),

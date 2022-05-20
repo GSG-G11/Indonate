@@ -16,7 +16,7 @@ import {
 } from 'antd';
 import './style.css';
 import { TeamOutlined } from '@ant-design/icons';
-import { DonationButton, Footer } from '../../components';
+import { Footer, DonateButton } from '../../components';
 
 const { Title, Paragraph } = Typography;
 
@@ -85,7 +85,7 @@ const Campaign = () => {
                   ) : (
                     <> </>
                   )}
-                  <DonationButton
+                  <DonateButton
                     setIsUpdated={setIsUpdated}
                     isAvailable={campaign.campaignInfo.is_available}
                     campaignId={+id}
