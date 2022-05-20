@@ -6,7 +6,7 @@ const {
   NODE_ENV, DB_URL, TEST_DB_URL, DATABASE_URL,
 } = process.env;
 
-let dbUrl:string | undefined = '';
+let dbUrl: string | undefined = '';
 let sslConnection: boolean | object = false;
 
 if (NODE_ENV === 'test') {
@@ -14,7 +14,7 @@ if (NODE_ENV === 'test') {
   sslConnection = false;
 } else if (NODE_ENV === 'production') {
   dbUrl = DATABASE_URL;
-  sslConnection = { rejectUnauthorized: true };
+  sslConnection = { rejectUnauthorized: false };
 } else if (NODE_ENV === 'dev') {
   dbUrl = DB_URL;
   sslConnection = false;
