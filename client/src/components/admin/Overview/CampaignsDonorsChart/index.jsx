@@ -25,7 +25,7 @@ const CampaignsDonorsChart = () => {
   }, []);
 
   return (
-    <div className="bar-chart-conatiner">
+    <div className="bar-chart-container">
       <Column
         data={data}
         xField="campaign"

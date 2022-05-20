@@ -9,7 +9,10 @@ const Card = ({ statistics }) => (
       <div className="card">
         <Row>
           <Col>
-            <Statistic title={item} value={statistics[item]} />
+            <center>
+              {statistics[item].icon}
+            </center>
+            <Statistic title={item} value={statistics[item].count} />
           </Col>
         </Row>
       </div>

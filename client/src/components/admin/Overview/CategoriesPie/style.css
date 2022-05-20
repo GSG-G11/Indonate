@@ -1,5 +1,9 @@
-.pie-chart-container{
-   width: 25vw;  
-   height:45vh; 
- background-color: #fff;
-  }
+.pie-chart-container {
+  background-color: #fff;
+  margin-inline: 1%;
+  margin-bottom: 0.5%;
+  border-radius: 5px;
+  height: 270px ;
+  width: 30%;
+  padding: 25px;
+}

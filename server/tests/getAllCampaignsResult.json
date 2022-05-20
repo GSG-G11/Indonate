@@ -1,8 +1,8 @@
-
-    [{
-        "category": {
-      "icon_url": "https://i.pinimg.com/564x/dd/9d/c9/dd9dc9d83423bc037b511d73b29e6b80.jpg",
-      "name": "Health"
+[
+  {
+    "category": {
+      "icon_url": "https://cdn.discordapp.com/attachments/881560989940731927/977291659173834893/unknown.png",
+      "name": "Medicine"
     },
     "categoryId": 1,
     "description": "This campaign aims to feed needy families by donating meals to feed families or donating money to buy the right amount",
@@ -34,9 +34,9 @@
     "description": "This campaign aims to help poor families secure summer clothes by collecting clothes from donors or buying new clothes with financial donations",
     "donors": [
       {
-      "id": 4
+        "id": 4
       }
-      ],
+    ],
     "id": 3,
     "image_link": "http://www.humanitygate.com/thumb/560x292/uploads//images/88e62e08915b10584950106f496140ca.jpg",
     "is_available": true,
@@ -52,12 +52,12 @@
     "id": 2,
     "donors": [
       {
-      "id": 1
+        "id": 1
       },
       {
-      "id": 3
+        "id": 3
       }
-      ],
+    ],
     "image_link": "http://www.humanitygate.com/thumb/560x292/uploads//images/88e62e08915b10584950106f496140ca.jpg",
     "is_available": true,
     "title": "winter clothes collection"
@@ -72,13 +72,12 @@
     "id": 1,
     "donors": [
       {
-      "id": 1
+        "id": 1
       }
-      ],
-      
+    ],
+
     "image_link": "https://media.voltron.alhurra.com/Drupal/01live-116/styles/sourced/s3/2019-12/AFC8DF4B-8C6D-4968-87B2-CEAFD63DED97.jpg?itok=Y3YypJNm",
     "is_available": true,
     "title": "Helping poor families"
   }
 ]
-  

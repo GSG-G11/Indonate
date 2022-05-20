@@ -37,7 +37,7 @@ const FamilyTable = () => {
         setIsLoading(true);
         const {
           data: { data },
-        } = await axios.get(`/api/admin/families?page=${page}&limit=8`);
+        } = await axios.get(`/api/admin/families?page=${page}&limit=7`);
         setIsLoading(false);
         setFamilies(data.families);
         setFamiliesCount(data.count);
@@ -204,9 +204,9 @@ const FamilyTable = () => {
         columns={columns}
         dataSource={families}
         pagination={
-          familiesCount > 10 && {
+          familiesCount > 7 && {
             total: familiesCount,
-            defaultPageSize: 10,
+            defaultPageSize: 7,
           }
         }
         onChange={(e) => {

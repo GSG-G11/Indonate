@@ -39,7 +39,7 @@ const DonorsTable = () => {
         data: {
           data: { donors, count },
         },
-      } = await axios.get(`/api/admin/donors/?page=${+page}&limit=${8}`);
+      } = await axios.get(`/api/admin/donors/?page=${+page}&limit=${7}`);
       const allDonors = donors.map((obj) => {
         const name = obj.name.charAt(0).toUpperCase() + obj.name.slice(1); // capitlize name
         return {
@@ -233,7 +233,7 @@ const DonorsTable = () => {
         dataSource={dataSource}
         bordered
         pagination={
-          rowsCount > 10 && { total: rowsCount, defaultPageSize: 10 }
+          rowsCount > 7 && { total: rowsCount, defaultPageSize: 7 }
         }
         onChange={(e) => {
           setPage(e.current);

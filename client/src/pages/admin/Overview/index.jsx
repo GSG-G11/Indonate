@@ -10,16 +10,15 @@ import {
 import './style.css';
 
 const Overview = () => (
-  <div>
-    <div className="conatiner1-overview">
-      <CampaignsDonorsChart />
+  <div className="overview-wrapper">
+    <div className="container1-overview">
       <Statistic />
-    </div>
-    <div className="conatiner2-overview">
       <CategoriesPie />
       <TopCampaignsTable />
+    </div>
+    <div className="container2-overview">
+      <CampaignsDonorsChart />
       <TopDonorsTable />
-
     </div>
   </div>
 );
