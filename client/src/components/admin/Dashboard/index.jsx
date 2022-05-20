@@ -40,11 +40,13 @@ const Dashboard = () => {
       className="dashboard-layout"
     >
       <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
-        <Image
-          width={logo === normalLogo ? 115 : 26}
-          src={logo}
-          preview={false}
-        />
+        <Link to="/">
+          <Image
+            width={logo === normalLogo ? 115 : 26}
+            src={logo}
+            preview={false}
+          />
+        </Link>
         <div className="dashboard">
           <Menu
             theme="light"

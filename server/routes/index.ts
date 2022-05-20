@@ -1,28 +1,36 @@
 import { Router } from 'express';
+import { authAdmin, authUser } from '../middlewares';
+import {
+  adminCampaignRouter,
+  adminDonorRouter,
+  adminFamilyRouter,
+  adminReportRouter,
+} from './admin';
 
 import authRouter from './auth';
-import categoryRouter from './category';
-import campaignRouter from './campaign';
-import reportsRouter from './reports';
-import donationRouter from './donation';
-import adminFamilyRouter from './adminFamilyRoutes';
-import adminDonors from './adminDonors';
-import adminDonorRouter from './adminDonor';
-import familyRouter from './adminFamily';
-import adminCampaignRouter from './adminCampaign';
+import donationRouter from './protected/donation';
+import {
+  categoryRouter,
+  campaignRouter,
+  reportsRouter,
+  statisticsRouter,
+} from './public';
 
 const router = Router();
 
-router.use(donationRouter);
 router.use(authRouter);
 router.use(categoryRouter);
 router.use(campaignRouter);
 router.use(reportsRouter);
+router.use(statisticsRouter);
 
-router.use('/admin', adminFamilyRouter);
-router.use('/admin', adminDonors);
-router.use('/admin', adminDonorRouter);
-router.use('/admin', familyRouter);
+router.use(authUser);
+router.use(donationRouter);
+
+router.use(authAdmin);
 router.use('/admin', adminCampaignRouter);
+router.use('/admin', adminDonorRouter);
+router.use('/admin', adminFamilyRouter);
+router.use('/admin', adminReportRouter);
 
 export default router;
