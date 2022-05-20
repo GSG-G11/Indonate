@@ -1,0 +1,12 @@
+.conatiner1-overview{
+    display: flex;
+    height: '45vh';
+    gap: 4%;
+  }
+  .conatiner2-overview{
+    margin-top: 5vh;
+    display: flex;
+    height: '40vh';
+    gap:3%;
+    padding-right: 2%;
+  }

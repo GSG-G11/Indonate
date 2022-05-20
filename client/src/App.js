@@ -1,14 +1,26 @@
 import React, { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { Nav, Family } from './components';
 import {
-  Landing, Campaign, Login, Signup, Campaigns, CampaignsTable, ReportsTable, DonorsTable,
+  Nav,
+  Dashboard,
+} from './components';
+import {
+  Landing,
+  Campaign,
+  Login,
+  Signup,
+  Campaigns,
+  CampaignsTable,
+  ReportsTable,
+  DonorsTable,
+  ServerError,
+  NotFoundError,
+  FamilyTable,
+  Overview,
 } from './pages';
 import store from './redux/app/store';
 import 'antd/dist/antd.less';
-import './App.css';
 import { getUserData } from './redux/feature/user/userSlice';
-import Dashboard from './components/Dashboard';
 
 function App() {
   useEffect(() => {
@@ -24,19 +36,15 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route path="/admin" element={<Dashboard />}>
-
-          <Route path="overview" element={<h1>overview</h1>} />
-          <Route
-            path="campaigns"
-            element={(
-              <CampaignsTable />
-)}
-          />
-          <Route path="campaigns" element={<h1>campaigns</h1>} />
+          <Route index element={<Overview />} />
+          <Route path="campaigns" element={<CampaignsTable />} />
           <Route path="donors" element={<DonorsTable />} />
-          <Route path="families" element={<Family />} />
+          <Route path="families" element={<FamilyTable />} />
           <Route path="reports" element={<ReportsTable />} />
+          <Route path="*" element={<NotFoundError />} />
         </Route>
+        <Route path="/servererror" element={<ServerError />} />
+        <Route path="*" element={<NotFoundError />} />
       </Routes>
     </>
   );
