@@ -1,12 +1,15 @@
-.conatiner1-overview{
-    display: flex;
-    height: '45vh';
-    gap: 4%;
-  }
-  .conatiner2-overview{
-    margin-top: 5vh;
-    display: flex;
-    height: '40vh';
-    gap:3%;
-    padding-right: 2%;
-  }
+.container1-overview {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1%;
+}
+.container2-overview {
+  display: flex;
+  justify-content: space-between;
+}
+
+.container2-overview .bar-chart-container{
+  width: 70%;
+  border-radius: 5px;
+  margin: 0 1% 1% 0;
+}

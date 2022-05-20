@@ -1,12 +1,23 @@
 {
   "categories": [
     {
-      "name": "Health",
-      "icon_url": "https://i.pinimg.com/564x/dd/9d/c9/dd9dc9d83423bc037b511d73b29e6b80.jpg"
+      "name": "Medicine",
+      "icon_url": "https://cdn.discordapp.com/attachments/881560989940731927/977291659173834893/unknown.png"
+    },{
+      "name": "Mental Health",
+      "icon_url": "https://cdn.discordapp.com/attachments/881560989940731927/977289672164249650/unknown.png"
     },
     {
       "name": "Education",
-      "icon_url": "https://i.pinimg.com/564x/dd/9d/c9/dd9dc9d83423bc037b511d73b29e6b80.jpg"
+      "icon_url": "https://cdn.discordapp.com/attachments/881560989940731927/977290043003650149/unknown.png"
+    },
+    {
+      "name": "Humanitarian",
+      "icon_url": "https://cdn.discordapp.com/attachments/881560989940731927/977290654206033930/unknown.png"
+    },
+    {
+      "name": "Crowdfunding",
+      "icon_url": "https://cdn.discordapp.com/attachments/881560989940731927/977294487128801371/unknown.png"
     }
   ]
 }

@@ -82,7 +82,7 @@ const AddEditCampaign = ({
       } else if (!file.length && action === 'Add') {
         setIsValidationError(true);
       } else if (action === 'Add') {
-        const { data: { message: successMessage } } = await axios.post('/api/admin/campaigns', { ...value, image_link: imageUrl });
+        const { data: { message: successMessage } } = await axios.post('/api/admin/campaign', { ...value, image_link: imageUrl });
         message.success(successMessage);
         setVisible(false);
         setIsUpdateCampaign(true);
