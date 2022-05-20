@@ -23,12 +23,13 @@ const sequelize = new Sequelize(
   dbUrl,
   {
     dialect: 'postgres',
+    protocol: 'postgres',
     logging: false,
-    dialectOptions: {
-      ssl: {
-        rejectUnauthorized: false,
-      },
-    },
+    // dialectOptions: {
+    //   ssl: {
+    //     rejectUnauthorized: false,
+    //   },
+    // },
   },
 );
 
