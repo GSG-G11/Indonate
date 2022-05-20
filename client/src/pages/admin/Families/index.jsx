@@ -37,7 +37,7 @@ const FamilyTable = () => {
         setIsLoading(true);
         const {
           data: { data },
-        } = await axios.get(`/api/admin/families?page=${page}&limit=10`);
+        } = await axios.get(`/api/admin/families?page=${page}&limit=8`);
         setIsLoading(false);
         setFamilies(data.families);
         setFamiliesCount(data.count);
@@ -194,7 +194,7 @@ const FamilyTable = () => {
   return (
     <>
       <div className="header-table">
-        <Title className="header-table-title" level={2}>
+        <Title className="header-table-title" level={3}>
           Families
         </Title>
         <FamilyButton isUpdated={isUpdated} setIsUpdated={setIsUpdated} />

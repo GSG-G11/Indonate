@@ -349,7 +349,7 @@ const CampaignsTable = () => {
   return (
     <>
       <div className="header-table">
-        <Title className="header-table-title" level={2}>
+        <Title className="header-table-title" level={4}>
           Campaigns
         </Title>
         <Button type="primary" onClick={handleAddCampaign}>

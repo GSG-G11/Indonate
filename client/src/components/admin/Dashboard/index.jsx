@@ -18,7 +18,7 @@ import collapsedLogo from '../../../assets/images/collapsed-logo.jpg';
 import './style.less';
 
 const {
-  Header, Sider, Content,
+  /* Header, */ Sider, Content,
 } = Layout;
 const { Item } = Menu;
 
@@ -80,9 +80,9 @@ const Dashboard = () => {
         </div>
       </Sider>
       <Layout className="site-layout">
-        <Header
+        {/* <Header
           className="site-layout-background"
-        />
+        /> */}
         <Content className="dashboard-content">
           <Outlet />
         </Content>

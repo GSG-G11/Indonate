@@ -39,7 +39,7 @@ const DonorsTable = () => {
         data: {
           data: { donors, count },
         },
-      } = await axios.get(`/api/admin/donors/?page=${+page}&limit=${10}`);
+      } = await axios.get(`/api/admin/donors/?page=${+page}&limit=${8}`);
       const allDonors = donors.map((obj) => {
         const name = obj.name.charAt(0).toUpperCase() + obj.name.slice(1); // capitlize name
         return {
@@ -224,7 +224,7 @@ const DonorsTable = () => {
   return (
     <>
       <div className="header-table">
-        <Title className="header-table-title" level={2}>
+        <Title className="header-table-title" level={3}>
           Donors
         </Title>
       </div>

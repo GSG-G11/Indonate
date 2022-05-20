@@ -67,7 +67,7 @@ const ReportsTable = () => {
   return (
     <>
       <div className="header-table">
-        <Title className="header-table-title" level={2}>
+        <Title className="header-table-title" level={3}>
           Reports
         </Title>
       </div>
