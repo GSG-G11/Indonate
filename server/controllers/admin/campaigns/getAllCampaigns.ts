@@ -10,7 +10,7 @@ const getAllCampaigns = async (
   next: NextFunction,
 ) => {
   try {
-    const { page = 1, limit = 10, order = 'available' }: any = req.query;
+    const { page = 1, limit = 8, order = 'available' }: any = req.query;
 
     await querySchema.validateAsync(req.query);
 
