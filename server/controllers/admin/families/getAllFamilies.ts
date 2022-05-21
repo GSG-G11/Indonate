@@ -10,6 +10,7 @@ const getAllFamilies = async (req: Request, res: Response, next: NextFunction) =
     const { rows, count } = await Family.findAndCountAll({
       limit,
       offset: (+page - 1) * limit,
+      distinct: true,
       include: [{
         duplicating: false,
         model: Capon,

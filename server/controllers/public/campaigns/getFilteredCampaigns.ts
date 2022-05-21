@@ -18,6 +18,7 @@ const getFilteredCampaigns = async (req:Request, res:Response, next:NextFunction
     await querySchema.validateAsync(req.query);
     const { count, rows: campaignesData } = await Campaign.findAndCountAll({
       offset: (page - 1) * (limit || 6),
+      distinct: true,
       limit,
       attributes:
        ['id', 'title', 'description', 'image_link', 'is_available', 'categoryId'],

@@ -138,10 +138,14 @@ const Campaign = () => {
                   </span>
                 </Paragraph>
                 <Progress
-                  percent={(
-                    (100 * campaign.current.current_food)
-                    / campaign.campaignInfo.food_target
-                  ).toFixed(1)}
+                  percent={
+                    campaign.campaignInfo.food_target
+                      ? (
+                        (100 * campaign.current.current_food)
+                          / campaign.campaignInfo.food_target
+                      ).toFixed(1)
+                      : (0).toFixed(1)
+                  }
                   size="default"
                   strokeColor={{
                     '0%': '#108ee9',
@@ -157,10 +161,14 @@ const Campaign = () => {
                   </span>
                 </Paragraph>
                 <Progress
-                  percent={(
-                    (100 * campaign.current.current_money)
-                    / campaign.campaignInfo.money_target
-                  ).toFixed(1)}
+                  percent={
+                    campaign.campaignInfo.money_target
+                      ? (
+                        (100 * campaign.current.current_money)
+                          / campaign.campaignInfo.money_target
+                      ).toFixed(1)
+                      : (0).toFixed(1)
+                  }
                   size="default"
                   strokeColor={{
                     '0%': '#108ee9',
@@ -177,10 +185,14 @@ const Campaign = () => {
                   </span>
                 </Paragraph>
                 <Progress
-                  percent={(
-                    (100 * campaign.current.current_clothes)
-                    / campaign.campaignInfo.clothes_target
-                  ).toFixed(1)}
+                  percent={
+                    campaign.campaignInfo.clothes_target
+                      ? (
+                        (100 * campaign.current.current_clothes)
+                          / campaign.campaignInfo.clothes_target
+                      ).toFixed(1)
+                      : (0).toFixed(1)
+                  }
                   size="default"
                   strokeColor={{
                     '0%': '#108ee9',

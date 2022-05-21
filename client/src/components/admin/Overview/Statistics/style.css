@@ -19,6 +19,14 @@
 .card-content .card:hover {
   transform: scale(1.04);
 }
-.top-donors-container{
+.top-donors-container {
   margin-bottom: -5px;
+  width: 35%;
+}
+.top-donors-container
+  .ant-table-wrapper
+  .ant-spin-nested-loading
+  .ant-spin-container
+  .ant-table {
+  margin: 0 !important;
 }

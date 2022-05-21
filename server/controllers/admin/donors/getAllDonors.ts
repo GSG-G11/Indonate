@@ -9,6 +9,7 @@ const getAllDonors = async (req:Request, res:Response, next:NextFunction) => {
     const { page = 1, limit = 6, order = 'id' } = await querySchema.validateAsync(req.query);
     const { rows: donors, count } = await Donor.findAndCountAll({
       offset: (+page - 1) * +limit,
+      distinct: true,
       limit: +limit,
       include: [{
         model: Donation,
