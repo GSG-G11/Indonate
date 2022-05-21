@@ -93,6 +93,7 @@ const EditDonor = ({
     </Modal>
   );
 };
+
 EditDonor.propTypes = {
   dataSource: PropType.objectOf.isRequired,
   visible: PropType.bool.isRequired,

@@ -7,6 +7,7 @@ interface error {
 
 // eslint-disable-next-line no-unused-vars
 const serverError = (err: error, req: Request, res: Response, next: NextFunction) => {
+  console.log(err);
   if (err.status) {
     res.status(err.status).json({ message: err.message });
   } else {

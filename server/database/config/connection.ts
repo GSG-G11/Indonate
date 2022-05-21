@@ -6,27 +6,32 @@ const {
   NODE_ENV, DB_URL, TEST_DB_URL, DATABASE_URL,
 } = process.env;
 
-let dbUrl:string | undefined = '';
-let sslConnection: boolean | object = false;
+let dbUrl: string | undefined = '';
 
 if (NODE_ENV === 'test') {
   dbUrl = TEST_DB_URL;
-  sslConnection = false;
 } else if (NODE_ENV === 'production') {
   dbUrl = DATABASE_URL;
-  sslConnection = { rejectUnauthorized: true };
 } else if (NODE_ENV === 'dev') {
-  dbUrl = DB_URL;
-  sslConnection = false;
+  dbUrl = DATABASE_URL;
 } else {
   throw new Error('No environment found');
 }
 if (!dbUrl) throw new Error('Invalid db url');
 
-const sequelize = new Sequelize(dbUrl, {
-  dialect: 'postgres',
-  logging: false,
-  dialectOptions: { sslConnection },
-});
+const sequelize = new Sequelize(
+  dbUrl,
+  {
+    dialect: 'postgres',
+    logging: false,
+    ssl: true,
+    dialectOptions: {
+      ssl: {
+        require: true,
+        rejectUnauthorized: false,
+      },
+    },
+  },
+);
 
 export default sequelize;

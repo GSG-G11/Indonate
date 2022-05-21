@@ -5,8 +5,10 @@
   "main": "index.js",
   "scripts": {
     "dev": "NODE_ENV=dev nodemon ./server/index.ts",
-    "start": "NODE_ENV=production npx tsc && node ./dist",
+    "start": "NODE_ENV=production node ./dist/index.js",
     "test": "NODE_ENV=test jest server/tests",
+    "tsc": "tsc",
+    "postinstall": "npm run tsc",
     "heroku-postbuild": "cd client && npm i && npm run build",
     "lint": "eslint --ext .ts server/",
     "lint-fix": "eslint --ext .ts server/ --fix && cd client && npm run lint-fix",
