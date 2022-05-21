@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;500;600;700;800;900&family=Fredoka&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 .one-campaign-page {
   display: flex;
   justify-content: center;
@@ -60,8 +60,9 @@
   display: flex;
 }
 .campaign-title {
-  font-size: 36px;
+  font-size: 3rem !important;
   margin-top: 2rem;
+  text-transform: capitalize;
   margin-bottom: 1rem;
 }
 .campaign-description {
@@ -115,7 +116,6 @@
     width: 100%;
   }
   .campaign-title{
-    font-family: 'Cairo', sans-serif;
     font-size: 150% !important;
     font-weight: 900 !important;
   }
