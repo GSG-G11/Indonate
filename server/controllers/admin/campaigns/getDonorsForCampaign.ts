@@ -9,6 +9,7 @@ const getDonorsForCampaign = async (req: Request, res: Response, next: NextFunct
     const { count, rows: donors } = await Donor.findAndCountAll({
       offset: (+page - 1) * 6,
       limit: 6,
+      distinct: true,
       include: {
         model: Campaign,
         duplicating: false,
