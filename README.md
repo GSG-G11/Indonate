@@ -43,31 +43,29 @@
   <summary>Table of Contents</summary>
   <ol>
     <li>
-      <a href="#About-The-Project">About The Project</a>
+      <a href="#About-The-Project">About The Project         </a>
       <ul>
         <li><a href="#Built-With">Built With</li> 
       </ul>
     </li>
     <li>
-      <a href="#Set-up-application-locally-💻">Install application</a>
+      <a href="#Set-up-application-locally">Install application</a>
     </li>
             <li>
-      <a href="#User-Journey-🚀">User journey</a>
+      <a href="#User-Journey">User Journey</a>
     <ul>
-<li><a href="##As-a-Donor">donor</a></li>
+<li><a href="#As-an-Applicant">donor</a></li>
 <li><a href="#As-an-Admin">admin</a></li>        
       </ul>
     </li>
     <li>
-      <a href="#User-Stories-📔">User stories</a>
+      <a href="#User-Stories">User Stories</a>
          <ul>
-<li><a href="#As-a-Donor-I-can">donor</a></li>
+<li><a href="#As-an-Applicant-I-can">donor</a></li>
 <li><a href="#As-an-Admin-I-can">admin</a></li>        
       </ul>
     </li>
-    <li><a href="#Contributers-👥">Contributers</a></li>
-    <li><a href="#Stretch-Goals-🎯">Stretch goals</a></li>
-      
+    <li><a href="#Contributers">Contributers</a></li>
   </ol>
 </details>
 
