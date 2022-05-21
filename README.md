@@ -1,9 +1,12 @@
-<div id="top"></div>
-
-![](https://i.imgur.com/VtPIP9k.png) 
-
-<center style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top: 40px;">
+<div id="top" align="center">
     
+![](https://i.imgur.com/VtPIP9k.png) 
+</div>
+
+<div align="center">
+    <div>
+    
+   
 [![Contributors][contributors-shield]][contributors-url]
 
 [![Forks][forks-shield]][forks-url]
@@ -11,11 +14,13 @@
 [![Stargazers][stars-shield]][stars-url]
 
 [![Issues][issues-shield]][issues-url]
-</center>
+    </div>
+</div>
+    
 
 <!-- PROJECT LOGO -->
 <br />
-<div>
+<div>    
 <div align="center">
   <a href="https://github.com/GSG-G11/Indonate">
     <img src="https://i.imgur.com/gJbA8hk.png" alt="Logo" width="40" height="40">
@@ -27,10 +32,9 @@
     <br />
       <br />
     <div align='center'>
-    <a href="https://indonate.herokuapp.com/">
-        <h2>Visit Indonate</h2></a>
-    <a href="https://www.figma.com/file/lhAfRWVmQ75y8USQoRp4wL/Indonate?node-id=0%3A1"><h3>Figma design</h3></a>
-     <a href="https://ibb.co/nwCQ0TJ"><h3>Schema design</h3></a>
+ <h3><a href="https://indonate.herokuapp.com/">Visit Indonate</a></h3>
+   <h4><a href="https://www.figma.com/file/lhAfRWVmQ75y8USQoRp4wL/Indonate?node-id=0%3A1">Figma design</a></h4>
+     <h4><a href="https://ibb.co/nwCQ0TJ">Schema design</a></h4>
       </p>
 </div>
 
@@ -39,7 +43,7 @@
   <summary>Table of Contents</summary>
   <ol>
     <li>
-      <a href="#About-The-Project">About The Project         </a>
+      <a href="#About-The-Project">About The Project</a>
       <ul>
         <li><a href="#Built-With">Built With</li> 
       </ul>
@@ -113,7 +117,6 @@ For over a decade, Indonate has responded to the hunger crisis, increase of unem
 * lastly admin can view all **comments and feedback** submitted by users using the contact us form in the landing page.
 <p align="right"><a href="#top">back to top</a></p>
 
----
     
 ## User Stories 📔
 ### `As a Donor I can:`
@@ -124,7 +127,7 @@ For over a decade, Indonate has responded to the hunger crisis, increase of unem
 - **View all website campaigns and filter or search by my own need.**
 - **Access any campaign page and view full description of the campaign, the donations sumbitted for this campaign and beneficiary families included in this campaign.**
 - **Submit a donation with the amount i desire either food or money or clothes.**
----
+
 ### `As an Admin I can:`
 - **Access my account either by signing in or registering to the website.**
 - **View overview page with all statistics including families, campaigns, all donations.**
