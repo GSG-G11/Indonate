@@ -61,7 +61,7 @@
     <li>
       <a href="#User-Stories">User Stories</a>
          <ul>
-<li><a href="#As-an-donor-I-can">donor</a></li>
+<li><a href="#as-a-donor-i-can">donor</a></li>
 <li><a href="#As-an-Admin-I-can">admin</a></li>        
       </ul>
     </li>
