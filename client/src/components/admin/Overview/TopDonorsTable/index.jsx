@@ -106,6 +106,7 @@ const TopDonorsTable = () => {
         loading={isLoading}
         bordered
         pagination={false}
+        size="middle"
       />
     </div>
   );
